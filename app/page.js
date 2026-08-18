@@ -2517,52 +2517,39 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* UNIFIED RESPONSIVE AWARDS GRID - ULTRA SMOOTH & FAST INTERACTION */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
-            {awardsData.map((award, idx) => (
+          {/* MOBILE / TABLET: 2-Col Grid */}
+          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            {awardsData.map((award) => (
               <div
                 key={award.id}
                 onClick={() => setSelectedAwardModal(award)}
-                className={`bento-card p-6 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl transition-all duration-100 cursor-pointer group rounded-3xl border border-[#CBD8F6]/80 relative overflow-hidden active:scale-98`}
+                className={`bento-card p-5 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 cursor-pointer group rounded-3xl border border-[#CBD8F6] shadow-xs`}
               >
-                {/* Background Subtle Photo Overlay */}
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-100 pointer-events-none">
-                  <Image src={award.image} alt={award.title} fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover mix-blend-multiply" />
-                </div>
-
-                <div className="relative z-10">
-                  {/* Top Bar with 3D Icon & Year */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm group-hover:scale-105 transition-transform duration-100">
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-12 h-12 rounded-2xl bg-white border border-[#CBD8F6] flex items-center justify-center text-2xl shadow-xs">
                       {award.icon}
                     </div>
-                    <span className="text-[11px] font-black text-[#64748B] uppercase tracking-wider bg-white/80 px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs">
+                    <span className="text-xs font-black text-[#64748B] uppercase">
                       {award.year}
                     </span>
                   </div>
-
-                  {/* Badge & Stat */}
-                  <div className="space-y-2 mb-3">
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-black shadow-2xs ${award.badgeClass}`}>
+                  <div className="space-y-1 mb-2">
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black shadow-2xs ${award.badgeClass}`}>
                       {award.badge}
                     </span>
-                    <div className="text-xl font-black text-[#00A8E8]">{award.stat}</div>
-                    <h3 className="font-heading font-extrabold text-base lg:text-lg text-[#0F2963] leading-snug group-hover:text-[#00A8E8] transition-colors">
+                    <div className="text-lg font-black text-[#00A8E8]">{award.stat}</div>
+                    <h3 className="font-heading font-extrabold text-base text-[#0F2963] leading-tight">
                       {award.title}
                     </h3>
                   </div>
-
-                  <p className="text-xs text-[#334155] leading-relaxed mb-4 font-medium">
+                  <p className="text-xs text-[#334155] leading-relaxed mb-3 font-medium">
                     {award.desc}
                   </p>
                 </div>
-
-                <div className="relative z-10 pt-3 border-t border-black/5 flex items-center justify-between text-xs font-black text-[#00A8E8]">
-                  <div className="flex items-center gap-1.5 text-[#64748B] font-bold text-[11px] truncate mr-2">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span className="truncate">{award.issuer}</span>
-                  </div>
-                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-100 shrink-0 font-extrabold">
+                <div className="pt-2.5 border-t border-black/5 flex items-center justify-between text-xs font-black text-[#00A8E8]">
+                  <span className="text-[11px] font-bold truncate mr-2 text-[#64748B]">{award.issuer}</span>
+                  <span className="flex items-center gap-1 shrink-0 font-extrabold">
                     <span>Verify</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
@@ -2571,6 +2558,91 @@ export default function Home() {
             ))}
           </div>
 
+          {/* DESKTOP: SILKY-SMOOTH EXPANDING ACCORDION */}
+          <div className="hidden lg:flex lg:flex-row gap-4 h-[480px] w-full max-w-6xl mx-auto items-stretch">
+            {awardsData.map((award, idx) => {
+              const isActive = activeAwardTab === idx;
+              return (
+                <div
+                  key={award.id}
+                  onClick={() => setActiveAwardTab(idx)}
+                  onMouseEnter={() => setActiveAwardTab(idx)}
+                  style={{
+                    flexGrow: isActive ? 5 : 1,
+                    flexShrink: 1,
+                    flexBasis: '0%'
+                  }}
+                  className={`relative overflow-hidden rounded-[2rem] border-2 cursor-pointer transition-[flex-grow,background-color,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between p-6 sm:p-7 group will-change-[flex-grow] ${
+                    isActive 
+                      ? `bg-gradient-to-br ${award.accentBg} shadow-2xl border-[#00A8E8]/40 ring-4 ring-[#00A8E8]/10` 
+                      : `bg-white border-[#CBD8F6] hover:border-[#00A8E8]/60 hover:bg-[#F0F4FC] hover:shadow-md`
+                  }`}
+                >
+                  {/* Background Photo Overlay with smooth crossfade */}
+                  <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ease-out ${isActive ? 'opacity-15' : 'opacity-0'}`}>
+                    <Image src={award.image} alt={award.title} fill sizes="50vw" className="object-cover mix-blend-multiply" />
+                  </div>
+
+                  {/* Top Bar: Icon & Year */}
+                  <div className="relative z-10 flex items-center justify-between w-full">
+                    <div className={`w-14 h-14 rounded-2xl bg-white border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm transition-all duration-500 ease-out ${
+                      isActive ? 'scale-100' : 'scale-90 opacity-80 group-hover:scale-95 group-hover:opacity-100'
+                    }`}>
+                      {award.icon}
+                    </div>
+                    <span className={`text-[11px] font-black text-[#64748B] uppercase tracking-wider bg-white/80 px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs transition-opacity duration-500 ${
+                      isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}>
+                      {award.year}
+                    </span>
+                  </div>
+
+                  {/* Collapsed Vertical Title (Visible when NOT active) */}
+                  <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-500 ease-out ${
+                    isActive ? 'opacity-0 scale-90 pointer-events-none' : 'opacity-100 scale-100'
+                  }`}>
+                    <h3 className="transform -rotate-90 text-[#0F2963] font-heading font-extrabold text-base xl:text-lg whitespace-nowrap tracking-wide opacity-60 group-hover:opacity-100 transition-opacity">
+                      {award.highlight}
+                    </h3>
+                  </div>
+
+                  {/* Expanded Content Box with smooth fade & glide */}
+                  <div className={`relative z-10 w-full transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+                    isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+                  }`}>
+                    <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/60 shadow-lg space-y-3">
+                      <div className="flex items-center gap-2.5">
+                        <span className={`px-3 py-1 rounded-full text-xs font-black shadow-2xs ${award.badgeClass}`}>
+                          {award.badge}
+                        </span>
+                        <span className="text-base font-black text-[#00A8E8]">{award.stat}</span>
+                      </div>
+
+                      <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#0F2963] leading-snug">
+                        {award.title}
+                      </h3>
+
+                      <p className="text-xs sm:text-sm text-[#334155] leading-relaxed font-medium line-clamp-2">
+                        {award.desc}
+                      </p>
+
+                      <div className="pt-3 border-t border-[#CBD8F6]/60 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 text-[#64748B] text-xs font-bold truncate mr-2">
+                          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                          <span className="truncate">Verified by {award.issuer}</span>
+                        </div>
+                        <button
+                          onClick={(e) => { e.stopPropagation(); setSelectedAwardModal(award); }}
+                          className="text-xs font-black text-[#00A8E8] hover:text-[#0F2963] transition-colors flex items-center gap-1 shrink-0 group/btn cursor-pointer"
+                        >
+                          <span>Verify Badge</span>
+                          <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
             })}
           </div>
 
