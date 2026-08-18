@@ -177,15 +177,26 @@ export default function Home() {
     return () => clearInterval(timer);
   }, [isAwardPaused]);
 
-  // Dynamic Content & Announcements from Admin Store
-  const [dynamicAnnouncements, setDynamicAnnouncements] = useState([]);
+  // Dynamic Content & Announcements from Admin Store with initial fallback
+  const [dynamicAnnouncements, setDynamicAnnouncements] = useState([
+    {
+      id: "ann-default",
+      title: `Admissions Open for Academic Year ${getAcademicYear()}`,
+      message: "Limited seats available across Playgroup, Nursery, LKG & UKG. Book your campus walkthrough now for early bird fee waiver!",
+      type: "admission",
+      active: true,
+      link: "#admissions",
+      linkText: "Apply Online",
+      bannerColor: "from-[#0F2963] via-[#00A8E8] to-[#F59E0B]"
+    }
+  ]);
   const [dynamicContent, setDynamicContent] = useState(null);
 
   useEffect(() => {
     fetch('/api/content')
       .then((res) => res.json())
       .then((data) => {
-        if (data.announcements && data.announcements.length > 0) {
+        if (data && Array.isArray(data.announcements) && data.announcements.length > 0) {
           setDynamicAnnouncements(data.announcements);
         }
         if (data) {
@@ -987,67 +998,100 @@ export default function Home() {
   return (
     <div className="relative min-h-screen font-sans text-[#0F2963] bg-[#FFFDF8] bg-playful-dots selection:bg-vannam-yellow/20 selection:text-vannam-orange pb-16 lg:pb-0">
 
-      {/* Live Admin Active Announcement Ribbon */}
-      {dynamicAnnouncements.length > 0 && (
-        <div className={`text-white py-2 px-3 sm:px-6 bg-gradient-to-r ${dynamicAnnouncements[0].bannerColor || 'from-[#0F2963] via-[#00A8E8] to-[#F59E0B]'} shadow-sm relative z-20`}>
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4">
-            <div className="min-w-0 flex-1">
-              <p className="font-bold text-xs sm:text-sm text-white leading-snug">
-                {formatDynamicYears(dynamicAnnouncements[0].title)}
-                {dynamicAnnouncements[0].message && (
-                  <span className="text-white/90 font-normal text-xs hidden md:inline ml-1.5">
-                    — {formatDynamicYears(dynamicAnnouncements[0].message)}
-                  </span>
-                )}
-              </p>
+      {/* STICKY TOP HEADER & ANNOUNCEMENT CONTAINER */}
+      <div className="sticky top-0 z-50 shadow-xs">
+        {/* Live Admin Active Announcement Ribbon */}
+        {dynamicAnnouncements.length > 0 && (
+          <div className={`text-white py-2 px-3 sm:px-6 bg-gradient-to-r ${dynamicAnnouncements[0].bannerColor || 'from-[#0F2963] via-[#00A8E8] to-[#F59E0B]'} shadow-xs relative z-20`}>
+            <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3 sm:gap-4">
+              <div className="min-w-0 flex-1">
+                <p className="font-bold text-xs sm:text-sm text-white leading-snug truncate sm:whitespace-normal">
+                  {formatDynamicYears(dynamicAnnouncements[0].title)}
+                  {dynamicAnnouncements[0].message && (
+                    <span className="text-white/90 font-normal text-xs hidden md:inline ml-1.5">
+                      — {formatDynamicYears(dynamicAnnouncements[0].message)}
+                    </span>
+                  )}
+                </p>
+              </div>
+              {dynamicAnnouncements[0].link && (
+                <a
+                  href={dynamicAnnouncements[0].link}
+                  className="inline-flex items-center gap-1.5 px-3 sm:px-3.5 py-1 rounded-full bg-white text-[#0F2963] text-[11px] sm:text-xs font-black hover:bg-amber-50 active:scale-95 transition-all shadow-xs shrink-0 whitespace-nowrap"
+                >
+                  <span>{dynamicAnnouncements[0].linkText || 'Apply Online'}</span>
+                  <span className="font-bold">→</span>
+                </a>
+              )}
             </div>
-            {dynamicAnnouncements[0].link && (
-              <a
-                href={dynamicAnnouncements[0].link}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white text-[#0F2963] text-xs font-black hover:bg-amber-50 active:scale-95 transition-all shadow-xs shrink-0 whitespace-nowrap"
-              >
-                <span>{dynamicAnnouncements[0].linkText || 'Apply Online'}</span>
-                <span className="font-bold">→</span>
-              </a>
-            )}
           </div>
-        </div>
-      )}
+        )}
 
-
-
-      <header className="sticky top-0 z-50 bg-white border-b border-[#CBD8F6]/80 shadow-xs">
-        <div className="max-w-[1440px] mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2.5 sm:gap-3 xl:gap-6">
-          
-          {/* Logo & School Name */}
-          <Link href="/" className="flex items-center group shrink-0">
-            <img 
-              src="/logo.png" 
-              alt="Vannam World Preschool Logo" 
-              className="h-9 xs:h-10 sm:h-12 lg:h-13 xl:h-14 w-auto object-contain group-hover:scale-105 transition transform"
-            />
-          </Link>
+        <header className="bg-white border-b border-[#CBD8F6]/80">
+          <div className="max-w-[1440px] mx-auto px-3.5 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-3 xl:gap-6">
+            
+            {/* Logo & School Name */}
+            <Link href="/" className="flex items-center group shrink-0">
+              <img 
+                src="/logo.png" 
+                alt="Vannam World Preschool Logo" 
+                className="h-9 xs:h-10 sm:h-12 lg:h-12 xl:h-14 w-auto object-contain group-hover:scale-105 transition transform"
+              />
+            </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 mx-2 xl:mx-4 gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13.5px] 2xl:text-[14.5px] font-bold text-[#0F2963]">
-            <a href="#about" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">About</a>
-            <a href="#programs" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Programs</a>
-            <a href="#why-us" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Why Us</a>
-            <a href="#approach" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Approach</a>
-            <a href="#activities" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Activities</a>
-            <a href="#facilities" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Facilities</a>
-            <a href="#safety" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Safety</a>
-            <a href="#awards" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Awards</a>
-            <a href="#teachers" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Teachers</a>
-            <a href="#gallery" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Gallery</a>
-            <a href="#contact" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Contact</a>
+          <nav className="hidden lg:flex items-center justify-center flex-1 mx-2 xl:mx-4 gap-0.5 xl:gap-1.5 2xl:gap-2.5 text-[12.5px] xl:text-[13.5px] 2xl:text-[14.5px] font-bold text-[#0F2963]">
+            <a href="#about" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">About</a>
+            <a href="#programs" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Programs</a>
+            <a href="#why-us" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Why Us</a>
+            <a href="#approach" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Approach</a>
+            <a href="#safety" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Safety</a>
+            
+            {/* Explore Dropdown for Secondary Sections */}
+            <div className="relative group">
+              <button 
+                type="button"
+                className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap flex items-center gap-1 group-hover:text-[#00A8E8] group-hover:bg-[#F0F4FC]"
+                aria-haspopup="true"
+              >
+                <span>Explore</span>
+                <ChevronDown className="w-3.5 h-3.5 transition-transform duration-200 group-hover:rotate-180 text-[#64748B] group-hover:text-[#00A8E8]" />
+              </button>
+
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 translate-y-1 invisible group-hover:opacity-100 group-hover:translate-y-0 group-hover:visible transition-all duration-200 z-50 pointer-events-none group-hover:pointer-events-auto">
+                <div className="w-52 bg-white rounded-2xl p-2 shadow-xl border border-[#CBD8F6] space-y-1">
+                  <a href="#activities" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">
+                    <Puzzle className="w-4 h-4 text-vannam-orange shrink-0" />
+                    <span>Activities</span>
+                  </a>
+                  <a href="#facilities" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">
+                    <TreePine className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>Facilities</span>
+                  </a>
+                  <a href="#awards" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">
+                    <Trophy className="w-4 h-4 text-amber-500 shrink-0" />
+                    <span>Awards</span>
+                  </a>
+                  <a href="#teachers" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">
+                    <Users className="w-4 h-4 text-purple-500 shrink-0" />
+                    <span>Teachers</span>
+                  </a>
+                  <a href="#gallery" className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">
+                    <Camera className="w-4 h-4 text-sky-500 shrink-0" />
+                    <span>Gallery</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <a href="#contact" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Contact</a>
           </nav>
 
           {/* Header Action CTAs */}
-          <div className="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
             <button
               onClick={() => setIsFeeCalcOpen(true)}
-              className="p-2 rounded-full text-[#334155] hover:text-[#0F2963] hover:bg-[#E8EEFB] transition shrink-0"
+              className="p-1.5 xl:p-2 rounded-full text-[#334155] hover:text-[#0F2963] hover:bg-[#E8EEFB] transition shrink-0"
               title="Fee Calculator"
               aria-label="Fee Calculator"
             >
@@ -1056,7 +1100,7 @@ export default function Home() {
 
             <button
               onClick={() => setIsPortalModalOpen(true)}
-              className="btn-secondary px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-secondary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
             >
               <Lock className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#0F2963]" />
               <span>Parent Portal</span>
@@ -1064,7 +1108,7 @@ export default function Home() {
 
             <button
               onClick={() => setIsTourModalOpen(true)}
-              className="btn-primary px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-primary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-vannam-yellow" />
               <span>Book a Visit</span>
@@ -1164,6 +1208,7 @@ export default function Home() {
           </div>
         )}
       </header>
+      </div>
 
       {/* HERO SECTION */}
       <section className="relative pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-playful-dots">
