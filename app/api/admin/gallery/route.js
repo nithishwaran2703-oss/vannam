@@ -1,9 +1,24 @@
 import { NextResponse } from 'next/server';
-import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET() {
-  const store = getStore();
-  return NextResponse.json({ success: true, gallery: store.gallery || [] });
+  try {
+    const { rows } = await pool.query('SELECT * FROM gallery ORDER BY upload_date DESC');
+    const gallery = rows.map((g) => ({
+      id: g.id,
+      title: g.title,
+      category: g.category,
+      url: g.url,
+      caption: g.caption,
+      featured: g.featured,
+      status: g.status,
+      uploadDate: g.upload_date
+    }));
+    return NextResponse.json({ success: true, gallery });
+  } catch (error) {
+    console.error('DB Error:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
 }
 
 export async function POST(request) {
@@ -15,29 +30,43 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Title and Media URL are required' }, { status: 400 });
     }
 
-    const store = getStore();
+    const id = `gal-${Date.now()}`;
+    const uploadDate = new Date().toISOString().split('T')[0];
+
     const newItem = {
-      id: `gal-${Date.now()}`,
+      id,
       title: title.trim(),
       category: category || 'Activities',
       url: url.trim(),
       caption: caption || '',
       featured: Boolean(featured),
       status: 'published',
-      uploadDate: new Date().toISOString().split('T')[0]
+      uploadDate
     };
 
-    store.gallery = [newItem, ...(store.gallery || [])];
-    saveStore(store, {
-      action: 'Uploaded Media Asset',
-      userId: user?.id || 'usr-1',
-      userName: user?.name || 'Administrator',
-      resource: 'Gallery',
-      details: `Added media asset: ${title} in category ${category}`
-    });
+    await pool.query(
+      `INSERT INTO gallery (id, title, category, url, caption, featured, status, upload_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)`,
+      [
+        newItem.id,
+        newItem.title,
+        newItem.category,
+        newItem.url,
+        newItem.caption,
+        newItem.featured,
+        newItem.status,
+        newItem.uploadDate
+      ]
+    );
+
+    await pool.query(
+      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [`log-${Date.now()}`, 'Uploaded Media Asset', user?.id || 'usr-1', user?.name || 'Administrator', 'Gallery', `Added media asset: ${title} in category ${category}`, new Date().toISOString()]
+    );
 
     return NextResponse.json({ success: true, item: newItem, message: 'Image added to gallery' });
   } catch (error) {
+    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -47,25 +76,50 @@ export async function PUT(request) {
     const body = await request.json();
     const { id, updates, user } = body;
 
-    const store = getStore();
-    const index = (store.gallery || []).findIndex((g) => g.id === id);
+    const setClauses = [];
+    const values = [];
+    let i = 1;
 
-    if (index === -1) {
+    const dbFieldMap = {
+      title: 'title',
+      category: 'category',
+      url: 'url',
+      caption: 'caption',
+      featured: 'featured',
+      status: 'status',
+      uploadDate: 'upload_date'
+    };
+
+    for (const [key, value] of Object.entries(updates)) {
+      if (dbFieldMap[key]) {
+        setClauses.push(`${dbFieldMap[key]} = $${i}`);
+        values.push(value);
+        i++;
+      }
+    }
+
+    if (setClauses.length === 0) {
+      return NextResponse.json({ error: 'No valid updates provided' }, { status: 400 });
+    }
+
+    values.push(id);
+    const { rowCount } = await pool.query(
+      `UPDATE gallery SET ${setClauses.join(', ')} WHERE id = $${i}`,
+      values
+    );
+
+    if (rowCount === 0) {
       return NextResponse.json({ error: 'Item not found' }, { status: 404 });
     }
 
-    store.gallery[index] = { ...store.gallery[index], ...updates };
+    await pool.query(
+      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [`log-${Date.now()}`, 'Updated Gallery Item', user?.id || 'usr-1', user?.name || 'Administrator', 'Gallery', `Updated media item ID: ${id}`, new Date().toISOString()]
+    );
 
-    saveStore(store, {
-      action: 'Updated Gallery Item',
-      userId: user?.id || 'usr-1',
-      userName: user?.name || 'Administrator',
-      resource: 'Gallery',
-      details: `Updated media item: ${store.gallery[index].title}`
-    });
-
-    return NextResponse.json({ success: true, item: store.gallery[index], message: 'Gallery updated' });
+    return NextResponse.json({ success: true, message: 'Gallery updated' });
   } catch (error) {
+    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -75,19 +129,18 @@ export async function DELETE(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
-    const store = getStore();
-    store.gallery = (store.gallery || []).filter((g) => g.id !== id);
+    const { rowCount } = await pool.query('DELETE FROM gallery WHERE id = $1', [id]);
 
-    saveStore(store, {
-      action: 'Deleted Gallery Item',
-      userId: 'usr-1',
-      userName: 'Administrator',
-      resource: 'Gallery',
-      details: `Deleted media item #${id}`
-    });
+    if (rowCount > 0) {
+      await pool.query(
+        `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+        [`log-${Date.now()}`, 'Deleted Gallery Item', 'usr-1', 'Administrator', 'Gallery', `Deleted media item #${id}`, new Date().toISOString()]
+      );
+    }
 
     return NextResponse.json({ success: true, message: 'Gallery item deleted' });
   } catch (error) {
+    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
