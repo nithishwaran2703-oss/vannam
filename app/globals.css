@@ -1,0 +1,416 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-xs: 475px;
+
+  --color-vannam-navy: #0F2963;
+  --color-vannam-navy-dark: #091A42;
+  --color-vannam-navy-light: #1D4ED8;
+  --color-vannam-navy-surface: #F0F4FC;
+  --color-vannam-navy-border: #CBD8F6;
+
+  --color-vannam-yellow: #F59E0B;
+  --color-vannam-yellow-light: #FBBF24;
+  --color-vannam-yellow-dark: #B45309;
+  --color-vannam-yellow-surface: #FFFBEB;
+  --color-vannam-yellow-border: #FDE68A;
+
+  --color-vannam-red: #F43F5E;
+  --color-vannam-red-light: #FB7185;
+  --color-vannam-red-dark: #BE123C;
+  --color-vannam-red-surface: #FFF1F2;
+  --color-vannam-red-border: #FECDD3;
+
+  --color-vannam-green: #10B981;
+  --color-vannam-green-light: #34D399;
+  --color-vannam-green-dark: #047857;
+  --color-vannam-green-surface: #ECFDF5;
+  --color-vannam-green-border: #A7F3D0;
+
+  --color-vannam-cyan: #00A8E8;
+  --color-vannam-cyan-light: #38BDF8;
+  --color-vannam-cyan-dark: #0284C7;
+  --color-vannam-cyan-surface: #F0F9FF;
+  --color-vannam-cyan-border: #BAE6FD;
+
+  --color-vannam-orange: #F97316;
+  --color-vannam-orange-light: #FB923C;
+  --color-vannam-orange-dark: #C2410C;
+  --color-vannam-orange-surface: #FFF7ED;
+  --color-vannam-orange-border: #FED7AA;
+
+  --color-vannam-purple: #8B5CF6;
+  --color-vannam-purple-light: #A78BFA;
+  --color-vannam-purple-dark: #6D28D9;
+  --color-vannam-purple-surface: #FAF5FF;
+  --color-vannam-purple-border: #E9D5FF;
+}
+
+@layer base {
+  :root {
+    --font-fredoka: 'Fredoka', cursive, sans-serif;
+    --font-jakarta: 'Plus Jakarta Sans', sans-serif;
+    
+    /* Vannam World Preschool Brand Palette */
+    --vannam-navy: #0F2963;
+    --vannam-navy-dark: #091A42;
+    --vannam-blue-light: #1D4ED8;
+    --vannam-cyan: #00A8E8;
+    --vannam-red: #F43F5E;
+    --vannam-yellow: #F59E0B;
+    --vannam-green: #10B981;
+    --vannam-orange: #F97316;
+    --vannam-purple: #8B5CF6;
+  }
+
+  html {
+    overflow-x: clip;
+    overscroll-behavior-y: none;
+    background-color: #FFFDF8;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  body {
+    background-color: #FFFDF8;
+    color: #0F2963;
+    font-family: var(--font-jakarta), sans-serif;
+    overflow-x: clip;
+    overscroll-behavior-y: none;
+    width: 100%;
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  /* Prevent iOS automatic zoom on inputs while keeping clean styling */
+  @media (max-width: 768px) {
+    input, select, textarea {
+      font-size: 16px !important;
+    }
+  }
+
+  /* Ensure minimum touch targets on mobile */
+  @media (max-width: 768px) {
+    button, a, [role="button"] {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    /* Exclude inline text links & very small icon-only elements */
+    a:not([class]), span[role="button"] {
+      min-height: unset;
+      min-width: unset;
+    }
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar,
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.font-heading {
+  font-family: var(--font-fredoka), cursive, sans-serif;
+}
+
+.font-sans {
+  font-family: var(--font-jakarta), sans-serif;
+}
+
+/* Tactile 3D Buttons tuned exclusively to Logo Palette */
+.btn-primary, .btn-navy {
+  background: #0F2963;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #091A42;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-primary:hover, .btn-navy:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #091A42;
+  background: #1D4ED8;
+}
+.btn-primary:active, .btn-navy:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #091A42;
+}
+
+.btn-secondary, .btn-yellow {
+  background: #F59E0B;
+  color: #0F2963;
+  font-weight: 800;
+  box-shadow: 0px 5px 0px 0px #B45309;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-secondary:hover, .btn-yellow:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #B45309;
+  background: #FBBF24;
+}
+.btn-secondary:active, .btn-yellow:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #B45309;
+}
+
+.btn-accent, .btn-cyan {
+  background: #00A8E8;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #0284C7;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-accent:hover, .btn-cyan:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #0284C7;
+  background: #38BDF8;
+}
+.btn-accent:active, .btn-cyan:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #0284C7;
+}
+
+.btn-green {
+  background: #10B981;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #047857;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-green:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #047857;
+  background: #34D399;
+}
+.btn-green:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #047857;
+}
+
+.btn-red {
+  background: #F43F5E;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #BE123C;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-red:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #BE123C;
+  background: #FB7185;
+}
+.btn-red:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #BE123C;
+}
+
+.btn-orange {
+  background: #F97316;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #C2410C;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-orange:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #C2410C;
+  background: #FB923C;
+}
+.btn-orange:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #C2410C;
+}
+
+.btn-purple {
+  background: #8B5CF6;
+  color: #FFFFFF;
+  font-weight: 700;
+  box-shadow: 0px 5px 0px 0px #6D28D9;
+  transition: all 0.15s ease-in-out;
+  border-radius: 9999px;
+}
+.btn-purple:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 7px 0px 0px #6D28D9;
+  background: #A78BFA;
+}
+.btn-purple:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px #6D28D9;
+}
+
+/* Premium Card Styles tuned to Logo Palette */
+.bento-card {
+  background: #FFFFFF;
+  border: 2px solid #E8EEFB;
+  box-shadow: 0px 10px 30px -5px rgba(15, 41, 99, 0.07), 0px 6px 0px 0px #F0F4FC;
+  border-radius: 1.75rem;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.bento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0px 20px 40px -5px rgba(15, 41, 99, 0.12), 0px 10px 0px 0px #CBD8F6;
+  border-color: #CBD8F6;
+}
+
+.card-navy {
+  background: linear-gradient(135deg, #F0F4FC 0%, #E8EEFB 100%);
+  border: 2px solid #CBD8F6;
+  box-shadow: 0px 6px 0px 0px #0F2963;
+}
+
+.card-amber, .card-yellow {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  border: 2px solid #FDE68A;
+  box-shadow: 0px 6px 0px 0px #F59E0B;
+}
+
+.card-emerald, .card-green {
+  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  border: 2px solid #A7F3D0;
+  box-shadow: 0px 6px 0px 0px #10B981;
+}
+
+.card-sky, .card-cyan {
+  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+  border: 2px solid #BAE6FD;
+  box-shadow: 0px 6px 0px 0px #00A8E8;
+}
+
+.card-rose, .card-red {
+  background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+  border: 2px solid #FECDD3;
+  box-shadow: 0px 6px 0px 0px #F43F5E;
+}
+
+.card-orange {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  border: 2px solid #FED7AA;
+  box-shadow: 0px 6px 0px 0px #F97316;
+}
+
+.card-purple {
+  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+  border: 2px solid #E9D5FF;
+  box-shadow: 0px 6px 0px 0px #8B5CF6;
+}
+
+/* Floating & Playful Animations */
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
+}
+
+@keyframes float-reverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-1.5deg); }
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.03); opacity: 1; }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes wiggle-subtle {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-3deg); }
+  75% { transform: rotate(3deg); }
+}
+
+.animate-float {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 6s ease-in-out infinite;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 4s ease-in-out infinite;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 3.5s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle-subtle 4s ease-in-out infinite;
+}
+
+/* Playful Multi-Color Polka Dots Grid */
+.bg-playful-dots {
+  background-image: 
+    radial-gradient(circle, #FDE68A 1.5px, transparent 1.5px), 
+    radial-gradient(circle, #BAE6FD 1.5px, transparent 1.5px),
+    radial-gradient(circle, #FECDD3 1.2px, transparent 1.2px),
+    radial-gradient(circle, #A7F3D0 1.2px, transparent 1.2px);
+  background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+  background-position: 0 0, 20px 20px, 0 20px, 20px 0;
+  background-repeat: repeat;
+}
+
+/* Hide scrollbar completely */
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+::-webkit-scrollbar {
+  display: none;
+  width: 0px;
+  background: transparent;
+}
+
+/* Glassmorphism accents */
+.glass-pill {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(203, 216, 246, 0.6);
+}
+
+/* Security Dashboard Animations */
+@keyframes scan {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
+.animate-scan {
+  animation: scan 4s linear infinite;
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh); opacity: 0; }
+}
+.animate-scan-line {
+  animation: scan-line 3s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+}

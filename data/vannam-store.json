@@ -1,0 +1,585 @@
+{
+  "homepage": {
+    "heroBadge": "Admissions Open 2026–27",
+    "heroTitle": "Where Curiosity Meets Joyful Montessori Excellence",
+    "heroSubtitle": "Welcome to Vannam World Preschool — cultivating confident, creative, and compassionate early learners through scientifically rooted play and nurturing spaces.",
+    "heroHighlight": "7-Shade Developmental Play",
+    "stats": [
+      {
+        "label": "Happy Children",
+        "value": "1,200+"
+      },
+      {
+        "label": "Certified Educators",
+        "value": "35+"
+      },
+      {
+        "label": "Student-Teacher Ratio",
+        "value": "8:1"
+      },
+      {
+        "label": "Safety & Hygiene Score",
+        "value": "100%"
+      }
+    ],
+    "primaryCta": {
+      "text": "Book Campus Tour",
+      "link": "#admissions"
+    },
+    "secondaryCta": {
+      "text": "Explore Curriculum",
+      "link": "#programs"
+    }
+  },
+  "about": {
+    "title": "Nurturing Little Minds Since 2018",
+    "subtitle": "A modern child-first sanctuary where early childhood science meets boundless playful curiosity.",
+    "mission": "To provide a safe, joyful, and developmentally enriched environment where every child discovers their unique talents through exploratory learning.",
+    "vision": "To become the benchmark for early childhood education, raising resilient, empathetic, and innovative lifelong learners.",
+    "values": [
+      {
+        "title": "Safety & Love First",
+        "desc": "Every child is cared for with uncompromising safety standards and genuine emotional warmth."
+      },
+      {
+        "title": "Holistic 7-Shade Growth",
+        "desc": "Balancing cognitive, sensory, artistic, physical, emotional, and social development."
+      },
+      {
+        "title": "Hands-on Montessori Tools",
+        "desc": "Encouraging self-discovery with tactile wooden apparatus and exploratory play kits."
+      },
+      {
+        "title": "Parent Partnership",
+        "desc": "Transparent daily communication and collaborative milestone tracking."
+      }
+    ]
+  },
+  "programs": [
+    {
+      "id": "toddler-playgroup",
+      "title": "Toddler Playgroup",
+      "ageGroup": "1.5 – 2.5 Years",
+      "timing": "9:00 AM – 12:00 PM",
+      "ratio": "6:1",
+      "fee": "₹45,000 / term",
+      "badge": "Most Popular",
+      "status": "published",
+      "order": 1,
+      "desc": "Sensory play, social initiation, motor skills stimulation, and language building through gentle songs and movement.",
+      "features": [
+        "Sensory tactile sand and water stations",
+        "Gentle social interaction circles",
+        "Fine & gross motor skill activities",
+        "Musical storytelling and rhythm play"
+      ],
+      "icon": "Baby"
+    },
+    {
+      "id": "nursery-explorers",
+      "title": "Nursery Explorers",
+      "ageGroup": "2.5 – 3.5 Years",
+      "timing": "9:00 AM – 12:30 PM",
+      "ratio": "8:1",
+      "fee": "₹52,000 / term",
+      "badge": "Foundational",
+      "status": "published",
+      "order": 2,
+      "desc": "Structured Montessori apparatus exploration, early phonics, numeracy foundations, and creative art studio blocks.",
+      "features": [
+        "Jolly Phonics foundation sounds",
+        "Montessori math beads and rods",
+        "Expressive messy art & clay studio",
+        "Outdoor nature discovery walks"
+      ],
+      "icon": "Sparkles"
+    },
+    {
+      "id": "kindergarten-1",
+      "title": "Junior Kindergarten (LKG)",
+      "ageGroup": "3.5 – 4.5 Years",
+      "timing": "9:00 AM – 1:00 PM",
+      "ratio": "10:1",
+      "fee": "₹58,000 / term",
+      "badge": "Core STEAM",
+      "status": "published",
+      "order": 3,
+      "desc": "Reading readiness, STEAM inquiry science experiments, bilingual story circles, and practical life skills.",
+      "features": [
+        "Early emergent reading & blended words",
+        "Junior STEAM laboratory experiments",
+        "Role-play & socio-dramatic theatre",
+        "Introduction to rhythm and percussion"
+      ],
+      "icon": "BookOpen"
+    },
+    {
+      "id": "kindergarten-2",
+      "title": "Senior Kindergarten (UKG)",
+      "ageGroup": "4.5 – 5.5 Years",
+      "timing": "9:00 AM – 1:30 PM",
+      "ratio": "12:1",
+      "fee": "₹64,000 / term",
+      "badge": "School Ready",
+      "status": "published",
+      "order": 4,
+      "desc": "Advanced reading comprehension, mental arithmetic, collaborative problem-solving, and primary school readiness.",
+      "features": [
+        "Fluent sentence construction & handwriting",
+        "Mathematical addition & mental grouping",
+        "Confidence & public speaking circles",
+        "Graduation showcase & leadership skills"
+      ],
+      "icon": "GraduationCap"
+    },
+    {
+      "id": "after-school-daycare",
+      "title": "Daycare & Extended Care",
+      "ageGroup": "1.5 – 10 Years",
+      "timing": "12:30 PM – 6:30 PM",
+      "ratio": "8:1",
+      "fee": "₹35,000 / term",
+      "badge": "Flexible Hours",
+      "status": "published",
+      "order": 5,
+      "desc": "Nutritious hot meals, supervised nap times, homework support, karate, dance, and free play in a secure, loving space.",
+      "features": [
+        "Fresh organic fruit & warm snacks",
+        "Cozy hygienic nap pods",
+        "Karate, chess, and classical dance",
+        "CCTV live parent streaming access"
+      ],
+      "icon": "SunMedium"
+    }
+  ],
+  "facilities": [
+    {
+      "id": "montessori-lab",
+      "title": "Tactile Montessori Discovery Studio",
+      "desc": "Custom-crafted non-toxic wooden apparatus imported for sensory and mathematical tactile development.",
+      "icon": "Box",
+      "status": "active",
+      "order": 1
+    },
+    {
+      "id": "indoor-playzone",
+      "title": "Soft-Padded Climate-Controlled Play Zone",
+      "desc": "Anti-microbial foam climbing structures, ball pits, and balance beams designed for zero-injury play.",
+      "icon": "Smile",
+      "status": "active",
+      "order": 2
+    },
+    {
+      "id": "splash-waterpark",
+      "title": "Eco Splash Pool & Sand Oasis",
+      "desc": "Filtered shallow splash pool and sterile river-sand pit for sensory and fine motor immersion.",
+      "icon": "Waves",
+      "status": "active",
+      "order": 3
+    },
+    {
+      "id": "cctv-safety",
+      "title": "360° AI CCTV & Real-Time Parent App",
+      "desc": "High-definition camera coverage with biometric campus entry and authorized pickup verification.",
+      "icon": "ShieldCheck",
+      "status": "active",
+      "order": 4
+    }
+  ],
+  "teachers": [
+    {
+      "id": "priya-sharma",
+      "name": "Mrs. Priya Sharma",
+      "role": "Head of Early Childhood / Lead Montessori Guide",
+      "experience": "12+ Years",
+      "qualifications": "M.Sc. Child Psychology, AMI Montessori Diploma",
+      "bio": "Passionate early childhood educator dedicated to individual pace learning and empathetic emotional coaching.",
+      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+      "active": true,
+      "email": "priya.sharma@vannam.edu"
+    },
+    {
+      "id": "ananya-deshmukh",
+      "name": "Ms. Ananya Deshmukh",
+      "role": "STEAM & Sensory Exploration Coordinator",
+      "experience": "8 Years",
+      "qualifications": "B.Ed., Cambridge Early Years Certified",
+      "bio": "Creates immersive hands-on science experiments and tactile sensory tables that turn curiosity into lifelong joy.",
+      "image": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+      "active": true,
+      "email": "ananya.d@vannam.edu"
+    },
+    {
+      "id": "rahul-menon",
+      "name": "Mr. Rahul Menon",
+      "role": "Physical Agility & Movement Specialist",
+      "experience": "6 Years",
+      "qualifications": "B.P.Ed., Certified Junior Yoga & Sports Coach",
+      "bio": "Fosters gross motor coordination, teamwork, and healthy physical habits through playful obstacle courses.",
+      "image": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80",
+      "active": true,
+      "email": "rahul.m@vannam.edu"
+    },
+    {
+      "id": "kavitha-nair",
+      "name": "Mrs. Kavitha Nair",
+      "role": "Phonics & Expressive Language Mentor",
+      "experience": "10 Years",
+      "qualifications": "M.A. English Literature, Jolly Phonics Trainer",
+      "bio": "Helps toddlers unlock vocal confidence, rhythm, and early reading joy through interactive puppetry and story circles.",
+      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&q=80",
+      "active": true,
+      "email": "kavitha.n@vannam.edu"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "test-1",
+      "name": "Meera & Rajesh K.",
+      "relation": "Parents of Aarav (Age 3.5)",
+      "rating": 5,
+      "text": "Vannam transformed our shy toddler into a confident, curious explorer! The live updates and caring teachers give us 100% peace of mind every single day.",
+      "status": "published",
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80"
+    },
+    {
+      "id": "test-2",
+      "name": "Deepak & Shilpa Roy",
+      "relation": "Parents of Ananya (Age 4.5)",
+      "rating": 5,
+      "text": "The 7-Shade play philosophy is genuinely unique. Ananya comes home eager to talk about STEAM experiments and phonics games. Unmatched hygiene and safety!",
+      "status": "published",
+      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80"
+    },
+    {
+      "id": "test-3",
+      "name": "Dr. Arvind Subramanian",
+      "relation": "Parent of Tara (Age 2)",
+      "rating": 5,
+      "text": "As a doctor, sanitation and child-led development were non-negotiable for me. Vannam exceeded every single expectation with their organic food and loving staff.",
+      "status": "published",
+      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&q=80"
+    }
+  ],
+  "gallery": [
+    {
+      "id": "gal-1",
+      "title": "Montessori Math & Geometry Circle",
+      "category": "Classroom",
+      "url": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=800&q=80",
+      "caption": "Junior learners manipulating tactile wooden cylinders and bead bars.",
+      "featured": true,
+      "status": "published",
+      "uploadDate": "2026-08-10"
+    },
+    {
+      "id": "gal-2",
+      "title": "Sensory Sand & Water Splash Fiesta",
+      "category": "Activities",
+      "url": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?w=800&q=80",
+      "caption": "Messy play day exploring fluid dynamics and fine motor grip.",
+      "featured": true,
+      "status": "published",
+      "uploadDate": "2026-08-12"
+    },
+    {
+      "id": "gal-3",
+      "title": "Annual Sports & Agility Day",
+      "category": "Events",
+      "url": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=800&q=80",
+      "caption": "Children cheering together during our cheerful relay courses.",
+      "featured": true,
+      "status": "published",
+      "uploadDate": "2026-08-14"
+    },
+    {
+      "id": "gal-4",
+      "title": "Eco Garden & Seed Planting",
+      "category": "Campus",
+      "url": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80",
+      "caption": "Nurturing botanical curiosity in our organic butterfly garden.",
+      "featured": false,
+      "status": "published",
+      "uploadDate": "2026-08-15"
+    }
+  ],
+  "announcements": [
+    {
+      "id": "ann-1",
+      "title": "Admissions Open for Academic Year 2026–27",
+      "message": "Limited seats available across Playgroup, Nursery, LKG & UKG. Book your campus walkthrough now for early bird fee waiver!",
+      "type": "admission",
+      "active": true,
+      "startDate": "2026-08-01",
+      "expiryDate": "2026-09-30",
+      "link": "#admissions",
+      "linkText": "Apply Online",
+      "bannerColor": "from-[#0F2963] via-[#00A8E8] to-[#F59E0B]"
+    },
+    {
+      "id": "ann-2",
+      "title": "Grand Weekend Open House & Child Sensory Camp",
+      "message": "Join us this Saturday from 10 AM to 1 PM for free developmental milestone screenings and fun pottery workshops.",
+      "type": "event",
+      "active": true,
+      "startDate": "2026-08-15",
+      "expiryDate": "2026-08-25",
+      "link": "#contact",
+      "linkText": "Reserve Free Pass",
+      "bannerColor": "from-amber-600 via-orange-500 to-amber-700"
+    }
+  ],
+  "enquiries": [
+    {
+      "id": "enq-101",
+      "parentName": "Siddharth Verma",
+      "email": "siddharth.v@gmail.com",
+      "phone": "+91 98450 12345",
+      "childAge": "2.5 Years",
+      "program": "Nursery Explorers",
+      "message": "Looking for nursery admissions starting next month. Would love to schedule a morning campus tour.",
+      "status": "new",
+      "notes": [
+        {
+          "author": "Admin",
+          "text": "Called on 15th Aug, parent prefers Saturday morning 11 AM tour.",
+          "date": "2026-08-15T11:30:00Z"
+        }
+      ],
+      "createdAt": "2026-08-15T09:12:00Z"
+    },
+    {
+      "id": "enq-102",
+      "parentName": "Ananya Iyer",
+      "email": "ananya.iyer@outlook.com",
+      "phone": "+91 98840 56789",
+      "childAge": "1.8 Years",
+      "program": "Toddler Playgroup",
+      "message": "Inquiring about student-teacher ratio and live CCTV access for working parents.",
+      "status": "contacted",
+      "notes": [
+        {
+          "author": "Priya (Admin)",
+          "text": "Sent brochure and CCTV policy document via WhatsApp.",
+          "date": "2026-08-14T14:20:00Z"
+        }
+      ],
+      "createdAt": "2026-08-14T10:45:00Z"
+    },
+    {
+      "id": "enq-103",
+      "parentName": "Vikram Malhotra",
+      "email": "vikram.m@techcorp.in",
+      "phone": "+91 97110 33445",
+      "childAge": "4.5 Years",
+      "program": "Senior Kindergarten (UKG)",
+      "message": "Relocating from Mumbai. Need details regarding primary school transition partnerships.",
+      "status": "followup",
+      "notes": [
+        {
+          "author": "Admin",
+          "text": "Follow up scheduled for Monday 18th Aug regarding ICSE/CBSE transition tie-ups.",
+          "date": "2026-08-13T16:00:00Z"
+        }
+      ],
+      "createdAt": "2026-08-13T15:20:00Z"
+    },
+    {
+      "id": "enq-104",
+      "parentName": "Sneha Reddy",
+      "email": "sneha.reddy@gmail.com",
+      "phone": "+91 99002 88990",
+      "childAge": "3 Years",
+      "program": "Daycare & Extended Care",
+      "message": "Need daycare support until 6:30 PM with nutritious dinner snack included.",
+      "status": "resolved",
+      "notes": [
+        {
+          "author": "Admin",
+          "text": "Enrolled in Daycare block starting Sept 1st. Fee received.",
+          "date": "2026-08-12T18:00:00Z"
+        }
+      ],
+      "createdAt": "2026-08-12T08:30:00Z"
+    }
+  ],
+  "admissions": [
+    {
+      "id": "adm-201",
+      "parentName": "Rohan & Sneha Kapoor",
+      "childName": "Vihaan Kapoor",
+      "childDob": "2023-04-12",
+      "email": "rohan.kapoor@gmail.com",
+      "phone": "+91 98200 44556",
+      "program": "Nursery Explorers",
+      "preferredDate": "2026-09-01",
+      "status": "under_review",
+      "notes": [
+        {
+          "author": "Super Admin",
+          "text": "Application form submitted with birth certificate and immunization records verified.",
+          "date": "2026-08-16T10:00:00Z"
+        }
+      ],
+      "createdAt": "2026-08-16T09:15:00Z"
+    },
+    {
+      "id": "adm-202",
+      "parentName": "Dr. Lakshmi Narayanan",
+      "childName": "Aditi Narayanan",
+      "childDob": "2022-09-20",
+      "email": "dr.lakshmi@hospital.org",
+      "phone": "+91 94440 12890",
+      "program": "Junior Kindergarten (LKG)",
+      "preferredDate": "2026-08-25",
+      "status": "approved",
+      "notes": [
+        {
+          "author": "Super Admin",
+          "text": "Interaction round completed with flying colors. Admission letter issued.",
+          "date": "2026-08-15T15:45:00Z"
+        }
+      ],
+      "createdAt": "2026-08-14T11:00:00Z"
+    },
+    {
+      "id": "adm-203",
+      "parentName": "Karthik Srinivasan",
+      "childName": "Diya Srinivasan",
+      "childDob": "2024-01-10",
+      "email": "karthik.s@fintech.co",
+      "phone": "+91 99401 77665",
+      "program": "Toddler Playgroup",
+      "preferredDate": "2026-10-01",
+      "status": "new",
+      "notes": [],
+      "createdAt": "2026-08-17T08:00:00Z"
+    }
+  ],
+  "settings": {
+    "branding": {
+      "siteName": "Vannam World Preschool",
+      "tagline": "Learning Through Every Shade of Play",
+      "logoUrl": "/logo.png",
+      "primaryColor": "#0F2963",
+      "secondaryColor": "#F59E0B",
+      "accentColor": "#00A8E8",
+      "supportPhone": "+91 98400 12345",
+      "supportEmail": "hello@vannamworld.edu"
+    },
+    "contact": {
+      "phone": "+91 98400 12345 / +91 98400 67890",
+      "email": "admissions@vannamworld.edu",
+      "address": "Plot 42, 1st Main Road, Rainbow Enclave, Anna Nagar, Chennai, Tamil Nadu 600040",
+      "mapsUrl": "https://maps.google.com/?q=Vannam+World+Preschool",
+      "whatsapp": "+91 98400 12345",
+      "hours": "Monday – Friday: 8:30 AM – 6:30 PM | Saturday: 9:00 AM – 1:30 PM"
+    },
+    "social": {
+      "instagram": "https://instagram.com/vannamworldpreschool",
+      "facebook": "https://facebook.com/vannamworld",
+      "youtube": "https://youtube.com/@vannamworldpreschool",
+      "linkedin": "https://linkedin.com/company/vannam-preschool"
+    },
+    "seo": {
+      "metaTitle": "Vannam World Preschool | Best Montessori & Play School in Chennai",
+      "metaDescription": "Award-winning early childhood sanctuary offering 7-Shade developmental learning, certified Montessori apparatus, AI CCTV security, and joyful daycare.",
+      "keywords": "preschool, montessori school, play school chennai, daycare, early childhood education, kindergarten admissions",
+      "ogImage": "/hero-kids.jpg"
+    },
+    "navigation": [
+      {
+        "label": "Home",
+        "href": "/",
+        "active": true
+      },
+      {
+        "label": "About Us",
+        "href": "/about",
+        "active": true
+      },
+      {
+        "label": "Programs",
+        "href": "/programs",
+        "active": true
+      },
+      {
+        "label": "Admissions",
+        "href": "/admissions",
+        "active": true
+      },
+      {
+        "label": "Safety & Hygiene",
+        "href": "/safety",
+        "active": true
+      },
+      {
+        "label": "Contact",
+        "href": "/contact",
+        "active": true
+      }
+    ],
+    "footer": {
+      "copyright": "© 2026 Vannam World Preschool. All Rights Reserved.",
+      "description": "Empowering children to flourish through child-centric discovery, science-backed play environments, and holistic empathy."
+    }
+  },
+  "users": [
+    {
+      "id": "usr-1",
+      "name": "Dr. Gayathri R. (Super Admin)",
+      "email": "admin@vannam.edu",
+      "password": "Admin@Vannam2026",
+      "role": "super_admin",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
+      "lastLogin": "2026-08-17T05:44:38.562Z"
+    },
+    {
+      "id": "usr-2",
+      "name": "Vikram K. (Content Manager)",
+      "email": "content@vannam.edu",
+      "password": "Content@Vannam2026",
+      "role": "content_manager",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
+      "lastLogin": "2026-08-16T16:20:00Z"
+    },
+    {
+      "id": "usr-3",
+      "name": "Shalini S. (Enquiry Manager)",
+      "email": "admissions@vannam.edu",
+      "password": "Admissions@Vannam2026",
+      "role": "enquiry_manager",
+      "avatar": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=120&q=80",
+      "lastLogin": "2026-08-17T09:10:00Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": "log-1786945478562",
+      "action": "Admin Login",
+      "userId": "usr-1",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login as super_admin",
+      "timestamp": "2026-08-17T05:44:38.562Z"
+    },
+    {
+      "id": "log-1",
+      "action": "System Initialized",
+      "userId": "usr-1",
+      "userName": "Dr. Gayathri R.",
+      "resource": "System",
+      "details": "Admin Control Center initialized with verified production seed data.",
+      "timestamp": "2026-08-17T10:00:00Z"
+    },
+    {
+      "id": "log-2",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Dr. Gayathri R.",
+      "resource": "Announcements",
+      "details": "Activated 'Admissions Open 2026–27' banner on public site.",
+      "timestamp": "2026-08-17T10:15:00Z"
+    }
+  ]
+}
