@@ -1029,22 +1029,36 @@ export default function Home() {
           </Link>
 
           {/* Desktop Nav Links */}
-          <nav className="hidden lg:flex items-center justify-center flex-1 mx-2 xl:mx-4 gap-1 xl:gap-2 2xl:gap-3 text-xs xl:text-[13.5px] 2xl:text-[14.5px] font-bold text-[#0F2963]">
-            <a href="#about" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">About</a>
-            <a href="#programs" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Programs</a>
-            <a href="#why-us" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Why Us</a>
-            <a href="#approach" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Approach</a>
-            <a href="#activities" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Activities</a>
-            <a href="#facilities" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Facilities</a>
-            <a href="#safety" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Safety</a>
-            <a href="#awards" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Awards</a>
-            <a href="#teachers" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Teachers</a>
-            <a href="#gallery" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Gallery</a>
-            <a href="#contact" className="px-2 xl:px-3 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Contact</a>
+          <nav className="hidden lg:flex items-center justify-center flex-1 mx-1 xl:mx-3 gap-0.5 xl:gap-1.5 2xl:gap-2 text-[12px] xl:text-[13px] 2xl:text-[14px] font-bold text-[#0F2963]">
+            <a href="#about" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">About</a>
+            <a href="#programs" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Programs</a>
+            <a href="#facilities" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Facilities</a>
+            <a href="#safety" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Safety</a>
+            <a href="#teachers" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Teachers</a>
+            <a href="#gallery" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Gallery</a>
+
+            {/* Explore Dropdown for Secondary Sections */}
+            <div className="relative group">
+              <button className="flex items-center gap-1 px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap cursor-pointer">
+                <span>Explore</span>
+                <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200" />
+              </button>
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 hidden group-hover:block z-50 min-w-[210px] animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="bg-white rounded-2xl shadow-xl border border-[#CBD8F6] p-2 space-y-1">
+                  <a href="#why-us" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">⭐ Why Choose Us</a>
+                  <a href="#approach" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🌱 7-Shade Approach</a>
+                  <a href="#activities" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🧸 Activities & Play</a>
+                  <a href="#awards" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🏆 Awards & Recognition</a>
+                  <a href="#testimonials" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">💬 Parent Reviews</a>
+                </div>
+              </div>
+            </div>
+
+            <a href="#contact" className="px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap">Contact</a>
           </nav>
 
           {/* Header Action CTAs */}
-          <div className="hidden sm:flex items-center gap-2 xl:gap-2.5 shrink-0">
+          <div className="hidden sm:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
             <button
               onClick={() => setIsFeeCalcOpen(true)}
               className="p-2 rounded-full text-[#334155] hover:text-[#0F2963] hover:bg-[#E8EEFB] transition shrink-0"
@@ -1056,7 +1070,7 @@ export default function Home() {
 
             <button
               onClick={() => setIsPortalModalOpen(true)}
-              className="btn-secondary px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-secondary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
             >
               <Lock className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#0F2963]" />
               <span>Parent Portal</span>
@@ -1064,7 +1078,7 @@ export default function Home() {
 
             <button
               onClick={() => setIsTourModalOpen(true)}
-              className="btn-primary px-3.5 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-primary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-vannam-yellow" />
               <span>Book a Visit</span>
