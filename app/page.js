@@ -164,18 +164,8 @@ export default function Home() {
   const [activeWhyUsTab, setActiveWhyUsTab] = useState(0);
   const [whyUsView, setWhyUsView] = useState("vannam"); // "vannam" | "traditional" | "matrix"
   const [activeAwardTab, setActiveAwardTab] = useState(0);
-  const [isAwardPaused, setIsAwardPaused] = useState(false);
   const [selectedAwardModal, setSelectedAwardModal] = useState(null);
   const [showCitationDetails, setShowCitationDetails] = useState(false);
-
-  // Auto-play for Awards Accordion (pauses smoothly when user hovers or interacts)
-  useEffect(() => {
-    if (isAwardPaused) return;
-    const timer = setInterval(() => {
-      setActiveAwardTab((prev) => (prev + 1) % 4);
-    }, 1400); // 1.4 seconds per tab
-    return () => clearInterval(timer);
-  }, [isAwardPaused]);
 
   // Dynamic Content & Announcements from Admin Store
   const [dynamicAnnouncements, setDynamicAnnouncements] = useState([]);
@@ -2527,43 +2517,52 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* MOBILE / TABLET VIEW: Clean 1-Col on mobile, 2-Col on tablet */}
-          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            {awardsData.map((award) => (
+          {/* UNIFIED RESPONSIVE AWARDS GRID - ULTRA SMOOTH & INTERACTIVE */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+            {awardsData.map((award, idx) => (
               <div
                 key={award.id}
                 onClick={() => setSelectedAwardModal(award)}
-                className={`bento-card p-4 sm:p-5 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 cursor-pointer group shadow-xs`}
+                className={`bento-card p-6 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group rounded-3xl border border-[#CBD8F6]/80 relative overflow-hidden`}
               >
-                <div>
-                  {/* Top Bar with Icon & Year */}
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-11 h-11 rounded-xl bg-white border border-[#CBD8F6] flex items-center justify-center text-2xl shadow-xs">
+                {/* Background Subtle Photo Overlay */}
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
+                  <Image src={award.image} alt={award.title} fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover mix-blend-multiply" />
+                </div>
+
+                <div className="relative z-10">
+                  {/* Top Bar with 3D Icon & Year */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="w-14 h-14 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
                       {award.icon}
                     </div>
-                    <span className="text-xs font-black text-[#64748B] uppercase">
+                    <span className="text-[11px] font-black text-[#64748B] uppercase tracking-wider bg-white/80 px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs">
                       {award.year}
                     </span>
                   </div>
 
                   {/* Badge & Stat */}
-                  <div className="space-y-1.5 mb-2">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black shadow-2xs ${award.badgeClass}`}>
+                  <div className="space-y-2 mb-3">
+                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-black shadow-2xs ${award.badgeClass}`}>
                       {award.badge}
                     </span>
-                    <h3 className="font-heading font-extrabold text-base sm:text-base text-[#0F2963] leading-tight">
+                    <div className="text-xl font-black text-[#00A8E8]">{award.stat}</div>
+                    <h3 className="font-heading font-extrabold text-base lg:text-lg text-[#0F2963] leading-snug group-hover:text-[#00A8E8] transition-colors">
                       {award.title}
                     </h3>
                   </div>
 
-                  <p className="text-xs text-[#334155] leading-relaxed mb-3 font-medium">
+                  <p className="text-xs text-[#334155] leading-relaxed mb-4 font-medium">
                     {award.desc}
                   </p>
                 </div>
 
-                <div className="pt-2.5 border-t border-black/5 flex items-center justify-between text-xs font-black text-[#00A8E8]">
-                  <span>{award.stat}</span>
-                  <span className="flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                <div className="relative z-10 pt-3 border-t border-black/5 flex items-center justify-between text-xs font-black text-[#00A8E8]">
+                  <div className="flex items-center gap-1.5 text-[#64748B] font-bold text-[11px] truncate mr-2">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span className="truncate">{award.issuer}</span>
+                  </div>
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform shrink-0 font-extrabold">
                     <span>Verify</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
@@ -2572,87 +2571,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* DESKTOP VIEW: INNOVATIVE FLEX ACCORDION (HORIZONTAL) */}
-          <div 
-            onMouseEnter={() => setIsAwardPaused(true)}
-            onMouseLeave={() => setIsAwardPaused(false)}
-            className="hidden lg:flex lg:flex-row gap-4 h-[500px] w-full max-w-6xl mx-auto"
-          >
-            {awardsData.map((award, idx) => {
-              const isActive = activeAwardTab === idx;
-              return (
-                <div
-                  key={award.id}
-                  onClick={() => { setActiveAwardTab(idx); setIsAwardPaused(true); }}
-                  onMouseEnter={() => { setActiveAwardTab(idx); setIsAwardPaused(true); }}
-                  style={{ flex: isActive ? 4.5 : 1 }}
-                  className={`relative overflow-hidden rounded-[2rem] border-2 cursor-pointer transition-all duration-350 ease-out group flex flex-col justify-end will-change-[flex] ${
-                    isActive 
-                      ? `bg-gradient-to-br ${award.accentBg} shadow-2xl` 
-                      : `bg-white border-[#CBD8F6] hover:border-[#00A8E8] hover:bg-[#F0F4FC] hover:shadow-md`
-                  }`}
-                >
-                  {/* Background Decoration (visible only when active) */}
-                  <div className={`absolute inset-0 transition-opacity duration-350 ${isActive ? 'opacity-15' : 'opacity-0'}`}>
-                     <Image src={award.image} alt={award.title} fill sizes="50vw" className="object-cover mix-blend-multiply" />
-                  </div>
-
-                  {/* Top Floating Icon (Always visible) */}
-                  <div className={`absolute transition-all duration-350 ease-out z-20 ${
-                    isActive ? "top-6 left-6" : "top-8 left-1/2 -translate-x-1/2"
-                  }`}>
-                    <div className={`w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center text-3xl lg:text-4xl shadow-lg border-2 transition-transform duration-350 ${
-                      isActive ? "bg-white border-[#CBD8F6] scale-100" : "bg-white border-[#CBD8F6] scale-75 group-hover:scale-90"
-                    }`}>
-                      {award.icon}
-                    </div>
-                  </div>
-
-                  {/* Vertical Title (Visible when NOT active on Desktop) */}
-                  <div className={`hidden lg:flex absolute inset-0 items-center justify-center pointer-events-none transition-opacity duration-200 ${
-                    isActive ? "opacity-0" : "opacity-100"
-                  }`}>
-                     <h3 className="transform -rotate-90 text-[#0F2963] font-heading font-extrabold text-xl whitespace-nowrap tracking-wide opacity-50 group-hover:opacity-100 transition-opacity">
-                       {award.highlight}
-                     </h3>
-                  </div>
-
-                  {/* Expanded Content (Visible when active) */}
-                  <div className={`relative z-20 p-6 sm:p-8 min-w-[460px] transition-all duration-350 ease-out ${
-                    isActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6 pointer-events-none absolute bottom-0"
-                  }`}>
-                    <div className="bg-white/90 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/50 shadow-xl space-y-4">
-                      
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className={`px-4 py-1.5 rounded-full text-xs font-black shadow-sm ${award.badgeClass}`}>
-                          {award.badge}
-                        </span>
-                        <span className="text-[10px] font-black text-[#64748B] uppercase tracking-wider">{award.year}</span>
-                      </div>
-
-                      <h3 className="font-heading text-3xl sm:text-4xl font-extrabold text-[#0F2963] leading-tight">
-                        <span className="text-[#00A8E8]">{award.stat}</span> <br className="hidden sm:block" />
-                        <span className="text-xl sm:text-2xl text-[#334155] font-medium">{award.title}</span>
-                      </h3>
-
-                      <div className="pt-4 mt-2 border-t border-[#CBD8F6]/60 flex items-center justify-between">
-                         <div className="flex items-center gap-2">
-                           <ShieldCheck className="w-5 h-5 text-emerald-600" />
-                           <span className="text-xs font-bold text-[#64748B] uppercase tracking-wider">Verified by {award.issuer}</span>
-                         </div>
-                         <button
-                           onClick={(e) => { e.stopPropagation(); setSelectedAwardModal(award); }}
-                           className="text-xs font-black text-[#00A8E8] hover:text-[#0F2963] transition flex items-center gap-1 group/btn"
-                         >
-                           <span>Verify Digital Badge</span>
-                           <ArrowUpRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                         </button>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-              );
             })}
           </div>
 
