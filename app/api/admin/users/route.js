@@ -1,22 +1,17 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { getStore, saveStore } from '@/lib/dataStore';
 
 export async function GET() {
-  try {
-    const { rows } = await pool.query('SELECT id, name, email, role, avatar, last_login FROM users');
-    const safeUsers = rows.map((u) => ({
-      id: u.id,
-      name: u.name,
-      email: u.email,
-      role: u.role,
-      avatar: u.avatar,
-      lastLogin: u.last_login
-    }));
-    return NextResponse.json({ success: true, users: safeUsers });
-  } catch (error) {
-    console.error('DB Error:', error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+  const store = getStore();
+  const safeUsers = (store.users || []).map((u) => ({
+    id: u.id,
+    name: u.name,
+    email: u.email,
+    role: u.role,
+    avatar: u.avatar,
+    lastLogin: u.lastLogin
+  }));
+  return NextResponse.json({ success: true, users: safeUsers });
 }
 
 export async function POST(request) {
@@ -28,41 +23,44 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
     }
 
-    const { rows: existingRows } = await pool.query('SELECT id FROM users WHERE LOWER(email) = $1', [email.trim().toLowerCase()]);
-    if (existingRows.length > 0) {
+    const store = getStore();
+    const existing = (store.users || []).find((u) => u.email.toLowerCase() === email.toLowerCase());
+
+    if (existing) {
       return NextResponse.json({ error: 'A user with this email already exists' }, { status: 400 });
     }
 
-    const id = `usr-${Date.now()}`;
-    const cleanName = name.trim();
-    const cleanEmail = email.trim();
-    const cleanRole = role || 'content_manager';
-    const cleanAvatar = avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80';
+    const newUser = {
+      id: `usr-${Date.now()}`,
+      name: name.trim(),
+      email: email.trim(),
+      password: password.trim(),
+      role: role || 'content_manager',
+      avatar: avatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80',
+      lastLogin: null
+    };
 
-    await pool.query(
-      `INSERT INTO users (id, name, email, password, role, avatar, last_login)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [id, cleanName, cleanEmail, password.trim(), cleanRole, cleanAvatar, null]
-    );
-
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Created Admin User', user?.id || 'usr-1', user?.name || 'Administrator', 'Users', `Created new admin user: ${cleanName} (${cleanRole})`, new Date().toISOString()]
-    );
+    store.users = [...(store.users || []), newUser];
+    saveStore(store, {
+      action: 'Created Admin User',
+      userId: user?.id || 'usr-1',
+      userName: user?.name || 'Administrator',
+      resource: 'Users',
+      details: `Created new admin user: ${name} (${role})`
+    });
 
     return NextResponse.json({
       success: true,
       user: {
-        id,
-        name: cleanName,
-        email: cleanEmail,
-        role: cleanRole,
-        avatar: cleanAvatar
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+        avatar: newUser.avatar
       },
       message: 'Admin user created successfully'
     });
   } catch (error) {
-    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

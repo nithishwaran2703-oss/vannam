@@ -1,17 +1,13 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { getStore, saveStore } from '@/lib/dataStore';
 
 export async function POST(request) {
   try {
     const { email, password } = await request.json();
-    const cleanEmail = (email || '').trim().toLowerCase();
-
-    const { rows } = await pool.query(
-      'SELECT id, name, email, password, role, avatar, last_login FROM users WHERE LOWER(email) = $1',
-      [cleanEmail]
+    const store = getStore();
+    const user = (store.users || []).find(
+      (u) => u.email.toLowerCase() === (email || '').trim().toLowerCase()
     );
-
-    const user = rows[0];
 
     if (!user || user.password !== password) {
       return NextResponse.json(
@@ -20,13 +16,15 @@ export async function POST(request) {
       );
     }
 
-    const lastLogin = new Date().toISOString();
-    await pool.query('UPDATE users SET last_login = $1 WHERE id = $2', [lastLogin, user.id]);
-
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Admin Login', user.id, user.name, 'Auth', `Successful login as ${user.role}`, lastLogin]
-    );
+    // Update lastLogin
+    user.lastLogin = new Date().toISOString();
+    saveStore(store, {
+      action: 'Admin Login',
+      userId: user.id,
+      userName: user.name,
+      resource: 'Auth',
+      details: `Successful login as ${user.role}`
+    });
 
     const safeUser = {
       id: user.id,
@@ -34,7 +32,7 @@ export async function POST(request) {
       email: user.email,
       role: user.role,
       avatar: user.avatar,
-      lastLogin
+      lastLogin: user.lastLogin
     };
 
     const response = NextResponse.json({
@@ -43,17 +41,17 @@ export async function POST(request) {
       message: `Welcome back, ${user.name}!`
     });
 
+    // Set cookie for session
     response.cookies.set('vannam_admin_session', JSON.stringify(safeUser), {
-      httpOnly: false,
+      httpOnly: false, // Accessible by client layout for state hydration
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
-      maxAge: 60 * 60 * 24 * 7
+      maxAge: 60 * 60 * 24 * 7 // 7 days
     });
 
     return response;
   } catch (error) {
-    console.error('Auth Error:', error);
     return NextResponse.json({ error: error.message || 'Authentication failed' }, { status: 500 });
   }
 }
@@ -66,8 +64,8 @@ export async function GET(request) {
     }
 
     const sessionUser = JSON.parse(cookie.value);
-    const { rows } = await pool.query('SELECT id, name, email, role, avatar, last_login FROM users WHERE id = $1', [sessionUser.id]);
-    const user = rows[0];
+    const store = getStore();
+    const user = (store.users || []).find((u) => u.id === sessionUser.id);
 
     if (!user) {
       return NextResponse.json({ authenticated: false }, { status: 401 });
@@ -81,7 +79,7 @@ export async function GET(request) {
         email: user.email,
         role: user.role,
         avatar: user.avatar,
-        lastLogin: user.last_login
+        lastLogin: user.lastLogin
       }
     });
   } catch {

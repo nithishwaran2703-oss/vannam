@@ -1,35 +1,14 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { getStore, saveStore } from '@/lib/dataStore';
 
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const search = (searchParams.get('search') || '').toLowerCase();
     const status = searchParams.get('status');
+    const store = getStore();
 
-    const { rows: allRows } = await pool.query('SELECT * FROM enquiries ORDER BY created_at DESC');
-
-    let enquiries = allRows.map((e) => ({
-      id: e.id,
-      parentName: e.parent_name,
-      email: e.email,
-      phone: e.phone,
-      childAge: e.child_age,
-      program: e.program,
-      message: e.message,
-      status: e.status,
-      notes: e.notes || [],
-      createdAt: e.created_at
-    }));
-
-    const stats = {
-      total: enquiries.length,
-      new: enquiries.filter((e) => e.status === 'new').length,
-      contacted: enquiries.filter((e) => e.status === 'contacted').length,
-      followup: enquiries.filter((e) => e.status === 'followup').length,
-      resolved: enquiries.filter((e) => e.status === 'resolved').length,
-      archived: enquiries.filter((e) => e.status === 'archived').length
-    };
+    let enquiries = store.enquiries || [];
 
     if (status && status !== 'all') {
       enquiries = enquiries.filter((e) => e.status === status);
@@ -46,9 +25,21 @@ export async function GET(request) {
       );
     }
 
+    // Sort newest first
+    enquiries.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Calculate stats
+    const stats = {
+      total: (store.enquiries || []).length,
+      new: (store.enquiries || []).filter((e) => e.status === 'new').length,
+      contacted: (store.enquiries || []).filter((e) => e.status === 'contacted').length,
+      followup: (store.enquiries || []).filter((e) => e.status === 'followup').length,
+      resolved: (store.enquiries || []).filter((e) => e.status === 'resolved').length,
+      archived: (store.enquiries || []).filter((e) => e.status === 'archived').length
+    };
+
     return NextResponse.json({ success: true, enquiries, stats });
   } catch (error) {
-    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -58,37 +49,36 @@ export async function PUT(request) {
     const body = await request.json();
     const { id, status, note, user } = body;
 
-    const { rows } = await pool.query('SELECT * FROM enquiries WHERE id = $1', [id]);
-    const enquiry = rows[0];
+    const store = getStore();
+    const enquiry = (store.enquiries || []).find((e) => e.id === id);
 
     if (!enquiry) {
       return NextResponse.json({ error: 'Enquiry not found' }, { status: 404 });
     }
 
-    const currentNotes = enquiry.notes || [];
+    if (status) {
+      enquiry.status = status;
+    }
+
     if (note && note.trim()) {
-      currentNotes.unshift({
+      enquiry.notes = enquiry.notes || [];
+      enquiry.notes.unshift({
         author: user?.name || 'Administrator',
         text: note.trim(),
         date: new Date().toISOString()
       });
     }
 
-    const newStatus = status || enquiry.status;
+    saveStore(store, {
+      action: 'Updated Enquiry',
+      userId: user?.id || 'usr-1',
+      userName: user?.name || 'Administrator',
+      resource: 'Enquiries',
+      details: `Updated enquiry #${id} status to ${enquiry.status}`
+    });
 
-    await pool.query(
-      `UPDATE enquiries SET status = $1, notes = $2 WHERE id = $3`,
-      [newStatus, JSON.stringify(currentNotes), id]
-    );
-
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Updated Enquiry', user?.id || 'usr-1', user?.name || 'Administrator', 'Enquiries', `Updated enquiry #${id} status to ${newStatus}`, new Date().toISOString()]
-    );
-
-    return NextResponse.json({ success: true, message: 'Enquiry updated successfully' });
+    return NextResponse.json({ success: true, enquiry, message: 'Enquiry updated successfully' });
   } catch (error) {
-    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -102,20 +92,24 @@ export async function DELETE(request) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const { rowCount } = await pool.query('DELETE FROM enquiries WHERE id = $1', [id]);
+    const store = getStore();
+    const initialLen = (store.enquiries || []).length;
+    store.enquiries = (store.enquiries || []).filter((e) => e.id !== id);
 
-    if (rowCount === 0) {
+    if (store.enquiries.length === initialLen) {
       return NextResponse.json({ error: 'Enquiry not found' }, { status: 404 });
     }
 
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Deleted Enquiry', 'usr-1', 'Administrator', 'Enquiries', `Deleted enquiry #${id}`, new Date().toISOString()]
-    );
+    saveStore(store, {
+      action: 'Deleted Enquiry',
+      userId: 'usr-1',
+      userName: 'Administrator',
+      resource: 'Enquiries',
+      details: `Deleted enquiry #${id}`
+    });
 
     return NextResponse.json({ success: true, message: 'Enquiry deleted' });
   } catch (error) {
-    console.error('DB Error:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }

@@ -1,25 +1,9 @@
 import { NextResponse } from 'next/server';
-import pool from '@/lib/db';
+import { getStore, saveStore } from '@/lib/dataStore';
 
 export async function GET() {
-  try {
-    const { rows } = await pool.query('SELECT * FROM teachers');
-    const teachers = rows.map(t => ({
-      id: t.id,
-      name: t.name,
-      role: t.role,
-      experience: t.experience,
-      qualifications: t.qualifications,
-      bio: t.bio,
-      image: t.image_url,
-      active: t.active,
-      email: t.email
-    }));
-    return NextResponse.json({ success: true, teachers });
-  } catch (error) {
-    console.error("DB Error:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
-  }
+  const store = getStore();
+  return NextResponse.json({ success: true, teachers: store.teachers || [] });
 }
 
 export async function POST(request) {
@@ -31,9 +15,9 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Name and Role are required' }, { status: 400 });
     }
 
-    const id = `teacher-${Date.now()}`;
+    const store = getStore();
     const newTeacher = {
-      id,
+      id: `teacher-${Date.now()}`,
       name: name.trim(),
       role: role.trim(),
       experience: experience || '5+ Years',
@@ -44,20 +28,17 @@ export async function POST(request) {
       email: email || ''
     };
 
-    await pool.query(
-      `INSERT INTO teachers (id, name, role, experience, qualifications, bio, image_url, active, email)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
-      [newTeacher.id, newTeacher.name, newTeacher.role, newTeacher.experience, newTeacher.qualifications, newTeacher.bio, newTeacher.image, newTeacher.active, newTeacher.email]
-    );
-
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Added Educator', user?.id || 'usr-1', user?.name || 'Administrator', 'Faculty', `Added educator profile for ${newTeacher.name}`, new Date().toISOString()]
-    );
+    store.teachers = [...(store.teachers || []), newTeacher];
+    saveStore(store, {
+      action: 'Added Educator',
+      userId: user?.id || 'usr-1',
+      userName: user?.name || 'Administrator',
+      resource: 'Faculty',
+      details: `Added educator profile for ${name}`
+    });
 
     return NextResponse.json({ success: true, teacher: newTeacher, message: 'Teacher added successfully' });
   } catch (error) {
-    console.error("DB Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -67,45 +48,25 @@ export async function PUT(request) {
     const body = await request.json();
     const { id, updates, user } = body;
 
-    const setClauses = [];
-    const values = [];
-    let i = 1;
+    const store = getStore();
+    const index = (store.teachers || []).findIndex((t) => t.id === id);
 
-    const dbFieldMap = {
-      name: 'name', role: 'role', experience: 'experience', qualifications: 'qualifications',
-      bio: 'bio', image: 'image_url', active: 'active', email: 'email'
-    };
-
-    for (const [key, value] of Object.entries(updates)) {
-      if (dbFieldMap[key]) {
-        setClauses.push(`${dbFieldMap[key]} = $${i}`);
-        values.push(value);
-        i++;
-      }
-    }
-
-    if (setClauses.length === 0) {
-      return NextResponse.json({ error: 'No valid updates provided' }, { status: 400 });
-    }
-
-    values.push(id);
-    const { rowCount } = await pool.query(
-      `UPDATE teachers SET ${setClauses.join(', ')} WHERE id = $${i}`,
-      values
-    );
-
-    if (rowCount === 0) {
+    if (index === -1) {
       return NextResponse.json({ error: 'Teacher not found' }, { status: 404 });
     }
 
-    await pool.query(
-      `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-      [`log-${Date.now()}`, 'Updated Educator', user?.id || 'usr-1', user?.name || 'Administrator', 'Faculty', `Updated educator ID: ${id}`, new Date().toISOString()]
-    );
+    store.teachers[index] = { ...store.teachers[index], ...updates };
 
-    return NextResponse.json({ success: true, message: 'Teacher updated successfully' });
+    saveStore(store, {
+      action: 'Updated Educator',
+      userId: user?.id || 'usr-1',
+      userName: user?.name || 'Administrator',
+      resource: 'Faculty',
+      details: `Updated educator ${store.teachers[index].name}`
+    });
+
+    return NextResponse.json({ success: true, teacher: store.teachers[index], message: 'Teacher updated successfully' });
   } catch (error) {
-    console.error("DB Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
@@ -115,18 +76,20 @@ export async function DELETE(request) {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
-    const { rowCount } = await pool.query('DELETE FROM teachers WHERE id = $1', [id]);
+    const store = getStore();
+    const teacher = (store.teachers || []).find((t) => t.id === id);
+    store.teachers = (store.teachers || []).filter((t) => t.id !== id);
 
-    if (rowCount > 0) {
-      await pool.query(
-        `INSERT INTO audit_logs (id, action, user_id, user_name, resource, details, timestamp) VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-        [`log-${Date.now()}`, 'Deleted Educator', 'usr-1', 'Administrator', 'Faculty', `Deleted educator ID: ${id}`, new Date().toISOString()]
-      );
-    }
+    saveStore(store, {
+      action: 'Deleted Educator',
+      userId: 'usr-1',
+      userName: 'Administrator',
+      resource: 'Faculty',
+      details: `Deleted educator ${teacher ? teacher.name : id}`
+    });
 
     return NextResponse.json({ success: true, message: 'Teacher deleted' });
   } catch (error) {
-    console.error("DB Error:", error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
