@@ -2517,23 +2517,23 @@ export default function Home() {
             </h2>
           </div>
 
-          {/* UNIFIED RESPONSIVE AWARDS GRID - ULTRA SMOOTH & INTERACTIVE */}
+          {/* UNIFIED RESPONSIVE AWARDS GRID - ULTRA SMOOTH & FAST INTERACTION */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {awardsData.map((award, idx) => (
               <div
                 key={award.id}
                 onClick={() => setSelectedAwardModal(award)}
-                className={`bento-card p-6 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-2 hover:shadow-xl transition-all duration-300 cursor-pointer group rounded-3xl border border-[#CBD8F6]/80 relative overflow-hidden`}
+                className={`bento-card p-6 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1.5 hover:shadow-xl transition-all duration-100 cursor-pointer group rounded-3xl border border-[#CBD8F6]/80 relative overflow-hidden active:scale-98`}
               >
                 {/* Background Subtle Photo Overlay */}
-                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-300 pointer-events-none">
+                <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-100 pointer-events-none">
                   <Image src={award.image} alt={award.title} fill sizes="(max-width: 768px) 100vw, 25vw" className="object-cover mix-blend-multiply" />
                 </div>
 
                 <div className="relative z-10">
                   {/* Top Bar with 3D Icon & Year */}
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-14 h-14 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-14 h-14 rounded-2xl bg-white/95 backdrop-blur-xs border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm group-hover:scale-105 transition-transform duration-100">
                       {award.icon}
                     </div>
                     <span className="text-[11px] font-black text-[#64748B] uppercase tracking-wider bg-white/80 px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs">
@@ -2562,7 +2562,7 @@ export default function Home() {
                     <ShieldCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
                     <span className="truncate">{award.issuer}</span>
                   </div>
-                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform shrink-0 font-extrabold">
+                  <span className="flex items-center gap-1 group-hover:translate-x-1 transition-transform duration-100 shrink-0 font-extrabold">
                     <span>Verify</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </span>
