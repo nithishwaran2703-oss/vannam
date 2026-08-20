@@ -60,6 +60,7 @@ import FeeCalculator from "../components/FeeCalculator";
 import VirtualTour from "../components/VirtualTour";
 import ParentPortalModal from "../components/ParentPortalModal";
 import TourSchedulerModal from "../components/TourSchedulerModal";
+import ScrollReveal from "../components/ScrollReveal";
 import { getAcademicYear, getCurrentYear, formatDynamicYears } from "../lib/academicYear";
 
 import {
@@ -68,11 +69,45 @@ import {
   ToyCarIcon,
   RainbowIcon,
   HappyCloudIcon,
+  SmilingSunIcon,
+  ButterflyIcon,
+  BlossomFlowerIcon,
+  SproutPlantIcon,
   CrayonIcon,
   BalloonIcon,
+  FloatingBalloonsGroup,
   KiteIcon,
+  TwinkleStarIcon,
+  SparkleStarsGroup,
   PuzzlePieceIcon,
-  StorybookIcon
+  StorybookIcon,
+  SchoolCastleIcon,
+  PaintSplatterIcon,
+  MusicNotesCluster,
+  PaperPlaneIcon,
+  ArtPaletteIcon,
+  PinwheelToy,
+  PlayfulWaveDivider,
+  MobileSceneBadge,
+  StorybookTransitionBridge,
+  NatureSceneGroup,
+  CreativitySceneGroup,
+  LearningSceneGroup,
+  PlaySceneGroup,
+  StemSceneGroup,
+  SafetySceneGroup,
+  CloudBridge,
+  RainbowArcBridge,
+  NatureBridge,
+  DoodleDivider,
+  StorybookStackIcon,
+  PlantInPotIcon,
+  SchoolBusToyIcon,
+  PlaygroundSlideIcon,
+  ShieldSecurityBadge,
+  TeacherApplesTrophy,
+  ParentLoveBadge,
+  PartyCelebrationIcon
 } from "../components/ToyDecorations";
 function Counter({ end, duration = 1800, prefix = "", suffix = "+", className = "" }) {
   const [count, setCount] = React.useState(0);
@@ -146,6 +181,9 @@ export default function Home() {
   // Gallery Filter & Lightbox State
   const [galleryCategory, setGalleryCategory] = useState("all");
   const [activeLightboxImage, setActiveLightboxImage] = useState(null);
+
+  // About Pillar Tab State
+  const [activeAboutTab, setActiveAboutTab] = useState("philosophy");
 
   // Program Tab State
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
@@ -878,23 +916,23 @@ export default function Home() {
     },
     {
       id: "updates",
-      feature: "Real-Time Parent App Telemetry",
-      shortTitle: "Instant Mobile App Alerts",
+      feature: "Daily Activity & Homework Command Center",
+      shortTitle: "Daily Activity & Homework Portal",
       vannamPoints: [
-        "Real-time app alerts for meal intake, naps & potty",
-        "Daily HD photo gallery delivered by 4:30 PM",
-        "Monthly developmental milestone report card"
+        "Live schedule tracking: classes, reading circles & activities",
+        "Actionable homework portal with due dates & materials attached",
+        "7-Shades progress insights, teacher chat & 4K live streams"
       ],
       traditionalPoints: [
         "Handwritten paper diary note given at pick-up",
-        "No daily photo updates for working parents",
-        "Brief quarterly report sheet without metrics"
+        "No visibility into pending homework or daily activities",
+        "Brief quarterly report sheet without learning insights"
       ],
       icon: "📱",
-      highlight: "Real-Time Telemetry",
+      highlight: "Daily Activity Cockpit",
       stat: "Live",
-      statLabel: "App Push Alerts",
-      proofTag: "Live Parent Portal App"
+      statLabel: "Schedule & Homework Tracker",
+      proofTag: "7-Shades Parent Portal"
     }
   ];
 
@@ -975,34 +1013,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="relative min-h-screen font-sans text-[#0F2963] bg-[#FFFDF8] bg-playful-dots selection:bg-vannam-yellow/20 selection:text-vannam-orange pb-16 lg:pb-0">
-
-      {/* Live Admin Active Announcement Ribbon */}
-      {dynamicAnnouncements.length > 0 && (
-        <div className={`text-white py-2 px-3 sm:px-6 bg-gradient-to-r ${dynamicAnnouncements[0].bannerColor || 'from-[#0F2963] via-[#00A8E8] to-[#F59E0B]'} shadow-sm relative z-20`}>
-          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4">
-            <div className="min-w-0 flex-1">
-              <p className="font-bold text-xs sm:text-sm text-white leading-snug">
-                {formatDynamicYears(dynamicAnnouncements[0].title)}
-                {dynamicAnnouncements[0].message && (
-                  <span className="text-white/90 font-normal text-xs hidden md:inline ml-1.5">
-                    — {formatDynamicYears(dynamicAnnouncements[0].message)}
-                  </span>
-                )}
-              </p>
-            </div>
-            {dynamicAnnouncements[0].link && (
-              <a
-                href={dynamicAnnouncements[0].link}
-                className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-white text-[#0F2963] text-xs font-black hover:bg-amber-50 active:scale-95 transition-all shadow-xs shrink-0 whitespace-nowrap"
-              >
-                <span>{dynamicAnnouncements[0].linkText || 'Apply Online'}</span>
-                <span className="font-bold">→</span>
-              </a>
-            )}
-          </div>
-        </div>
-      )}
+    <div className="relative min-h-screen font-sans text-[#0F2963] bg-[#FFFDF8] bg-playful-dots selection:bg-vannam-yellow/20 selection:text-vannam-orange">
 
 
 
@@ -1170,131 +1181,188 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative pt-6 pb-12 sm:pt-10 sm:pb-16 lg:pt-14 lg:pb-24 overflow-hidden bg-playful-dots">
-        {/* Subtle Background Organic Shapes */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-vannam-yellow/10 via-vannam-red/5 to-vannam-cyan/10 rounded-full blur-3xl -z-10 opacity-80 pointer-events-none" />
+      <section className="relative pt-6 pb-10 sm:pt-10 sm:pb-14 lg:pt-16 lg:pb-20 overflow-hidden bg-playful-dots">
+        {/* Subtle Background Organic Glows */}
+        <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-vannam-yellow/15 via-vannam-red/8 to-vannam-cyan/15 rounded-full blur-3xl -z-10 opacity-90 pointer-events-none" />
         
-        {/* Decorative Playful Floating Elements (Positioned safely away from text/buttons) */}
-        <div className="hidden lg:block absolute top-6 left-10 animate-float pointer-events-none opacity-85">
-          <RainbowIcon className="w-16 h-10 drop-shadow-sm" />
+        {/* DESKTOP EXCLUSIVE DECORATIVE VISUAL STORYTELLING (Balanced Whitespace - Zero Content Interference) */}
+        <div className="hidden lg:block absolute top-4 left-6 xl:left-12 animate-float pointer-events-none z-10">
+          <RainbowIcon className="w-20 h-12 xl:w-24 xl:h-14 drop-shadow-md" />
         </div>
-        <div className="hidden lg:block absolute top-12 right-16 animate-float-reverse pointer-events-none opacity-80">
-          <HappyCloudIcon className="w-14 h-10 drop-shadow-xs" />
-        </div>
-        <div className="hidden xl:block absolute bottom-12 left-12 animate-wiggle pointer-events-none opacity-85">
-          <div className="flex items-center gap-1.5">
-            <AlphabetBlock letter="A" color="rose" className="w-9 h-9 drop-shadow-sm" />
-            <AlphabetBlock letter="B" color="amber" className="w-9 h-9 drop-shadow-sm -mt-2" />
-            <AlphabetBlock letter="C" color="sky" className="w-9 h-9 drop-shadow-sm" />
+        <div className="hidden lg:block absolute top-6 right-8 xl:right-16 animate-float-reverse pointer-events-none z-10">
+          <div className="flex items-center gap-2">
+            <HappyCloudIcon className="w-14 h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
+            <SmilingSunIcon className="w-12 h-12 xl:w-14 xl:h-14 drop-shadow-md" />
           </div>
         </div>
+        <div className="hidden xl:block absolute bottom-14 left-10 animate-wiggle pointer-events-none z-10">
+          <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-xs p-2 rounded-2xl border border-[#E8EEFB] shadow-xs">
+            <AlphabetBlock letter="A" color="rose" className="w-8 h-8 drop-shadow-xs" />
+            <AlphabetBlock letter="B" color="amber" className="w-8 h-8 drop-shadow-xs -mt-1.5" />
+            <AlphabetBlock letter="C" color="sky" className="w-8 h-8 drop-shadow-xs" />
+          </div>
+        </div>
+        <div className="hidden lg:block absolute top-44 left-4 xl:left-8 animate-flutter pointer-events-none z-10 opacity-85">
+          <ButterflyIcon color="purple" className="w-8 h-8" />
+        </div>
+        <div className="hidden xl:block absolute bottom-24 right-8 animate-flutter pointer-events-none z-10 opacity-90">
+          <ButterflyIcon color="amber" className="w-8 h-8" />
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
             
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left relative">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left relative">
               
-              {/* Trust Badge */}
-              <div className="inline-flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 border border-amber-200 text-[#C2410C] text-[11px] sm:text-xs font-extrabold shadow-2xs max-w-full text-center mx-auto lg:mx-0">
-                <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-[#EA580C]" />
-                <span className="leading-tight">Voted #1 International Preschool for Early Development & Safety</span>
+              {/* Mobile Preschool Header Greeting */}
+              <div className="block lg:hidden mb-2">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-rose-100 border-2 border-amber-300 text-[#0F2963] text-xs font-black shadow-xs">
+                  <TeddyBearIcon className="w-4 h-4 text-vannam-yellow animate-bounce-gentle shrink-0" />
+                  <span>Welcome to Vannam World Preschool</span>
+                  <span className="text-xs">✨</span>
+                </div>
               </div>
 
               {/* Headline */}
-              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-[1.15]">
-                Where Little Minds Begin <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-8">Big Adventures</span>
+              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-[1.2] sm:leading-[1.15]">
+                Where Little Minds Begin <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-8">Big Adventures</span> 🚀
               </h1>
 
               {/* Sub-paragraph */}
-              <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
                 A warm, joyful, and certified preschool designed for parents who seek absolute safety, Montessori-inspired STEAM learning, and loving early childhood care.
               </p>
 
-              {/* Dual Action CTAs - Responsive Stack on Extra Small, Row on Larger */}
+              {/* BESPOKE MOBILE STORYBOOK HERO CARD (Visible ONLY on Mobile/Tablet) */}
+              <div className="block lg:hidden my-3 relative mx-auto max-w-sm px-1">
+                
+                {/* Rainbow Aura Glow Effect */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-amber-300/40 via-rose-300/30 to-sky-300/40 rounded-[2.5rem] blur-lg -z-10 animate-pulse-subtle" />
+
+                {/* Top Corner Floating Sticker: Rainbow Fun */}
+                <div className="absolute -top-3 -left-1 z-30 animate-float pointer-events-none">
+                  <div className="bg-white px-2.5 py-1 rounded-full border-2 border-amber-300 shadow-md flex items-center gap-1.5">
+                    <RainbowIcon className="w-5 h-3.5" />
+                    <span className="text-[10px] font-black text-[#0F2963]">Play & Learn</span>
+                  </div>
+                </div>
+
+                {/* Top Right Corner Floating Sticker: Age Tag */}
+                <div className="absolute -top-3 -right-1 z-30 animate-float-reverse pointer-events-none">
+                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 border border-white">
+                    <span className="text-[10px] font-black tracking-wide">👶 Ages 1–6 Yrs</span>
+                  </div>
+                </div>
+
+                {/* Main Die-Cut Photo Frame with 3D Rounded Borders */}
+                <div className="relative rounded-[2rem] overflow-hidden border-4 border-white shadow-2xl bg-white aspect-[16/11]">
+                  <Image 
+                    src="/hero-kids.jpg" 
+                    alt="Preschool children playing with colorful wooden blocks" 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover" 
+                    priority
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/85 via-transparent to-transparent" />
+                  
+                  {/* Floating Trust Badge on Left Inside Frame */}
+                  <div className="absolute bottom-2.5 left-2.5 z-20 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-200/80 shadow-xs flex items-center gap-1.5">
+                    <div className="flex -space-x-1">
+                      <span className="text-xs">⭐</span>
+                      <span className="text-xs">⭐</span>
+                      <span className="text-xs">⭐</span>
+                    </div>
+                    <span className="text-[9.5px] font-black text-[#0F2963]">Top Parent Rating</span>
+                  </div>
+
+                  {/* Floating Confetti Quick-Apply Button on Right Inside Frame */}
+                  <button 
+                    onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
+                    className="absolute bottom-2.5 right-2.5 z-20 btn-primary px-3 py-1.5 text-[10px] font-black rounded-xl shadow-md transition-transform active:scale-95 flex items-center gap-1 !min-h-0 h-auto"
+                  >
+                    <span>Apply Now</span>
+                    <ChevronRight className="w-3 h-3 text-vannam-yellow" />
+                  </button>
+                </div>
+
+              </div>
+
+              {/* Dual Action CTAs for Mobile Parents */}
               <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-2">
                 <button
                   onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-                  className="btn-primary w-full xs:w-auto px-6 sm:px-8 py-3 sm:py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-2 shadow-md whitespace-nowrap min-h-[44px]"
+                  className="btn-primary w-full xs:w-auto px-6 sm:px-8 py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg whitespace-nowrap min-h-[48px] active:scale-95 transition-transform"
                 >
-                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0" />
-                  <span>Book a Visit</span>
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0 animate-bounce-gentle" />
+                  <span>Book a Campus Visit</span>
                 </button>
 
                 <a
                   href="#programs"
-                  className="btn-secondary w-full xs:w-auto px-6 sm:px-7 py-3 sm:py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap min-h-[44px]"
+                  className="btn-secondary w-full xs:w-auto px-6 sm:px-7 py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap min-h-[48px] active:scale-95 transition-transform group"
                 >
                   <span>Explore Programs</span>
-                  <ChevronRight className="w-4 h-4 text-vannam-navy shrink-0" />
+                  <ChevronRight className="w-4 h-4 text-vannam-navy shrink-0 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
-              {/* Trust Indicator Pills */}
-              <div className="pt-3 sm:pt-6 border-t border-[#CBD8F6]/80 grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-left">
-                <div className="flex items-center gap-2 sm:gap-2.5 p-2 rounded-xl bg-white/80 border border-vannam-green/20 shadow-2xs">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-vannam-green/10 flex items-center justify-center text-vannam-green font-bold text-[11px] sm:text-xs shrink-0">
-                    1:4
-                  </div>
-                  <span className="text-[11px] sm:text-xs font-bold text-[#0F2963] leading-tight">Low Ratio Care</span>
+              {/* Storybook Scene Transition Bridge on Mobile */}
+              <div className="block lg:hidden pt-2">
+                <StorybookTransitionBridge quote="Where little minds love to explore" />
+              </div>
+
+              {/* Desktop Quick Feature Pills */}
+              <div className="hidden lg:flex items-center gap-3 pt-3">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-[#CBD8F6] shadow-xs text-xs font-bold text-[#0F2963]">
+                  <span className="text-vannam-green">✓</span> 1:6 Loving Teacher Ratio
                 </div>
-                <div className="flex items-center gap-2 sm:gap-2.5 p-2 rounded-xl bg-white/80 border border-vannam-yellow/20 shadow-2xs">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-vannam-yellow/10 flex items-center justify-center text-vannam-orange shrink-0">
-                    <ShieldCheck className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </div>
-                  <span className="text-[11px] sm:text-xs font-bold text-[#0F2963] leading-tight">24/7 Live CCTV</span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-[#CBD8F6] shadow-xs text-xs font-bold text-[#0F2963]">
+                  <span className="text-vannam-yellow">★</span> Organic In-House Chef
                 </div>
-                <div className="flex items-center gap-2 sm:gap-2.5 p-2 rounded-xl bg-white/80 border border-vannam-red/20 shadow-2xs">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-vannam-red/10 flex items-center justify-center text-vannam-red shrink-0">
-                    <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </div>
-                  <span className="text-[11px] sm:text-xs font-bold text-[#0F2963] leading-tight">Organic Meals</span>
-                </div>
-                <div className="flex items-center gap-2 sm:gap-2.5 p-2 rounded-xl bg-white/80 border border-vannam-cyan/20 shadow-2xs">
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-vannam-cyan/10 flex items-center justify-center text-vannam-cyan shrink-0">
-                    <Award className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </div>
-                  <span className="text-[11px] sm:text-xs font-bold text-[#0F2963] leading-tight">CPR Certified</span>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/90 border border-[#CBD8F6] shadow-xs text-xs font-bold text-[#0F2963]">
+                  <span className="text-vannam-cyan">🛡️</span> 4K Parent Live Stream
                 </div>
               </div>
 
             </div>
 
-            {/* Right Hero Visual Layout */}
-            <div className="lg:col-span-5 relative">
+            {/* Desktop Hero Visual Layout */}
+            <div className="hidden lg:block lg:col-span-5 relative">
               
               {/* Cute Floating Balloon Accent near image */}
-              <div className="hidden sm:block absolute -top-8 left-4 animate-float pointer-events-none z-20">
-                <BalloonIcon color="rose" className="w-10 h-14 drop-shadow-md" />
+              <div className="absolute -top-10 -left-6 animate-float pointer-events-none z-20">
+                <FloatingBalloonsGroup className="w-16 h-20 drop-shadow-md" />
               </div>
-              <div className="hidden sm:block absolute -bottom-8 right-6 animate-float-reverse pointer-events-none z-20">
+              <div className="absolute -bottom-8 -right-6 animate-float-reverse pointer-events-none z-20">
                 <BalloonIcon color="sky" className="w-10 h-14 drop-shadow-md" />
               </div>
 
               {/* Main Visual Container */}
               <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden border-4 border-vannam-yellow/30 shadow-xl bg-white aspect-[16/11] sm:aspect-square">
+                <div className="relative rounded-3xl overflow-hidden border-4 border-vannam-yellow/40 shadow-2xl bg-white aspect-square">
                   <Image 
                     src="/hero-kids.jpg" 
                     alt="Preschool children playing with colorful wooden blocks" 
                     fill 
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 1200px) 50vw, 33vw"
                     className="object-cover" 
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
                   
                   {/* Floating Badge 1 */}
-                  <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 bg-white/95 backdrop-blur-md p-2.5 sm:p-4 rounded-xl sm:rounded-2xl border border-[#E8EEFB] shadow-lg flex items-center justify-between gap-2">
+                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-[#E8EEFB] shadow-lg flex items-center justify-between gap-2">
                     <div>
-                      <span className="text-[10px] sm:text-xs font-bold text-vannam-green flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 sm:w-3.5 sm:h-3.5 inline text-vannam-green" /> Admissions Open
+                      <span className="text-xs font-bold text-vannam-green flex items-center gap-1">
+                        <CheckCircle2 className="w-3.5 h-3.5 inline text-vannam-green" /> Admissions Open
                       </span>
-                      <span className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] block">Limited Seats Available</span>
+                      <span className="font-heading font-extrabold text-sm text-[#0F2963] block">Limited Seats Available</span>
                     </div>
                     <button 
                       onClick={() => setIsTourModalOpen(true)}
-                      className="btn-accent px-3 py-1.5 sm:px-4 sm:py-2 text-[11px] sm:text-xs flex items-center gap-1 shrink-0 min-h-[36px]"
+                      className="btn-accent px-4 py-2 text-xs flex items-center gap-1 shrink-0"
                     >
                       <span>Apply Now</span>
                     </button>
@@ -1302,170 +1370,203 @@ export default function Home() {
                 </div>
 
                 {/* Floating Decorative Card 2 - Teddy & Happy Graduates */}
-                <div className="hidden sm:flex absolute -top-6 -right-6 bg-white p-3.5 rounded-2xl border-2 border-vannam-green/30 shadow-xl animate-float items-center gap-3">
+                <div className="flex absolute -top-6 -right-6 bg-white p-3.5 rounded-2xl border-2 border-vannam-green/30 shadow-xl animate-float items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-vannam-green/10 flex items-center justify-center text-vannam-green shadow-xs">
                     <TeddyBearIcon className="w-7 h-7" />
                   </div>
                   <div>
+                    <span className="text-[10px] font-bold text-[#64748B] block uppercase tracking-wider">Joyful Learners</span>
                     <Counter end={1500} className="font-heading font-bold text-sm text-[#0F2963] block" />
                   </div>
                 </div>
 
+                {/* Floating Decorative Card 3 - Little Stars Seal */}
+                <div className="flex absolute -bottom-6 -left-6 bg-white p-2.5 rounded-2xl border-2 border-vannam-yellow/40 shadow-xl animate-bounce-gentle items-center gap-2">
+                  <SparkleStarsGroup color="amber" className="w-6 h-6" />
+                  <span className="text-xs font-extrabold text-[#0F2963]">5-Star Montessori</span>
+                </div>
+
               </div>
 
             </div>
 
           </div>
         </div>
+
+        {/* Playful Organic Wave Divider to About */}
+        <PlayfulWaveDivider className="mt-8 -mb-10 sm:-mb-14 lg:-mb-20" />
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative overflow-hidden">
-        {/* Subtle decorative playful stickers in empty spaces */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-wiggle pointer-events-none opacity-40">
-          <AlphabetBlock letter="★" color="amber" className="w-10 h-10" />
+      <section id="about" className="scroll-mt-24 py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Decorative Corner Accents */}
+        <div className="hidden lg:block absolute top-6 right-10 animate-float pointer-events-none opacity-80">
+          <BlossomFlowerIcon color="rose" className="w-10 h-10" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float pointer-events-none opacity-40">
-          <PuzzlePieceIcon color="emerald" className="w-10 h-10" />
+        <div className="hidden lg:block absolute bottom-8 left-8 animate-float-reverse pointer-events-none opacity-80">
+          <SproutPlantIcon className="w-10 h-10" />
+        </div>
+        <div className="hidden xl:block absolute top-1/2 left-4 -translate-y-1/2 animate-flutter pointer-events-none opacity-75">
+          <ButterflyIcon color="emerald" className="w-7 h-7" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/10 px-3.5 py-1.5 rounded-full shadow-2xs">
-              <Heart className="w-3.5 h-3.5" />
-              <span>About Vannam World Preschool</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963]">
-              Building a Safe & Inspiring Foundation for Life
+          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 relative">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <PlantInPotIcon className="w-7 h-7 sm:w-8 sm:h-8 animate-bounce-gentle" />
+              <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
+              <StorybookStackIcon className="w-7 h-7 sm:w-8 sm:h-8 animate-float" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-3.5 py-1 rounded-full shadow-2xs">
+              <Heart className="w-3.5 h-3.5 text-vannam-red" />
+              <span>About Vannam World</span>
+            </div>
+            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963] leading-tight">
+              Building a Safe & Inspiring Foundation
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
-              Our school philosophy combines Montessori freedom of exploration with early STEAM inquiry, structured around your child’s emotional comfort and intellectual curiosity.
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed">
+              Combining Montessori exploration with early STEAM inquiry, structured around your child&apos;s natural curiosity and comfort.
             </p>
-          </div>
+          </ScrollReveal>
 
-          {/* Philosophy, Mission, Vision Horizontal Swipeable Row on Mobile & 3-Col Bento Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 sm:gap-4 pb-4 mb-6 md:mb-16 md:grid md:grid-cols-3 md:gap-8 md:overflow-visible -mx-4 px-4 sm:mx-0 sm:px-0">
+          {/* 3 Pillars - Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6">
             
-            {/* Philosophy Card */}
-            <div className="bento-card card-amber p-5 sm:p-8 space-y-4 relative group w-[84vw] xs:w-[320px] sm:w-[340px] md:w-auto shrink-0 md:shrink snap-center flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center shadow-md">
-                    <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
+            {/* Philosophy */}
+            <ScrollReveal stagger={1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-amber p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="w-10 h-10 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
+                    <Heart className="w-5 h-5" />
                   </div>
-                  <TeddyBearIcon className="w-6 h-6 sm:w-7 sm:h-7 opacity-70 group-hover:scale-110 transition" />
+                  <SparkleStarsGroup color="amber" className="w-5 h-5 opacity-60" />
                 </div>
-                <h3 className="font-heading text-lg sm:text-2xl font-bold text-[#0F2963] mb-2">Our Philosophy</h3>
-                <p className="text-xs sm:text-sm text-[#0F2963] leading-relaxed">
-                  Every child possesses a unique spark of genius. We cultivate confidence through gentle encouragement, self-chosen activities, and warm teacher mentorship.
+                <h3 className="font-heading text-base sm:text-lg font-extrabold text-[#0F2963]">Our Philosophy</h3>
+                <p className="text-xs text-[#334155] leading-relaxed">
+                  Cultivating confidence through gentle encouragement, self-chosen exploration, and warm mentorship.
                 </p>
               </div>
-              <div className="pt-3 border-t border-amber-200/60 flex items-center gap-1.5 text-[11px] font-extrabold text-amber-900">
-                <span>🌱 Self-Discovery & Joy</span>
+              <div className="pt-2 border-t border-amber-200/60 flex items-center gap-1.5 text-[11px] font-bold text-amber-800">
+                <span>🌱 Child-Led Discovery</span>
               </div>
-            </div>
+            </ScrollReveal>
 
-            {/* Mission Card */}
-            <div className="bento-card card-emerald p-5 sm:p-8 space-y-4 relative group w-[84vw] xs:w-[320px] sm:w-[340px] md:w-auto shrink-0 md:shrink snap-center flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-vannam-green text-white flex items-center justify-center shadow-md">
-                    <Sun className="w-5 h-5 sm:w-6 sm:h-6" />
+            {/* Mission */}
+            <ScrollReveal stagger={2} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-emerald p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="w-10 h-10 rounded-2xl bg-vannam-green text-white flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
+                    <Sun className="w-5 h-5" />
                   </div>
-                  <PuzzlePieceIcon color="emerald" className="w-6 h-6 sm:w-7 sm:h-7 opacity-80 group-hover:scale-110 transition" />
+                  <SproutPlantIcon className="w-5 h-5 opacity-60" />
                 </div>
-                <h3 className="font-heading text-lg sm:text-2xl font-bold text-[#0F2963] mb-2">Our Mission</h3>
-                <p className="text-xs sm:text-sm text-[#0F2963] leading-relaxed">
-                  To provide a world-class, hygienic, and emotionally secure early childhood environment that prepares children for lifelong academic success and emotional resilience.
+                <h3 className="font-heading text-base sm:text-lg font-extrabold text-[#0F2963]">Our Mission</h3>
+                <p className="text-xs text-[#334155] leading-relaxed">
+                  Providing a world-class, hygienic, and secure early learning space that builds lifelong emotional resilience.
                 </p>
               </div>
-              <div className="pt-3 border-t border-emerald-200/60 flex items-center gap-1.5 text-[11px] font-extrabold text-emerald-900">
-                <span>🛡️ Safety & Excellence</span>
+              <div className="pt-2 border-t border-emerald-200/60 flex items-center gap-1.5 text-[11px] font-bold text-emerald-800">
+                <span>🛡️ Safe & Nurturing Care</span>
               </div>
-            </div>
+            </ScrollReveal>
 
-            {/* Vision Card */}
-            <div className="bento-card card-sky p-5 sm:p-8 space-y-4 relative group w-[84vw] xs:w-[320px] sm:w-[340px] md:w-auto shrink-0 md:shrink snap-center flex flex-col justify-between">
-              <div>
-                <div className="flex items-center justify-between mb-4">
-                  <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-vannam-cyan text-white flex items-center justify-center shadow-md">
-                    <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
+            {/* Vision */}
+            <ScrollReveal stagger={3} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-sky p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="w-10 h-10 rounded-2xl bg-vannam-cyan text-white flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
+                    <Globe className="w-5 h-5" />
                   </div>
-                  <KiteIcon className="w-6 h-6 sm:w-7 sm:h-7 opacity-80 group-hover:scale-110 transition" />
+                  <ButterflyIcon color="sky" className="w-5 h-5 opacity-60" />
                 </div>
-                <h3 className="font-heading text-lg sm:text-2xl font-bold text-[#0F2963] mb-2">Our Vision</h3>
-                <p className="text-xs sm:text-sm text-[#0F2963] leading-relaxed">
-                  To set the benchmark in global early childhood education by combining cutting-edge STEAM inquiry with compassionate parenting partnership.
+                <h3 className="font-heading text-base sm:text-lg font-extrabold text-[#0F2963]">Our Vision</h3>
+                <p className="text-xs text-[#334155] leading-relaxed">
+                  Setting global benchmarks in early education through cutting-edge STEAM inquiry and compassionate care.
                 </p>
               </div>
-              <div className="pt-3 border-t border-sky-200/60 flex items-center gap-1.5 text-[11px] font-extrabold text-sky-900">
-                <span>🚀 Future-Ready Global Citizens</span>
+              <div className="pt-2 border-t border-sky-200/60 flex items-center gap-1.5 text-[11px] font-bold text-sky-800">
+                <span>🚀 Future-Ready Milestones</span>
               </div>
-            </div>
+            </ScrollReveal>
 
           </div>
 
-          {/* Mobile Swipe Hint Indicators */}
-          <div className="flex md:hidden items-center justify-center gap-1.5 pb-6">
-            <span className="text-[11px] font-bold text-[#0F2963]/60 flex items-center gap-1">
-              <span>← Swipe cards horizontally →</span>
-            </span>
-          </div>
+          {/* Statistics Bar with Playful Badges */}
+          <ScrollReveal className="bg-[#0F2963] text-white rounded-2xl p-4 sm:p-6 shadow-xl border-2 border-[#091A42] grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 text-center relative overflow-hidden">
+            <div className="space-y-0.5 relative z-10">
+              <Counter end={12} className="font-heading text-xl sm:text-3xl font-extrabold text-vannam-yellow block" />
+              <span className="text-[11px] sm:text-xs font-semibold text-blue-100">Years Experience</span>
+            </div>
+            <div className="space-y-0.5 relative z-10">
+              <Counter end={1500} className="font-heading text-xl sm:text-3xl font-extrabold text-vannam-green block" />
+              <span className="text-[11px] sm:text-xs font-semibold text-blue-100">Happy Children</span>
+            </div>
+            <div className="space-y-0.5 relative z-10">
+              <Counter end={25} className="font-heading text-xl sm:text-3xl font-extrabold text-vannam-cyan block" />
+              <span className="text-[11px] sm:text-xs font-semibold text-blue-100">Qualified Teachers</span>
+            </div>
+            <div className="space-y-0.5 relative z-10">
+              <Counter end={100} className="font-heading text-xl sm:text-3xl font-extrabold text-vannam-red block" />
+              <span className="text-[11px] sm:text-xs font-semibold text-blue-100">Daily Activities</span>
+            </div>
+          </ScrollReveal>
 
-          {/* Animated Statistics Counters Bar */}
-          <div className="bg-[#0F2963] text-white rounded-3xl p-5 sm:p-8 md:p-12 shadow-2xl border-4 border-[#091A42] grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center relative overflow-hidden">
-            <div className="space-y-1 relative">
-              <Counter end={12} className="font-heading text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-vannam-yellow block" />
-              <span className="text-xs sm:text-sm font-semibold text-blue-100">Years of Experience</span>
-            </div>
-            <div className="space-y-1 relative">
-              <Counter end={1500} className="font-heading text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-vannam-green block" />
-              <span className="text-xs sm:text-sm font-semibold text-blue-100">Happy Children</span>
-            </div>
-            <div className="space-y-1 relative">
-              <Counter end={25} className="font-heading text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-vannam-cyan block" />
-              <span className="text-xs sm:text-sm font-semibold text-blue-100">Qualified Teachers</span>
-            </div>
-            <div className="space-y-1 relative">
-              <Counter end={100} className="font-heading text-2xl xs:text-3xl sm:text-4xl md:text-5xl font-extrabold text-vannam-red block" />
-              <span className="text-xs sm:text-sm font-semibold text-blue-100">Activities & Games</span>
-            </div>
-          </div>
+          {/* Subtle Storytelling Bridge */}
+          <NatureBridge className="mt-6 -mb-4" />
 
         </div>
       </section>
 
       {/* AGE-BASED PROGRAMS SECTION */}
-      <section id="programs" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-10 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <PuzzlePieceIcon color="emerald" className="w-12 h-12" />
+        </div>
+        <div className="hidden lg:block absolute top-12 right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <StorybookIcon className="w-12 h-12 drop-shadow-xs" />
+        </div>
+        <div className="hidden xl:block absolute bottom-12 left-12 animate-wiggle pointer-events-none opacity-85 z-10">
+          <CrayonIcon color="rose" className="w-10 h-10" />
+        </div>
+        <div className="hidden xl:block absolute bottom-12 right-12 animate-flutter pointer-events-none opacity-85 z-10">
+          <AlphabetBlock letter="P" color="purple" className="w-9 h-9" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-vannam-green/10 px-3.5 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+            <div className="flex justify-center mb-1">
+              <LearningSceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-vannam-green/10 border border-vannam-green/30 px-3 py-1 rounded-full shadow-2xs">
               <BookOpen className="w-3.5 h-3.5" />
               <span>Tailored Programs</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963]">
-              Curriculum Built for Every Growth Stage
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
+              Curriculum Built for <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Every Growth Stage</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
-              Select your child's age group below to discover learning objectives, daily teacher ratios, and specialized activities.
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+              Select your child's age group below to discover learning objectives, teacher ratios, and activities.
             </p>
-          </div>
+          </ScrollReveal>
 
-          {/* Program Tabs - Touch Horizontal Scroll with Snap */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 sm:mb-10 scrollbar-none snap-x justify-start sm:justify-center px-1">
+          {/* Program Tabs - Touch Horizontal Scroll with Snap on Mobile */}
+          <ScrollReveal className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
             {Object.keys(programsData).map((key) => {
               const prog = programsData[key];
               return (
                 <button
                   key={key}
                   onClick={() => setActiveProgramTab(key)}
-                  className={`px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-xs sm:text-sm font-extrabold flex items-center gap-1.5 sm:gap-2 transition shrink-0 snap-center min-h-[44px] ${
+                  className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition shrink-0 snap-center !min-h-0 ${
                     activeProgramTab === key
                       ? prog.activeTabStyle
-                      : "bg-white text-[#0F2963] hover:bg-[#E8EEFB] border border-[#CBD8F6]"
+                      : "bg-white text-[#0F2963] hover:bg-[#E8EEFB] border border-[#CBD8F6] shadow-2xs"
                   }`}
                 >
                   {prog.toyType === "teddy" && <TeddyBearIcon className="w-4 h-4 shrink-0" />}
@@ -1477,53 +1578,53 @@ export default function Home() {
                 </button>
               );
             })}
-          </div>
+          </ScrollReveal>
 
           {/* Active Program Card Showcase */}
           {activeProgramTab && (
-            <div className="max-w-4xl mx-auto">
-              <div className={`bento-card ${programsData[activeProgramTab].cardStyle} p-5 sm:p-8 md:p-12 transition-all duration-300 relative overflow-hidden`}>
+            <ScrollReveal variant="reveal-scale" className="max-w-4xl mx-auto">
+              <div className={`bento-card ${programsData[activeProgramTab].cardStyle} p-4 sm:p-6 md:p-8 transition-all duration-300 relative overflow-hidden`}>
                 
                 {/* Decorative Toy Watermark */}
-                <div className="absolute top-4 right-4 opacity-15 sm:opacity-20 pointer-events-none">
-                  {programsData[activeProgramTab].toyType === "teddy" && <TeddyBearIcon className="w-16 h-16 sm:w-24 sm:h-24" />}
-                  {programsData[activeProgramTab].toyType === "blocks" && <AlphabetBlock letter="1" color="amber" className="w-16 h-16 sm:w-24 sm:h-24" />}
-                  {programsData[activeProgramTab].toyType === "puzzle" && <PuzzlePieceIcon color="emerald" className="w-16 h-16 sm:w-24 sm:h-24" />}
-                  {programsData[activeProgramTab].toyType === "crayons" && <CrayonIcon color="sky" className="w-16 h-16 sm:w-24 sm:h-24" />}
-                  {programsData[activeProgramTab].toyType === "storybook" && <StorybookIcon className="w-16 h-16 sm:w-24 sm:h-24" />}
+                <div className="absolute top-3 right-3 opacity-20 sm:opacity-25 pointer-events-none">
+                  {programsData[activeProgramTab].toyType === "teddy" && <TeddyBearIcon className="w-12 h-12 sm:w-20 sm:h-20" />}
+                  {programsData[activeProgramTab].toyType === "blocks" && <AlphabetBlock letter="1" color="amber" className="w-12 h-12 sm:w-20 sm:h-20" />}
+                  {programsData[activeProgramTab].toyType === "puzzle" && <PuzzlePieceIcon color="emerald" className="w-12 h-12 sm:w-20 sm:h-20" />}
+                  {programsData[activeProgramTab].toyType === "crayons" && <CrayonIcon color="sky" className="w-12 h-12 sm:w-20 sm:h-20" />}
+                  {programsData[activeProgramTab].toyType === "storybook" && <StorybookIcon className="w-12 h-12 sm:w-20 sm:h-20" />}
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 relative">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3 sm:mb-4 relative">
                   <div>
-                    <span className={`inline-block px-3 py-1 rounded-full text-xs font-extrabold border ${programsData[activeProgramTab].badgeBg} mb-2`}>
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10.5px] font-extrabold border ${programsData[activeProgramTab].badgeBg} mb-1 shadow-2xs`}>
                       Age: {programsData[activeProgramTab].age}
                     </span>
-                    <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-[#0F2963]">
+                    <h3 className="font-heading text-xl sm:text-2xl font-extrabold text-[#0F2963]">
                       {programsData[activeProgramTab].title}
                     </h3>
                   </div>
 
-                  <span className="px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-white/90 font-bold text-xs text-[#0F2963] border border-[#CBD8F6] shadow-xs">
+                  <span className="px-3 py-1 rounded-xl bg-white/95 font-black text-xs text-[#0F2963] border border-[#CBD8F6] shadow-xs">
                     {programsData[activeProgramTab].ratio}
                   </span>
                 </div>
 
-                <p className="text-xs xs:text-sm sm:text-base text-[#0F2963] leading-relaxed mb-6 sm:mb-8 relative">
+                <p className="text-xs sm:text-sm text-[#0F2963] leading-relaxed mb-4 sm:mb-5 relative font-medium">
                   {programsData[activeProgramTab].description}
                 </p>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mb-6 sm:mb-8 relative">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-5 relative">
                   
                   {/* Learning Objectives */}
-                  <div className="bg-white/90 rounded-2xl p-4 sm:p-6 border border-[#CBD8F6]/80 shadow-xs space-y-3">
-                    <h4 className="font-heading font-extrabold text-[#0F2963] text-base sm:text-lg flex items-center gap-2">
-                      <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-green shrink-0" />
+                  <div className="bg-white/95 rounded-2xl p-3.5 sm:p-4.5 border border-[#CBD8F6]/80 shadow-xs space-y-2">
+                    <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-vannam-green shrink-0" />
                       <span>Key Learning Objectives</span>
                     </h4>
-                    <ul className="space-y-2 text-xs sm:text-sm text-[#0F2963]">
+                    <ul className="space-y-1.5 text-xs text-[#0F2963]">
                       {programsData[activeProgramTab].objectives.map((obj, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <span className="w-2 h-2 rounded-full bg-vannam-yellow mt-1.5 shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-vannam-yellow mt-1.5 shrink-0" />
                           <span>{obj}</span>
                         </li>
                       ))}
@@ -1531,14 +1632,14 @@ export default function Home() {
                   </div>
 
                   {/* Featured Activities */}
-                  <div className="bg-white/90 rounded-2xl p-4 sm:p-6 border border-[#CBD8F6]/80 shadow-xs space-y-3">
-                    <h4 className="font-heading font-extrabold text-[#0F2963] text-base sm:text-lg flex items-center gap-2">
-                      <Play className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0" />
+                  <div className="bg-white/95 rounded-2xl p-3.5 sm:p-4.5 border border-[#CBD8F6]/80 shadow-xs space-y-2">
+                    <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm flex items-center gap-1.5">
+                      <Play className="w-4 h-4 text-vannam-yellow shrink-0" />
                       <span>Core Daily Activities</span>
                     </h4>
-                    <div className="flex flex-wrap gap-2 pt-1">
+                    <div className="flex flex-wrap gap-1.5 pt-1">
                       {programsData[activeProgramTab].activities.map((act, i) => (
-                        <span key={i} className="px-2.5 sm:px-3 py-1.5 bg-[#E8EEFB]/90 rounded-xl text-xs font-bold text-[#0F2963] flex items-center gap-1.5">
+                        <span key={i} className="px-2.5 py-1 bg-[#E8EEFB]/90 rounded-lg text-[11px] font-bold text-[#0F2963] flex items-center gap-1 shadow-2xs">
                           <Check className="w-3 h-3 text-vannam-green shrink-0" />
                           <span>{act}</span>
                         </span>
@@ -1549,72 +1650,81 @@ export default function Home() {
                 </div>
 
                 {/* Enquire CTA */}
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-4 border-t border-[#0F2963]/10 relative">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-[#0F2963]/10 relative">
                   <span className="text-xs font-bold text-[#334155] text-center sm:text-left">
                     Interested in {programsData[activeProgramTab].title}?
                   </span>
                   <button
                     onClick={() => setIsTourModalOpen(true)}
-                    className="btn-primary w-full sm:w-auto px-6 py-3 text-xs sm:text-sm min-h-[44px] flex items-center justify-center"
+                    className="btn-primary w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm !min-h-0 flex items-center justify-center shadow-md gap-2 active:scale-95 transition-transform"
                   >
-                    Enquire for Admission
+                    <Calendar className="w-3.5 h-3.5 text-vannam-yellow" />
+                    <span>Enquire for Admission</span>
                   </button>
                 </div>
 
               </div>
-            </div>
+            </ScrollReveal>
           )}
 
+          {/* Rainbow Arc Bridge */}
+          <RainbowArcBridge className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Why Us */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
-      {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION - INNOVATIVE INTERACTIVE COCKPIT */}
-      <section id="why-us" className="scroll-mt-24 py-12 sm:py-20 lg:py-28 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative overflow-hidden">
+      {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
+      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
         
-        {/* Floating Decorative Elements */}
-        <div className="hidden lg:block absolute top-12 left-8 animate-float pointer-events-none opacity-80">
-          <RainbowIcon className="w-16 h-10 drop-shadow-sm" />
+        {/* Floating Decorative Elements for Desktop Whitespace */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80">
+          <RainbowIcon className="w-14 h-9 drop-shadow-sm" />
         </div>
-        <div className="hidden lg:block absolute bottom-12 right-8 animate-float-reverse pointer-events-none opacity-80">
-          <PuzzlePieceIcon color="amber" className="w-14 h-14" />
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-80">
+          <PuzzlePieceIcon color="amber" className="w-12 h-12" />
         </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 space-y-8 sm:space-y-10">
-          
+        <div className="hidden xl:block absolute top-24 right-10 animate-flutter pointer-events-none opacity-85">
+          <ButterflyIcon color="rose" className="w-8 h-8" />
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-vannam-yellow/10 border border-vannam-yellow/30 text-vannam-orange text-xs font-extrabold uppercase tracking-widest shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2">
+            <div className="flex justify-center mb-1">
+              <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            </div>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-vannam-yellow/10 border border-vannam-yellow/30 text-vannam-orange text-[11px] font-extrabold uppercase tracking-widest shadow-2xs">
               <Star className="w-3.5 h-3.5 shrink-0" />
               <span>Interactive Standard Comparison</span>
             </span>
             
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              How We Differ From <br className="hidden sm:block" />
-              <span className="inline-block whitespace-nowrap text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-8">Other Schools</span>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              How We Differ From{" "}
+              <span className="inline-block whitespace-nowrap text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-6">Other Schools</span>
             </h2>
             
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] leading-relaxed">
-              Tap any feature parameter below to launch the live side-by-side comparison console:
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+              Tap any feature parameter below to compare side-by-side:
             </p>
-          </div>
+          </ScrollReveal>
 
-          {/* INNOVATIVE FEATURE SELECTOR TILES */}
-          <div className="flex overflow-x-auto sm:grid sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 pb-3 sm:pb-0 scrollbar-none snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0">
+          {/* FEATURE SELECTOR TILES */}
+          <ScrollReveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
             {differentiators.map((item, idx) => {
               const isSelected = activeWhyUsTab === idx;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveWhyUsTab(idx)}
-                  className={`min-w-[130px] xs:min-w-[145px] sm:min-w-0 flex-1 snap-start p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center gap-1.5 sm:gap-2 shrink-0 sm:shrink min-h-[90px] ${
+                  className={`w-full p-2.5 sm:p-3.5 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center gap-1.5 min-h-[78px] sm:min-h-[86px] active:scale-95 ${
                     isSelected
-                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-xl scale-[1.02] sm:scale-105"
-                      : "bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8]"
+                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-lg scale-[1.02] sm:scale-105"
+                      : "bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] shadow-2xs"
                   }`}
                 >
-                  <span className="text-xl sm:text-2xl">{item.icon}</span>
-                  <span className="text-[11px] sm:text-xs font-extrabold leading-tight">{item.shortTitle}</span>
-                  <span className={`text-[9px] font-black uppercase px-2 py-0.5 rounded-full whitespace-nowrap ${
+                  <span className="text-lg sm:text-2xl">{item.icon}</span>
+                  <span className="text-[10.5px] sm:text-xs font-extrabold leading-tight">{item.shortTitle}</span>
+                  <span className={`text-[8px] sm:text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full whitespace-nowrap ${
                     isSelected ? "bg-vannam-yellow text-[#0F2963]" : "bg-[#E8EEFB] text-[#00A8E8]"
                   }`}>
                     {item.stat}
@@ -1622,98 +1732,76 @@ export default function Home() {
                 </button>
               );
             })}
-          </div>
+          </ScrollReveal>
 
-          {/* INNOVATIVE DUAL-PANEL COMPARISON COCKPIT - RESPONSIVE STACK ON MOBILE, SIDE-BY-SIDE ON DESKTOP */}
+          {/* DUAL-PANEL COMPARISON COCKPIT */}
           {(() => {
             const current = differentiators[activeWhyUsTab];
             return (
-              <div className="bg-white rounded-2xl sm:rounded-3xl lg:rounded-[2.5rem] border-2 sm:border-4 border-[#CBD8F6] shadow-xl sm:shadow-2xl p-4 sm:p-8 lg:p-10 relative overflow-hidden animate-in fade-in zoom-in-95">
+              <ScrollReveal variant="reveal-scale" className="bg-white rounded-2xl sm:rounded-3xl border-2 sm:border-3 border-[#CBD8F6] shadow-lg sm:shadow-xl p-3.5 sm:p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
                 
                 {/* Cockpit Top Bar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 pb-4 sm:pb-6 border-b border-[#E8EEFB]">
-                  <div className="flex items-center gap-3 text-center sm:text-left">
-                    <span className="text-2xl sm:text-4xl p-2 sm:p-2.5 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pb-3 sm:pb-4 border-b border-[#E8EEFB]">
+                  <div className="flex items-center gap-2.5 text-center sm:text-left">
+                    <span className="text-xl sm:text-3xl p-2 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
                     <div>
-                      <span className="text-[10px] sm:text-xs font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
-                      <h3 className="font-heading font-extrabold text-base sm:text-2xl text-[#0F2963] leading-tight">{current.feature}</h3>
+                      <span className="text-[9.5px] sm:text-[10.5px] font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
+                      <h3 className="font-heading font-extrabold text-sm sm:text-lg text-[#0F2963] leading-tight">{current.feature}</h3>
                     </div>
                   </div>
 
-                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[10px] sm:text-xs font-black text-center">
+                  <span className="px-3 py-1 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[10px] sm:text-[11px] font-black text-center shadow-2xs">
                     Verified Benchmark: {current.proofTag}
                   </span>
                 </div>
 
-                {/* Split Dual-Panel Comparison Cockpit (Stacked on Mobile, 2-Col on Desktop) */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 pt-5 sm:pt-8 items-stretch">
+                {/* Split Dual-Panel Comparison Cockpit (2 Grids Per Row) */}
+                <div className="grid grid-cols-2 gap-2.5 sm:gap-6 pt-3 sm:pt-5 items-stretch">
                   
-                  {/* LEFT PANEL: VANNAM WORLD (98% VISUAL GAUGE) */}
-                  <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-2xl sm:rounded-3xl p-4 sm:p-8 border-2 border-[#A7F3D0] space-y-4 sm:space-y-6 relative overflow-hidden shadow-sm flex flex-col justify-between">
-                    <div className="space-y-3 sm:space-y-6">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="px-2.5 sm:px-3 py-1 rounded-full bg-emerald-700 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shrink-0">
-                          <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-300 shrink-0" />
-                          <span>Vannam Standard</span>
+                  {/* LEFT PANEL: VANNAM WORLD */}
+                  <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-xl sm:rounded-2xl p-3 sm:p-5 border-2 border-[#A7F3D0] space-y-2.5 sm:space-y-3 relative overflow-hidden shadow-xs flex flex-col justify-between">
+                    <div className="space-y-2 sm:space-y-2.5">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
+                        <span className="px-2 sm:px-3 py-0.5 rounded-full bg-emerald-700 text-white text-[8.5px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0">
+                          <CheckCircle2 className="w-3 3 text-emerald-300 shrink-0" />
+                          <span>Vannam</span>
                         </span>
-                        <span className="font-heading font-black text-lg sm:text-2xl text-emerald-950">{current.stat}</span>
-                      </div>
-
-                      {/* Visual Score Gauge Bar */}
-                      <div className="space-y-1 sm:space-y-1.5">
-                        <div className="flex justify-between text-[10px] sm:text-xs font-black text-emerald-900">
-                          <span>Quality Score</span>
-                          <span>98/100</span>
-                        </div>
-                        <div className="w-full h-2.5 sm:h-3 bg-emerald-200/80 rounded-full overflow-hidden p-0.5">
-                          <div className="h-full bg-emerald-600 rounded-full w-[98%] animate-pulse" />
-                        </div>
+                        <span className="font-heading font-black text-xs sm:text-xl text-emerald-950 text-center sm:text-right">{current.stat}</span>
                       </div>
 
                       {/* Visual Checkmark Pills */}
-                      <div className="space-y-2 sm:space-y-3 pt-1">
+                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
                         {current.vannamPoints.map((pt, i) => (
-                          <div key={i} className="flex items-start sm:items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/95 border border-emerald-300/80 shadow-2xs">
-                            <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs sm:text-sm shrink-0 mt-0.5 sm:mt-0">
+                          <div key={i} className="flex items-start gap-1.5 sm:gap-2 p-2 sm:p-2.5 rounded-xl bg-white/95 border border-emerald-300/80 shadow-2xs">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-[9px] sm:text-xs shrink-0 mt-0.5">
                               ✓
                             </div>
-                            <span className="text-xs sm:text-sm font-extrabold text-[#0F2963] leading-snug">{pt}</span>
+                            <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-[#0F2963] leading-snug">{pt}</span>
                           </div>
                         ))}
                       </div>
                     </div>
                   </div>
 
-                  {/* RIGHT PANEL: TRADITIONAL SCHOOLS (38% VISUAL GAUGE) */}
-                  <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-2xl sm:rounded-3xl p-4 sm:p-8 border-2 border-rose-200 space-y-4 sm:space-y-6 relative overflow-hidden opacity-95 flex flex-col justify-between">
-                    <div className="space-y-3 sm:space-y-6">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className="px-2.5 sm:px-3 py-1 rounded-full bg-slate-800 text-slate-200 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shrink-0">
-                          <X className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-rose-400 shrink-0" />
-                          <span>Traditional Daycare</span>
+                  {/* RIGHT PANEL: TRADITIONAL SCHOOLS */}
+                  <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-xl sm:rounded-2xl p-3 sm:p-5 border-2 border-rose-200 space-y-2.5 sm:space-y-3 relative overflow-hidden opacity-95 flex flex-col justify-between">
+                    <div className="space-y-2 sm:space-y-2.5">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
+                        <span className="px-2 sm:px-3 py-0.5 rounded-full bg-slate-800 text-slate-200 text-[8.5px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0">
+                          <X className="w-3 h-3 text-rose-400 shrink-0" />
+                          <span>Others</span>
                         </span>
-                        <span className="font-heading font-bold text-sm sm:text-lg text-slate-500 whitespace-nowrap">Baseline</span>
-                      </div>
-
-                      {/* Visual Score Gauge Bar */}
-                      <div className="space-y-1 sm:space-y-1.5">
-                        <div className="flex justify-between text-[10px] sm:text-xs font-bold text-slate-600">
-                          <span>Quality Score</span>
-                          <span>38/100</span>
-                        </div>
-                        <div className="w-full h-2.5 sm:h-3 bg-slate-200 rounded-full overflow-hidden p-0.5">
-                          <div className="h-full bg-rose-400 rounded-full w-[38%]" />
-                        </div>
+                        <span className="font-heading font-bold text-[10px] sm:text-sm text-slate-500 whitespace-nowrap text-center sm:text-right">Baseline</span>
                       </div>
 
                       {/* Visual Warning Pills */}
-                      <div className="space-y-2 sm:space-y-3 pt-1">
+                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
                         {current.traditionalPoints.map((pt, i) => (
-                          <div key={i} className="flex items-start sm:items-center gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-xl sm:rounded-2xl bg-white/85 border border-rose-200/80 shadow-2xs">
-                            <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-md sm:rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-black text-xs sm:text-sm shrink-0 mt-0.5 sm:mt-0">
+                          <div key={i} className="flex items-start gap-1.5 sm:gap-2 p-2 sm:p-2.5 rounded-xl bg-white/85 border border-rose-200/80 shadow-2xs">
+                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-[9px] sm:text-xs shrink-0 mt-0.5">
                               ✕
                             </div>
-                            <span className="text-xs sm:text-sm font-semibold text-slate-600 leading-snug">{pt}</span>
+                            <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-semibold text-slate-600 leading-snug">{pt}</span>
                           </div>
                         ))}
                       </div>
@@ -1722,95 +1810,169 @@ export default function Home() {
 
                 </div>
 
-              </div>
+              </ScrollReveal>
             );
           })()}
 
           {/* Bottom Trust CTA Strip */}
-          <div className="bento-card p-5 sm:p-8 bg-gradient-to-r from-vannam-yellow/10 via-white to-vannam-cyan/10 border-2 border-vannam-yellow/30 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 text-center sm:text-left">
-            <div className="flex items-center gap-3.5 sm:gap-4">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center text-2xl shrink-0 shadow-md font-bold">
+          <ScrollReveal className="bento-card p-4 sm:p-5 bg-gradient-to-r from-vannam-yellow/15 via-white to-vannam-cyan/15 border-2 border-vannam-yellow/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left shadow-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center text-2xl shrink-0 shadow-xs font-bold">
                 🧸
               </div>
               <div>
-                <h4 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963]">See the difference with your own eyes</h4>
-                <p className="text-xs sm:text-sm text-[#334155] font-medium">Join a 30-minute private campus walk-through with our academic principal.</p>
+                <h4 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963]">See the difference with your own eyes</h4>
+                <p className="text-[11px] sm:text-xs text-[#334155] font-medium">Join a 30-minute private campus walk-through with our academic principal.</p>
               </div>
             </div>
 
             <button
               onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-              className="btn-primary w-full sm:w-auto px-6 sm:px-8 py-3.5 text-xs sm:text-sm font-bold shrink-0 flex items-center justify-center gap-2 shadow-lg min-h-[44px]"
+              className="btn-primary w-full sm:w-auto px-5 py-2.5 text-xs sm:text-sm font-bold shrink-0 flex items-center justify-center gap-2 shadow-md !min-h-0 active:scale-95 transition-transform"
             >
               <Calendar className="w-4 h-4 text-vannam-yellow" />
               <span>Schedule Campus Visit</span>
             </button>
-          </div>
+          </ScrollReveal>
+
+          {/* Cloud Bridge */}
+          <CloudBridge label="7 Shades of Growth" className="mt-6 -mb-4" />
 
         </div>
+
+        {/* Wave Divider into 7-Shades Methodology */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
-      <section id="approach" className="scroll-mt-24 py-12 sm:py-20 lg:py-28 bg-[#FFFDF8] bg-playful-dots border-y-2 border-[#E8EEFB] relative overflow-hidden">
+      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
         
-        {/* Subtle Ambient Glow corresponding to active shade */}
-        <div 
-          className="absolute top-1/3 left-1/2 -translate-x-1/2 w-full max-w-5xl h-[500px] rounded-full blur-3xl -z-10 opacity-30 pointer-events-none transition-all duration-700"
-          style={{ backgroundColor: (methodologyShades.find(s => s.id === activeMethodologyShade) || methodologyShades[0]).hex }}
-        />
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <PaintSplatterIcon color="amber" className="w-12 h-12" />
+        </div>
+        <div className="hidden lg:block absolute top-12 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <MusicNotesCluster className="w-10 h-10" />
+        </div>
+        <div className="hidden xl:block absolute bottom-10 left-10 animate-flutter pointer-events-none opacity-85 z-10">
+          <ButterflyIcon color="purple" className="w-8 h-8" />
+        </div>
+        <div className="hidden xl:block absolute bottom-12 right-12 animate-wiggle pointer-events-none opacity-80 z-10">
+          <BlossomFlowerIcon color="sky" className="w-9 h-9" />
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          {/* Section Header with Multi-Color Innovation Badges */}
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border-2 border-[#CBD8F6] shadow-xs">
-              <Compass className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#0F2963] shrink-0" />
-              <span className="text-xs font-black uppercase tracking-wider text-[#0F2963]">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex justify-center mb-1">
+              <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#CBD8F6] shadow-2xs">
+              <Compass className="w-3.5 h-3.5 text-[#0F2963] shrink-0" />
+              <span className="text-[10.5px] sm:text-xs font-black uppercase tracking-wider text-[#0F2963]">
                 The 7-Shade Growth Spectrum
               </span>
             </div>
 
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-5xl font-extrabold text-[#0F2963] leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
               How Children Learn & Flourish: <br className="hidden sm:block" />
-              <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-8">The 7 Shades</span> of Development
+              <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-6">The 7 Shades</span> of Development
             </h2>
 
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] font-medium leading-relaxed max-w-2xl mx-auto">
-              Rooted in our signature motto <em>&quot;Learning Through Every Shade of Play&quot;</em>. Tap each developmental shade below to inspect our tactile Montessori tools, live daily immersion, and verified child milestones.
+            <p className="text-xs sm:text-sm text-[#334155] font-medium leading-relaxed max-w-xl mx-auto">
+              Rooted in our signature motto <em>&quot;Learning Through Every Shade of Play&quot;</em>. Tap each shade below to explore tools and milestones.
             </p>
           </div>
 
-          {/* Quick-Tap Category Tabs for Mobile View */}
-          <div className="flex lg:hidden overflow-x-auto gap-2 pb-3 mb-6 scrollbar-none snap-x px-1">
-            {methodologyShades.map((shade) => {
-              const isActive = activeMethodologyShade === shade.id;
-              const Icon = shade.icon;
-              return (
-                <button
-                  key={`tab-${shade.id}`}
-                  onClick={() => {
-                    setActiveMethodologyShade(shade.id);
-                    setIsMethodologyAutoPaused(true);
-                  }}
-                  className={`px-3 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 shrink-0 snap-center transition-all min-h-[40px] ${
-                    isActive
-                      ? "text-white shadow-md scale-[1.02]"
-                      : "bg-white text-[#0F2963] border border-[#CBD8F6]/80 hover:bg-[#F0F4FC]"
-                  }`}
-                  style={{
-                    backgroundColor: isActive ? shade.hex : undefined
-                  }}
-                >
-                  <Icon className="w-3.5 h-3.5 shrink-0" />
-                  <span>{shade.title}</span>
-                </button>
-              );
-            })}
+          {/* MOBILE VIEW: HORIZONTAL CARDS CAROUSEL (No circle on mobile) */}
+          <div className="block lg:hidden mb-6 sm:mb-8">
+            <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
+              {methodologyShades.map((shade) => {
+                const Icon = shade.icon;
+                return (
+                  <div
+                    key={`mobile-card-${shade.id}`}
+                    className="w-[85vw] max-w-[320px] xs:max-w-[340px] shrink-0 snap-center bg-white/95 backdrop-blur-xl rounded-2xl border-2 p-4 shadow-md flex flex-col justify-between"
+                    style={{ borderColor: `${shade.hex}50` }}
+                  >
+                    <div className="space-y-2.5">
+                      {/* Badge & Title */}
+                      <div className="flex items-center justify-between gap-1.5 flex-wrap">
+                        <div className="flex items-center gap-2">
+                          <div 
+                            className="w-8 h-8 rounded-xl flex items-center justify-center shadow-xs shrink-0"
+                            style={{ backgroundColor: `${shade.hex}20`, color: shade.hex }}
+                          >
+                            <Icon className="w-4 h-4 stroke-[2.5]" />
+                          </div>
+                          <div>
+                            <h3 className="font-heading text-base font-extrabold text-[#0F2963] leading-tight">
+                              {shade.title}
+                            </h3>
+                            <span 
+                              className="text-[9px] font-black uppercase tracking-wider block"
+                              style={{ color: shade.hex }}
+                            >
+                              {shade.tagline}
+                            </span>
+                          </div>
+                        </div>
+                        <span className="px-2 py-0.5 rounded-full bg-[#F0F4FC] text-[#0F2963] text-[9px] font-extrabold border border-[#CBD8F6]">
+                          {shade.dailyDuration}
+                        </span>
+                      </div>
+
+                      {/* Quote & Description */}
+                      <p className="text-[11px] font-bold italic" style={{ color: shade.hex }}>
+                        &ldquo;{shade.quote}&rdquo;
+                      </p>
+                      <p className="text-xs text-[#334155] leading-relaxed">
+                        {shade.description}
+                      </p>
+
+                      {/* Tools & Insight Block */}
+                      <div className="bg-[#F8FAFC] rounded-xl p-2.5 border border-[#E8EEFB] space-y-1.5">
+                        <span className="text-[10px] font-extrabold text-[#0F2963] block">
+                          🛠️ Key Tools & Methods:
+                        </span>
+                        <ul className="space-y-1">
+                          {shade.tools.slice(0, 2).map((tool, idx) => (
+                            <li key={idx} className="text-[10.5px] text-[#334155] leading-tight">
+                              <strong className="text-[#0F2963]">{tool.name}:</strong> {tool.desc}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="bg-emerald-50/80 rounded-xl p-2 border border-emerald-200/60">
+                        <span className="text-[9.5px] font-bold text-emerald-900 block leading-tight">
+                          💡 <strong>Insight:</strong> {shade.scientificInsight}
+                        </span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setIsTourModalOpen(true)}
+                      className={`${shade.btnClass} w-full mt-3 py-2 text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform !min-h-0`}
+                    >
+                      <Calendar className="w-3.5 h-3.5 shrink-0" />
+                      <span>Experience In Campus</span>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Mobile swipe hint */}
+            <p className="text-center text-[10.5px] font-bold text-[#64748B] mt-1 flex items-center justify-center gap-1">
+              <span>👉 Swipe horizontally to explore all 7 shades</span>
+            </p>
           </div>
 
-          {/* Interactive Radial Color Wheel & Glassmorphism Reveal */}
+          {/* DESKTOP VIEW: Interactive Radial Color Wheel & Glassmorphism Reveal (Hidden on Mobile) */}
           <div 
-            className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center relative z-10 mb-12 sm:mb-16"
+            className="hidden lg:grid grid-cols-12 gap-10 items-center relative z-10 mb-8"
           >
             {/* Global Hidden Sync Timer for Methodology Wheel */}
             <div 
@@ -1829,14 +1991,14 @@ export default function Home() {
               }}
             />
             
-            {/* Interactive Radial Color Wheel (Responsive Centered Orbit on Mobile & Desktop) */}
-            <div className="w-full lg:col-span-5 flex justify-center items-center relative py-2 lg:py-0">
+            {/* Interactive Radial Color Wheel (Desktop Only) */}
+            <div className="col-span-5 flex justify-center items-center relative">
               {(() => {
                 const currentShade = methodologyShades.find(s => s.id === activeMethodologyShade) || methodologyShades[0];
                 const ActiveIcon = currentShade.icon;
                 
                 return (
-                  <div className="relative w-[250px] h-[250px] xs:w-[285px] xs:h-[285px] sm:w-[350px] sm:h-[350px] lg:w-[420px] lg:h-[420px] aspect-square rounded-full flex items-center justify-center mx-auto">
+                  <div className="relative w-[360px] h-[360px] aspect-square rounded-full flex items-center justify-center mx-auto">
                     
                     {/* Injecting CSS Keyframe for the smooth SVG circular loading animation */}
                     <style>{`
@@ -1853,23 +2015,21 @@ export default function Home() {
 
                     {/* Center Hub */}
                     <div 
-                      className="w-20 h-20 xs:w-24 xs:h-24 sm:w-32 sm:h-32 lg:w-40 lg:h-40 rounded-full z-20 flex flex-col items-center justify-center transition-all duration-500 bg-white shadow-xl p-2 text-center"
+                      className="w-32 h-32 rounded-full z-20 flex flex-col items-center justify-center transition-all duration-500 bg-white shadow-xl p-1.5 text-center"
                       style={{ 
                         border: `4px solid ${currentShade.hex}`
                       }}
                     >
-                      <ActiveIcon className="w-7 h-7 xs:w-9 xs:h-9 sm:w-12 sm:h-12 lg:w-16 lg:h-16 mb-1 transition-colors duration-500 shrink-0" style={{ color: currentShade.hex }} />
-                      <span className="text-[8px] xs:text-[9px] sm:text-[10px] lg:text-[11px] font-black uppercase text-[#0F2963] leading-tight px-1 truncate max-w-full">
+                      <ActiveIcon className="w-12 h-12 mb-0.5 transition-colors duration-500 shrink-0" style={{ color: currentShade.hex }} />
+                      <span className="text-[10.5px] font-black uppercase text-[#0F2963] leading-tight px-0.5 truncate max-w-full">
                         {currentShade.title}
                       </span>
                     </div>
 
                     {/* Orbiting 7 Nodes with Percentage Positioning for Responsive Scaling */}
                     {methodologyShades.map((shade, i) => {
-                      // Distribute evenly across 360 degrees, start at top (-90deg)
                       const angle = (i * (360 / methodologyShades.length)) - 90;
                       const rad = (angle * Math.PI) / 180;
-                      // 38% radius places nodes precisely along the dashed orbit line
                       const leftPercent = 50 + 38 * Math.cos(rad);
                       const topPercent = 50 + 38 * Math.sin(rad);
                       const isActive = activeMethodologyShade === shade.id;
@@ -1885,10 +2045,10 @@ export default function Home() {
                           onMouseEnter={() => setIsMethodologyAutoPaused(true)}
                           onMouseLeave={() => setIsMethodologyAutoPaused(false)}
                           aria-label={`Select ${shade.title}`}
-                          className={`absolute w-8 h-8 xs:w-10 xs:h-10 sm:w-13 sm:h-13 lg:w-16 lg:h-16 rounded-full flex flex-col items-center justify-center transition-all duration-300 group z-30 ${
+                          className={`absolute w-13 h-13 rounded-full flex flex-col items-center justify-center transition-all duration-300 group z-30 ${
                             isActive 
-                              ? "shadow-2xl ring-2 xs:ring-3 sm:ring-4 ring-white scale-110" 
-                              : "opacity-80 hover:opacity-100 shadow-sm hover:scale-105"
+                              ? "shadow-xl ring-2 ring-white scale-110" 
+                              : "opacity-80 hover:opacity-100 shadow-2xs hover:scale-105"
                           }`}
                           style={{
                             left: `${leftPercent}%`,
@@ -1896,8 +2056,8 @@ export default function Home() {
                             transform: `translate(-50%, -50%)`,
                             backgroundColor: isActive ? shade.hex : "#ffffff",
                             color: isActive ? "#ffffff" : shade.hex,
-                            border: isActive ? 'none' : `2px solid ${shade.hex}40`,
-                            boxShadow: isActive ? `0 10px 25px -5px ${shade.hex}80` : "none"
+                            border: isActive ? 'none' : `1.5px solid ${shade.hex}40`,
+                            boxShadow: isActive ? `0 8px 20px -4px ${shade.hex}80` : "none"
                           }}
                         >
                           {/* Animated Outer Loading Ring for Active Bubble */}
@@ -1923,12 +2083,12 @@ export default function Home() {
                             </svg>
                           )}
 
-                          <Icon className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-6 sm:h-6 lg:w-7 lg:h-7 stroke-[2.5] relative z-10" />
+                          <Icon className="w-5 h-5 stroke-[2.5] relative z-10" />
                           
                           {/* Floating Tooltip Label */}
                           {!isActive && (
-                            <div className="hidden sm:block absolute top-[110%] w-max opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40">
-                              <span className="bg-white text-[#0F2963] text-[10px] font-extrabold px-2 py-1 rounded-md shadow-md border border-[#E8EEFB] block">
+                            <div className="absolute top-[110%] w-max opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-40">
+                              <span className="bg-white text-[#0F2963] text-[9px] font-extrabold px-1.5 py-0.5 rounded shadow-sm border border-[#E8EEFB] block">
                                 {shade.title}
                               </span>
                             </div>
@@ -1941,8 +2101,8 @@ export default function Home() {
               })()}
             </div>
 
-            {/* Right: Glassmorphism Dynamic Content Reveal */}
-            <div className="w-full lg:col-span-7 relative">
+            {/* Right: Glassmorphism Dynamic Content Reveal (Desktop Only) */}
+            <div className="col-span-7 relative">
               {(() => {
                 const currentShade = methodologyShades.find(s => s.id === activeMethodologyShade) || methodologyShades[0];
                 const ActiveIcon = currentShade.icon;
@@ -1950,24 +2110,24 @@ export default function Home() {
                 return (
                   <div 
                     key={currentShade.id}
-                    className="bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl lg:rounded-[2rem] border-2 sm:border-[3px] p-4 xs:p-5 sm:p-8 lg:p-10 shadow-xl sm:shadow-2xl transition-all duration-700 relative overflow-hidden animate-in fade-in slide-in-from-bottom-3 lg:slide-in-from-right-4"
+                    className="bg-white/95 backdrop-blur-xl rounded-3xl border-2 p-7 shadow-lg transition-all duration-700 relative overflow-hidden animate-in fade-in slide-in-from-right-4"
                     style={{ borderColor: `${currentShade.hex}40` }}
                   >
                     {/* Background Watermark Icon */}
                     <div 
-                      className="absolute -right-12 -bottom-12 opacity-5 pointer-events-none transition-transform duration-700 rotate-12 scale-110"
+                      className="absolute -right-8 -bottom-8 opacity-5 pointer-events-none transition-transform duration-700 rotate-12 scale-110"
                       style={{ color: currentShade.hex }}
                     >
-                      <ActiveIcon className="w-80 h-80" />
+                      <ActiveIcon className="w-60 h-60" />
                     </div>
 
-                    <div className="relative z-10 space-y-4 sm:space-y-6">
+                    <div className="relative z-10 space-y-4">
                       
                       {/* Badge & Title */}
-                      <div className="space-y-2 sm:space-y-4">
-                        <div className="flex flex-wrap items-center gap-2">
+                      <div className="space-y-2">
+                        <div className="flex flex-wrap items-center gap-1.5">
                           <span 
-                            className="px-3 sm:px-4 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 shadow-2xs"
+                            className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-2xs"
                             style={{
                               backgroundColor: `${currentShade.hex}20`,
                               color: currentShade.hex
@@ -1976,38 +2136,38 @@ export default function Home() {
                             <span>{currentShade.tagline}</span>
                           </span>
 
-                          <span className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white text-[#0F2963] text-[10px] font-extrabold border border-[#CBD8F6] shadow-2xs">
+                          <span className="px-2.5 py-0.5 rounded-full bg-white text-[#0F2963] text-[9.5px] font-extrabold border border-[#CBD8F6] shadow-2xs">
                             {currentShade.dailyDuration}
                           </span>
                         </div>
 
                         <div>
-                          <h3 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963] leading-tight mb-1 transition-colors duration-500">
+                          <h3 className="font-heading text-2xl font-extrabold text-[#0F2963] leading-tight mb-0.5 transition-colors duration-500">
                             {currentShade.title}
                           </h3>
-                          <p className="text-xs sm:text-base font-bold italic" style={{ color: currentShade.hex }}>
+                          <p className="text-xs font-bold italic" style={{ color: currentShade.hex }}>
                             &ldquo;{currentShade.quote}&rdquo;
                           </p>
                         </div>
                       </div>
 
                       {/* Detailed Description */}
-                      <p className="text-xs xs:text-sm sm:text-base text-[#334155] font-medium leading-relaxed">
+                      <p className="text-sm text-[#334155] font-medium leading-relaxed">
                         {currentShade.description}
                       </p>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 pt-2">
+                      <div className="grid grid-cols-2 gap-3.5 pt-1">
                         
                         {/* Tools / Montessori Block */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#E8EEFB] shadow-2xs space-y-2 sm:space-y-3">
-                          <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] flex items-center gap-2 border-b border-[#F0F4FC] pb-2">
-                            <Puzzle className="w-4 h-4 shrink-0" style={{ color: currentShade.hex }} />
+                        <div className="bg-white rounded-2xl p-3.5 border border-[#E8EEFB] shadow-2xs space-y-1.5">
+                          <h4 className="font-heading font-extrabold text-xs text-[#0F2963] flex items-center gap-1.5 border-b border-[#F0F4FC] pb-1.5">
+                            <Puzzle className="w-3.5 h-3.5 shrink-0" style={{ color: currentShade.hex }} />
                             <span>Tactile Tools Used</span>
                           </h4>
-                          <ul className="space-y-2">
+                          <ul className="space-y-1">
                             {currentShade.tools.map((tool, idx) => (
-                              <li key={idx} className="flex items-start gap-2 text-[11px] sm:text-xs font-medium text-[#334155]">
-                                <span className="text-[14px] mt-0.5 leading-none shrink-0" style={{ color: currentShade.hex }}>•</span>
+                              <li key={idx} className="flex items-start gap-1.5 text-[11px] font-medium text-[#334155]">
+                                <span className="text-[12px] mt-0.5 leading-none shrink-0" style={{ color: currentShade.hex }}>•</span>
                                 <span><strong className="text-[#0F2963]">{tool.name}:</strong> {tool.desc}</span>
                               </li>
                             ))}
@@ -2015,18 +2175,18 @@ export default function Home() {
                         </div>
 
                         {/* Milestones / Benefit Block */}
-                        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#E8EEFB] shadow-2xs space-y-2 sm:space-y-3">
-                          <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] flex items-center gap-2 border-b border-[#F0F4FC] pb-2">
-                            <BookOpen className="w-4 h-4 text-vannam-orange shrink-0" />
+                        <div className="bg-white rounded-2xl p-3.5 border border-[#E8EEFB] shadow-2xs space-y-1.5">
+                          <h4 className="font-heading font-extrabold text-xs text-[#0F2963] flex items-center gap-1.5 border-b border-[#F0F4FC] pb-1.5">
+                            <BookOpen className="w-3.5 h-3.5 text-vannam-orange shrink-0" />
                             <span>Scientific Insight</span>
                           </h4>
-                          <p className="text-[11px] sm:text-xs text-[#0F2963] font-bold leading-relaxed bg-[#F0F4FC] p-2.5 sm:p-3 rounded-xl border border-[#CBD8F6]">
+                          <p className="text-[11px] text-[#0F2963] font-bold leading-snug bg-[#F0F4FC] p-2 rounded-xl border border-[#CBD8F6]">
                             {currentShade.scientificInsight}
                           </p>
-                          <ul className="space-y-1.5 mt-2">
+                          <ul className="space-y-1 mt-1">
                             {currentShade.milestones.slice(0, 2).map((milestone, idx) => (
-                              <li key={idx} className="flex items-center gap-1.5 text-[11px] font-bold text-[#334155]">
-                                <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: currentShade.hex }} />
+                              <li key={idx} className="flex items-center gap-1 text-[10.5px] font-bold text-[#334155]">
+                                <CheckCircle2 className="w-3 h-3 shrink-0" style={{ color: currentShade.hex }} />
                                 <span>{milestone}</span>
                               </li>
                             ))}
@@ -2036,14 +2196,13 @@ export default function Home() {
                       </div>
 
                       {/* Action Button */}
-                      <div className="pt-2">
+                      <div className="pt-1">
                         <button
                           onClick={() => setIsTourModalOpen(true)}
-                          className={`${currentShade.btnClass} w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-lg transition-transform hover:-translate-y-1 min-h-[44px]`}
+                          className={`${currentShade.btnClass} px-5 py-2.5 text-sm font-bold flex items-center justify-center gap-1.5 shadow-md transition-transform hover:-translate-y-0.5 !min-h-0`}
                         >
-                          <Calendar className="w-4 h-4 shrink-0" />
-                          <span className="hidden sm:inline">Experience {currentShade.title} In Campus</span>
-                          <span className="sm:hidden">Experience Our Approach</span>
+                          <Calendar className="w-3.5 h-3.5 shrink-0" />
+                          <span>Experience {currentShade.title} In Campus</span>
                         </button>
                       </div>
 
@@ -2055,79 +2214,98 @@ export default function Home() {
             
           </div>
 
-          {/* Bottom Innovation Row: The 4 Pillars of the 7-Shade Learning System */}
-          <div className="mt-8 sm:mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          {/* Bottom Row: The 4 Pillars of the 7-Shade Learning System */}
+          <div className="mt-4 sm:mt-6 grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
             
-            <div className="bento-card card-yellow p-4 sm:p-6 space-y-2 sm:space-y-3 relative group">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#F59E0B] text-[#0F2963] font-bold text-xl sm:text-2xl flex items-center justify-center shadow-md border-2 border-white">
+            <div className="bento-card card-yellow p-3 sm:p-4 space-y-1.5 relative group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#F59E0B] text-[#0F2963] font-bold text-base sm:text-lg flex items-center justify-center shadow-xs border border-white">
                 🌱
               </div>
-              <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#0F2963] leading-tight">Self-Paced Freedom</h4>
-              <p className="text-xs sm:text-xs text-[#334155] font-medium leading-relaxed">
-                Children choose activities based on inner curiosity, building intrinsic focus without pressure.
+              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-tight">Self-Paced Freedom</h4>
+              <p className="text-[10.5px] sm:text-[11px] text-[#334155] font-medium leading-snug">
+                Children choose activities based on curiosity, building focus without pressure.
               </p>
             </div>
 
-            <div className="bento-card card-green p-4 sm:p-6 space-y-2 sm:space-y-3 relative group">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#10B981] text-white font-bold text-xl sm:text-2xl flex items-center justify-center shadow-md border-2 border-white">
+            <div className="bento-card card-green p-3 sm:p-4 space-y-1.5 relative group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#10B981] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-xs border border-white">
                 🔬
               </div>
-              <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#0F2963] leading-tight">Tactile STEAM Labs</h4>
-              <p className="text-xs sm:text-xs text-[#334155] font-medium leading-relaxed">
-                Touching, manipulating, and observing real materials connects abstract concepts to physical reality.
+              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-tight">Tactile STEAM Labs</h4>
+              <p className="text-[10.5px] sm:text-[11px] text-[#334155] font-medium leading-snug">
+                Touching and manipulating real materials connects concepts to reality.
               </p>
             </div>
 
-            <div className="bento-card card-cyan p-4 sm:p-6 space-y-2 sm:space-y-3 relative group">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#00A8E8] text-white font-bold text-xl sm:text-2xl flex items-center justify-center shadow-md border-2 border-white">
+            <div className="bento-card card-cyan p-3 sm:p-4 space-y-1.5 relative group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#00A8E8] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-xs border border-white">
                 👩‍🏫
               </div>
-              <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#0F2963] leading-tight">Loving 1:4 to 1:8 Ratio</h4>
-              <p className="text-xs sm:text-xs text-[#334155] font-medium leading-relaxed">
-                Every teacher acts as an observant guide, tailoring learning steps to each child&apos;s unique pace.
+              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-tight">Loving 1:4 to 1:8 Ratio</h4>
+              <p className="text-[10.5px] sm:text-[11px] text-[#334155] font-medium leading-snug">
+                Every teacher acts as a guide, tailoring steps to each child&apos;s pace.
               </p>
             </div>
 
-            <div className="bento-card card-red p-4 sm:p-6 space-y-2 sm:space-y-3 relative group">
-              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-[#F43F5E] text-white font-bold text-xl sm:text-2xl flex items-center justify-center shadow-md border-2 border-white">
+            <div className="bento-card card-red p-3 sm:p-4 space-y-1.5 relative group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-[#F43F5E] text-white font-bold text-base sm:text-lg flex items-center justify-center shadow-xs border border-white">
                 📱
               </div>
-              <h4 className="font-heading font-extrabold text-base sm:text-lg text-[#0F2963] leading-tight">Parent Portal Updates</h4>
-              <p className="text-xs sm:text-xs text-[#334155] font-medium leading-relaxed">
-                Daily milestone logs, snack reports, and photo moments directly to your phone.
+              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-tight">Daily Activity & Homework Portal</h4>
+              <p className="text-[10.5px] sm:text-[11px] text-[#334155] font-medium leading-snug">
+                Real-time schedule tracking, actionable homework tasks, and 7-shades learning insights.
               </p>
             </div>
+
           </div>
 
         </div>
+
+        {/* Wave Divider into Daily Activities */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* DAILY ACTIVITIES SECTION */}
-      <section id="activities" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SmilingSunIcon className="w-12 h-12" />
+        </div>
+        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <HappyCloudIcon className="w-14 h-10" />
+        </div>
+        <div className="hidden xl:block absolute bottom-10 left-10 animate-drift pointer-events-none opacity-80 z-10">
+          <PaperPlaneIcon className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-red bg-rose-100 border border-rose-300 px-4 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+            <div className="flex justify-center mb-1">
+              <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-red bg-rose-100 border border-rose-300 px-3 py-1 rounded-full shadow-2xs">
               <Clock className="w-3.5 h-3.5" />
               <span>A Day at Vannam World Preschool</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              Joyful <span className="text-vannam-red underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-8">Daily Activities</span>
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              Joyful <span className="text-vannam-red underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Daily Activities</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               Every hour is balanced between structured learning, free play, organic dining, and restful quiet time.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+          <div className="grid lg:grid-cols-12 gap-3.5 sm:gap-6 items-start">
             
-            {/* Timeline Tabs - Horizontal on Mobile, Sticky Column on Desktop */}
-            <div className="lg:col-span-4 flex flex-row lg:flex-col gap-2.5 sm:gap-3 overflow-x-auto lg:overflow-visible pb-3 lg:pb-0 scrollbar-none snap-x lg:sticky lg:top-28 z-10 -mx-4 px-4 sm:mx-0 sm:px-0">
+            {/* Timeline Tabs - 3-col Grid on Mobile, Sticky Column on Desktop */}
+            <ScrollReveal className="lg:col-span-4 grid grid-cols-3 lg:flex lg:flex-col gap-1.5 sm:gap-2.5 pb-1 lg:pb-0 lg:sticky lg:top-28 z-10">
               {[
-                { id: "morning", label: "Morning Block", sub: "8:00 AM - 11:00 AM", icon: Sun, color: "text-[#F59E0B]", activeBorder: "border-[#F59E0B]", bg: "bg-amber-100" },
-                { id: "mid-day", label: "Mid-Day Block", sub: "11:00 AM - 1:00 PM", icon: Cloud, color: "text-[#F97316]", activeBorder: "border-[#F97316]", bg: "bg-orange-100" },
-                { id: "afternoon", label: "Afternoon Block", sub: "1:00 PM - 4:00 PM", icon: Moon, color: "text-[#8B5CF6]", activeBorder: "border-[#8B5CF6]", bg: "bg-purple-100" }
+                { id: "morning", label: "Morning", sub: "8:00 - 11:00 AM", icon: Sun, color: "text-[#F59E0B]", activeBorder: "border-[#F59E0B]", bg: "bg-amber-100" },
+                { id: "mid-day", label: "Mid-Day", sub: "11:00 - 12:00 PM", icon: Cloud, color: "text-[#F97316]", activeBorder: "border-[#F97316]", bg: "bg-orange-100" },
+                { id: "afternoon", label: "Afternoon", sub: "1:00 - 4:00 PM", icon: Moon, color: "text-[#8B5CF6]", activeBorder: "border-[#8B5CF6]", bg: "bg-purple-100" }
               ].map((tab) => {
                 const isActive = activeRoutineTab === tab.id;
                 const Icon = tab.icon;
@@ -2136,63 +2314,64 @@ export default function Home() {
                   <button
                     key={tab.id}
                     onClick={() => setActiveRoutineTab(tab.id)}
-                    className={`shrink-0 snap-center min-w-[170px] xs:min-w-[190px] sm:min-w-[220px] lg:min-w-0 w-auto lg:w-full text-left p-3 sm:p-4 rounded-2xl transition-all duration-200 flex items-center gap-2.5 sm:gap-3 border-2 group min-h-[52px] ${
+                    className={`w-full text-center sm:text-left p-2.5 sm:p-3.5 rounded-2xl transition-all duration-200 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 border-2 group !min-h-0 ${
                       isActive 
-                        ? `bg-white shadow-md ${tab.activeBorder}` 
+                        ? `bg-white shadow-md ${tab.activeBorder} scale-[1.01] sm:scale-102` 
                         : "bg-white/70 border-[#CBD8F6]/60 hover:bg-white hover:border-[#CBD8F6]"
                     }`}
                   >
-                    <div className={`w-9 h-9 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center transition-colors shrink-0 ${isActive ? tab.bg : "bg-[#F0F4FC] group-hover:bg-gray-100"}`}>
+                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${isActive ? tab.bg : "bg-[#F0F4FC] group-hover:bg-gray-100"}`}>
                       <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${isActive ? tab.color : "text-gray-400 group-hover:text-gray-600"}`} />
                     </div>
                     <div className="min-w-0">
-                      <span className={`block font-heading font-extrabold text-xs sm:text-sm truncate ${isActive ? "text-[#0F2963]" : "text-gray-600"}`}>
+                      <span className={`block font-heading font-extrabold text-[11px] sm:text-xs truncate ${isActive ? "text-[#0F2963]" : "text-gray-600"}`}>
                         {tab.label}
                       </span>
-                      <span className={`block text-[10px] sm:text-xs font-bold truncate ${isActive ? tab.color : "text-gray-400"}`}>
+                      <span className={`block text-[8.5px] sm:text-[10px] font-bold truncate ${isActive ? tab.color : "text-gray-400"}`}>
                         {tab.sub}
                       </span>
                     </div>
                   </button>
                 );
               })}
-            </div>
+            </ScrollReveal>
 
-            {/* Dynamic Activity Cards Grid - Responsive columns */}
+            {/* Dynamic Activity Cards Grid (2 Grids per row on mobile) */}
             <div className="lg:col-span-8 relative">
-              <div className="grid grid-cols-1 xs:grid-cols-2 xl:grid-cols-3 gap-3.5 sm:gap-5">
+              <div className="grid grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3.5">
                 {dailyActivities
                   .filter((act) => act.time === activeRoutineTab)
                   .map((act, i) => {
                     const CardIcon = act.Icon;
                     
                     return (
-                      <div 
+                      <ScrollReveal 
                         key={`${activeRoutineTab}-${i}`} 
-                        className={`relative overflow-hidden rounded-2xl sm:rounded-3xl border-2 bg-gradient-to-br ${act.bgClass} p-4 sm:p-6 shadow-xs hover:shadow-lg transition-all duration-300 group hover:-translate-y-1 flex flex-col justify-between`}
+                        stagger={((i % 3) + 1)}
+                        className={`relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br ${act.bgClass} p-3 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 group hover:-translate-y-0.5 flex flex-col justify-between`}
                       >
                         {/* Background Watermark SVG */}
-                        <div className="absolute -right-4 -top-4 opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none rotate-12">
-                          <CardIcon className="w-24 h-24 sm:w-36 sm:h-36" color={act.color} />
+                        <div className="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none rotate-12">
+                          <CardIcon className="w-18 h-18 sm:w-28 sm:h-28" color={act.color} />
                         </div>
 
                         {/* Interactive Floating Icon */}
-                        <div className="relative z-10 bg-white w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl shadow-xs border border-white/80 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shrink-0">
-                          <CardIcon className="w-6 h-6 sm:w-8 sm:h-8" color={act.color} />
+                        <div className="relative z-10 bg-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-xs border border-white/80 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform duration-300 shrink-0">
+                          <CardIcon className="w-4 h-4 sm:w-6 sm:h-6" color={act.color} />
                         </div>
 
-                        <div className="relative z-10 space-y-1 sm:space-y-1.5">
-                          <span className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-[#0F2963]/70 bg-white/70 px-2 py-0.5 rounded-md inline-block">
+                        <div className="relative z-10 space-y-1">
+                          <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-[#0F2963]/70 bg-white/80 px-2 py-0.5 rounded-md inline-block shadow-2xs">
                             {act.time}
                           </span>
-                          <h3 className="font-heading font-extrabold text-[#0F2963] text-sm sm:text-base leading-tight">
+                          <h3 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm leading-tight">
                             {act.title}
                           </h3>
-                          <p className="text-xs text-[#334155] font-medium leading-relaxed">
+                          <p className="text-[10.5px] sm:text-xs text-[#334155] font-medium leading-snug">
                             {act.desc}
                           </p>
                         </div>
-                      </div>
+                      </ScrollReveal>
                     );
                   })}
               </div>
@@ -2200,106 +2379,147 @@ export default function Home() {
 
           </div>
 
+          {/* Doodle Divider */}
+          <DoodleDivider className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Facilities */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SchoolCastleIcon className="w-12 h-12" />
+        </div>
+        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <SproutPlantIcon className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-4 py-1.5 rounded-full shadow-2xs">
+          {/* Section Header */}
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <SchoolCastleIcon className="w-8 h-8 text-vannam-navy animate-float" />
+              <PlaygroundSlideIcon className="w-8 h-8 animate-bounce-gentle" />
+              <SchoolBusToyIcon className="w-9 h-9 animate-wiggle" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>World-Class Campus</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
               Facilities Engineered for <br className="hidden sm:block" />
-              <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-8">Safety & Wonder</span>
+              <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Safety & Wonder</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               Designed from the ground up with rounded edges, medical-grade air filtration, and engaging play environments.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+          {/* HORIZONTAL CARDS: Horizontal Scroll on Mobile/Tablet, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5">
             {facilities.map((fac, idx) => (
-              <div key={idx} className={`bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between`}>
-                <div className="relative h-44 xs:h-48 sm:h-48 w-full overflow-hidden">
+              <ScrollReveal key={idx} stagger={((idx % 3) + 1)} className={`w-[260px] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
+                <div className="relative h-34 xs:h-38 sm:h-44 w-full overflow-hidden">
                   <Image 
                     src={fac.image} 
                     alt={fac.title} 
                     fill 
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition duration-500" 
                   />
-                  <div className="absolute top-2.5 right-2.5 sm:top-3 sm:right-3 bg-white/95 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-extrabold text-[#0F2963] shadow-xs">
+                  <div className="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black text-[#0F2963] shadow-xs">
                     {fac.tag}
                   </div>
                 </div>
-                <div className="p-4 sm:p-6 space-y-1.5 sm:space-y-2">
-                  <h3 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963]">{fac.title}</h3>
-                  <p className="text-xs sm:text-sm text-[#334155] leading-relaxed">{fac.desc}</p>
+                <div className="p-3.5 sm:p-4.5 space-y-1">
+                  <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963]">{fac.title}</h3>
+                  <p className="text-[11px] sm:text-xs text-[#334155] leading-relaxed line-clamp-2">{fac.desc}</p>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
+          <CloudBridge label="Safe Campus & Care" className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Safety */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
-      <section id="safety" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SparkleStarsGroup className="w-12 h-12" />
+        </div>
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+          <ButterflyIcon color="emerald" className="w-8 h-8" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-14 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-4 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <ShieldSecurityBadge className="w-8 h-8 animate-pulse-subtle" />
+              <SafetySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+              <ShieldSecurityBadge className="w-8 h-8 animate-pulse-subtle scale-x-[-1]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Zero-Compromise Security Standard</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
               Your Child&apos;s Safety <br className="hidden sm:block" />
-              <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-8">Comes First. Always.</span>
+              <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Comes First. Always.</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               From biometric pickup gates and 4K encrypted parent live streams to full-time pediatric CPR staff, we protect your peace of mind.
             </p>
-          </div>
+          </ScrollReveal>
 
-          {/* 4 Safety Pillars - Stacked on Mobile, 2-Col on Tablet, 4-Col on Desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8 sm:mb-12">
+          {/* 4 Safety Pillars - 2-Col Grid on Mobile, 4-Col on Desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 mb-4 sm:mb-6">
             {[
               {
-                title: "Biometric Access Control",
+                title: "Biometric Access",
                 desc: "Strict gate security allowing entry only to authorized parents & staff.",
-                badge: "Biometric RFID Gates",
+                badge: "RFID Gates",
                 image: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&w=800&q=80",
                 color: "card-amber",
                 badgeColor: "bg-vannam-yellow text-[#0F2963]",
                 icon: Lock
               },
               {
-                title: "24/7 Live Parent CCTV",
+                title: "24/7 Live CCTV",
                 desc: "Watch classroom learning anytime via encrypted parent portal streaming.",
-                badge: "4K Encrypted Stream",
+                badge: "4K Stream",
                 image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
                 color: "card-emerald",
                 badgeColor: "bg-vannam-green text-white",
                 icon: Eye
               },
               {
-                title: "Pediatric CPR Certified",
+                title: "Pediatric CPR",
                 desc: "All teachers & caregivers trained in pediatric first aid and emergency care.",
-                badge: "Medical First-Aid On-Site",
+                badge: "First-Aid On-Site",
                 image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=800&q=80",
                 color: "card-sky",
                 badgeColor: "bg-vannam-cyan text-white",
                 icon: Award
               },
               {
-                title: "Child-Safe Architecture",
-                desc: "Rounded furniture corners, finger-guard doors, and daily UV-C toy sanitization.",
-                badge: "UV-C Sanitized Daily",
+                title: "Child-Safe Campus",
+                desc: "Rounded furniture corners, finger-guards, and daily UV-C toy sanitization.",
+                badge: "UV-C Sanitized",
                 image: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80",
                 color: "card-rose",
                 badgeColor: "bg-vannam-red text-white",
@@ -2310,41 +2530,41 @@ export default function Home() {
               return (
                 <div 
                   key={idx} 
-                  className={`bento-card ${item.color} p-4 sm:p-5 flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-200 group`}
+                  className={`bento-card ${item.color} p-2.5 sm:p-4 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 group rounded-2xl`}
                 >
                   <div>
                     {/* Photo with Tag */}
-                    <div className="relative h-40 sm:h-44 w-full rounded-xl sm:rounded-2xl overflow-hidden mb-3">
+                    <div className="relative h-24 xs:h-28 sm:h-36 w-full rounded-xl overflow-hidden mb-2">
                       <Image 
                         src={item.image} 
                         alt={item.title} 
                         fill 
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        sizes="(max-width: 768px) 50vw, 25vw"
                         className="object-cover group-hover:scale-105 transition duration-500" 
                       />
-                      <span className={`absolute top-2.5 right-2.5 px-2.5 py-1 rounded-full text-[10px] sm:text-[10px] font-black ${item.badgeColor} shadow-xs`}>
+                      <span className={`absolute top-1.5 right-1.5 px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] font-black ${item.badgeColor} shadow-2xs`}>
                         {item.badge}
                       </span>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-lg bg-white/90 flex items-center justify-center text-[#0F2963] shrink-0 shadow-2xs">
-                          <Icon className="w-3.5 h-3.5" />
+                    <div className="space-y-0.5 sm:space-y-1">
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-5 h-5 rounded-md bg-white/90 flex items-center justify-center text-[#0F2963] shrink-0 shadow-2xs">
+                          <Icon className="w-3 h-3" />
                         </div>
-                        <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963] leading-tight">
+                        <h3 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-tight">
                           {item.title}
                         </h3>
                       </div>
-                      <p className="text-xs text-[#334155] leading-relaxed">
+                      <p className="text-[10px] sm:text-xs text-[#334155] leading-snug line-clamp-2">
                         {item.desc}
                       </p>
                     </div>
                   </div>
 
-                  <div className="pt-3 border-t border-black/5 mt-3 flex items-center gap-1.5 text-xs font-black text-emerald-800">
-                    <Check className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span className="truncate">100% Certified Standard</span>
+                  <div className="pt-1.5 border-t border-black/5 mt-2 flex items-center gap-1 text-[10px] sm:text-xs font-black text-emerald-800">
+                    <Check className="w-3 h-3 text-emerald-600 shrink-0" />
+                    <span className="truncate">Certified Safety</span>
                   </div>
                 </div>
               );
@@ -2352,90 +2572,125 @@ export default function Home() {
           </div>
 
           {/* Reassurance Trust Banner */}
-          <div className="bg-[#F0F4FC] border-2 border-[#CBD8F6] rounded-2xl p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-6 text-center">
+          <div className="bg-[#F0F4FC] border-2 border-[#CBD8F6] rounded-2xl p-3.5 sm:p-4.5 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-4 text-center shadow-xs">
             <div className="flex items-center justify-center gap-2">
-              <Shield className="w-5 h-5 text-[#00A8E8] shrink-0" />
-              <span className="text-xs sm:text-sm font-extrabold text-[#0F2963]">256-Bit Encrypted Parent App</span>
+              <Shield className="w-4 h-4 text-[#00A8E8] shrink-0" />
+              <span className="text-[11px] sm:text-xs font-extrabold text-[#0F2963]">256-Bit Encrypted Parent App</span>
             </div>
             <div className="flex items-center justify-center gap-2">
-              <Award className="w-5 h-5 text-vannam-yellow shrink-0" />
-              <span className="text-xs sm:text-sm font-extrabold text-[#0F2963]">Pediatric First-Aid Certified</span>
+              <Award className="w-4 h-4 text-vannam-yellow shrink-0" />
+              <span className="text-[11px] sm:text-xs font-extrabold text-[#0F2963]">Pediatric First-Aid Certified</span>
             </div>
             <div className="flex items-center justify-center gap-2">
-              <CheckCircle2 className="w-5 h-5 text-vannam-green shrink-0" />
-              <span className="text-xs sm:text-sm font-extrabold text-[#0F2963]">UV-C Disinfected Daily</span>
+              <CheckCircle2 className="w-4 h-4 text-vannam-green shrink-0" />
+              <span className="text-[11px] sm:text-xs font-extrabold text-[#0F2963]">UV-C Disinfected Daily</span>
             </div>
           </div>
 
         </div>
+
+        {/* Wave Divider into Teachers */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* TEACHERS & LEADERSHIP SECTION */}
-      <section id="teachers" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <AlphabetBlock letter="T" color="amber" className="w-10 h-10" />
+        </div>
+        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <CrayonIcon color="sky" className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-4 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <TeacherApplesTrophy className="w-8 h-8 animate-bounce-gentle" />
+              <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
+              <StorybookStackIcon className="w-7 h-7 animate-float" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-3 py-1 rounded-full shadow-2xs">
               <Users className="w-3.5 h-3.5" />
               <span>Loving Educators</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
               Meet Our Certified & <br className="hidden sm:block" />
-              <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-8">Warm Teachers</span>
+              <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-6">Warm Teachers</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               Every educator at Vannam World Preschool holds early childhood degrees, background checks, and a deep love for guiding young learners.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
+          {/* 2 Grids per row on Mobile, 4 on Desktop */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
             {teachers.map((t, idx) => (
-              <div key={idx} className="bento-card p-4 sm:p-6 space-y-3 sm:space-y-4 hover:-translate-y-2 transition duration-200 flex flex-col justify-between">
+              <ScrollReveal key={idx} stagger={((idx % 4) + 1)} className="bento-card p-2.5 sm:p-4 space-y-2 sm:space-y-3 hover:-translate-y-1 transition duration-200 flex flex-col justify-between rounded-2xl">
                 <div>
-                  <div className="relative h-48 xs:h-52 sm:h-56 w-full rounded-xl sm:rounded-2xl overflow-hidden mb-3">
-                    <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" className="object-cover" />
-                    <span className={`absolute top-2.5 right-2.5 sm:top-3 sm:right-3 px-2.5 sm:px-3 py-1 rounded-full text-[10px] sm:text-[10px] font-extrabold ${t.badgeColor} shadow-xs`}>
+                  <div className="relative h-28 xs:h-32 sm:h-48 w-full rounded-xl overflow-hidden mb-2">
+                    <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
+                    <span className={`absolute top-1.5 right-1.5 px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] font-extrabold ${t.badgeColor} shadow-2xs`}>
                       {t.badge}
                     </span>
                   </div>
-                  <div className="space-y-1">
-                    <h3 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963] truncate">{t.name}</h3>
-                    <span className="text-xs font-bold text-vannam-orange block truncate">{t.role}</span>
-                    <span className="text-[11px] font-semibold text-[#64748B] block truncate">{t.qual}</span>
+                  <div className="space-y-0.5">
+                    <h3 className="font-heading font-extrabold text-xs sm:text-base text-[#0F2963] truncate">{t.name}</h3>
+                    <span className="text-[10px] sm:text-xs font-bold text-vannam-orange block truncate">{t.role}</span>
+                    <span className="text-[9px] sm:text-[11px] font-semibold text-[#64748B] block truncate">{t.qual}</span>
                   </div>
                 </div>
-                <p className="text-xs text-[#334155] leading-relaxed">{t.intro}</p>
-              </div>
+                <p className="text-[10px] sm:text-xs text-[#334155] leading-snug line-clamp-2">{t.intro}</p>
+              </ScrollReveal>
             ))}
           </div>
 
+          <NatureBridge className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Gallery */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
-      <section id="gallery" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <ArtPaletteIcon className="w-10 h-10" />
+        </div>
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <Camera className="w-10 h-10 text-vannam-cyan" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-4 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex justify-center mb-1">
+              <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <Camera className="w-3.5 h-3.5" />
-              <span>Campus Moments</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              Moments of <span className="text-vannam-cyan underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-8">Joy & Discovery</span>
+              <span>Campus Scrapbook Moments</span>
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              Moments of <span className="text-vannam-cyan underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Joy & Discovery</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               Explore snapshots of classroom STEAM activities, outdoor sports, and seasonal celebrations.
             </p>
-          </div>
+          </ScrollReveal>
 
           {/* Filter Tabs - Horizontal Swipeable on Mobile */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-8 sm:mb-10 scrollbar-none snap-x justify-start sm:justify-center px-1">
+          <ScrollReveal className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
             {["all", "classroom", "activities", "events", "sports", "celebrations", "outdoor"].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setGalleryCategory(cat)}
-                className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-extrabold capitalize transition shrink-0 snap-center min-h-[40px] flex items-center justify-center ${
+                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-extrabold capitalize transition shrink-0 snap-center !min-h-0 flex items-center justify-center ${
                   galleryCategory === cat
                     ? "bg-[#091A42] text-[#F59E0B] border border-[#1D4ED8] shadow-xs"
                     : "bg-[#E8EEFB] text-[#0F2963] hover:bg-slate-200"
@@ -2444,38 +2699,50 @@ export default function Home() {
                 {cat}
               </button>
             ))}
-          </div>
+          </ScrollReveal>
 
-          {/* Gallery Grid - Responsive */}
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5 sm:gap-6">
-            {filteredGallery.map((item) => (
-              <div 
+          {/* Gallery Grid - Scrapbook Style on Mobile & Desktop */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
+            {filteredGallery.map((item, idx) => (
+              <ScrollReveal 
                 key={item.id} 
+                stagger={((idx % 4) + 1)}
                 onClick={() => setActiveLightboxImage(item)}
-                className="group relative h-48 xs:h-44 sm:h-64 rounded-2xl overflow-hidden cursor-pointer border-2 border-[#CBD8F6] shadow-xs hover:border-vannam-yellow/40 transition"
+                className="gallery-scrapbook group relative h-32 xs:h-36 sm:h-52 rounded-2xl overflow-hidden cursor-pointer border-2 border-[#CBD8F6] shadow-xs hover:border-vannam-yellow/60 transition-all hover:scale-[1.02]"
               >
                 <Image 
                   src={item.src} 
                   alt={item.title} 
                   fill 
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-110 transition duration-500" 
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                  className="object-cover group-hover:scale-105 transition duration-500" 
                 />
+                
+                {/* Decorative Tape Sticker Effect in Top Corner */}
+                <div className="absolute top-1.5 left-2 bg-amber-100/90 border border-amber-300 text-[8px] font-black text-amber-800 px-1.5 py-0.5 rounded shadow-2xs rotate-[-4deg] pointer-events-none">
+                  📸 Memory #{item.id}
+                </div>
+
                 <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-2.5 rounded-xl text-xs font-bold text-[#0F2963] truncate shadow-sm group-hover:bg-white transition-colors">
+                <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold text-[#0F2963] truncate shadow-sm group-hover:bg-white transition-colors">
                   {item.title}
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
+          <RainbowArcBridge className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Awards */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* LIGHTBOX MODAL */}
       {activeLightboxImage && (
         <div className="fixed inset-0 z-50 bg-[#091A42]/95 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative max-w-4xl w-full bg-[#0F2963] rounded-3xl border-4 border-[#F59E0B] overflow-hidden shadow-2xl border border-slate-800">
+          <div className="relative max-w-4xl w-full bg-[#0F2963] rounded-3xl border-4 border-[#F59E0B] overflow-hidden shadow-2xl">
             <button
               onClick={() => setActiveLightboxImage(null)}
               className="absolute top-4 right-4 z-10 bg-[#0F2963]/80 hover:bg-slate-700 p-2.5 rounded-full text-white transition min-w-[44px] min-h-[44px] flex items-center justify-center"
@@ -2501,273 +2768,249 @@ export default function Home() {
         </div>
       )}
 
-      {/* AWARDS & RECOGNITION SECTION - INNOVATIVE FLEX ACCORDION */}
-      <section id="awards" className="scroll-mt-24 py-12 sm:py-20 lg:py-28 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* AWARDS & RECOGNITION SECTION - HORIZONTAL CARDS */}
+      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <TwinkleStarIcon color="amber" className="w-10 h-10" />
+        </div>
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <TeddyBearIcon className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-3 sm:space-y-4 mb-10 sm:mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#0F2963]/5 border border-[#CBD8F6] text-[#0F2963] text-xs font-extrabold uppercase tracking-widest">
-              <Award className="w-4 h-4 text-[#0F2963]" />
+          <div className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F2963]/5 border border-[#CBD8F6] text-[#0F2963] text-xs font-extrabold uppercase tracking-widest shadow-2xs">
+              <Award className="w-3.5 h-3.5 text-[#0F2963]" />
               <span>Accreditations & Honors</span>
             </div>
             
-            <h2 className="font-heading text-2xl xs:text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              A Legacy of <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-8">Excellence</span>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              A Legacy of <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-6">Excellence</span>
             </h2>
           </div>
 
-          {/* MOBILE / TABLET: 2-Col Grid */}
-          <div className="lg:hidden grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+          {/* HORIZONTAL CARDS: Horizontal Scroll on Mobile/Tablet, 4-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:gap-5">
             {awardsData.map((award) => (
               <div
                 key={award.id}
                 onClick={() => setSelectedAwardModal(award)}
-                className={`bento-card p-5 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 cursor-pointer group rounded-3xl border border-[#CBD8F6] shadow-xs`}
+                className={`w-[260px] xs:w-[290px] shrink-0 snap-center lg:w-auto bento-card p-4 sm:p-5 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 cursor-pointer group rounded-2xl border border-[#CBD8F6] shadow-xs`}
               >
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-12 h-12 rounded-2xl bg-white border border-[#CBD8F6] flex items-center justify-center text-2xl shadow-xs">
+                  <div className="flex items-center justify-between mb-2.5">
+                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white border border-[#CBD8F6] flex items-center justify-center text-xl sm:text-2xl shadow-xs">
                       {award.icon}
                     </div>
-                    <span className="text-xs font-black text-[#64748B] uppercase">
+                    <span className="text-[11px] font-black text-[#64748B] uppercase">
                       {award.year}
                     </span>
                   </div>
-                  <div className="space-y-1 mb-2">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-black shadow-2xs ${award.badgeClass}`}>
+                  <div className="space-y-0.5 mb-2">
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[9.5px] font-black shadow-2xs ${award.badgeClass}`}>
                       {award.badge}
                     </span>
-                    <div className="text-lg font-black text-[#00A8E8]">{award.stat}</div>
-                    <h3 className="font-heading font-extrabold text-base text-[#0F2963] leading-tight">
+                    <div className="text-base sm:text-lg font-black text-[#00A8E8]">{award.stat}</div>
+                    <h3 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-snug">
                       {award.title}
                     </h3>
                   </div>
-                  <p className="text-xs text-[#334155] leading-relaxed mb-3 font-medium">
+                  <p className="text-[11px] sm:text-xs text-[#334155] leading-relaxed mb-2.5 font-medium line-clamp-3">
                     {award.desc}
                   </p>
                 </div>
-                <div className="pt-2.5 border-t border-black/5 flex items-center justify-between text-xs font-black text-[#00A8E8]">
-                  <span className="text-[11px] font-bold truncate mr-2 text-[#64748B]">{award.issuer}</span>
+                <div className="pt-2 border-t border-black/5 flex items-center justify-between text-[11px] font-black text-[#00A8E8]">
+                  <span className="text-[10px] sm:text-[11px] font-bold truncate mr-2 text-[#64748B]">{award.issuer}</span>
                   <span className="flex items-center gap-1 shrink-0 font-extrabold">
                     <span>Verify</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
+                    <ArrowUpRight className="w-3 h-3" />
                   </span>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* DESKTOP: SILKY-SMOOTH EXPANDING ACCORDION */}
-          <div className="hidden lg:flex lg:flex-row gap-4 h-[480px] w-full max-w-6xl mx-auto items-stretch">
-            {awardsData.map((award, idx) => {
-              const isActive = activeAwardTab === idx;
-              return (
-                <div
-                  key={award.id}
-                  onClick={() => setActiveAwardTab(idx)}
-                  onMouseEnter={() => setActiveAwardTab(idx)}
-                  style={{
-                    flexGrow: isActive ? 5 : 1,
-                    flexShrink: 1,
-                    flexBasis: '0%'
-                  }}
-                  className={`relative overflow-hidden rounded-[2rem] border-2 cursor-pointer transition-[flex-grow,background-color,border-color,box-shadow] duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] flex flex-col justify-between p-6 sm:p-7 group will-change-[flex-grow] ${
-                    isActive 
-                      ? `bg-gradient-to-br ${award.accentBg} shadow-2xl border-[#00A8E8]/40 ring-4 ring-[#00A8E8]/10` 
-                      : `bg-white border-[#CBD8F6] hover:border-[#00A8E8]/60 hover:bg-[#F0F4FC] hover:shadow-md`
-                  }`}
-                >
-                  {/* Background Photo Overlay with smooth crossfade */}
-                  <div className={`absolute inset-0 pointer-events-none transition-opacity duration-700 ease-out ${isActive ? 'opacity-15' : 'opacity-0'}`}>
-                    <Image src={award.image} alt={award.title} fill sizes="50vw" className="object-cover mix-blend-multiply" />
-                  </div>
-
-                  {/* Top Bar: Icon & Year */}
-                  <div className="relative z-10 flex items-center justify-between w-full">
-                    <div className={`w-14 h-14 rounded-2xl bg-white border border-[#CBD8F6] flex items-center justify-center text-3xl shadow-sm transition-all duration-500 ease-out ${
-                      isActive ? 'scale-100' : 'scale-90 opacity-80 group-hover:scale-95 group-hover:opacity-100'
-                    }`}>
-                      {award.icon}
-                    </div>
-                    <span className={`text-[11px] font-black text-[#64748B] uppercase tracking-wider bg-white/80 px-2.5 py-1 rounded-full border border-slate-200 shadow-2xs transition-opacity duration-500 ${
-                      isActive ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                    }`}>
-                      {award.year}
-                    </span>
-                  </div>
-
-                  {/* Collapsed Vertical Title (Visible when NOT active) */}
-                  <div className={`absolute inset-0 flex items-center justify-center pointer-events-none transition-all duration-500 ease-out ${
-                    isActive ? 'opacity-0 scale-90 pointer-events-none' : 'opacity-100 scale-100'
-                  }`}>
-                    <h3 className="transform -rotate-90 text-[#0F2963] font-heading font-extrabold text-base xl:text-lg whitespace-nowrap tracking-wide opacity-60 group-hover:opacity-100 transition-opacity">
-                      {award.highlight}
-                    </h3>
-                  </div>
-
-                  {/* Expanded Content Box with smooth fade & glide */}
-                  <div className={`relative z-10 w-full transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                    isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
-                  }`}>
-                    <div className="bg-white/95 backdrop-blur-md rounded-2xl p-5 sm:p-6 border border-white/60 shadow-lg space-y-3">
-                      <div className="flex items-center gap-2.5">
-                        <span className={`px-3 py-1 rounded-full text-xs font-black shadow-2xs ${award.badgeClass}`}>
-                          {award.badge}
-                        </span>
-                        <span className="text-base font-black text-[#00A8E8]">{award.stat}</span>
-                      </div>
-
-                      <h3 className="font-heading font-extrabold text-xl sm:text-2xl text-[#0F2963] leading-snug">
-                        {award.title}
-                      </h3>
-
-                      <p className="text-xs sm:text-sm text-[#334155] leading-relaxed font-medium line-clamp-2">
-                        {award.desc}
-                      </p>
-
-                      <div className="pt-3 border-t border-[#CBD8F6]/60 flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-[#64748B] text-xs font-bold truncate mr-2">
-                          <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                          <span className="truncate">Verified by {award.issuer}</span>
-                        </div>
-                        <button
-                          onClick={(e) => { e.stopPropagation(); setSelectedAwardModal(award); }}
-                          className="text-xs font-black text-[#00A8E8] hover:text-[#0F2963] transition-colors flex items-center gap-1 shrink-0 group/btn cursor-pointer"
-                        >
-                          <span>Verify Badge</span>
-                          <ArrowUpRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
         </div>
+
+        {/* Wave Divider into Testimonials */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* PARENT TESTIMONIALS SECTION */}
-      <section id="testimonials" className="scroll-mt-24 py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <FloatingBalloonsGroup className="w-12 h-16" />
+        </div>
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <BlossomFlowerIcon color="rose" className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-4 py-1.5 rounded-full shadow-2xs">
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>Parent Feedback</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              Trusted by Hundreds of <br className="hidden sm:block" />
-              <span className="text-vannam-yellow underline decoration-vannam-cyan underline-offset-4 sm:underline-offset-8">Happy Families</span>
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle" />
+              <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+              <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle scale-x-[-1]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-3 py-1 rounded-full shadow-2xs">
+              <MessageCircle className="w-3.5 h-3.5 text-vannam-orange" />
+              <span>Parent Love & Reviews</span>
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              Trusted by Hundreds of{" "}
+              <span className="text-vannam-yellow underline decoration-vannam-cyan underline-offset-4 sm:underline-offset-6">Happy Families</span>
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               Read authentic reviews from parents about their child's growth, safety experience, and academic readiness.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-4 md:grid md:grid-cols-3 md:gap-8 pb-4 -mx-4 px-4 sm:mx-0 sm:px-0">
+          {/* Testimonial Cards: Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 md:grid md:grid-cols-3 md:gap-5">
             {testimonials.map((t, idx) => (
-              <div key={idx} className="w-[85vw] xs:w-[320px] sm:w-[360px] shrink-0 snap-center md:w-auto bento-card p-5 sm:p-8 space-y-4 sm:space-y-6 flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-200">
-                <div className="space-y-4">
-                  <div className="flex items-center gap-1 text-vannam-yellow">
-                    {[...Array(t.rating)].map((_, i) => (
-                      <Star key={i} className="w-5 h-5 fill-amber-400" />
-                    ))}
+              <ScrollReveal key={idx} stagger={idx + 1} className="w-[82vw] xs:w-[300px] shrink-0 snap-center md:w-auto bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30">
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-0.5 text-vannam-yellow">
+                      {[...Array(t.rating)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      ))}
+                    </div>
+                    <span className="text-xs text-rose-500 animate-pulse-subtle">💛 Verified Family</span>
                   </div>
-                  <p className="text-sm text-[#0F2963] italic leading-relaxed">
-                    "{t.quote}"
+                  <p className="text-xs sm:text-sm text-[#0F2963] italic leading-relaxed">
+                    &ldquo;{t.quote}&rdquo;
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4 pt-4 border-t border-[#E8EEFB]">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/30">
-                    <Image src={t.avatar} alt={t.parent} fill sizes="150px" className="object-cover" />
+                <div className="flex items-center gap-2.5 pt-2.5 border-t border-[#E8EEFB]">
+                  <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/40">
+                    <Image src={t.avatar} alt={t.parent} fill sizes="100px" className="object-cover" />
                   </div>
                   <div>
-                    <h4 className="font-heading font-extrabold text-[#0F2963] text-base">{t.parent}</h4>
-                    <span className="text-xs font-bold text-vannam-orange block">Parent of {t.child}</span>
+                    <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm">{t.parent}</h4>
+                    <span className="text-[10px] sm:text-[11px] font-bold text-vannam-orange block">Parent of {t.child}</span>
                   </div>
                 </div>
-              </div>
+              </ScrollReveal>
             ))}
           </div>
 
+          <NatureBridge className="mt-6 -mb-4" />
+
         </div>
+
+        {/* Wave Divider into Events */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* UPCOMING SCHOOL EVENTS */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
+          <Calendar className="w-10 h-10 text-vannam-yellow" />
+        </div>
+        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <PaperPlaneIcon className="w-10 h-10" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-3">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-cyan bg-vannam-cyan/10 px-3.5 py-1.5 rounded-full shadow-2xs">
+          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+            <div className="flex items-center justify-center gap-3 mb-1">
+              <PartyCelebrationIcon className="w-8 h-8 animate-bounce-gentle" />
+              <BalloonIcon color="sky" className="w-6 h-8 animate-float" />
+              <PartyCelebrationIcon className="w-8 h-8 animate-bounce-gentle scale-x-[-1]" />
+            </div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-cyan bg-vannam-cyan/10 px-3 py-1 rounded-full shadow-2xs">
               <Calendar className="w-3.5 h-3.5" />
               <span>School Calendar</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963]">
+            </div>
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
               Upcoming School Events & Celebrations
             </h2>
-            <p className="text-xs xs:text-sm sm:text-base text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
               We invite parents to participate in regular workshops, sports days, and cultural celebrations.
             </p>
-          </div>
+          </ScrollReveal>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
             {upcomingEvents.map((ev, idx) => (
-              <div key={idx} className="bento-card p-4 sm:p-6 flex flex-col xs:flex-row items-start gap-3.5 sm:gap-6 hover:border-vannam-yellow/40 hover:-translate-y-1 transition-all duration-200">
-                <div className="w-14 h-14 xs:w-16 xs:h-16 sm:w-20 sm:h-20 rounded-2xl bg-vannam-yellow text-[#0F2963] flex flex-col items-center justify-center shrink-0 shadow-md">
-                  <span className="font-heading font-black text-base xs:text-lg sm:text-xl leading-none">{ev.date.split(" ")[1]}</span>
-                  <span className="text-[9px] xs:text-[10px] font-extrabold uppercase tracking-widest">{ev.date.split(" ")[0]}</span>
+              <div key={idx} className="bento-card p-3.5 sm:p-5 rounded-2xl flex flex-row items-center gap-3 sm:gap-4 hover:border-vannam-yellow/40 hover:-translate-y-0.5 transition-all duration-200 shadow-xs">
+                <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 rounded-2xl bg-vannam-yellow text-[#0F2963] flex flex-col items-center justify-center shrink-0 shadow-xs">
+                  <span className="font-heading font-black text-sm xs:text-base sm:text-lg leading-none">{ev.date.split(" ")[1]}</span>
+                  <span className="text-[8px] xs:text-[9px] font-extrabold uppercase tracking-widest">{ev.date.split(" ")[0]}</span>
                 </div>
-                <div className="space-y-1.5 sm:space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${ev.badge}`}>
+                <div className="space-y-1 flex-1 min-w-0">
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className={`px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-extrabold ${ev.badge}`}>
                       {ev.category}
                     </span>
-                    <span className="text-xs text-[#64748B] font-semibold flex items-center gap-1">
+                    <span className="text-[10.5px] sm:text-xs text-[#64748B] font-semibold flex items-center gap-1">
                       <Clock className="w-3 h-3 text-vannam-yellow" /> {ev.time}
                     </span>
                   </div>
-                  <h3 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963] leading-tight">{ev.title}</h3>
-                  <p className="text-xs text-[#334155] leading-relaxed">{ev.desc}</p>
+                  <h3 className="font-heading font-extrabold text-xs sm:text-base text-[#0F2963] leading-tight truncate">{ev.title}</h3>
+                  <p className="text-[10.5px] sm:text-xs text-[#334155] leading-snug line-clamp-2">{ev.desc}</p>
                 </div>
               </div>
             ))}
           </div>
 
         </div>
+
+        {/* Wave Divider into FAQs */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* FAQS ACCORDION SECTION */}
-      <section className="py-12 sm:py-16 lg:py-24 bg-[#FFFDF8] bg-playful-dots border-y border-[#CBD8F6]/80">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+        
+        {/* Desktop Exclusive Floating Storytelling Accents */}
+        <div className="hidden lg:block absolute top-10 left-10 animate-float pointer-events-none opacity-80 z-10">
+          <SproutPlantIcon className="w-10 h-10" />
+        </div>
+        <div className="hidden lg:block absolute bottom-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <ButterflyIcon color="amber" className="w-8 h-8" />
+        </div>
+
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <div className="text-center mb-10 sm:mb-14 space-y-3 sm:space-y-4">
-            <span className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-vannam-green/15 border border-vannam-green/30 px-4 py-1.5 rounded-full shadow-2xs">
+          <div className="text-center mb-6 sm:mb-8 space-y-2 sm:space-y-2.5">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-vannam-green/15 border border-vannam-green/30 px-3.5 py-1 rounded-full shadow-2xs">
               <HelpCircle className="w-3.5 h-3.5" />
               <span>Parent Answers</span>
-            </span>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              Frequently Asked <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-8">Questions</span>
+            </div>
+            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+              Frequently Asked <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Questions</span>
             </h2>
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+              Everything you need to know about our daily routines, admissions, child safety, and curriculum.
+            </p>
           </div>
 
-          <div className="space-y-3 sm:space-y-4">
+          <div className="space-y-3 sm:space-y-3.5">
             {faqs.map((faq, idx) => (
-              <div key={idx} className="bento-card p-4 sm:p-6 bg-white">
+              <div key={idx} className="bento-card p-4 sm:p-5 bg-white rounded-2xl border border-[#CBD8F6]/80 shadow-2xs">
                 <button
                   onClick={() => setActiveFaq(activeFaq === idx ? null : idx)}
-                  className="w-full flex items-center justify-between text-left gap-3 sm:gap-4"
+                  className="w-full flex items-center justify-between text-left gap-3 sm:gap-4 !min-h-0 py-0.5"
                 >
-                  <span className="font-heading font-extrabold text-[#0F2963] text-base sm:text-xl leading-snug">
+                  <span className="font-heading font-extrabold text-[#0F2963] text-sm sm:text-base leading-snug">
                     {faq.q}
                   </span>
-                  <ChevronDown className={`w-5 h-5 text-[#64748B] shrink-0 transition transform ${activeFaq === idx ? "rotate-180 text-vannam-yellow" : ""}`} />
+                  <ChevronDown className={`w-4 h-4 sm:w-5 sm:h-5 text-[#64748B] shrink-0 transition transform ${activeFaq === idx ? "rotate-180 text-vannam-yellow" : ""}`} />
                 </button>
                 {activeFaq === idx && (
-                  <p className="mt-3 sm:mt-4 text-xs sm:text-sm text-[#334155] leading-relaxed pt-3 border-t border-[#E8EEFB]">
+                  <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-[#334155] leading-relaxed pt-2.5 border-t border-[#E8EEFB]">
                     {faq.a}
                   </p>
                 )}
@@ -2779,20 +3022,20 @@ export default function Home() {
       </section>
 
       {/* ADMISSION CTA & CONTACT FORM SECTION - GLASSMORPHIC POSTCARD */}
-      <section id="contact" className="scroll-mt-24 py-12 sm:py-20 lg:py-32 bg-[#0F2963] text-white relative overflow-hidden">
+      <section id="contact" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#0F2963] text-white relative overflow-hidden">
         
         {/* Floating Background 3D Toys */}
-        <div className="absolute top-10 left-10 opacity-30 animate-pulse pointer-events-none rotate-[-15deg]">
-          <KiteIcon className="w-24 h-24" />
+        <div className="absolute top-10 left-10 opacity-35 animate-pulse pointer-events-none rotate-[-15deg]">
+          <KiteIcon className="w-16 h-16 sm:w-24 sm:h-24" />
         </div>
-        <div className="absolute bottom-20 left-1/4 opacity-20 animate-wiggle pointer-events-none rotate-[20deg] scale-150">
-          <RainbowIcon className="w-32 h-32" />
+        <div className="absolute bottom-20 left-1/4 opacity-25 animate-wiggle pointer-events-none rotate-[20deg] scale-150">
+          <RainbowIcon className="w-20 h-20 sm:w-32 sm:h-32" />
         </div>
-        <div className="absolute top-20 right-10 opacity-30 animate-pulse pointer-events-none rotate-[10deg]">
-          <HappyCloudIcon className="w-20 h-20" />
+        <div className="absolute top-20 right-10 opacity-35 animate-pulse pointer-events-none rotate-[10deg]">
+          <SmilingSunIcon className="w-16 h-16 sm:w-20 sm:h-20" />
         </div>
         <div className="absolute -bottom-10 right-1/4 opacity-40 pointer-events-none rotate-[-25deg]">
-          <CrayonIcon color="amber" className="w-32 h-32" />
+          <CrayonIcon color="amber" className="w-20 h-20 sm:w-32 sm:h-32" />
         </div>
 
         {/* Ambient Light Glows */}
@@ -2803,140 +3046,144 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-12 items-center">
             
             {/* Left Info - VIP Invitation Vibe */}
-            <div className="lg:col-span-5 space-y-6 sm:space-y-8 text-center lg:text-left">
-              <span className="px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FDE68A] text-[11px] font-black uppercase tracking-widest inline-flex items-center gap-2 shadow-sm backdrop-blur-md mx-auto lg:mx-0">
-                <Calendar className="w-4 h-4 text-[#FDE68A]" />
-                <span>Admissions Open</span>
-              </span>
+            <div className="lg:col-span-5 space-y-3 sm:space-y-4 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-2.5">
+                <SchoolBusToyIcon className="w-9 h-9 animate-bounce-gentle" />
+                <span className="px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-[#FDE68A] text-[10.5px] sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-1.5 shadow-sm backdrop-blur-md">
+                  <Calendar className="w-3.5 h-3.5 text-[#FDE68A]" />
+                  <span>Admissions Open</span>
+                </span>
+                <PaperPlaneIcon className="w-6 h-6 text-sky-300 animate-flutter" />
+              </div>
 
-              <h2 className="font-heading text-2xl xs:text-3xl sm:text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.15] text-white drop-shadow-sm">
-                Begin Your Child's Learning Journey.
+              <h2 className="font-heading text-xl xs:text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white drop-shadow-sm">
+                Begin Your Child&apos;s Learning Journey.
               </h2>
 
-              <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-blue-100 font-medium leading-relaxed max-w-md mx-auto lg:mx-0">
+              <p className="text-xs sm:text-sm text-blue-100 font-medium leading-relaxed max-w-md mx-auto lg:mx-0">
                 Schedule a campus tour or submit an admission enquiry. Our friendly counselors are happy to help you through the process.
               </p>
 
-              <div className="space-y-3.5 sm:space-y-5 pt-2 text-left">
-                <div className="flex items-center gap-3 sm:gap-4 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 shrink-0">
-                    <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-[#F59E0B]" />
+              <div className="space-y-2.5 sm:space-y-3.5 pt-1 text-left">
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <MapPin className="w-4 h-4 text-[#F59E0B]" />
                   </div>
                   <span className="font-bold text-blue-50 text-xs sm:text-sm">Rainbow Gardens Campus, 124 Academy Drive</span>
                 </div>
 
-                <div className="flex items-center gap-3 sm:gap-4 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 shrink-0">
-                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#10B981]" />
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <Phone className="w-4 h-4 text-[#10B981]" />
                   </div>
                   <span className="font-bold text-blue-50 text-xs sm:text-sm">Direct Admissions: +1 (800) 555-PLAY</span>
                 </div>
 
-                <div className="flex items-center gap-3 sm:gap-4 group">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-lg transition-transform group-hover:scale-110 shrink-0">
-                    <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-[#00A8E8]" />
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <Mail className="w-4 h-4 text-[#00A8E8]" />
                   </div>
                   <span className="font-bold text-blue-50 text-xs sm:text-sm break-all sm:break-normal">admissions@vannamworld.edu</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Contact Form - Glassmorphic Postcard with 1-Col Inputs on Mobile */}
+            {/* Right Contact Form - Glassmorphic Postcard with compact inputs */}
             <div className="lg:col-span-7 relative">
-              <div className="bg-white/10 backdrop-blur-2xl p-5 xs:p-6 sm:p-10 md:p-12 rounded-3xl sm:rounded-[2.5rem] border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+              <div className="bg-white/10 backdrop-blur-2xl p-4 xs:p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
                 
                 {/* Form Internal Glow */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
 
-                <div className="relative z-10 mb-6 sm:mb-8 text-center sm:text-left">
-                  <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-1.5">
+                <div className="relative z-10 mb-3 sm:mb-4 text-center sm:text-left">
+                  <h3 className="font-heading text-lg sm:text-2xl font-extrabold text-white mb-0.5">
                     Admission Enquiry
                   </h3>
-                  <p className="text-xs sm:text-sm text-blue-100 font-medium">
+                  <p className="text-[11px] sm:text-xs text-blue-100 font-medium">
                     Fill out the postcard below to receive our prospectus and fee schedule instantly.
                   </p>
                 </div>
 
                 {enquirySubmitted ? (
-                  <div className="p-6 sm:p-8 rounded-3xl bg-white/10 border border-[#10B981]/50 backdrop-blur-md text-center space-y-4 animate-in zoom-in-95 duration-500">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-[#10B981] rounded-full flex items-center justify-center mx-auto shadow-lg shadow-[#10B981]/30">
-                      <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
+                  <div className="p-5 sm:p-6 rounded-2xl bg-white/10 border border-[#10B981]/50 backdrop-blur-md text-center space-y-3 animate-in zoom-in-95 duration-500">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#10B981] rounded-full flex items-center justify-center mx-auto shadow-lg shadow-[#10B981]/30">
+                      <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <h4 className="font-heading font-extrabold text-white text-xl sm:text-2xl">
+                    <h4 className="font-heading font-extrabold text-white text-lg sm:text-xl">
                       Enquiry Received!
                     </h4>
-                    <p className="text-xs sm:text-sm text-blue-50 font-medium">
+                    <p className="text-xs text-blue-50 font-medium">
                       Thank you! Our admissions coordinator will reach out to you within 2 business hours.
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleEnquirySubmit} className="space-y-4 sm:space-y-5 relative z-10">
+                  <form onSubmit={handleEnquirySubmit} className="space-y-2 sm:space-y-3 relative z-10">
                     
-                    {/* Row 1: Parent Name & Child Name */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5">
+                    {/* Row 1: Parent Name & Child Name (2 cols per row on mobile) */}
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Parent Name *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Parent Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.parentName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, parentName: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 min-h-[44px]"
-                          placeholder="e.g. Sarah J."
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          placeholder="e.g. Sarah"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Child Name *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.childName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childName: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 min-h-[44px]"
-                          placeholder="e.g. Leo J."
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          placeholder="e.g. Leo"
                         />
                       </div>
                     </div>
 
-                    {/* Row 2: Phone & Email */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5">
+                    {/* Row 2: Phone & Email (2 cols per row on mobile) */}
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Phone Number *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Phone *</label>
                         <input
                           type="tel"
                           required
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 min-h-[44px]"
-                          placeholder="+1 (555) 000-0000"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          placeholder="+1 (555) 000"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Email Address *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Email *</label>
                         <input
                           type="email"
                           required
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 min-h-[44px]"
-                          placeholder="parent@example.com"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          placeholder="parent@mail.com"
                         />
                       </div>
                     </div>
 
-                    {/* Row 3: Child Age & Preferred Program */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-5">
+                    {/* Row 3: Child Age & Preferred Program (2 cols per row on mobile) */}
+                    <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Child Age *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Age *</label>
                         <select
                           value={enquiryForm.childAge}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childAge: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer min-h-[44px]"
+                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="12-24m">12-24m (Toddler)</option>
                           <option value="2-3">2-3 Yrs (Play Group)</option>
@@ -2947,11 +3194,11 @@ export default function Home() {
                       </div>
 
                       <div>
-                        <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Preferred Program</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Program</label>
                         <select
                           value={enquiryForm.program}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, program: e.target.value })}
-                          className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer min-h-[44px]"
+                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="toddler">Toddler Care</option>
                           <option value="playgroup">Play Group</option>
@@ -2963,22 +3210,22 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="block text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-1">Message / Questions</label>
+                      <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5">Message / Questions</label>
                       <textarea
-                        rows={3}
+                        rows={2}
                         value={enquiryForm.message}
                         onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                        className="w-full px-4 sm:px-5 py-3 sm:py-4 rounded-2xl bg-white/90 border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-4 focus:ring-[#F43F5E]/30 focus:border-[#F43F5E] transition-all placeholder:text-[#64748B]/50 resize-none"
-                        placeholder="Tell us any specific requirements or questions..."
+                        className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F43F5E]/30 focus:border-[#F43F5E] transition-all placeholder:text-[#64748B]/50 resize-none !min-h-0"
+                        placeholder="Any specific questions..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="btn-yellow w-full py-4 sm:py-5 text-base sm:text-lg font-black flex items-center justify-center gap-2.5 rounded-2xl shadow-[0_8px_30px_-5px_rgba(245,158,11,0.5)] transition-all hover:-translate-y-1 mt-3 sm:mt-4 min-h-[48px]"
+                      className="btn-yellow w-full py-2.5 sm:py-3 text-xs sm:text-sm font-black flex items-center justify-center gap-2 rounded-xl shadow-[0_8px_30px_-5px_rgba(245,158,11,0.5)] transition-all hover:-translate-y-0.5 mt-1.5 !min-h-0"
                     >
                       <span className="uppercase tracking-wide">Submit Enquiry</span>
-                      <ArrowUpRight className="w-5 h-5 sm:w-6 sm:h-6 stroke-[3]" />
+                      <ArrowUpRight className="w-4 h-4 stroke-[3]" />
                     </button>
                   </form>
                 )}
@@ -2992,7 +3239,7 @@ export default function Home() {
       </section>
 
       {/* SOPHISTICATED LIGHT ORANGE THEMED FOOTER */}
-      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-12 sm:pt-16 pb-24 lg:pb-12 border-t-2 border-[#FDBA74]">
+      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-12 sm:pt-16 pb-12 sm:pb-16 border-t-2 border-[#FDBA74]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-8">
@@ -3161,49 +3408,6 @@ export default function Home() {
           </div>
         </div>
       )}
-
-      {/* FIXED MOBILE BOTTOM QUICK-ACTION DOCK */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-xl border-t border-[#CBD8F6] px-2 xs:px-3 py-1.5 xs:py-2 flex items-center justify-around text-center shadow-[0_-4px_20px_rgba(0,0,0,0.08)] pb-[calc(0.5rem+env(safe-area-inset-bottom,0px))]">
-        <a 
-          href="tel:+18005557529"
-          className="flex flex-col items-center justify-center gap-0.5 text-[#0F2963] hover:text-vannam-green transition py-1 px-1.5 xs:px-2 group min-w-[56px] min-h-[44px]"
-        >
-          <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Phone className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
-          </div>
-          <span className="text-[10px] font-extrabold">Call</span>
-        </a>
-
-        <button 
-          onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-          className="flex flex-col items-center justify-center gap-0.5 text-[#0F2963] transition py-1 px-1.5 xs:px-2 group min-w-[56px] min-h-[44px]"
-        >
-          <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-full bg-amber-100 text-[#D97706] flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Calendar className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-[#D97706]" />
-          </div>
-          <span className="text-[10px] font-black text-[#0F2963]">Book Visit</span>
-        </button>
-
-        <button 
-          onClick={() => setIsFeeCalcOpen(true)}
-          className="flex flex-col items-center justify-center gap-0.5 text-[#0F2963] hover:text-[#00A8E8] transition py-1 px-1.5 xs:px-2 group min-w-[56px] min-h-[44px]"
-        >
-          <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-full bg-sky-50 text-[#00A8E8] flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Calculator className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
-          </div>
-          <span className="text-[10px] font-extrabold">Fee Calc</span>
-        </button>
-
-        <button 
-          onClick={() => setIsPortalModalOpen(true)}
-          className="flex flex-col items-center justify-center gap-0.5 text-[#0F2963] hover:text-vannam-yellow transition py-1 px-1.5 xs:px-2 group min-w-[56px] min-h-[44px]"
-        >
-          <div className="w-7 h-7 xs:w-8 xs:h-8 rounded-full bg-amber-50 text-amber-600 flex items-center justify-center group-hover:scale-110 transition-transform">
-            <Lock className="w-3.5 h-3.5 xs:w-4 xs:h-4" />
-          </div>
-          <span className="text-[10px] font-extrabold">Portal</span>
-        </button>
-      </nav>
 
     </div>
   );

@@ -84,6 +84,23 @@
     padding-bottom: env(safe-area-inset-bottom, 0);
     overflow-wrap: break-word;
     word-break: break-word;
+    box-sizing: border-box;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  img, svg, video, canvas, iframe {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Universal Fluid Containers on Mobile (320px - 480px) */
+  @media (max-width: 480px) {
+    .bento-card, .glass-card, .container {
+      max-width: 100% !important;
+    }
   }
 
   /* Prevent iOS automatic zoom on inputs while keeping clean styling */
@@ -93,16 +110,10 @@
     }
   }
 
-  /* Ensure minimum touch targets on mobile */
+  /* Ensure interactive touch targets without distorting card structures */
   @media (max-width: 768px) {
-    button, a, [role="button"] {
-      min-height: 44px;
-      min-width: 44px;
-    }
-    /* Exclude inline text links & very small icon-only elements */
-    a:not([class]), span[role="button"] {
-      min-height: unset;
-      min-width: unset;
+    .btn-primary, .btn-secondary, .btn-accent, .btn-cyan, .btn-green, .btn-red, .btn-orange, .btn-purple, .btn-navy {
+      min-height: 46px;
     }
   }
 }
@@ -413,4 +424,187 @@ html, body {
 }
 .animate-shimmer {
   animation: shimmer 2s linear infinite;
+}
+
+@keyframes flutter {
+  0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
+  25% { transform: translateY(-4px) rotate(4deg) scale(1.03); }
+  50% { transform: translateY(-8px) rotate(-3deg) scale(0.98); }
+  75% { transform: translateY(-3px) rotate(2deg) scale(1.02); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; transform: scale(0.85) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.15) rotate(15deg); }
+}
+
+@keyframes drift-horizontal {
+  0%, 100% { transform: translateX(0px); }
+  50% { transform: translateX(14px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-flutter {
+  animation: flutter 4.5s ease-in-out infinite;
+}
+
+.animate-twinkle {
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+.animate-drift {
+  animation: drift-horizontal 8s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+}
+
+/* Playful Card Gradient Borders & Shadows */
+.border-playful-rainbow {
+  border-image: linear-gradient(to right, #F43F5E, #F59E0B, #10B981, #00A8E8, #8B5CF6) 1;
+}
+
+/* Respect user accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ========================================
+   SCROLL-REVEAL ANIMATION SYSTEM
+   Mobile-first, GPU-accelerated, lightweight
+   ======================================== */
+
+/* Base hidden state — elements start invisible and shifted down */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 24px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Revealed state — toggled by Intersection Observer */
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Variant: slide from left */
+.reveal-on-scroll.reveal-left {
+  transform: translate3d(-20px, 0, 0);
+}
+.reveal-on-scroll.reveal-left.revealed {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Variant: slide from right */
+.reveal-on-scroll.reveal-right {
+  transform: translate3d(20px, 0, 0);
+}
+.reveal-on-scroll.reveal-right.revealed {
+  transform: translate3d(0, 0, 0);
+}
+
+/* Variant: scale up */
+.reveal-on-scroll.reveal-scale {
+  transform: scale(0.92);
+}
+.reveal-on-scroll.reveal-scale.revealed {
+  transform: scale(1);
+}
+
+/* Stagger delays for cascading entrance */
+.stagger-1 { transition-delay: 80ms; }
+.stagger-2 { transition-delay: 160ms; }
+.stagger-3 { transition-delay: 240ms; }
+.stagger-4 { transition-delay: 320ms; }
+.stagger-5 { transition-delay: 400ms; }
+.stagger-6 { transition-delay: 480ms; }
+
+/* ========================================
+   MOBILE-OPTIMIZED POLKA DOTS
+   Smaller, softer dots on small screens
+   ======================================== */
+@media (max-width: 640px) {
+  .bg-playful-dots {
+    background-image: 
+      radial-gradient(circle, #FDE68A 1px, transparent 1px), 
+      radial-gradient(circle, #BAE6FD 1px, transparent 1px),
+      radial-gradient(circle, #FECDD3 0.8px, transparent 0.8px),
+      radial-gradient(circle, #A7F3D0 0.8px, transparent 0.8px);
+    background-size: 32px 32px, 32px 32px, 32px 32px, 32px 32px;
+    background-position: 0 0, 16px 16px, 0 16px, 16px 0;
+  }
+}
+
+/* ========================================
+   MOBILE SECTION DECORATION UTILITIES
+   Compact decorative elements for transitions
+   ======================================== */
+
+/* Section visual bridge — compact flex row of decorative icons */
+.section-bridge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .section-bridge {
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+  }
+}
+
+/* Scrapbook gallery image effects */
+.gallery-scrapbook {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.gallery-scrapbook:nth-child(odd) {
+  transform: rotate(-1deg);
+}
+.gallery-scrapbook:nth-child(even) {
+  transform: rotate(1deg);
+}
+.gallery-scrapbook:nth-child(3n) {
+  transform: rotate(0.5deg);
+}
+.gallery-scrapbook:hover {
+  transform: rotate(0deg) scale(1.03);
+  box-shadow: 0 12px 24px -4px rgba(15, 41, 99, 0.15);
+}
+
+/* Mobile-visible decoration wrapper — shows on all sizes */
+.mobile-deco {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Warm gradient overlays for testimonials */
+.warm-gradient-bg {
+  background: linear-gradient(135deg, #FFFBEB 0%, #FFF1F2 25%, #FFFDF8 50%, #F0F9FF 100%);
 }

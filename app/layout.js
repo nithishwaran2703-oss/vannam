@@ -1,5 +1,6 @@
 import { Fredoka, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import PlayfulInteractiveWorld from "../components/PlayfulInteractiveWorld";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -235,7 +236,8 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
         />
       </head>
-      <body className="font-sans bg-[#FFFDF8] bg-playful-dots text-[#0F2963] antialiased selection:bg-vannam-yellow/30 selection:text-vannam-orange">
+      <body className="font-sans bg-[#FFFDF8] bg-playful-dots text-[#0F2963] antialiased selection:bg-vannam-yellow/30 selection:text-vannam-orange relative min-h-screen">
+        <PlayfulInteractiveWorld />
         {children}
       </body>
     </html>
