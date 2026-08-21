@@ -483,42 +483,60 @@ export function PaperPlaneIcon({ className = "w-6 h-6", ...props }) {
   );
 }
 
-// Organic Playful Wave Divider between sections
+// Organic Playful Wave Divider between sections (Crisp & clearly visible on Mobile & Desktop)
 export function PlayfulWaveDivider({ variant = "cloud", className = "w-full", fillColor = "#FFFDF8", strokeColor = "#CBD8F6", flip = false }) {
   if (variant === "wave") {
     return (
       <div className={`overflow-hidden leading-none pointer-events-none ${flip ? "rotate-180" : ""} ${className}`}>
-        <svg viewBox="0 0 1440 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-7 sm:h-11 md:h-14 preserve-3d" preserveAspectRatio="none">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 xs:h-10 sm:h-12 md:h-16" preserveAspectRatio="none">
+          {/* Secondary Ripple Under-layer */}
           <path
-            d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32 L1440,64 L0,64 Z"
+            d="M0,45 C280,75 520,15 800,45 C1080,75 1320,15 1440,45 L1440,80 L0,80 Z"
+            fill="#E8EEFB"
+            opacity="0.6"
+          />
+          {/* Main Wave Solid Fill */}
+          <path
+            d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36 L1440,80 L0,80 Z"
             fill={fillColor}
           />
+          {/* High-Visibility Crisp Wave Contour Stroke */}
           <path
-            d="M0,32 C240,64 480,0 720,32 C960,64 1200,0 1440,32"
+            d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36"
             stroke={strokeColor}
-            strokeWidth="1.5"
+            strokeWidth="3"
+            strokeLinecap="round"
             fill="none"
-            opacity="0.6"
+            opacity="0.9"
           />
         </svg>
       </div>
     );
   }
 
-  // Default: Scalloped / Cloud-shaped playful border
+  // Default: Scalloped / Cloud-shaped playful wave with clearly visible curves on mobile
   return (
     <div className={`overflow-hidden leading-none pointer-events-none ${flip ? "rotate-180" : ""} ${className}`}>
-      <svg viewBox="0 0 1200 48" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-5 sm:h-8 md:h-11" preserveAspectRatio="none">
+      <svg viewBox="0 0 1200 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 xs:h-10 sm:h-12 md:h-16" preserveAspectRatio="none">
+        {/* Soft Secondary Depth Layer */}
         <path
-          d="M0,24 C50,6 100,6 150,24 C200,42 250,42 300,24 C350,6 400,6 450,24 C500,42 550,42 600,24 C650,6 700,6 750,24 C800,42 850,42 900,24 C950,6 1000,6 1050,24 C1100,42 1150,42 1200,24 L1200,48 L0,48 Z"
+          d="M0,32 C60,12 120,12 180,32 C240,52 300,52 360,32 C420,12 480,12 540,32 C600,52 660,52 720,32 C780,12 840,12 900,32 C960,52 1020,52 1080,32 C1140,12 1200,12 1200,32 L1200,60 L0,60 Z"
+          fill="#E8EEFB"
+          opacity="0.6"
+        />
+        {/* Main Scalloped Wave Solid Fill */}
+        <path
+          d="M0,26 C60,6 120,6 180,26 C240,46 300,46 360,26 C420,6 480,6 540,26 C600,46 660,46 720,26 C780,6 840,6 900,26 C960,46 1020,46 1080,26 C1140,6 1200,6 1200,26 L1200,60 L0,60 Z"
           fill={fillColor}
         />
+        {/* Bold, Crisp Wave Contour Line (3px stroke for high mobile clarity) */}
         <path
-          d="M0,24 C50,6 100,6 150,24 C200,42 250,42 300,24 C350,6 400,6 450,24 C500,42 550,42 600,24 C650,6 700,6 750,24 C800,42 850,42 900,24 C950,6 1000,6 1050,24 C1100,42 1150,42 1200,24"
+          d="M0,26 C60,6 120,6 180,26 C240,46 300,46 360,26 C420,6 480,6 540,26 C600,46 660,46 720,26 C780,6 840,6 900,26 C960,46 1020,46 1080,26 C1140,6 1200,6 1200,26"
           stroke={strokeColor}
-          strokeWidth="1.5"
+          strokeWidth="3"
+          strokeLinecap="round"
           fill="none"
-          opacity="0.5"
+          opacity="0.9"
         />
       </svg>
     </div>
