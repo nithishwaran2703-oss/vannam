@@ -81,7 +81,8 @@
     overscroll-behavior-y: none;
     width: 100%;
     position: relative;
-    padding-bottom: env(safe-area-inset-bottom, 0);
+    padding: 0;
+    margin: 0;
     overflow-wrap: break-word;
     word-break: break-word;
     box-sizing: border-box;
