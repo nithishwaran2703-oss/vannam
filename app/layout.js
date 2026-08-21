@@ -1,6 +1,8 @@
 import { Fredoka, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import PlayfulInteractiveWorld from "../components/PlayfulInteractiveWorld";
+import FloatingParallaxElements from "../components/FloatingParallaxElements";
+import MobilePlayfulElements from "../components/MobilePlayfulElements";
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -238,6 +240,8 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-sans bg-[#FFFDF8] bg-playful-dots text-[#0F2963] antialiased selection:bg-vannam-yellow/30 selection:text-vannam-orange relative min-h-screen">
         <PlayfulInteractiveWorld />
+        <FloatingParallaxElements />
+        <MobilePlayfulElements />
         {children}
       </body>
     </html>

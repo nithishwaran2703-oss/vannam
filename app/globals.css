@@ -349,6 +349,16 @@
   75% { transform: rotate(3deg); }
 }
 
+@keyframes float-soft {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(3deg); }
+  100% { transform: translateY(10px) rotate(-2deg); }
+}
+
+.animate-float-soft {
+  animation: float-soft 6s ease-in-out infinite alternate;
+}
+
 .animate-float {
   animation: float-slow 5s ease-in-out infinite;
 }
@@ -607,4 +617,58 @@ html, body {
 /* Warm gradient overlays for testimonials */
 .warm-gradient-bg {
   background: linear-gradient(135deg, #FFFBEB 0%, #FFF1F2 25%, #FFFDF8 50%, #F0F9FF 100%);
+}
+
+/* ========================================
+   MOBILE HERO VISUAL ENHANCEMENTS
+   Premium depth & richer visual presence
+   ======================================== */
+
+/* Stronger 3D button depth on mobile */
+@media (max-width: 640px) {
+  .btn-primary, .btn-navy {
+    box-shadow: 0px 6px 0px 0px #091A42, 0px 12px 24px -4px rgba(15, 41, 99, 0.25);
+  }
+  .btn-primary:active, .btn-navy:active {
+    box-shadow: 0px 2px 0px 0px #091A42;
+  }
+  
+  .btn-secondary, .btn-yellow {
+    box-shadow: 0px 6px 0px 0px #B45309, 0px 12px 24px -4px rgba(180, 83, 9, 0.2);
+  }
+  .btn-secondary:active, .btn-yellow:active {
+    box-shadow: 0px 2px 0px 0px #B45309;
+  }
+}
+
+/* Shimmer ring animation for mobile hero image frame */
+@keyframes shimmer-ring {
+  0% { box-shadow: 0 0 0 0px rgba(245, 158, 11, 0.3), 0 20px 40px -10px rgba(15, 41, 99, 0.2); }
+  50% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15), 0 25px 50px -10px rgba(15, 41, 99, 0.25); }
+  100% { box-shadow: 0 0 0 0px rgba(245, 158, 11, 0.3), 0 20px 40px -10px rgba(15, 41, 99, 0.2); }
+}
+
+@media (max-width: 1023px) {
+  .mobile-hero-frame {
+    animation: shimmer-ring 3s ease-in-out infinite;
+  }
+}
+
+/* Mobile trust badge glass effect */
+@media (max-width: 640px) {
+  .bento-card {
+    box-shadow: 0px 8px 24px -4px rgba(15, 41, 99, 0.08), 0px 6px 0px 0px #F0F4FC;
+  }
+  .bento-card:hover {
+    box-shadow: 0px 16px 32px -4px rgba(15, 41, 99, 0.12), 0px 8px 0px 0px #CBD8F6;
+  }
+}
+
+/* Mobile feature pill glass styling */
+@media (max-width: 640px) {
+  .glass-pill {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px -2px rgba(15, 41, 99, 0.08);
+  }
 }

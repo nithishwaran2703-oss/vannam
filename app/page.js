@@ -1017,7 +1017,7 @@ export default function Home() {
 
 
 
-      <header className="sticky top-0 z-50 bg-white border-b border-[#CBD8F6]/80 shadow-xs">
+      <header className="sticky top-0 z-50 bg-white  shadow-xs">
         <div className="max-w-[1440px] mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2.5 sm:gap-3 xl:gap-6">
           
           {/* Logo & School Name */}
@@ -1181,9 +1181,13 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative pt-6 pb-10 sm:pt-10 sm:pb-14 lg:pt-16 lg:pb-20 overflow-hidden bg-playful-dots">
+      <section className="relative pt-4 pb-8 sm:pt-10 sm:pb-14 lg:pt-16 lg:pb-20 overflow-hidden bg-playful-dots">
         {/* Subtle Background Organic Glows */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-vannam-yellow/15 via-vannam-red/8 to-vannam-cyan/15 rounded-full blur-3xl -z-10 opacity-90 pointer-events-none" />
+        {/* Mobile-only extra ambient glows for depth */}
+        <div className="lg:hidden absolute top-0 left-0 w-48 h-48 bg-gradient-to-br from-amber-200/40 to-rose-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
+        <div className="lg:hidden absolute top-20 right-0 w-40 h-40 bg-gradient-to-bl from-sky-200/40 to-emerald-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
+        <div className="lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-32 bg-gradient-to-r from-vannam-yellow/20 via-vannam-red/10 to-vannam-purple/15 rounded-full blur-2xl -z-10 pointer-events-none" />
         
         {/* DESKTOP EXCLUSIVE DECORATIVE VISUAL STORYTELLING (Balanced Whitespace - Zero Content Interference) */}
         <div className="hidden lg:block absolute top-4 left-6 xl:left-12 animate-float pointer-events-none z-10">
@@ -1213,11 +1217,11 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center">
             
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-center lg:text-left relative">
+            <div className="lg:col-span-7 space-y-3 sm:space-y-5 text-center lg:text-left relative">
               
               {/* Mobile Preschool Header Greeting */}
               <div className="block lg:hidden mb-2">
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-rose-100 border-2 border-amber-300 text-[#0F2963] text-xs font-black shadow-xs">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-rose-100 border border-amber-300/80 text-[#0F2963] text-xs font-bold shadow-xs backdrop-blur-xs">
                   <TeddyBearIcon className="w-4 h-4 text-vannam-yellow animate-bounce-gentle shrink-0" />
                   <span>Welcome to Vannam World Preschool</span>
                   <span className="text-xs">✨</span>
@@ -1225,8 +1229,8 @@ export default function Home() {
               </div>
 
               {/* Headline */}
-              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-[1.2] sm:leading-[1.15]">
-                Where Little Minds Begin <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-8">Big Adventures</span> 🚀
+              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-tight">
+                Where Little Minds Begin <span className="text-vannam-yellow underline decoration-vannam-green decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">Big Adventures</span> 🚀
               </h1>
 
               {/* Sub-paragraph */}
@@ -1235,52 +1239,42 @@ export default function Home() {
               </p>
 
               {/* BESPOKE MOBILE STORYBOOK HERO CARD (Visible ONLY on Mobile/Tablet) */}
-              <div className="block lg:hidden my-3 relative mx-auto max-w-sm px-1">
+              <div className="block lg:hidden my-2.5 relative mx-auto w-full max-w-[290px] xs:max-w-[320px] px-1">
                 
                 {/* Rainbow Aura Glow Effect */}
-                <div className="absolute -inset-2 bg-gradient-to-r from-amber-300/40 via-rose-300/30 to-sky-300/40 rounded-[2.5rem] blur-lg -z-10 animate-pulse-subtle" />
-
-                {/* Top Corner Floating Sticker: Rainbow Fun */}
-                <div className="absolute -top-3 -left-1 z-30 animate-float pointer-events-none">
-                  <div className="bg-white px-2.5 py-1 rounded-full border-2 border-amber-300 shadow-md flex items-center gap-1.5">
-                    <RainbowIcon className="w-5 h-3.5" />
-                    <span className="text-[10px] font-black text-[#0F2963]">Play & Learn</span>
-                  </div>
-                </div>
-
-                {/* Top Right Corner Floating Sticker: Age Tag */}
-                <div className="absolute -top-3 -right-1 z-30 animate-float-reverse pointer-events-none">
-                  <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-2.5 py-1 rounded-full shadow-md flex items-center gap-1 border border-white">
-                    <span className="text-[10px] font-black tracking-wide">👶 Ages 1–6 Yrs</span>
-                  </div>
-                </div>
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-300/30 via-rose-300/20 to-sky-300/30 rounded-2xl blur-md -z-10" />
 
                 {/* Main Die-Cut Photo Frame with 3D Rounded Borders */}
-                <div className="relative rounded-[2rem] overflow-hidden border-4 border-white shadow-2xl bg-white aspect-[16/11]">
+                <div className="relative rounded-2xl overflow-hidden border-2 sm:border-[3px] border-white shadow-lg bg-white aspect-[16/10] mobile-hero-frame">
                   <Image 
                     src="/hero-kids.jpg" 
                     alt="Preschool children playing with colorful wooden blocks" 
                     fill 
-                    sizes="(max-width: 768px) 100vw, 50vw"
+                    sizes="(max-width: 768px) 320px, 50vw"
                     className="object-cover" 
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/85 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/75 via-transparent to-transparent" />
                   
-                  {/* Floating Trust Badge on Left Inside Frame */}
-                  <div className="absolute bottom-2.5 left-2.5 z-20 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-xl border border-amber-200/80 shadow-xs flex items-center gap-1.5">
-                    <div className="flex -space-x-1">
-                      <span className="text-xs">⭐</span>
-                      <span className="text-xs">⭐</span>
-                      <span className="text-xs">⭐</span>
+                  {/* Top Corner Floating Sticker: Rainbow Fun */}
+                  <div className="absolute top-2 left-2 z-20 pointer-events-none">
+                    <div className="bg-white/95 backdrop-blur-xs px-2 py-0.5 rounded-full border border-amber-200/80 shadow-xs flex items-center gap-1">
+                      <RainbowIcon className="w-3.5 h-2.5" />
+                      <span className="text-[9.5px] font-extrabold text-[#0F2963]">Play & Learn</span>
                     </div>
-                    <span className="text-[9.5px] font-black text-[#0F2963]">Top Parent Rating</span>
+                  </div>
+
+                  {/* Top Right Corner Floating Sticker: Age Tag */}
+                  <div className="absolute top-2 right-2 z-20 pointer-events-none">
+                    <div className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 border border-white/90">
+                      <span className="text-[9.5px] font-bold">👶 Ages 1–6</span>
+                    </div>
                   </div>
 
                   {/* Floating Confetti Quick-Apply Button on Right Inside Frame */}
                   <button 
                     onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-                    className="absolute bottom-2.5 right-2.5 z-20 btn-primary px-3 py-1.5 text-[10px] font-black rounded-xl shadow-md transition-transform active:scale-95 flex items-center gap-1 !min-h-0 h-auto"
+                    className="absolute bottom-2.5 right-2.5 z-20 btn-primary px-3 py-1 text-[10px] font-extrabold rounded-full shadow-md transition-transform active:scale-95 flex items-center gap-1 !min-h-0 h-auto"
                   >
                     <span>Apply Now</span>
                     <ChevronRight className="w-3 h-3 text-vannam-yellow" />
@@ -1290,10 +1284,10 @@ export default function Home() {
               </div>
 
               {/* Dual Action CTAs for Mobile Parents */}
-              <div className="flex flex-col xs:flex-row items-stretch xs:items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-2">
+              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-3 w-full max-w-md mx-auto lg:max-w-none">
                 <button
                   onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-                  className="btn-primary w-full xs:w-auto px-6 sm:px-8 py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg whitespace-nowrap min-h-[48px] active:scale-95 transition-transform"
+                  className="btn-primary w-full sm:w-auto px-5 sm:px-8 py-3 sm:py-4 text-xs sm:text-base flex items-center justify-center gap-2 shadow-lg whitespace-nowrap min-h-[46px] sm:min-h-[52px] active:scale-95 transition-transform"
                 >
                   <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0 animate-bounce-gentle" />
                   <span>Book a Campus Visit</span>
@@ -1301,10 +1295,10 @@ export default function Home() {
 
                 <a
                   href="#programs"
-                  className="btn-secondary w-full xs:w-auto px-6 sm:px-7 py-3.5 text-xs xs:text-sm sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 whitespace-nowrap min-h-[48px] active:scale-95 transition-transform group"
+                  className="btn-secondary w-full sm:w-auto px-5 sm:px-7 py-3 sm:py-4 text-xs sm:text-base flex items-center justify-center gap-1.5 whitespace-nowrap min-h-[46px] sm:min-h-[52px] active:scale-95 transition-transform group"
                 >
                   <span>Explore Programs</span>
-                  <ChevronRight className="w-4 h-4 text-vannam-navy shrink-0 group-hover:translate-x-1 transition-transform" />
+                  <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-vannam-navy shrink-0 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
@@ -1398,7 +1392,7 @@ export default function Home() {
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="scroll-mt-24 py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="about" className="scroll-mt-24 py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Decorative Corner Accents */}
         <div className="hidden lg:block absolute top-6 right-10 animate-float pointer-events-none opacity-80">
@@ -1518,10 +1512,13 @@ export default function Home() {
           <NatureBridge className="mt-6 -mb-4" />
 
         </div>
+
+        {/* Playful Organic Wave Divider to Programs */}
+        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
       </section>
 
       {/* AGE-BASED PROGRAMS SECTION */}
-      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-10 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -1677,7 +1674,7 @@ export default function Home() {
       </section>
 
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
-      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Floating Decorative Elements for Desktop Whitespace */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80">
@@ -1845,7 +1842,7 @@ export default function Home() {
       </section>
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
-      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2266,7 +2263,7 @@ export default function Home() {
       </section>
 
       {/* DAILY ACTIVITIES SECTION */}
-      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2389,7 +2386,7 @@ export default function Home() {
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2454,7 +2451,7 @@ export default function Home() {
       </section>
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
-      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2594,7 +2591,7 @@ export default function Home() {
       </section>
 
       {/* TEACHERS & LEADERSHIP SECTION */}
-      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2656,7 +2653,7 @@ export default function Home() {
       </section>
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
-      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2769,7 +2766,7 @@ export default function Home() {
       )}
 
       {/* AWARDS & RECOGNITION SECTION - HORIZONTAL CARDS */}
-      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2841,7 +2838,7 @@ export default function Home() {
       </section>
 
       {/* PARENT TESTIMONIALS SECTION */}
-      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2912,7 +2909,7 @@ export default function Home() {
       </section>
 
       {/* UPCOMING SCHOOL EVENTS */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
@@ -2972,7 +2969,7 @@ export default function Home() {
       </section>
 
       {/* FAQS ACCORDION SECTION */}
-      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots border-b border-[#CBD8F6]/80 relative overflow-hidden">
+      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
         
         {/* Desktop Exclusive Floating Storytelling Accents */}
         <div className="hidden lg:block absolute top-10 left-10 animate-float pointer-events-none opacity-80 z-10">
@@ -3019,6 +3016,9 @@ export default function Home() {
           </div>
 
         </div>
+
+        {/* Playful Organic Wave Divider into Contact */}
+        <PlayfulWaveDivider className="mt-8 -mb-10 sm:-mb-14 lg:-mb-18" fillColor="#0F2963" strokeColor="#CBD8F6" />
       </section>
 
       {/* ADMISSION CTA & CONTACT FORM SECTION - GLASSMORPHIC POSTCARD */}
