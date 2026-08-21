@@ -1687,9 +1687,9 @@ export default function Home() {
           <ButterflyIcon color="rose" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 space-y-4 sm:space-y-6">
           {/* Section Header */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
+          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
             <div className="flex justify-center mb-1">
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
@@ -1709,22 +1709,22 @@ export default function Home() {
           </ScrollReveal>
 
           {/* FEATURE SELECTOR TILES */}
-          <ScrollReveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-2.5">
+          <ScrollReveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 items-stretch">
             {differentiators.map((item, idx) => {
               const isSelected = activeWhyUsTab === idx;
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveWhyUsTab(idx)}
-                  className={`w-full p-2.5 sm:p-3.5 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-center text-center gap-1.5 min-h-[78px] sm:min-h-[86px] active:scale-95 ${
+                  className={`w-full p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center justify-between text-center gap-2 min-h-[92px] sm:min-h-[104px] h-full active:scale-95 cursor-pointer ${
                     isSelected
-                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-lg scale-[1.02] sm:scale-105"
+                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-md ring-2 ring-vannam-yellow/30"
                       : "bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] shadow-2xs"
                   }`}
                 >
-                  <span className="text-lg sm:text-2xl">{item.icon}</span>
-                  <span className="text-[10.5px] sm:text-xs font-extrabold leading-tight">{item.shortTitle}</span>
-                  <span className={`text-[8px] sm:text-[9.5px] font-black uppercase px-2 py-0.5 rounded-full whitespace-nowrap ${
+                  <span className="text-xl sm:text-2xl">{item.icon}</span>
+                  <span className="text-[11px] sm:text-xs font-extrabold leading-tight px-0.5 line-clamp-2">{item.shortTitle}</span>
+                  <span className={`text-[8.5px] sm:text-[9.5px] font-black uppercase px-2.5 py-0.5 rounded-full whitespace-nowrap ${
                     isSelected ? "bg-vannam-yellow text-[#0F2963]" : "bg-[#E8EEFB] text-[#00A8E8]"
                   }`}>
                     {item.stat}
@@ -1738,45 +1738,45 @@ export default function Home() {
           {(() => {
             const current = differentiators[activeWhyUsTab];
             return (
-              <ScrollReveal variant="reveal-scale" className="bg-white rounded-2xl sm:rounded-3xl border-2 sm:border-3 border-[#CBD8F6] shadow-lg sm:shadow-xl p-3.5 sm:p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
+              <ScrollReveal variant="reveal-scale" className="bg-white rounded-2xl sm:rounded-3xl border-2 border-[#CBD8F6] shadow-lg p-4 sm:p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
                 
                 {/* Cockpit Top Bar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-2.5 pb-3 sm:pb-4 border-b border-[#E8EEFB]">
-                  <div className="flex items-center gap-2.5 text-center sm:text-left">
-                    <span className="text-xl sm:text-3xl p-2 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 sm:pb-5 border-b border-[#E8EEFB]">
+                  <div className="flex items-center gap-3 text-center sm:text-left">
+                    <span className="text-2xl sm:text-3xl p-2.5 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
                     <div>
-                      <span className="text-[9.5px] sm:text-[10.5px] font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
-                      <h3 className="font-heading font-extrabold text-sm sm:text-lg text-[#0F2963] leading-tight">{current.feature}</h3>
+                      <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
+                      <h3 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963] leading-tight">{current.feature}</h3>
                     </div>
                   </div>
 
-                  <span className="px-3 py-1 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[10px] sm:text-[11px] font-black text-center shadow-2xs">
+                  <span className="px-3.5 py-1.5 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[10.5px] sm:text-xs font-black text-center shadow-2xs">
                     Verified Benchmark: {current.proofTag}
                   </span>
                 </div>
 
-                {/* Split Dual-Panel Comparison Cockpit (2 Grids Per Row) */}
-                <div className="grid grid-cols-2 gap-2.5 sm:gap-6 pt-3 sm:pt-5 items-stretch">
+                {/* Split Dual-Panel Comparison Cockpit (Symmetrical side-by-side on tablet/desktop, stacked on mobile) */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 pt-4 sm:pt-6 items-stretch">
                   
                   {/* LEFT PANEL: VANNAM WORLD */}
-                  <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-xl sm:rounded-2xl p-3 sm:p-5 border-2 border-[#A7F3D0] space-y-2.5 sm:space-y-3 relative overflow-hidden shadow-xs flex flex-col justify-between">
-                    <div className="space-y-2 sm:space-y-2.5">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-                        <span className="px-2 sm:px-3 py-0.5 rounded-full bg-emerald-700 text-white text-[8.5px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0">
-                          <CheckCircle2 className="w-3 3 text-emerald-300 shrink-0" />
-                          <span>Vannam</span>
+                  <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-2xl p-3.5 sm:p-5 border-2 border-[#A7F3D0] space-y-3 relative overflow-hidden shadow-xs flex flex-col justify-between">
+                    <div className="space-y-2.5 sm:space-y-3">
+                      <div className="flex items-center justify-between gap-2 pb-1 border-b border-emerald-300/40">
+                        <span className="px-3 py-1 rounded-full bg-emerald-700 text-white text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shrink-0 shadow-2xs">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300 shrink-0" />
+                          <span>Vannam Standard</span>
                         </span>
-                        <span className="font-heading font-black text-xs sm:text-xl text-emerald-950 text-center sm:text-right">{current.stat}</span>
+                        <span className="font-heading font-black text-sm sm:text-xl text-emerald-950">{current.stat}</span>
                       </div>
 
                       {/* Visual Checkmark Pills */}
-                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
+                      <div className="space-y-2 pt-0.5">
                         {current.vannamPoints.map((pt, i) => (
-                          <div key={i} className="flex items-start gap-1.5 sm:gap-2 p-2 sm:p-2.5 rounded-xl bg-white/95 border border-emerald-300/80 shadow-2xs">
-                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-[9px] sm:text-xs shrink-0 mt-0.5">
+                          <div key={i} className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/95 border border-emerald-300/80 shadow-2xs min-h-[46px]">
+                            <div className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shrink-0">
                               ✓
                             </div>
-                            <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-bold text-[#0F2963] leading-snug">{pt}</span>
+                            <span className="text-xs sm:text-sm font-bold text-[#0F2963] leading-snug">{pt}</span>
                           </div>
                         ))}
                       </div>
@@ -1784,24 +1784,24 @@ export default function Home() {
                   </div>
 
                   {/* RIGHT PANEL: TRADITIONAL SCHOOLS */}
-                  <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-xl sm:rounded-2xl p-3 sm:p-5 border-2 border-rose-200 space-y-2.5 sm:space-y-3 relative overflow-hidden opacity-95 flex flex-col justify-between">
-                    <div className="space-y-2 sm:space-y-2.5">
-                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-2">
-                        <span className="px-2 sm:px-3 py-0.5 rounded-full bg-slate-800 text-slate-200 text-[8.5px] sm:text-[11px] font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0">
-                          <X className="w-3 h-3 text-rose-400 shrink-0" />
-                          <span>Others</span>
+                  <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-2xl p-3.5 sm:p-5 border-2 border-rose-200 space-y-3 relative overflow-hidden opacity-95 flex flex-col justify-between">
+                    <div className="space-y-2.5 sm:space-y-3">
+                      <div className="flex items-center justify-between gap-2 pb-1 border-b border-rose-200/60">
+                        <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-200 text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1.5 shrink-0 shadow-2xs">
+                          <X className="w-3.5 h-3.5 text-rose-400 shrink-0" />
+                          <span>Traditional Daycares</span>
                         </span>
-                        <span className="font-heading font-bold text-[10px] sm:text-sm text-slate-500 whitespace-nowrap text-center sm:text-right">Baseline</span>
+                        <span className="font-heading font-bold text-xs sm:text-sm text-slate-500 whitespace-nowrap">Baseline</span>
                       </div>
 
                       {/* Visual Warning Pills */}
-                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
+                      <div className="space-y-2 pt-0.5">
                         {current.traditionalPoints.map((pt, i) => (
-                          <div key={i} className="flex items-start gap-1.5 sm:gap-2 p-2 sm:p-2.5 rounded-xl bg-white/85 border border-rose-200/80 shadow-2xs">
-                            <div className="w-4 h-4 sm:w-5 sm:h-5 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-[9px] sm:text-xs shrink-0 mt-0.5">
+                          <div key={i} className="flex items-center gap-2.5 p-2.5 sm:p-3 rounded-xl bg-white/85 border border-rose-200/80 shadow-2xs min-h-[46px]">
+                            <div className="w-5 h-5 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-xs shrink-0">
                               ✕
                             </div>
-                            <span className="text-[9.5px] xs:text-[10.5px] sm:text-xs font-semibold text-slate-600 leading-snug">{pt}</span>
+                            <span className="text-xs sm:text-sm font-semibold text-slate-600 leading-snug">{pt}</span>
                           </div>
                         ))}
                       </div>
