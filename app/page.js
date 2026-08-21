@@ -2316,23 +2316,47 @@ export default function Home() {
           <PaperPlaneIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
         </div>
 
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12" />
+        {/* CHILD-ATTRACTIVE FLOATING DECORATIONS (Fills empty spaces on Mobile & Desktop) */}
+        <div className="absolute top-2 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
+          <SmilingSunIcon className="w-7 h-7 sm:w-11 sm:h-11 drop-shadow-xs" />
+          <RainbowIcon className="w-8 h-5 sm:w-12 sm:h-8 drop-shadow-xs hidden xs:block" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <HappyCloudIcon className="w-8 h-6 sm:w-14 sm:h-10" />
+        <div className="absolute top-2 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
+          <HappyCloudIcon className="w-7 h-5 sm:w-11 sm:h-8" />
+          <FloatingBalloonsGroup className="w-7 h-9 sm:w-11 sm:h-14 drop-shadow-xs" />
         </div>
-        <div className="absolute bottom-4 left-3 sm:bottom-10 sm:left-10 animate-drift pointer-events-none opacity-80 z-10">
-          <PaperPlaneIcon className="w-7 h-7 sm:w-10 sm:h-10" />
+
+        {/* Mid-Flank Toy Accents */}
+        <div className="absolute top-1/3 left-1 sm:left-4 animate-bounce-gentle pointer-events-none opacity-80 z-10">
+          <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs p-1 rounded-xl border border-amber-200/80 shadow-2xs">
+            <AlphabetBlock letter="1" color="amber" className="w-4 h-4 sm:w-6 sm:h-6" />
+            <AlphabetBlock letter="2" color="sky" className="w-4 h-4 sm:w-6 sm:h-6 -mt-1" />
+            <AlphabetBlock letter="3" color="rose" className="w-4 h-4 sm:w-6 sm:h-6" />
+          </div>
+        </div>
+        <div className="absolute top-1/3 right-1 sm:right-4 animate-flutter pointer-events-none opacity-85 z-10 flex flex-col items-center gap-1">
+          <PinwheelToy className="w-6 h-6 sm:w-9 sm:h-9 animate-spin-slow" />
+          <ButterflyIcon color="rose" className="w-5 h-5 sm:w-7 sm:h-7" />
+        </div>
+
+        {/* Lower Corner Accents */}
+        <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-8 animate-drift pointer-events-none opacity-85 z-10 flex items-center gap-1.5">
+          <PaperPlaneIcon className="w-6 h-6 sm:w-9 sm:h-9" />
+          <CrayonIcon color="sky" className="w-5 h-5 sm:w-7 sm:h-7 hidden xs:block" />
+        </div>
+        <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-8 animate-wiggle pointer-events-none opacity-80 z-10 flex items-center gap-1">
+          <MusicNotesCluster className="w-6 h-6 sm:w-8 sm:h-8" />
+          <ToyCarIcon className="w-6 h-6 sm:w-8 sm:h-8 hidden xs:block" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          {/* Section Header */}
+          {/* Section Header with Child-Attractive Mascot Scene */}
           <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
-            <div className="flex justify-center mb-1">
-              <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+              <TeddyBearIcon className="w-7 h-7 sm:w-9 sm:h-9 animate-bounce-gentle" />
+              <CreativitySceneGroup className="opacity-95 scale-90 sm:scale-100" />
+              <PinwheelToy className="w-6 h-6 sm:w-8 sm:h-8 animate-float" />
             </div>
             <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-red bg-rose-100 border border-rose-300 px-3 py-1 rounded-full shadow-2xs">
               <Clock className="w-3.5 h-3.5" />
