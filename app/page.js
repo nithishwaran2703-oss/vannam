@@ -1189,11 +1189,25 @@ export default function Home() {
         <div className="lg:hidden absolute top-20 right-0 w-40 h-40 bg-gradient-to-bl from-sky-200/40 to-emerald-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
         <div className="lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-32 bg-gradient-to-r from-vannam-yellow/20 via-vannam-red/10 to-vannam-purple/15 rounded-full blur-2xl -z-10 pointer-events-none" />
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART (Fills empty side whitespace on large screens) */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/3 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-3">
+            <StorybookStackIcon className="w-16 h-16 text-amber-400 animate-float" />
+            <span className="text-[10px] font-black text-amber-600 uppercase tracking-widest bg-amber-100/60 px-2 py-0.5 rounded-md">Montessori</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-3">
+            <PinwheelToy className="w-16 h-16 animate-float-reverse" />
+            <span className="text-[10px] font-black text-cyan-600 uppercase tracking-widest bg-cyan-100/60 px-2 py-0.5 rounded-md">STEAM Play</span>
+          </div>
+        </div>
+
         {/* PLAYFUL DECORATIVE ANIMATIONS (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-12 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-16 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
           <RainbowIcon className="w-10 h-6 sm:w-20 sm:h-12 xl:w-24 xl:h-14 drop-shadow-xs" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-16 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
+        <div className="absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-20 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
           <div className="flex items-center gap-1 sm:gap-2">
             <HappyCloudIcon className="w-8 h-5 sm:w-14 sm:h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
             <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12 xl:w-14 xl:h-14 drop-shadow-xs" />
@@ -1206,10 +1220,10 @@ export default function Home() {
             <AlphabetBlock letter="C" color="sky" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs" />
           </div>
         </div>
-        <div className="absolute top-32 left-2 sm:top-44 sm:left-4 xl:left-8 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-85">
+        <div className="absolute top-32 left-2 sm:top-44 sm:left-4 xl:left-12 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-85">
           <ButterflyIcon color="purple" className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
-        <div className="absolute bottom-16 right-2 sm:bottom-24 sm:right-8 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-90">
+        <div className="absolute bottom-16 right-2 sm:bottom-24 sm:right-8 xl:right-16 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-90">
           <ButterflyIcon color="amber" className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
 
@@ -1394,6 +1408,20 @@ export default function Home() {
       {/* ABOUT SECTION */}
       <section id="about" className="scroll-mt-24 py-8 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <StorybookStackIcon className="w-18 h-18 text-amber-500 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Story Time</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <BlossomFlowerIcon color="rose" className="w-18 h-18 animate-wiggle" />
+            <span className="text-[9.5px] font-black text-rose-700 uppercase tracking-widest bg-rose-100/70 px-2 py-0.5 rounded-full">Nature Care</span>
+          </div>
+        </div>
+
         {/* Floating Decorative Corner Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 right-3 sm:top-6 sm:right-10 animate-float pointer-events-none opacity-80 z-10">
           <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
@@ -1520,6 +1548,20 @@ export default function Home() {
       {/* AGE-BASED PROGRAMS SECTION */}
       <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <PuzzlePieceIcon color="emerald" className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/70 px-2 py-0.5 rounded-full">Logic Puzzles</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <StorybookIcon className="w-18 h-18 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-purple-700 uppercase tracking-widest bg-purple-100/70 px-2 py-0.5 rounded-full">Early Reading</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-10 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <PuzzlePieceIcon color="emerald" className="w-7 h-7 sm:w-12 sm:h-12" />
@@ -1676,6 +1718,20 @@ export default function Home() {
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
       <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <RainbowIcon className="w-20 h-14 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Top Ranked</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <TeddyBearIcon className="w-18 h-18 animate-wiggle" />
+            <span className="text-[9.5px] font-black text-sky-700 uppercase tracking-widest bg-sky-100/70 px-2 py-0.5 rounded-full">Zero Screens</span>
+          </div>
+        </div>
+
         {/* Floating Decorative Elements (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <RainbowIcon className="w-8 h-5 sm:w-14 sm:h-9 drop-shadow-sm" />
@@ -1847,6 +1903,20 @@ export default function Home() {
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
       <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <ArtPaletteIcon className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-rose-700 uppercase tracking-widest bg-rose-100/70 px-2 py-0.5 rounded-full">Arts & STEAM</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <MusicNotesCluster className="w-16 h-16 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-purple-700 uppercase tracking-widest bg-purple-100/70 px-2 py-0.5 rounded-full">Sound & Rhythm</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <PaintSplatterIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
@@ -2268,6 +2338,20 @@ export default function Home() {
       {/* DAILY ACTIVITIES SECTION */}
       <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <SmilingSunIcon className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Morning Flow</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <PaperPlaneIcon className="w-18 h-18 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-sky-700 uppercase tracking-widest bg-sky-100/70 px-2 py-0.5 rounded-full">Outdoor Play</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12" />
@@ -2391,6 +2475,20 @@ export default function Home() {
       {/* FACILITIES SECTION */}
       <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <SchoolCastleIcon className="w-18 h-18 text-blue-600 animate-float" />
+            <span className="text-[9.5px] font-black text-blue-700 uppercase tracking-widest bg-blue-100/70 px-2 py-0.5 rounded-full">Safe Campus</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <PlaygroundSlideIcon className="w-18 h-18 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/70 px-2 py-0.5 rounded-full">Soft Play</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <SchoolCastleIcon className="w-7 h-7 sm:w-12 sm:h-12" />
@@ -2432,6 +2530,7 @@ export default function Home() {
                     fill 
                     sizes="(max-width: 768px) 80vw, (max-width: 1200px) 50vw, 33vw"
                     className="object-cover group-hover:scale-105 transition duration-500" 
+                    priority={false}
                   />
                   <div className="absolute top-2.5 right-2.5 bg-white/95 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black text-[#0F2963] shadow-xs">
                     {fac.tag}
@@ -2456,6 +2555,20 @@ export default function Home() {
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
       <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <ShieldSecurityBadge className="w-18 h-18 animate-pulse-subtle" />
+            <span className="text-[9.5px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/70 px-2 py-0.5 rounded-full">4K CCTV</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <SparkleStarsGroup className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Pediatric Care</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <SparkleStarsGroup className="w-7 h-7 sm:w-12 sm:h-12" />
@@ -2596,6 +2709,20 @@ export default function Home() {
       {/* TEACHERS & LEADERSHIP SECTION */}
       <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <TeacherApplesTrophy className="w-18 h-18 text-amber-500 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Faculty Care</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <StorybookStackIcon className="w-18 h-18 text-sky-500 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-sky-700 uppercase tracking-widest bg-sky-100/70 px-2 py-0.5 rounded-full">Montessori Lead</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <AlphabetBlock letter="T" color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
@@ -2658,6 +2785,20 @@ export default function Home() {
       {/* GALLERY SECTION WITH LIGHTBOX */}
       <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <ArtPaletteIcon className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-rose-700 uppercase tracking-widest bg-rose-100/70 px-2 py-0.5 rounded-full">Memory Album</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <PinwheelToy className="w-18 h-18 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/70 px-2 py-0.5 rounded-full">Campus Joy</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
@@ -2771,6 +2912,20 @@ export default function Home() {
       {/* AWARDS & RECOGNITION SECTION - HORIZONTAL CARDS */}
       <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <TwinkleStarIcon color="amber" className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Top Ranked</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <TeddyBearIcon className="w-18 h-18 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-sky-700 uppercase tracking-widest bg-sky-100/70 px-2 py-0.5 rounded-full">Accredited</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <TwinkleStarIcon color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
@@ -2843,6 +2998,20 @@ export default function Home() {
       {/* PARENT TESTIMONIALS SECTION */}
       <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <ParentLoveBadge className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-rose-700 uppercase tracking-widest bg-rose-100/70 px-2 py-0.5 rounded-full">Parent Love</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <FloatingBalloonsGroup className="w-18 h-20 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">5-Star Care</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <FloatingBalloonsGroup className="w-8 h-10 sm:w-12 sm:h-16" />
@@ -2914,6 +3083,20 @@ export default function Home() {
       {/* UPCOMING SCHOOL EVENTS */}
       <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <PartyCelebrationIcon className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-purple-700 uppercase tracking-widest bg-purple-100/70 px-2 py-0.5 rounded-full">Festivals</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <BalloonIcon color="sky" className="w-16 h-20 animate-float-reverse" />
+            <span className="text-[9.5px] font-black text-sky-700 uppercase tracking-widest bg-sky-100/70 px-2 py-0.5 rounded-full">Workshops</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <Calendar className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-yellow" />
@@ -2974,6 +3157,20 @@ export default function Home() {
       {/* FAQS ACCORDION SECTION */}
       <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
+        {/* DESKTOP WIDE MARGIN BACKGROUND ART */}
+        <div className="hidden xl:block absolute -left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <SproutPlantIcon className="w-18 h-18 animate-float" />
+            <span className="text-[9.5px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-100/70 px-2 py-0.5 rounded-full">Curriculum</span>
+          </div>
+        </div>
+        <div className="hidden xl:block absolute -right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-20 select-none">
+          <div className="flex flex-col items-center gap-2">
+            <ButterflyIcon color="amber" className="w-16 h-16 animate-flutter" />
+            <span className="text-[9.5px] font-black text-amber-700 uppercase tracking-widest bg-amber-100/70 px-2 py-0.5 rounded-full">Admissions</span>
+          </div>
+        </div>
+
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
         <div className="absolute top-3 left-3 sm:top-10 sm:left-10 animate-float pointer-events-none opacity-80 z-10">
           <SproutPlantIcon className="w-7 h-7 sm:w-10 sm:h-10" />
