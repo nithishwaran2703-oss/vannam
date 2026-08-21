@@ -1291,22 +1291,22 @@ export default function Home() {
 
               </div>
 
-              {/* Dual Action CTAs for Mobile Parents */}
-              <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-2.5 sm:gap-4 pt-1 sm:pt-3 w-full max-w-md mx-auto lg:max-w-none">
+              {/* Dual Action CTAs - Sleek & Compact on Mobile */}
+              <div className="flex flex-row items-center justify-center lg:justify-start gap-2 xs:gap-2.5 sm:gap-4 pt-1 sm:pt-3 w-full max-w-[320px] xs:max-w-[360px] sm:max-w-none mx-auto lg:mx-0">
                 <button
                   onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-                  className="btn-primary w-full sm:w-auto px-5 sm:px-8 py-3 sm:py-4 text-xs sm:text-base flex items-center justify-center gap-2 shadow-lg whitespace-nowrap min-h-[46px] sm:min-h-[52px] active:scale-95 transition-transform"
+                  className="btn-primary flex-1 sm:flex-initial sm:w-auto px-3 xs:px-4 sm:px-7 py-2.5 sm:py-3.5 text-[11px] xs:text-xs sm:text-base flex items-center justify-center gap-1.5 sm:gap-2 shadow-md whitespace-nowrap !min-h-[40px] sm:!min-h-[48px] rounded-xl sm:rounded-2xl active:scale-95 transition-transform"
                 >
-                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0 animate-bounce-gentle" />
-                  <span>Book a Campus Visit</span>
+                  <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-vannam-yellow shrink-0 animate-bounce-gentle" />
+                  <span>Book a Visit</span>
                 </button>
 
                 <a
                   href="#programs"
-                  className="btn-secondary w-full sm:w-auto px-5 sm:px-7 py-3 sm:py-4 text-xs sm:text-base flex items-center justify-center gap-1.5 whitespace-nowrap min-h-[46px] sm:min-h-[52px] active:scale-95 transition-transform group"
+                  className="btn-secondary flex-1 sm:flex-initial sm:w-auto px-3 xs:px-4 sm:px-6 py-2.5 sm:py-3.5 text-[11px] xs:text-xs sm:text-base flex items-center justify-center gap-1 sm:gap-1.5 whitespace-nowrap !min-h-[40px] sm:!min-h-[48px] rounded-xl sm:rounded-2xl active:scale-95 transition-transform group"
                 >
-                  <span>Explore Programs</span>
-                  <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-vannam-navy shrink-0 group-hover:translate-x-1 transition-transform" />
+                  <span>Programs</span>
+                  <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-vannam-navy shrink-0 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>
 
