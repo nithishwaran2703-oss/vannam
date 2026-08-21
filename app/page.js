@@ -1189,28 +1189,28 @@ export default function Home() {
         <div className="lg:hidden absolute top-20 right-0 w-40 h-40 bg-gradient-to-bl from-sky-200/40 to-emerald-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
         <div className="lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-32 bg-gradient-to-r from-vannam-yellow/20 via-vannam-red/10 to-vannam-purple/15 rounded-full blur-2xl -z-10 pointer-events-none" />
         
-        {/* DESKTOP EXCLUSIVE DECORATIVE VISUAL STORYTELLING (Balanced Whitespace - Zero Content Interference) */}
-        <div className="hidden lg:block absolute top-4 left-6 xl:left-12 animate-float pointer-events-none z-10">
-          <RainbowIcon className="w-20 h-12 xl:w-24 xl:h-14 drop-shadow-md" />
+        {/* PLAYFUL DECORATIVE ANIMATIONS (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-12 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
+          <RainbowIcon className="w-10 h-6 sm:w-20 sm:h-12 xl:w-24 xl:h-14 drop-shadow-xs" />
         </div>
-        <div className="hidden lg:block absolute top-6 right-8 xl:right-16 animate-float-reverse pointer-events-none z-10">
-          <div className="flex items-center gap-2">
-            <HappyCloudIcon className="w-14 h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
-            <SmilingSunIcon className="w-12 h-12 xl:w-14 xl:h-14 drop-shadow-md" />
+        <div className="absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-16 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
+          <div className="flex items-center gap-1 sm:gap-2">
+            <HappyCloudIcon className="w-8 h-5 sm:w-14 sm:h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
+            <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12 xl:w-14 xl:h-14 drop-shadow-xs" />
           </div>
         </div>
-        <div className="hidden xl:block absolute bottom-14 left-10 animate-wiggle pointer-events-none z-10">
-          <div className="flex items-center gap-1.5 bg-white/80 backdrop-blur-xs p-2 rounded-2xl border border-[#E8EEFB] shadow-xs">
-            <AlphabetBlock letter="A" color="rose" className="w-8 h-8 drop-shadow-xs" />
-            <AlphabetBlock letter="B" color="amber" className="w-8 h-8 drop-shadow-xs -mt-1.5" />
-            <AlphabetBlock letter="C" color="sky" className="w-8 h-8 drop-shadow-xs" />
+        <div className="absolute bottom-6 left-2 sm:bottom-14 sm:left-10 animate-wiggle pointer-events-none z-10 opacity-80 sm:opacity-100">
+          <div className="flex items-center gap-1 sm:gap-1.5 bg-white/85 backdrop-blur-xs p-1 sm:p-2 rounded-xl sm:rounded-2xl border border-[#E8EEFB] shadow-xs">
+            <AlphabetBlock letter="A" color="rose" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs" />
+            <AlphabetBlock letter="B" color="amber" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs -mt-1" />
+            <AlphabetBlock letter="C" color="sky" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs" />
           </div>
         </div>
-        <div className="hidden lg:block absolute top-44 left-4 xl:left-8 animate-flutter pointer-events-none z-10 opacity-85">
-          <ButterflyIcon color="purple" className="w-8 h-8" />
+        <div className="absolute top-32 left-2 sm:top-44 sm:left-4 xl:left-8 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-85">
+          <ButterflyIcon color="purple" className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
-        <div className="hidden xl:block absolute bottom-24 right-8 animate-flutter pointer-events-none z-10 opacity-90">
-          <ButterflyIcon color="amber" className="w-8 h-8" />
+        <div className="absolute bottom-16 right-2 sm:bottom-24 sm:right-8 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-90">
+          <ButterflyIcon color="amber" className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -1388,24 +1388,24 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider to About */}
-        <PlayfulWaveDivider className="mt-8 -mb-10 sm:-mb-14 lg:-mb-20" />
+        <PlayfulWaveDivider className="mt-4 -mb-4 sm:-mb-6" />
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="scroll-mt-24 py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="about" className="scroll-mt-24 py-8 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Decorative Corner Accents */}
-        <div className="hidden lg:block absolute top-6 right-10 animate-float pointer-events-none opacity-80">
-          <BlossomFlowerIcon color="rose" className="w-10 h-10" />
+        {/* Floating Decorative Corner Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 right-3 sm:top-6 sm:right-10 animate-float pointer-events-none opacity-80 z-10">
+          <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 left-8 animate-float-reverse pointer-events-none opacity-80">
-          <SproutPlantIcon className="w-10 h-10" />
+        <div className="absolute bottom-4 left-3 sm:bottom-8 sm:left-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+          <SproutPlantIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden xl:block absolute top-1/2 left-4 -translate-y-1/2 animate-flutter pointer-events-none opacity-75">
-          <ButterflyIcon color="emerald" className="w-7 h-7" />
+        <div className="absolute top-1/2 left-2 -translate-y-1/2 animate-flutter pointer-events-none opacity-75 z-10">
+          <ButterflyIcon color="emerald" className="w-6 h-6 sm:w-7 sm:h-7" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Header */}
           <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 relative">
@@ -1514,24 +1514,24 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider to Programs */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* AGE-BASED PROGRAMS SECTION */}
-      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-10 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <PuzzlePieceIcon color="emerald" className="w-12 h-12" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-10 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <PuzzlePieceIcon color="emerald" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden lg:block absolute top-12 right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <StorybookIcon className="w-12 h-12 drop-shadow-xs" />
+        <div className="absolute top-3 right-3 sm:top-12 sm:right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <StorybookIcon className="w-7 h-7 sm:w-12 sm:h-12 drop-shadow-xs" />
         </div>
-        <div className="hidden xl:block absolute bottom-12 left-12 animate-wiggle pointer-events-none opacity-85 z-10">
-          <CrayonIcon color="rose" className="w-10 h-10" />
+        <div className="absolute bottom-4 left-3 sm:bottom-12 sm:left-12 animate-wiggle pointer-events-none opacity-85 z-10">
+          <CrayonIcon color="rose" className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden xl:block absolute bottom-12 right-12 animate-flutter pointer-events-none opacity-85 z-10">
-          <AlphabetBlock letter="P" color="purple" className="w-9 h-9" />
+        <div className="absolute bottom-4 right-3 sm:bottom-12 sm:right-12 animate-flutter pointer-events-none opacity-85 z-10">
+          <AlphabetBlock letter="P" color="purple" className="w-6 h-6 sm:w-9 sm:h-9" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -1670,23 +1670,26 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Why Us */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
-      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Floating Decorative Elements for Desktop Whitespace */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80">
-          <RainbowIcon className="w-14 h-9 drop-shadow-sm" />
+        {/* Floating Decorative Elements (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <RainbowIcon className="w-8 h-5 sm:w-14 sm:h-9 drop-shadow-sm" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-80">
-          <PuzzlePieceIcon color="amber" className="w-12 h-12" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+          <PuzzlePieceIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden xl:block absolute top-24 right-10 animate-flutter pointer-events-none opacity-85">
-          <ButterflyIcon color="rose" className="w-8 h-8" />
+        <div className="absolute top-20 right-3 sm:top-24 sm:right-10 animate-flutter pointer-events-none opacity-85 z-10">
+          <ButterflyIcon color="rose" className="w-6 h-6 sm:w-8 sm:h-8" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           {/* Section Header */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2">
+          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
             <div className="flex justify-center mb-1">
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
@@ -1842,20 +1845,20 @@ export default function Home() {
       </section>
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
-      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <PaintSplatterIcon color="amber" className="w-12 h-12" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <PaintSplatterIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden lg:block absolute top-12 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <MusicNotesCluster className="w-10 h-10" />
+        <div className="absolute top-3 right-3 sm:top-12 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <MusicNotesCluster className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden xl:block absolute bottom-10 left-10 animate-flutter pointer-events-none opacity-85 z-10">
-          <ButterflyIcon color="purple" className="w-8 h-8" />
+        <div className="absolute bottom-4 left-3 sm:bottom-10 sm:left-10 animate-flutter pointer-events-none opacity-85 z-10">
+          <ButterflyIcon color="purple" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
-        <div className="hidden xl:block absolute bottom-12 right-12 animate-wiggle pointer-events-none opacity-80 z-10">
-          <BlossomFlowerIcon color="sky" className="w-9 h-9" />
+        <div className="absolute bottom-4 right-3 sm:bottom-12 sm:right-12 animate-wiggle pointer-events-none opacity-80 z-10">
+          <BlossomFlowerIcon color="sky" className="w-6 h-6 sm:w-9 sm:h-9" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2259,21 +2262,21 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Daily Activities */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* DAILY ACTIVITIES SECTION */}
-      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SmilingSunIcon className="w-12 h-12" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <HappyCloudIcon className="w-14 h-10" />
+        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <HappyCloudIcon className="w-8 h-6 sm:w-14 sm:h-10" />
         </div>
-        <div className="hidden xl:block absolute bottom-10 left-10 animate-drift pointer-events-none opacity-80 z-10">
-          <PaperPlaneIcon className="w-10 h-10" />
+        <div className="absolute bottom-4 left-3 sm:bottom-10 sm:left-10 animate-drift pointer-events-none opacity-80 z-10">
+          <PaperPlaneIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2382,18 +2385,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Facilities */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SchoolCastleIcon className="w-12 h-12" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SchoolCastleIcon className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <SproutPlantIcon className="w-10 h-10" />
+        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <SproutPlantIcon className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2447,18 +2450,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Safety */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
-      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SparkleStarsGroup className="w-12 h-12" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <SparkleStarsGroup className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
-          <ButterflyIcon color="emerald" className="w-8 h-8" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+          <ButterflyIcon color="emerald" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2587,18 +2590,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Teachers */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* TEACHERS & LEADERSHIP SECTION */}
-      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <AlphabetBlock letter="T" color="amber" className="w-10 h-10" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <AlphabetBlock letter="T" color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden lg:block absolute top-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <CrayonIcon color="sky" className="w-10 h-10" />
+        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <CrayonIcon color="sky" className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2649,18 +2652,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Gallery */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
-      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <ArtPaletteIcon className="w-10 h-10" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <Camera className="w-10 h-10 text-vannam-cyan" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <Camera className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-cyan" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2733,7 +2736,7 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Awards */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* LIGHTBOX MODAL */}
@@ -2766,14 +2769,14 @@ export default function Home() {
       )}
 
       {/* AWARDS & RECOGNITION SECTION - HORIZONTAL CARDS */}
-      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <TwinkleStarIcon color="amber" className="w-10 h-10" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <TwinkleStarIcon color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <TeddyBearIcon className="w-10 h-10" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <TeddyBearIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2834,18 +2837,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Testimonials */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* PARENT TESTIMONIALS SECTION */}
-      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <FloatingBalloonsGroup className="w-12 h-16" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <FloatingBalloonsGroup className="w-8 h-10 sm:w-12 sm:h-16" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <BlossomFlowerIcon color="rose" className="w-10 h-10" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2905,18 +2908,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Events */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* UPCOMING SCHOOL EVENTS */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-8 left-8 animate-float pointer-events-none opacity-80 z-10">
-          <Calendar className="w-10 h-10 text-vannam-yellow" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <Calendar className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-yellow" />
         </div>
-        <div className="hidden lg:block absolute bottom-8 right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <PaperPlaneIcon className="w-10 h-10" />
+        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <PaperPlaneIcon className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
@@ -2965,18 +2968,18 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into FAQs */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
       </section>
 
       {/* FAQS ACCORDION SECTION */}
-      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots  relative overflow-hidden">
+      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
         
-        {/* Desktop Exclusive Floating Storytelling Accents */}
-        <div className="hidden lg:block absolute top-10 left-10 animate-float pointer-events-none opacity-80 z-10">
-          <SproutPlantIcon className="w-10 h-10" />
+        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
+        <div className="absolute top-3 left-3 sm:top-10 sm:left-10 animate-float pointer-events-none opacity-80 z-10">
+          <SproutPlantIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="hidden lg:block absolute bottom-10 right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <ButterflyIcon color="amber" className="w-8 h-8" />
+        <div className="absolute bottom-4 right-3 sm:bottom-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <ButterflyIcon color="amber" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
