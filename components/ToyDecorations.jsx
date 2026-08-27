@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 
 // Teddy Bear Illustration
 export function TeddyBearIcon({ className = "w-6 h-6", ...props }) {
@@ -492,7 +492,8 @@ export function PlayfulWaveDivider({
   strokeColor = "#CBD8F6", 
   flip = false 
 }) {
-  const gradId = `wave-grad-${Math.random().toString(36).substring(2, 7)}`;
+  const reactId = useId();
+  const gradId = `wave-grad-${reactId.replace(/:/g, "")}`;
 
   if (variant === "wave") {
     return (
