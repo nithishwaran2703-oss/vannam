@@ -181,6 +181,7 @@ export default function Home() {
   // Gallery Filter & Lightbox State
   const [galleryCategory, setGalleryCategory] = useState("all");
   const [activeLightboxImage, setActiveLightboxImage] = useState(null);
+  const [activeVaultCardIndex, setActiveVaultCardIndex] = useState(0);
 
   // About Pillar Tab State
   const [activeAboutTab, setActiveAboutTab] = useState("philosophy");
@@ -191,6 +192,7 @@ export default function Home() {
   // Innovative 7-Shade Methodology State
   const [activeMethodologyShade, setActiveMethodologyShade] = useState("creative");
   const [methodologyAgeStage, setMethodologyAgeStage] = useState("all");
+  const [selectedMethodologyModal, setSelectedMethodologyModal] = useState(null);
 
   // Routine Schedule Tab State
   const [activeRoutineTab, setActiveRoutineTab] = useState("morning");
@@ -203,6 +205,7 @@ export default function Home() {
   const [whyUsView, setWhyUsView] = useState("vannam"); // "vannam" | "traditional" | "matrix"
   const [activeAwardTab, setActiveAwardTab] = useState(0);
   const [selectedAwardModal, setSelectedAwardModal] = useState(null);
+  const [selectedComparisonModal, setSelectedComparisonModal] = useState(null);
   const [showCitationDetails, setShowCitationDetails] = useState(false);
 
   // Dynamic Content & Announcements from Admin Store
@@ -1049,7 +1052,6 @@ export default function Home() {
                   <a href="#why-us" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">⭐ Why Choose Us</a>
                   <a href="#approach" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🌱 7-Shade Approach</a>
                   <a href="#activities" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🧸 Activities & Play</a>
-                  <a href="#awards" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">🏆 Awards & Recognition</a>
                   <a href="#testimonials" className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold text-[#0F2963] hover:bg-[#F0F4FC] hover:text-[#00A8E8] transition">💬 Parent Reviews</a>
                 </div>
               </div>
@@ -1134,7 +1136,6 @@ export default function Home() {
                   <a href="#activities" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-rose-50 active:bg-rose-100 flex items-center gap-2 transition min-h-[44px]">🧸 Activities</a>
                   <a href="#facilities" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-emerald-50 active:bg-emerald-100 flex items-center gap-2 transition min-h-[44px]">🏰 Facilities</a>
                   <a href="#safety" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-blue-50 active:bg-blue-100 flex items-center gap-2 transition min-h-[44px]">🛡️ Safety</a>
-                  <a href="#awards" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-amber-50 active:bg-amber-100 flex items-center gap-2 transition min-h-[44px]">🏆 Awards</a>
                   <a href="#teachers" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-amber-50 active:bg-amber-100 flex items-center gap-2 transition min-h-[44px]">👩‍🏫 Teachers</a>
                   <a href="#gallery" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-sky-50 active:bg-sky-100 flex items-center gap-2 transition min-h-[44px]">📸 Gallery</a>
                   <a href="#testimonials" onClick={() => setMobileMenuOpen(false)} className="p-3 rounded-2xl bg-[#F0F4FC] hover:bg-rose-50 active:bg-rose-100 flex items-center gap-2 transition min-h-[44px]">💬 Reviews</a>
@@ -1181,7 +1182,7 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative pt-4 pb-8 sm:pt-10 sm:pb-14 lg:pt-16 lg:pb-20 overflow-hidden bg-playful-dots">
+      <section className="relative pt-4 pb-0 sm:pt-10 sm:pb-0 lg:pt-16 lg:pb-0 overflow-hidden bg-section-hero">
         {/* Subtle Background Organic Glows */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-vannam-yellow/15 via-vannam-red/8 to-vannam-cyan/15 rounded-full blur-3xl -z-10 opacity-90 pointer-events-none" />
         {/* Mobile-only extra ambient glows for depth */}
@@ -1232,7 +1233,6 @@ export default function Home() {
                 <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-amber-100 via-amber-50 to-rose-100 border border-amber-300/80 text-[#0F2963] text-xs font-bold shadow-xs backdrop-blur-xs">
                   <TeddyBearIcon className="w-4 h-4 text-vannam-yellow animate-bounce-gentle shrink-0" />
                   <span>Welcome to Vannam World Preschool</span>
-                  <span className="text-xs">✨</span>
                 </div>
               </div>
 
@@ -1396,11 +1396,11 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider to About */}
-        <PlayfulWaveDivider className="mt-4 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#FDE68A" />
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="scroll-mt-24 py-8 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="about" className="scroll-mt-24 pt-8 pb-0 sm:pt-14 sm:pb-0 lg:pt-18 lg:pb-0 bg-section-about relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -1424,7 +1424,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Header */}
-          <ScrollReveal className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 relative">
+          <ScrollReveal variant="reveal-page-turn" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 relative">
             <div className="flex items-center justify-center gap-3 mb-1">
               <PlantInPotIcon className="w-7 h-7 sm:w-8 sm:h-8 animate-bounce-gentle" />
               <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
@@ -1446,7 +1446,7 @@ export default function Home() {
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6">
             
             {/* Philosophy */}
-            <ScrollReveal stagger={1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-amber p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+            <ScrollReveal variant="reveal-pop-bounce" stagger={1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-amber p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
@@ -1465,7 +1465,7 @@ export default function Home() {
             </ScrollReveal>
 
             {/* Mission */}
-            <ScrollReveal stagger={2} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-emerald p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+            <ScrollReveal variant="reveal-pop-bounce" stagger={2} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-emerald p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-2xl bg-vannam-green text-white flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
@@ -1484,7 +1484,7 @@ export default function Home() {
             </ScrollReveal>
 
             {/* Vision */}
-            <ScrollReveal stagger={3} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-sky p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
+            <ScrollReveal variant="reveal-pop-bounce" stagger={3} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-sky p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="w-10 h-10 rounded-2xl bg-vannam-cyan text-white flex items-center justify-center shadow-xs font-bold group-hover:scale-105 transition-transform">
@@ -1505,7 +1505,7 @@ export default function Home() {
           </div>
 
           {/* Statistics Bar with Playful Badges */}
-          <ScrollReveal className="bg-[#0F2963] text-white rounded-2xl p-4 sm:p-6 shadow-xl border-2 border-[#091A42] grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 text-center relative overflow-hidden">
+          <ScrollReveal variant="reveal-hero-bloom" className="bg-[#0F2963] text-white rounded-2xl p-4 sm:p-6 shadow-xl border-2 border-[#091A42] grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-6 text-center relative overflow-hidden">
             <div className="space-y-0.5 relative z-10">
               <Counter end={12} className="font-heading text-xl sm:text-3xl font-extrabold text-vannam-yellow block" />
               <span className="text-[11px] sm:text-xs font-semibold text-blue-100">Years Experience</span>
@@ -1530,11 +1530,11 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider to Programs */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FDF4FF" secondaryFill="#F0F9FF" strokeColor="#E9D5FF" />
       </section>
 
       {/* AGE-BASED PROGRAMS SECTION */}
-      <section id="programs" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="programs" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-programs relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -1545,22 +1545,22 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-10 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-10 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <PuzzlePieceIcon color="emerald" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-12 sm:right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute top-6 right-3 sm:top-12 sm:right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
           <StorybookIcon className="w-7 h-7 sm:w-12 sm:h-12 drop-shadow-xs" />
         </div>
-        <div className="absolute bottom-4 left-3 sm:bottom-12 sm:left-12 animate-wiggle pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 left-3 sm:bottom-12 sm:left-12 animate-wiggle pointer-events-none opacity-85 z-10">
           <CrayonIcon color="rose" className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-12 sm:right-12 animate-flutter pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-12 sm:right-12 animate-flutter pointer-events-none opacity-85 z-10">
           <AlphabetBlock letter="P" color="purple" className="w-6 h-6 sm:w-9 sm:h-9" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+          <ScrollReveal variant="reveal-pop-bounce" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
             <div className="flex justify-center mb-1">
               <LearningSceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
@@ -1577,7 +1577,7 @@ export default function Home() {
           </ScrollReveal>
 
           {/* Program Tabs - Touch Horizontal Scroll with Snap on Mobile */}
-          <ScrollReveal className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
+          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
             {Object.keys(programsData).map((key) => {
               const prog = programsData[key];
               return (
@@ -1603,7 +1603,7 @@ export default function Home() {
 
           {/* Active Program Card Showcase */}
           {activeProgramTab && (
-            <ScrollReveal variant="reveal-scale" className="max-w-4xl mx-auto">
+            <ScrollReveal variant="reveal-pop-bounce" className="max-w-4xl mx-auto">
               <div className={`bento-card ${programsData[activeProgramTab].cardStyle} p-4 sm:p-6 md:p-8 transition-all duration-300 relative overflow-hidden`}>
                 
                 {/* Decorative Toy Watermark */}
@@ -1694,11 +1694,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Why Us */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#ECFDF5" secondaryFill="#EFF6FF" strokeColor="#A7F3D0" />
       </section>
 
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
-      <section id="why-us" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="why-us" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-why-us relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -1709,10 +1709,10 @@ export default function Home() {
         </div>
 
         {/* Floating Decorative Elements (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <RainbowIcon className="w-8 h-5 sm:w-14 sm:h-9 drop-shadow-sm" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
           <PuzzlePieceIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
         <div className="absolute top-20 right-3 sm:top-24 sm:right-10 animate-flutter pointer-events-none opacity-85 z-10">
@@ -1721,7 +1721,7 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 space-y-4 sm:space-y-6">
           {/* Section Header */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
+          <ScrollReveal variant="reveal-split-left" className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
             <div className="flex justify-center mb-1">
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
@@ -1740,114 +1740,36 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* FEATURE SELECTOR TILES */}
-          <ScrollReveal className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3 items-stretch">
+          {/* FEATURE SELECTOR CARDS (Click to pop up full comparison) */}
+          <ScrollReveal variant="reveal-pop-bounce" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 items-stretch">
             {differentiators.map((item, idx) => {
-              const isSelected = activeWhyUsTab === idx;
               return (
                 <button
                   key={item.id}
-                  onClick={() => setActiveWhyUsTab(idx)}
-                  className={`w-full p-3 sm:p-3.5 rounded-2xl border-2 transition-all duration-200 flex flex-col items-center justify-between text-center gap-2 min-h-[92px] sm:min-h-[104px] h-full active:scale-95 cursor-pointer ${
-                    isSelected
-                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-md ring-2 ring-vannam-yellow/30"
-                      : "bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] shadow-2xs"
-                  }`}
+                  type="button"
+                  onClick={() => setSelectedComparisonModal(item)}
+                  className="w-full p-3.5 sm:p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-between text-center gap-2.5 min-h-[112px] sm:min-h-[126px] h-full active:scale-95 cursor-pointer bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] hover:shadow-md shadow-2xs group relative overflow-hidden"
                 >
-                  <span className="text-xl sm:text-2xl">{item.icon}</span>
-                  <span className="text-[11px] sm:text-xs font-extrabold leading-tight px-0.5 line-clamp-2">{item.shortTitle}</span>
-                  <span className={`text-[8.5px] sm:text-[9.5px] font-black uppercase px-2.5 py-0.5 rounded-full whitespace-nowrap ${
-                    isSelected ? "bg-vannam-yellow text-[#0F2963]" : "bg-[#E8EEFB] text-[#00A8E8]"
-                  }`}>
-                    {item.stat}
-                  </span>
+                  <span className="text-2xl sm:text-3xl transform group-hover:scale-115 transition-transform duration-300">{item.icon}</span>
+                  <span className="text-[11px] sm:text-xs font-extrabold leading-tight px-0.5 line-clamp-2 text-[#0F2963] group-hover:text-[#00A8E8] transition-colors">{item.shortTitle}</span>
+                  <div className="flex items-center gap-1">
+                    <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase px-2.5 py-0.5 rounded-full whitespace-nowrap bg-[#E8EEFB] text-[#00A8E8] group-hover:bg-[#00A8E8] group-hover:text-white transition-colors">
+                      {item.stat}
+                    </span>
+                    <span className="text-[10.5px] text-vannam-orange font-bold opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                  </div>
                 </button>
               );
             })}
           </ScrollReveal>
 
-          {/* DUAL-PANEL COMPARISON COCKPIT */}
-          {(() => {
-            const current = differentiators[activeWhyUsTab];
-            return (
-              <ScrollReveal variant="reveal-scale" className="bg-white rounded-2xl sm:rounded-3xl border-2 border-[#CBD8F6] shadow-lg p-4 sm:p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
-                
-                {/* Cockpit Top Bar */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-4 sm:pb-5 border-b border-[#E8EEFB]">
-                  <div className="flex items-center gap-3 text-center sm:text-left">
-                    <span className="text-2xl sm:text-3xl p-2.5 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
-                    <div>
-                      <span className="text-[10px] sm:text-[11px] font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
-                      <h3 className="font-heading font-extrabold text-base sm:text-xl text-[#0F2963] leading-tight">{current.feature}</h3>
-                    </div>
-                  </div>
-
-                  <span className="px-3.5 py-1.5 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[10.5px] sm:text-xs font-black text-center shadow-2xs">
-                    Verified Benchmark: {current.proofTag}
-                  </span>
-                </div>
-
-                {/* Split Dual-Panel Comparison Cockpit (Always Horizontal 2-Column Side-by-Side) */}
-                <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-6 pt-3 sm:pt-6 items-stretch">
-                  
-                  {/* LEFT PANEL: VANNAM WORLD */}
-                  <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-xl sm:rounded-2xl p-2.5 xs:p-3.5 sm:p-5 border-2 border-[#A7F3D0] space-y-2 sm:space-y-3 relative overflow-hidden shadow-xs flex flex-col justify-between">
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1 xs:gap-2 pb-1 border-b border-emerald-300/40">
-                        <span className="px-2 xs:px-3 py-0.5 xs:py-1 rounded-full bg-emerald-700 text-white text-[8.5px] xs:text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0 shadow-2xs">
-                          <CheckCircle2 className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-emerald-300 shrink-0" />
-                          <span>Vannam Standard</span>
-                        </span>
-                        <span className="font-heading font-black text-xs xs:text-sm sm:text-xl text-emerald-950">{current.stat}</span>
-                      </div>
-
-                      {/* Visual Checkmark Pills */}
-                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
-                        {current.vannamPoints.map((pt, i) => (
-                          <div key={i} className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 p-1.5 xs:p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/95 border border-emerald-300/80 shadow-2xs min-h-[38px] xs:min-h-[42px] sm:min-h-[46px]">
-                            <div className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-[9px] xs:text-[10px] sm:text-xs shrink-0">
-                              ✓
-                            </div>
-                            <span className="text-[9.5px] xs:text-[11px] sm:text-sm font-bold text-[#0F2963] leading-tight sm:leading-snug">{pt}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* RIGHT PANEL: TRADITIONAL SCHOOLS */}
-                  <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-xl sm:rounded-2xl p-2.5 xs:p-3.5 sm:p-5 border-2 border-rose-200 space-y-2 sm:space-y-3 relative overflow-hidden opacity-95 flex flex-col justify-between">
-                    <div className="space-y-2 sm:space-y-3">
-                      <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1 xs:gap-2 pb-1 border-b border-rose-200/60">
-                        <span className="px-2 xs:px-3 py-0.5 xs:py-1 rounded-full bg-slate-800 text-slate-200 text-[8.5px] xs:text-[10px] sm:text-xs font-black uppercase tracking-wider flex items-center justify-center gap-1 shrink-0 shadow-2xs">
-                          <X className="w-3 h-3 xs:w-3.5 xs:h-3.5 text-rose-400 shrink-0" />
-                          <span>Traditional Daycares</span>
-                        </span>
-                        <span className="font-heading font-bold text-[9px] xs:text-xs sm:text-sm text-slate-500 whitespace-nowrap">Baseline</span>
-                      </div>
-
-                      {/* Visual Warning Pills */}
-                      <div className="space-y-1.5 sm:space-y-2 pt-0.5">
-                        {current.traditionalPoints.map((pt, i) => (
-                          <div key={i} className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 p-1.5 xs:p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/85 border border-rose-200/80 shadow-2xs min-h-[38px] xs:min-h-[42px] sm:min-h-[46px]">
-                            <div className="w-4 h-4 xs:w-4.5 xs:h-4.5 sm:w-5 sm:h-5 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-[9px] xs:text-[10px] sm:text-xs shrink-0">
-                              ✕
-                            </div>
-                            <span className="text-[9.5px] xs:text-[11px] sm:text-sm font-semibold text-slate-600 leading-tight sm:leading-snug">{pt}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-              </ScrollReveal>
-            );
-          })()}
+          {/* Hint text */}
+          <p className="text-center text-[10.5px] font-bold text-[#64748B] -mt-1 sm:-mt-2 flex items-center justify-center gap-1">
+            <span>👉 Tap any feature card above to view full comparison</span>
+          </p>
 
           {/* Bottom Trust CTA Strip */}
-          <ScrollReveal className="bento-card p-4 sm:p-5 bg-gradient-to-r from-vannam-yellow/15 via-white to-vannam-cyan/15 border-2 border-vannam-yellow/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left shadow-xs">
+          <ScrollReveal variant="reveal-hero-bloom" className="bento-card p-4 sm:p-5 bg-gradient-to-r from-vannam-yellow/15 via-white to-vannam-cyan/15 border-2 border-vannam-yellow/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left shadow-xs">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-vannam-yellow text-[#0F2963] flex items-center justify-center text-2xl shrink-0 shadow-xs font-bold">
                 🧸
@@ -1873,11 +1795,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into 7-Shades Methodology */}
-        <PlayfulWaveDivider className="mt-8 -mb-8 sm:-mb-12 lg:-mb-16" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF7ED" secondaryFill="#ECFDF5" strokeColor="#FED7AA" />
       </section>
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
-      <section id="methodology" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="methodology" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-methodology relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -1888,16 +1810,16 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <PaintSplatterIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-12 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute top-6 right-3 sm:top-12 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
           <MusicNotesCluster className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="absolute bottom-4 left-3 sm:bottom-10 sm:left-10 animate-flutter pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 left-3 sm:bottom-10 sm:left-10 animate-flutter pointer-events-none opacity-85 z-10">
           <ButterflyIcon color="purple" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-12 sm:right-12 animate-wiggle pointer-events-none opacity-80 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-12 sm:right-12 animate-wiggle pointer-events-none opacity-80 z-10">
           <BlossomFlowerIcon color="sky" className="w-6 h-6 sm:w-9 sm:h-9" />
         </div>
 
@@ -1925,88 +1847,84 @@ export default function Home() {
             </p>
           </div>
 
-          {/* MOBILE VIEW: HORIZONTAL CARDS CAROUSEL (No circle on mobile) */}
+          {/* MOBILE & TABLET VIEW: SHORT COMPACT CARDS (Click to pop up full card) */}
           <div className="block lg:hidden mb-6 sm:mb-8">
             <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
               {methodologyShades.map((shade) => {
                 const Icon = shade.icon;
                 return (
-                  <div
+                  <button
                     key={`mobile-card-${shade.id}`}
-                    className="w-[85vw] max-w-[320px] xs:max-w-[340px] shrink-0 snap-center bg-white/95 backdrop-blur-xl rounded-2xl border-2 p-4 shadow-md flex flex-col justify-between"
+                    type="button"
+                    onClick={() => setSelectedMethodologyModal(shade)}
+                    className="w-[78vw] max-w-[290px] shrink-0 snap-center bg-white/95 backdrop-blur-xl rounded-2xl border-2 p-3.5 shadow-sm hover:shadow-md active:scale-[0.98] transition-all text-left flex flex-col justify-between group cursor-pointer relative overflow-hidden"
                     style={{ borderColor: `${shade.hex}50` }}
                   >
-                    <div className="space-y-2.5">
-                      {/* Badge & Title */}
-                      <div className="flex items-center justify-between gap-1.5 flex-wrap">
-                        <div className="flex items-center gap-2">
+                    {/* Top Color Accent Strip */}
+                    <div 
+                      className="absolute top-0 left-0 right-0 h-1.5 opacity-90"
+                      style={{ backgroundColor: shade.hex }}
+                    />
+
+                    <div className="space-y-2 pt-1">
+                      {/* Header with Icon, Title & Duration */}
+                      <div className="flex items-center justify-between gap-1.5">
+                        <div className="flex items-center gap-2 min-w-0">
                           <div 
-                            className="w-8 h-8 rounded-xl flex items-center justify-center shadow-xs shrink-0"
+                            className="w-8 h-8 rounded-xl flex items-center justify-center shadow-2xs shrink-0"
                             style={{ backgroundColor: `${shade.hex}20`, color: shade.hex }}
                           >
                             <Icon className="w-4 h-4 stroke-[2.5]" />
                           </div>
-                          <div>
-                            <h3 className="font-heading text-base font-extrabold text-[#0F2963] leading-tight">
-                              {shade.title}
-                            </h3>
+                          <div className="min-w-0">
                             <span 
-                              className="text-[9px] font-black uppercase tracking-wider block"
+                              className="text-[9px] font-black uppercase tracking-wider block truncate"
                               style={{ color: shade.hex }}
                             >
-                              {shade.tagline}
+                              {shade.shadeName}
                             </span>
+                            <h3 className="font-heading text-sm font-extrabold text-[#0F2963] leading-tight truncate">
+                              {shade.title}
+                            </h3>
                           </div>
                         </div>
-                        <span className="px-2 py-0.5 rounded-full bg-[#F0F4FC] text-[#0F2963] text-[9px] font-extrabold border border-[#CBD8F6]">
-                          {shade.dailyDuration}
+                        <span className="px-2 py-0.5 rounded-full bg-[#F0F4FC] text-[#0F2963] text-[8.5px] font-extrabold border border-[#CBD8F6] shrink-0">
+                          {shade.dailyDuration.split(" ")[0]} {shade.dailyDuration.split(" ")[1]}
                         </span>
                       </div>
 
-                      {/* Quote & Description */}
-                      <p className="text-[11px] font-bold italic" style={{ color: shade.hex }}>
+                      {/* Tagline / Teaser Quote */}
+                      <p className="text-[11px] font-bold italic line-clamp-1" style={{ color: shade.hex }}>
                         &ldquo;{shade.quote}&rdquo;
                       </p>
-                      <p className="text-xs text-[#334155] leading-relaxed">
+
+                      {/* Short Description */}
+                      <p className="text-[11px] text-[#334155] leading-relaxed line-clamp-2">
                         {shade.description}
                       </p>
-
-                      {/* Tools & Insight Block */}
-                      <div className="bg-[#F8FAFC] rounded-xl p-2.5 border border-[#E8EEFB] space-y-1.5">
-                        <span className="text-[10px] font-extrabold text-[#0F2963] block">
-                          🛠️ Key Tools & Methods:
-                        </span>
-                        <ul className="space-y-1">
-                          {shade.tools.slice(0, 2).map((tool, idx) => (
-                            <li key={idx} className="text-[10.5px] text-[#334155] leading-tight">
-                              <strong className="text-[#0F2963]">{tool.name}:</strong> {tool.desc}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      <div className="bg-emerald-50/80 rounded-xl p-2 border border-emerald-200/60">
-                        <span className="text-[9.5px] font-bold text-emerald-900 block leading-tight">
-                          💡 <strong>Insight:</strong> {shade.scientificInsight}
-                        </span>
-                      </div>
                     </div>
 
-                    <button
-                      onClick={() => setIsTourModalOpen(true)}
-                      className={`${shade.btnClass} w-full mt-3 py-2 text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition-transform !min-h-0`}
+                    {/* Bottom Tap to Expand Indicator */}
+                    <div 
+                      className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[10.5px] font-extrabold"
+                      style={{ color: shade.hex }}
                     >
-                      <Calendar className="w-3.5 h-3.5 shrink-0" />
-                      <span>Experience In Campus</span>
-                    </button>
-                  </div>
+                      <span className="flex items-center gap-1">
+                        <span>Tap to view full card</span>
+                        <span className="animate-pulse">✨</span>
+                      </span>
+                      <span className="w-5 h-5 rounded-full flex items-center justify-center bg-slate-50 group-hover:translate-x-0.5 transition-transform text-xs">
+                        →
+                      </span>
+                    </div>
+                  </button>
                 );
               })}
             </div>
             
             {/* Mobile swipe hint */}
             <p className="text-center text-[10.5px] font-bold text-[#64748B] mt-1 flex items-center justify-center gap-1">
-              <span>👉 Swipe horizontally to explore all 7 shades</span>
+              <span>👉 Swipe & tap any card to open full details</span>
             </p>
           </div>
 
@@ -2302,11 +2220,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Daily Activities */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF1F2" secondaryFill="#FFFBEB" strokeColor="#FECDD3" />
       </section>
 
       {/* DAILY ACTIVITIES SECTION */}
-      <section id="activities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="activities" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-activities relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2317,11 +2235,11 @@ export default function Home() {
         </div>
 
         {/* CHILD-ATTRACTIVE FLOATING DECORATIONS (Fills empty spaces on Mobile & Desktop) */}
-        <div className="absolute top-2 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
+        <div className="absolute top-6 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
           <SmilingSunIcon className="w-7 h-7 sm:w-11 sm:h-11 drop-shadow-xs" />
           <RainbowIcon className="w-8 h-5 sm:w-12 sm:h-8 drop-shadow-xs hidden xs:block" />
         </div>
-        <div className="absolute top-2 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
+        <div className="absolute top-6 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
           <HappyCloudIcon className="w-7 h-5 sm:w-11 sm:h-8" />
           <FloatingBalloonsGroup className="w-7 h-9 sm:w-11 sm:h-14 drop-shadow-xs" />
         </div>
@@ -2352,7 +2270,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header with Child-Attractive Mascot Scene */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+          <ScrollReveal variant="reveal-spin-drop" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
             <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
               <TeddyBearIcon className="w-7 h-7 sm:w-9 sm:h-9 animate-bounce-gentle" />
               <CreativitySceneGroup className="opacity-95 scale-90 sm:scale-100" />
@@ -2373,7 +2291,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-12 gap-3.5 sm:gap-6 items-start">
             
             {/* Timeline Tabs - 3-col Grid on Mobile, Sticky Column on Desktop */}
-            <ScrollReveal className="lg:col-span-4 grid grid-cols-3 lg:flex lg:flex-col gap-1.5 sm:gap-2.5 pb-1 lg:pb-0 lg:sticky lg:top-28 z-10">
+            <ScrollReveal variant="reveal-calendar-flip" className="lg:col-span-4 grid grid-cols-3 lg:flex lg:flex-col gap-1.5 sm:gap-2.5 pb-1 lg:pb-0 lg:sticky lg:top-28 z-10">
               {[
                 { id: "morning", label: "Morning", sub: "8:00 - 11:00 AM", icon: Sun, color: "text-[#F59E0B]", activeBorder: "border-[#F59E0B]", bg: "bg-amber-100" },
                 { id: "mid-day", label: "Mid-Day", sub: "11:00 - 12:00 PM", icon: Cloud, color: "text-[#F97316]", activeBorder: "border-[#F97316]", bg: "bg-orange-100" },
@@ -2419,6 +2337,7 @@ export default function Home() {
                     return (
                       <ScrollReveal 
                         key={`${activeRoutineTab}-${i}`} 
+                        variant="reveal-spin-drop"
                         stagger={((i % 3) + 1)}
                         className={`relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br ${act.bgClass} p-3 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 group hover:-translate-y-0.5 flex flex-col justify-between`}
                       >
@@ -2457,11 +2376,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Facilities */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#F0F9FF" secondaryFill="#EFF6FF" strokeColor="#BAE6FD" />
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="facilities" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-facilities relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2472,17 +2391,17 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <SchoolCastleIcon className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute top-6 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
           <SproutPlantIcon className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+          <ScrollReveal variant="reveal-gate-open" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-center gap-3 mb-1">
               <SchoolCastleIcon className="w-8 h-8 text-vannam-navy animate-float" />
               <PlaygroundSlideIcon className="w-8 h-8 animate-bounce-gentle" />
@@ -2504,7 +2423,7 @@ export default function Home() {
           {/* HORIZONTAL CARDS: Horizontal Scroll on Mobile/Tablet, 3-Col Grid on Desktop */}
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5">
             {facilities.map((fac, idx) => (
-              <ScrollReveal key={idx} stagger={((idx % 3) + 1)} className={`w-[260px] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
+              <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className={`w-[260px] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
                 <div className="relative h-34 xs:h-38 sm:h-44 w-full overflow-hidden">
                   <Image 
                     src={fac.image} 
@@ -2531,11 +2450,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Safety */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#ECFDF5" secondaryFill="#F0F9FF" strokeColor="#A7F3D0" />
       </section>
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
-      <section id="safety" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="safety" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-safety relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2546,17 +2465,17 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <SparkleStarsGroup className="w-7 h-7 sm:w-12 sm:h-12" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
           <ButterflyIcon color="emerald" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+          <ScrollReveal variant="reveal-shield-pulse" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-center gap-3 mb-1">
               <ShieldSecurityBadge className="w-8 h-8 animate-pulse-subtle" />
               <SafetySceneGroup className="opacity-90 scale-90 sm:scale-100" />
@@ -2679,11 +2598,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Teachers */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FAF5FF" secondaryFill="#FFF1F2" strokeColor="#E9D5FF" />
       </section>
 
       {/* TEACHERS & LEADERSHIP SECTION */}
-      <section id="teachers" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="teachers" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-teachers relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2694,16 +2613,16 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <AlphabetBlock letter="T" color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute top-6 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
           <CrayonIcon color="sky" className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+          <ScrollReveal variant="reveal-heart-grow" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-center gap-3 mb-1">
               <TeacherApplesTrophy className="w-8 h-8 animate-bounce-gentle" />
               <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
@@ -2725,7 +2644,7 @@ export default function Home() {
           {/* 2 Grids per row on Mobile, 4 on Desktop */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
             {teachers.map((t, idx) => (
-              <ScrollReveal key={idx} stagger={((idx % 4) + 1)} className="bento-card p-2.5 sm:p-4 space-y-2 sm:space-y-3 hover:-translate-y-1 transition duration-200 flex flex-col justify-between rounded-2xl">
+              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className="bento-card p-2.5 sm:p-4 space-y-2 sm:space-y-3 hover:-translate-y-1 transition duration-200 flex flex-col justify-between rounded-2xl">
                 <div>
                   <div className="relative h-28 xs:h-32 sm:h-48 w-full rounded-xl overflow-hidden mb-2">
                     <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
@@ -2749,11 +2668,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Gallery */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFBEB" secondaryFill="#FDF4FF" strokeColor="#FDE68A" />
       </section>
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
-      <section id="gallery" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="gallery" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-gallery relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2764,16 +2683,16 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
           <Camera className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-cyan" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+          <ScrollReveal variant="reveal-polaroid" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
             <div className="flex justify-center mb-1">
               <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
@@ -2789,172 +2708,109 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* Filter Tabs - Horizontal Swipeable on Mobile */}
-          <ScrollReveal className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
-            {["all", "classroom", "activities", "events", "sports", "celebrations", "outdoor"].map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setGalleryCategory(cat)}
-                className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-extrabold capitalize transition shrink-0 snap-center !min-h-0 flex items-center justify-center ${
-                  galleryCategory === cat
-                    ? "bg-[#091A42] text-[#F59E0B] border border-[#1D4ED8] shadow-xs"
-                    : "bg-[#E8EEFB] text-[#0F2963] hover:bg-slate-200"
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Filter Tabs - Compact Bento Pills */}
+          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
+            {[
+              { id: "all", label: "All Moments", icon: "✨" },
+              { id: "classroom", label: "Classroom", icon: "📚" },
+              { id: "activities", label: "Creative Art", icon: "🎨" },
+              { id: "events", label: "Celebrations", icon: "🎉" },
+              { id: "sports", label: "Agility & Sports", icon: "🏃" },
+              { id: "outdoor", label: "Nature & Garden", icon: "🌱" }
+            ].map((cat) => {
+              const count = cat.id === "all" 
+                ? galleryItems.length 
+                : galleryItems.filter(item => item.category === cat.id || (cat.id === "events" && (item.category === "events" || item.category === "celebrations"))).length;
+              const isSelected = galleryCategory === cat.id;
+
+              return (
+                <button
+                  key={cat.id}
+                  onClick={() => setGalleryCategory(cat.id)}
+                  className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl text-xs sm:text-sm font-extrabold capitalize transition shrink-0 snap-center !min-h-0 flex items-center gap-1.5 shadow-2xs cursor-pointer ${
+                    isSelected
+                      ? "bg-[#0F2963] text-white border border-[#1D4ED8] shadow-xs scale-105"
+                      : "bg-white/90 text-[#0F2963] hover:bg-[#E8EEFB] border border-[#CBD8F6]/70"
+                  }`}
+                >
+                  <span>{cat.icon}</span>
+                  <span>{cat.label}</span>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                    isSelected ? "bg-white/20 text-vannam-yellow" : "bg-slate-100 text-[#64748B]"
+                  }`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </ScrollReveal>
 
-          {/* Gallery Grid - Scrapbook Style on Mobile & Desktop */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-5">
-            {filteredGallery.map((item, idx) => (
-              <ScrollReveal 
-                key={item.id} 
-                stagger={((idx % 4) + 1)}
-                onClick={() => setActiveLightboxImage(item)}
-                className="gallery-scrapbook group relative h-32 xs:h-36 sm:h-52 rounded-2xl overflow-hidden cursor-pointer border-2 border-[#CBD8F6] shadow-xs hover:border-vannam-yellow/60 transition-all hover:scale-[1.02]"
-              >
-                <Image 
-                  src={item.src} 
-                  alt={item.title} 
-                  fill 
-                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                  className="object-cover group-hover:scale-105 transition duration-500" 
-                />
-                
-                {/* Decorative Tape Sticker Effect in Top Corner */}
-                <div className="absolute top-1.5 left-2 bg-amber-100/90 border border-amber-300 text-[8px] font-black text-amber-800 px-1.5 py-0.5 rounded shadow-2xs rotate-[-4deg] pointer-events-none">
-                  📸 Memory #{item.id}
-                </div>
+          {/* COMPACT BENTO GRID CONTAINER */}
+          <ScrollReveal variant="reveal-gentle-rise" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+            {filteredGallery.map((item, idx) => {
+              // Dynamic bento sizing with explicit responsive heights for 100% reliable rendering
+              let bentoClass = "col-span-1 h-36 xs:h-40 sm:h-48 lg:h-52";
+              if (galleryCategory === "all") {
+                if (idx === 0) {
+                  bentoClass = "col-span-2 sm:col-span-2 lg:col-span-2 lg:row-span-2 h-56 xs:h-64 sm:h-76 lg:h-[432px]";
+                } else if (idx === 3) {
+                  bentoClass = "col-span-2 sm:col-span-2 lg:col-span-2 h-36 xs:h-40 sm:h-48 lg:h-52";
+                }
+              }
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="absolute bottom-2 left-2 right-2 bg-white/95 backdrop-blur-md px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-bold text-[#0F2963] truncate shadow-sm group-hover:bg-white transition-colors">
-                  {item.title}
+              return (
+                <div 
+                  key={item.id} 
+                  onClick={() => setActiveLightboxImage(item)}
+                  className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border-2 border-[#CBD8F6]/80 shadow-xs hover:border-[#F59E0B] hover:shadow-lg transition-all duration-300 hover:scale-[1.015] bg-slate-900 ${bentoClass}`}
+                >
+                  <Image 
+                    src={item.src} 
+                    alt={item.title} 
+                    fill 
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out" 
+                  />
+                  
+                  {/* Subtle Top Gradient Bar */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/85 via-[#091A42]/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
+                  
+                  {/* Decorative Polaroid Scrapbook Tag */}
+                  <div className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 bg-white/95 backdrop-blur-md border border-amber-300 text-[8.5px] sm:text-[9.5px] font-black text-[#0F2963] px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 z-10">
+                    <span>📸</span>
+                    <span className="capitalize">{item.category}</span>
+                  </div>
+
+                  {/* Top-Right Expand Icon */}
+                  <div className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#0F2963]/80 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 shadow-xs z-10">
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </div>
+
+                  {/* Bottom Compact Caption Bar */}
+                  <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-3.5 z-10 flex flex-col justify-end">
+                    <h3 className="font-heading font-extrabold text-xs sm:text-sm lg:text-base text-white leading-tight drop-shadow-sm line-clamp-1 group-hover:text-vannam-yellow transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="flex items-center justify-between mt-1 text-[9.5px] sm:text-[10.5px] text-blue-100 font-semibold opacity-90">
+                      <span>Click to view photo</span>
+                      <span className="group-hover:translate-x-1 transition-transform">↗</span>
+                    </div>
+                  </div>
                 </div>
-              </ScrollReveal>
-            ))}
-          </div>
+              );
+            })}
+          </ScrollReveal>
 
           <RainbowArcBridge className="mt-6 -mb-4" />
 
         </div>
 
-        {/* Wave Divider into Awards */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
-      </section>
-
-      {/* LIGHTBOX MODAL */}
-      {activeLightboxImage && (
-        <div className="fixed inset-0 z-50 bg-[#091A42]/95 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative max-w-4xl w-full bg-[#0F2963] rounded-3xl border-4 border-[#F59E0B] overflow-hidden shadow-2xl">
-            <button
-              onClick={() => setActiveLightboxImage(null)}
-              className="absolute top-4 right-4 z-10 bg-[#0F2963]/80 hover:bg-slate-700 p-2.5 rounded-full text-white transition min-w-[44px] min-h-[44px] flex items-center justify-center"
-            >
-              <X className="w-6 h-6" />
-            </button>
-            <div className="relative h-[50vh] sm:h-[65vh] w-full">
-              <Image 
-                src={activeLightboxImage.src} 
-                alt={activeLightboxImage.title} 
-                fill 
-                sizes="100vw"
-                className="object-contain" 
-              />
-            </div>
-            <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
-              <span className="font-heading font-extrabold text-sm sm:text-lg truncate mr-2">{activeLightboxImage.title}</span>
-              <span className="text-xs uppercase font-extrabold text-vannam-yellow px-3 py-1 bg-[#0F2963] rounded-full shrink-0">
-                {activeLightboxImage.category}
-              </span>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* AWARDS & RECOGNITION SECTION - HORIZONTAL CARDS */}
-      <section id="awards" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
-        
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <TwinkleStarIcon color="amber" className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <TeddyBearIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <TwinkleStarIcon color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <TeddyBearIcon className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-          
-          {/* Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-4 sm:mb-6">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#0F2963]/5 border border-[#CBD8F6] text-[#0F2963] text-xs font-extrabold uppercase tracking-widest shadow-2xs">
-              <Award className="w-3.5 h-3.5 text-[#0F2963]" />
-              <span>Accreditations & Honors</span>
-            </div>
-            
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
-              A Legacy of <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-6">Excellence</span>
-            </h2>
-          </div>
-
-          {/* HORIZONTAL CARDS: Horizontal Scroll on Mobile/Tablet, 4-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 lg:grid lg:grid-cols-4 lg:gap-5">
-            {awardsData.map((award) => (
-              <div
-                key={award.id}
-                onClick={() => setSelectedAwardModal(award)}
-                className={`w-[260px] xs:w-[290px] shrink-0 snap-center lg:w-auto bento-card p-4 sm:p-5 bg-gradient-to-br ${award.accentBg} flex flex-col justify-between hover:-translate-y-1 transition-all duration-300 cursor-pointer group rounded-2xl border border-[#CBD8F6] shadow-xs`}
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-2.5">
-                    <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-white border border-[#CBD8F6] flex items-center justify-center text-xl sm:text-2xl shadow-xs">
-                      {award.icon}
-                    </div>
-                    <span className="text-[11px] font-black text-[#64748B] uppercase">
-                      {award.year}
-                    </span>
-                  </div>
-                  <div className="space-y-0.5 mb-2">
-                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[9.5px] font-black shadow-2xs ${award.badgeClass}`}>
-                      {award.badge}
-                    </span>
-                    <div className="text-base sm:text-lg font-black text-[#00A8E8]">{award.stat}</div>
-                    <h3 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-snug">
-                      {award.title}
-                    </h3>
-                  </div>
-                  <p className="text-[11px] sm:text-xs text-[#334155] leading-relaxed mb-2.5 font-medium line-clamp-3">
-                    {award.desc}
-                  </p>
-                </div>
-                <div className="pt-2 border-t border-black/5 flex items-center justify-between text-[11px] font-black text-[#00A8E8]">
-                  <span className="text-[10px] sm:text-[11px] font-bold truncate mr-2 text-[#64748B]">{award.issuer}</span>
-                  <span className="flex items-center gap-1 shrink-0 font-extrabold">
-                    <span>Verify</span>
-                    <ArrowUpRight className="w-3 h-3" />
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-        </div>
-
         {/* Wave Divider into Testimonials */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF7ED" secondaryFill="#FAF5FF" strokeColor="#FED7AA" />
       </section>
 
       {/* PARENT TESTIMONIALS SECTION */}
-      <section id="testimonials" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-testimonials relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2965,16 +2821,16 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <FloatingBalloonsGroup className="w-8 h-10 sm:w-12 sm:h-16" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
           <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+          <ScrollReveal variant="reveal-bubble-float" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
             <div className="flex items-center justify-center gap-3 mb-1">
               <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle" />
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
@@ -2996,7 +2852,7 @@ export default function Home() {
           {/* Testimonial Cards: Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
           <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 md:grid md:grid-cols-3 md:gap-5">
             {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} stagger={idx + 1} className="w-[82vw] xs:w-[300px] shrink-0 snap-center md:w-auto bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30">
+              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-[82vw] xs:w-[300px] shrink-0 snap-center md:w-auto bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-0.5 text-vannam-yellow">
@@ -3029,11 +2885,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Events */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#EFF6FF" secondaryFill="#FFFBEB" strokeColor="#BFDBFE" />
       </section>
 
       {/* UPCOMING SCHOOL EVENTS */}
-      <section className="py-8 sm:py-12 lg:py-16 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section className="pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-interactive relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -3044,16 +2900,16 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
           <Calendar className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-yellow" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
           <PaperPlaneIcon className="w-6 h-6 sm:w-10 sm:h-10" />
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
+          <ScrollReveal variant="reveal-calendar-flip" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
             <div className="flex items-center justify-center gap-3 mb-1">
               <PartyCelebrationIcon className="w-8 h-8 animate-bounce-gentle" />
               <BalloonIcon color="sky" className="w-6 h-8 animate-float" />
@@ -3097,11 +2953,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into FAQs */}
-        <PlayfulWaveDivider className="mt-8 -mb-4 sm:-mb-6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#CBD8F6" />
       </section>
 
       {/* FAQS ACCORDION SECTION */}
-      <section className="py-10 sm:py-14 lg:py-18 bg-[#FFFDF8] bg-playful-dots relative overflow-hidden">
+      <section className="pt-10 pb-0 sm:pt-14 sm:pb-0 lg:pt-18 lg:pb-0 bg-section-about relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -3112,10 +2968,10 @@ export default function Home() {
         </div>
 
         {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-10 sm:left-10 animate-float pointer-events-none opacity-80 z-10">
+        <div className="absolute top-6 left-3 sm:top-10 sm:left-10 animate-float pointer-events-none opacity-80 z-10">
           <SproutPlantIcon className="w-7 h-7 sm:w-10 sm:h-10" />
         </div>
-        <div className="absolute bottom-4 right-3 sm:bottom-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
+        <div className="absolute bottom-6 right-3 sm:bottom-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
           <ButterflyIcon color="amber" className="w-6 h-6 sm:w-8 sm:h-8" />
         </div>
 
@@ -3158,11 +3014,11 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider into Contact */}
-        <PlayfulWaveDivider className="mt-8 -mb-10 sm:-mb-14 lg:-mb-18" fillColor="#0F2963" strokeColor="#CBD8F6" />
+        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#0F2963" secondaryFill="#0A1D47" strokeColor="#1D4ED8" />
       </section>
 
       {/* ADMISSION CTA & CONTACT FORM SECTION - GLASSMORPHIC POSTCARD */}
-      <section id="contact" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-[#0F2963] text-white relative overflow-hidden">
+      <section id="contact" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-section-contact text-white relative overflow-hidden">
         
         {/* Floating Background 3D Toys */}
         <div className="absolute top-10 left-10 opacity-35 animate-pulse pointer-events-none rotate-[-15deg]">
@@ -3379,37 +3235,53 @@ export default function Home() {
       </section>
 
       {/* SOPHISTICATED LIGHT ORANGE THEMED FOOTER */}
-      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-12 sm:pt-16 pb-12 sm:pb-16 border-t-2 border-[#FDBA74]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-10 sm:pt-16 pb-12 sm:pb-16 border-t-2 border-[#FDBA74]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             
-            {/* Brand Col */}
-            <div className="sm:col-span-2 space-y-4 sm:space-y-5 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start gap-3">
-                <div className="bg-white p-2 rounded-2xl inline-block shadow-xs border border-[#FED7AA]">
+            {/* Brand Column (Span 4 on Desktop) */}
+            <div className="lg:col-span-4 space-y-3.5 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start">
+                <div className="bg-white p-2.5 rounded-2xl inline-block shadow-xs border border-[#FED7AA]">
                   <Image 
                     src="/logo.png" 
                     alt="Vannam World Preschool Logo" 
                     width={180}
                     height={48}
-                    className="h-10 sm:h-12 w-auto object-contain"
+                    className="h-9 sm:h-12 w-auto object-contain"
                   />
                 </div>
               </div>
+              
               <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-sm font-medium mx-auto sm:mx-0">
                 Learning through every shade of play. Voted #1 international preschool for safe, joyful Montessori & STEAM early learning.
               </p>
-              <div className="flex items-center justify-center sm:justify-start gap-3 pt-1">
+              
+              {/* Trust Badges */}
+              <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-0.5">
+                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                  🏆 #1 Preschool
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                  🛡️ 100% Child Safe
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                  🌱 STEAM Accredited
+                </span>
+              </div>
+
+              {/* Social Media Links */}
+              <div className="flex items-center justify-center sm:justify-start gap-2.5 pt-1">
                 {/* Instagram */}
                 <a 
                   href="https://instagram.com/vannamworldpreschool" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="Instagram"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
                 >
-                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
                     <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -3422,9 +3294,9 @@ export default function Home() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="Facebook"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
                 >
-                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                   </svg>
                 </a>
@@ -3435,9 +3307,9 @@ export default function Home() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="YouTube"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
                 >
-                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
                     <polygon points="10 15 15 12 10 9 10 15" fill="currentColor" />
                   </svg>
@@ -3449,9 +3321,9 @@ export default function Home() {
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="LinkedIn"
-                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
                 >
-                  <svg className="w-4 h-4 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
+                  <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                     <rect width="4" height="12" x="2" y="9" />
                     <circle cx="4" cy="4" r="2" />
@@ -3460,44 +3332,81 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div className="space-y-3 sm:space-y-4">
-              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#C2410C] uppercase tracking-wider">Quick Links</h4>
-              <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-[#475569] font-semibold">
-                <li><a href="#about" className="hover:text-[#EA580C] transition">About School</a></li>
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">Our Programs</a></li>
-                <li><a href="#facilities" className="hover:text-[#EA580C] transition">Campus Facilities</a></li>
-                <li><a href="#safety" className="hover:text-[#EA580C] transition">Child Safety Standard</a></li>
-                <li><a href="#teachers" className="hover:text-[#EA580C] transition">Educators & Staff</a></li>
-              </ul>
-            </div>
-
-            {/* Programs */}
-            <div className="space-y-3 sm:space-y-4">
-              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#C2410C] uppercase tracking-wider">Programs</h4>
-              <ul className="space-y-2.5 sm:space-y-3 text-xs sm:text-sm text-[#475569] font-semibold">
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">Toddler Care (12-24m)</a></li>
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">Play Group (2-3 Yrs)</a></li>
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">Nursery Early STEAM</a></li>
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">LKG Junior Kindergarten</a></li>
-                <li><a href="#programs" className="hover:text-[#EA580C] transition">UKG Senior Kindergarten</a></li>
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div className="space-y-3 sm:space-y-4">
-              <h4 className="font-heading font-extrabold text-xs sm:text-sm text-[#C2410C] uppercase tracking-wider">Campus Contact</h4>
-              <div className="space-y-2 text-xs sm:text-sm text-[#475569] font-medium">
-                <p>124 Rainbow Gardens Drive, <br className="hidden sm:block" />North Campus</p>
-                <p>Mon - Fri: 8:00 AM - 6:00 PM</p>
-                <p className="text-[#C2410C] font-extrabold text-sm sm:text-base mt-1">+1 (800) 555-PLAY</p>
-                <p className="text-[#0F2963] font-bold break-all">admissions@vannamworld.edu</p>
+            {/* Quick Links & Programs (2-COLUMNS ON MOBILE, SPAN 5 ON DESKTOP) */}
+            <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-6 pt-1 sm:pt-0">
+              {/* Quick Links */}
+              <div className="space-y-1.5 sm:space-y-2">
+                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider">Quick Links</h4>
+                <ul className="space-y-1.5 text-xs text-[#475569] font-semibold">
+                  <li><a href="#about" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> About School</a></li>
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Our Programs</a></li>
+                  <li><a href="#facilities" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Campus Facilities</a></li>
+                  <li><a href="#safety" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Child Safety</a></li>
+                  <li><a href="#teachers" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Educators & Staff</a></li>
+                </ul>
               </div>
+
+              {/* Programs */}
+              <div className="space-y-1.5 sm:space-y-2">
+                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider">Programs</h4>
+                <ul className="space-y-1.5 text-xs text-[#475569] font-semibold">
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Toddler Care</a></li>
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Play Group</a></li>
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Nursery STEAM</a></li>
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> LKG Kindergarten</a></li>
+                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> UKG Senior</a></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Campus Contact Bento Box (COMPACT SHORT CARD) */}
+            <div className="lg:col-span-3 bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-[#FED7AA] shadow-xs space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider flex items-center gap-1">
+                  <MapPin className="w-3.5 h-3.5 text-[#EA580C]" />
+                  <span>Campus Contact</span>
+                </h4>
+                <span className="text-[10px] text-[#64748B] flex items-center gap-1 font-semibold">
+                  <Clock className="w-3 h-3 text-[#EA580C]" />
+                  <span>8 AM - 6 PM</span>
+                </span>
+              </div>
+              
+              <p className="text-[11px] sm:text-xs text-[#475569] font-medium leading-snug">
+                124 Rainbow Gardens Drive, North Campus
+              </p>
+
+              <div className="flex flex-col xs:flex-row gap-1.5 text-xs pt-0.5">
+                <a 
+                  href="tel:+18005557529" 
+                  className="flex-1 px-2.5 py-1.5 rounded-xl bg-orange-50/80 border border-orange-200 text-[#C2410C] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-orange-100 transition"
+                >
+                  <Phone className="w-3 h-3" />
+                  <span>+1 (800) 555-PLAY</span>
+                </a>
+                <a 
+                  href="mailto:admissions@vannamworld.edu" 
+                  className="flex-1 px-2.5 py-1.5 rounded-xl bg-blue-50/80 border border-blue-200 text-[#0F2963] font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 transition truncate"
+                  title="admissions@vannamworld.edu"
+                >
+                  <Mail className="w-3 h-3 text-[#00A8E8] shrink-0" />
+                  <span className="truncate">Email Us</span>
+                </a>
+              </div>
+
+              <button
+                onClick={() => setIsTourModalOpen(true)}
+                className="btn-primary w-full py-1.5 text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs !min-h-0 active:scale-95 transition-transform mt-1"
+              >
+                <Calendar className="w-3.5 h-3.5 text-vannam-yellow" />
+                <span>Book Campus Visit</span>
+              </button>
             </div>
 
           </div>
 
-          <div className="pt-6 sm:pt-8 border-t border-[#FED7AA] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs sm:text-sm text-[#64748B]">
+          {/* Bottom Copyright & Policy Strip */}
+          <div className="pt-6 sm:pt-8 border-t border-[#FED7AA] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-[#64748B]">
             <p className="text-center sm:text-left">© {getCurrentYear()} Vannam World Preschool. All Rights Reserved.</p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
               <a href="#" className="hover:text-[#0F2963] transition">Privacy Policy</a>
@@ -3545,6 +3454,366 @@ export default function Home() {
               <X className="w-5 h-5" />
             </button>
             <VirtualTour />
+          </div>
+        </div>
+      )}
+
+      {/* Gallery Lightbox Modal */}
+      {activeLightboxImage && (
+        <div className="fixed inset-0 z-50 bg-[#091A42]/95 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="relative max-w-4xl w-full bg-[#0F2963] rounded-3xl border-4 border-[#F59E0B] overflow-hidden shadow-2xl">
+            <button
+              onClick={() => setActiveLightboxImage(null)}
+              className="absolute top-4 right-4 z-10 bg-[#0F2963]/80 hover:bg-slate-700 p-2.5 rounded-full text-white transition min-w-[44px] min-h-[44px] flex items-center justify-center"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <div className="relative h-[50vh] sm:h-[65vh] w-full">
+              <Image 
+                src={activeLightboxImage.src} 
+                alt={activeLightboxImage.title} 
+                fill 
+                sizes="100vw"
+                className="object-contain" 
+              />
+            </div>
+            <div className="p-4 bg-slate-900 text-white flex items-center justify-between">
+              <span className="font-heading font-extrabold text-sm sm:text-lg truncate mr-2">{activeLightboxImage.title}</span>
+              <span className="text-xs uppercase font-extrabold text-vannam-yellow px-3 py-1 bg-[#0F2963] rounded-full shrink-0">
+                {activeLightboxImage.category}
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 7-SHADES METHODOLOGY FULL CARD POPUP MODAL (HORIZONTAL AMAZON/FLIPKART STYLE) */}
+      {selectedMethodologyModal && (
+        <div 
+          className="fixed inset-0 z-50 bg-[#091A42]/85 backdrop-blur-md flex items-center justify-center p-2.5 xs:p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setSelectedMethodologyModal(null)}
+        >
+          <div 
+            className="bg-white max-w-4xl w-full rounded-2xl sm:rounded-3xl p-4 sm:p-6 relative border-3 shadow-2xl my-auto max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-200"
+            style={{ borderColor: selectedMethodologyModal.hex }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Close Button */}
+            <button 
+              onClick={() => setSelectedMethodologyModal(null)}
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 bg-slate-100 text-[#0F2963] hover:bg-slate-200 p-2 rounded-full transition shadow-xs flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9"
+              aria-label="Close details"
+            >
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            {/* Top Horizontal Shade Navigation Strip (Flipkart / Amazon Style) */}
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2.5 mb-3.5 pr-10 scrollbar-none border-b border-slate-100">
+              {methodologyShades.map((s) => {
+                const isCurrent = selectedMethodologyModal.id === s.id;
+                const ShadeIcon = s.icon;
+                return (
+                  <button
+                    key={s.id}
+                    onClick={() => setSelectedMethodologyModal(s)}
+                    className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-[10px] sm:text-xs font-black transition flex items-center gap-1.5 shrink-0 whitespace-nowrap !min-h-0 cursor-pointer ${
+                      isCurrent
+                        ? "text-white shadow-sm scale-105"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                    }`}
+                    style={{
+                      backgroundColor: isCurrent ? s.hex : undefined,
+                    }}
+                  >
+                    <ShadeIcon className="w-3 h-3 stroke-[2.5]" />
+                    <span>{s.title}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Horizontal Split Body (Flipkart / Amazon Product Spec Style) */}
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-5 items-stretch">
+              
+              {/* LEFT COLUMN: Identity & Brain Science Card */}
+              <div 
+                className="md:col-span-5 rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between border-2 space-y-3"
+                style={{ 
+                  backgroundColor: `${selectedMethodologyModal.hex}0D`,
+                  borderColor: `${selectedMethodologyModal.hex}35`
+                }}
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center gap-2.5">
+                    <div 
+                      className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center shadow-xs shrink-0"
+                      style={{ 
+                        backgroundColor: `${selectedMethodologyModal.hex}25`, 
+                        color: selectedMethodologyModal.hex,
+                        border: `2px solid ${selectedMethodologyModal.hex}50`
+                      }}
+                    >
+                      {React.createElement(selectedMethodologyModal.icon, { className: "w-5 h-5 sm:w-6 sm:h-6 stroke-[2.5]" })}
+                    </div>
+                    <div>
+                      <span 
+                        className="text-[9px] sm:text-[10px] font-black uppercase tracking-wider block"
+                        style={{ color: selectedMethodologyModal.hex }}
+                      >
+                        {selectedMethodologyModal.shadeName}
+                      </span>
+                      <h3 className="font-heading text-base sm:text-lg font-extrabold text-[#0F2963] leading-tight">
+                        {selectedMethodologyModal.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-1 flex-wrap pt-0.5">
+                    <span className="px-2.5 py-0.5 rounded-full bg-white text-[#0F2963] text-[9.5px] sm:text-[10px] font-black border border-[#CBD8F6] shadow-2xs">
+                      ⏱️ {selectedMethodologyModal.dailyDuration}
+                    </span>
+                    <span 
+                      className="text-[9.5px] sm:text-[10px] font-bold"
+                      style={{ color: selectedMethodologyModal.hex }}
+                    >
+                      {selectedMethodologyModal.tagline}
+                    </span>
+                  </div>
+
+                  {/* Stylized Quote Card */}
+                  <div className="p-2.5 rounded-xl bg-white/90 border border-slate-200/80 shadow-2xs">
+                    <p className="text-[11px] sm:text-xs font-bold italic leading-snug" style={{ color: selectedMethodologyModal.hex }}>
+                      &ldquo;{selectedMethodologyModal.quote}&rdquo;
+                    </p>
+                  </div>
+                </div>
+
+                {/* Brain Science Insight */}
+                <div className="bg-emerald-50 rounded-xl p-2.5 border border-emerald-200/90 space-y-1">
+                  <span className="text-[9.5px] font-black uppercase tracking-wide text-emerald-900 flex items-center gap-1">
+                    <span>💡</span> Brain Science Insight
+                  </span>
+                  <p className="text-[10.5px] sm:text-[11px] text-emerald-800 font-semibold leading-tight">
+                    {selectedMethodologyModal.scientificInsight}
+                  </p>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: Curriculum Tools, Milestones & Actions */}
+              <div className="md:col-span-7 flex flex-col justify-between space-y-3">
+                <div className="space-y-3">
+                  {/* Full Description */}
+                  <p className="text-xs sm:text-sm text-[#334155] leading-relaxed">
+                    {selectedMethodologyModal.description}
+                  </p>
+
+                  {/* Tactile Tools (Compact Horizontal Bento Grid) */}
+                  <div className="bg-[#F8FAFC] rounded-2xl p-3 border border-[#E8EEFB] space-y-2">
+                    <h4 className="font-heading font-extrabold text-xs text-[#0F2963] flex items-center gap-1.5">
+                      <Puzzle className="w-3.5 h-3.5 shrink-0" style={{ color: selectedMethodologyModal.hex }} />
+                      <span>Classroom Tactile Tools & Methods</span>
+                    </h4>
+                    <div className="grid grid-cols-2 gap-2">
+                      {selectedMethodologyModal.tools.map((tool, idx) => (
+                        <div key={idx} className="bg-white p-2 rounded-xl border border-slate-200/80 shadow-2xs">
+                          <span className="text-[10.5px] font-black text-[#0F2963] block truncate">
+                            • {tool.name}
+                          </span>
+                          <span className="text-[9.5px] text-[#64748B] leading-tight block mt-0.5 line-clamp-2">
+                            {tool.desc}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Developmental Milestones */}
+                  {selectedMethodologyModal.milestones && (
+                    <div className="bg-white rounded-2xl p-3 border border-[#E8EEFB] shadow-2xs space-y-1.5">
+                      <h4 className="font-heading font-extrabold text-xs text-[#0F2963] flex items-center gap-1.5">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>Target Milestones Achieved</span>
+                      </h4>
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
+                        {selectedMethodologyModal.milestones.map((milestone, idx) => (
+                          <li key={idx} className="flex items-start gap-1.5 text-[10.5px] sm:text-[11px] text-[#334155] font-medium leading-tight">
+                            <CheckCircle2 className="w-3 h-3 shrink-0 mt-0.5" style={{ color: selectedMethodologyModal.hex }} />
+                            <span>{milestone}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+
+                {/* Footer Action Strip */}
+                <div className="pt-2 flex flex-col xs:flex-row gap-2 border-t border-slate-100">
+                  <button
+                    onClick={() => {
+                      setSelectedMethodologyModal(null);
+                      setIsTourModalOpen(true);
+                    }}
+                    className={`${selectedMethodologyModal.btnClass} flex-1 py-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition-transform !min-h-0`}
+                  >
+                    <Calendar className="w-4 h-4 shrink-0" />
+                    <span>Experience on Campus</span>
+                  </button>
+                  <button
+                    onClick={() => setSelectedMethodologyModal(null)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold transition !min-h-0"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* HOW WE DIFFER / DIFFERENTIATOR COMPARISON POPUP MODAL (HORIZONTAL AMAZON/FLIPKART STYLE) */}
+      {selectedComparisonModal && (
+        <div 
+          className="fixed inset-0 z-50 bg-[#091A42]/85 backdrop-blur-md flex items-center justify-center p-2.5 xs:p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setSelectedComparisonModal(null)}
+        >
+          <div 
+            className="bg-white max-w-3xl w-full rounded-2xl sm:rounded-3xl p-4 sm:p-6 relative border-2 border-[#CBD8F6] shadow-2xl my-auto max-h-[92vh] overflow-y-auto animate-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Close Button */}
+            <button 
+              onClick={() => setSelectedComparisonModal(null)} 
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-30 bg-slate-100 text-[#0F2963] hover:bg-slate-200 p-2 rounded-full transition shadow-xs flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9"
+              aria-label="Close Comparison Details"
+            >
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            {/* Top Horizontal Differentiator Switcher Strip (Flipkart / Amazon Style) */}
+            <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2.5 mb-3.5 pr-10 scrollbar-none border-b border-slate-100">
+              {differentiators.map((diff) => {
+                const isCurrent = selectedComparisonModal.id === diff.id;
+                return (
+                  <button
+                    key={diff.id}
+                    onClick={() => setSelectedComparisonModal(diff)}
+                    className={`px-2.5 py-1 sm:px-3 sm:py-1.5 rounded-xl text-[10px] sm:text-xs font-black transition flex items-center gap-1.5 shrink-0 whitespace-nowrap !min-h-0 cursor-pointer ${
+                      isCurrent
+                        ? "bg-[#0F2963] text-white shadow-sm scale-105 border border-[#1D4ED8]"
+                        : "bg-slate-100 text-[#0F2963] hover:bg-slate-200 border border-slate-200/80"
+                    }`}
+                  >
+                    <span>{diff.icon}</span>
+                    <span>{diff.shortTitle}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Modal Header */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-100">
+              <div className="flex items-center gap-2.5">
+                <span className="text-2xl sm:text-3xl p-2 rounded-xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">
+                  {selectedComparisonModal.icon}
+                </span>
+                <div>
+                  <span className="text-[9.5px] sm:text-[10px] font-black uppercase tracking-wider text-[#00A8E8] block">
+                    {selectedComparisonModal.highlight}
+                  </span>
+                  <h3 className="font-heading font-extrabold text-sm sm:text-lg text-[#0F2963] leading-tight">
+                    {selectedComparisonModal.feature}
+                  </h3>
+                </div>
+              </div>
+              <span className="px-2.5 py-0.5 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-[9.5px] sm:text-[10.5px] font-black shadow-2xs self-start sm:self-auto">
+                🏆 {selectedComparisonModal.proofTag}
+              </span>
+            </div>
+
+            {/* STRICTLY HORIZONTAL SIDE-BY-SIDE COMPARISON PANELS (GRID-COLS-2 ALWAYS) */}
+            <div className="grid grid-cols-2 gap-2 xs:gap-3 sm:gap-4 py-3.5 items-stretch">
+              
+              {/* LEFT COLUMN: VANNAM WORLD (GREEN THEME) */}
+              <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-xl sm:rounded-2xl p-2.5 xs:p-3.5 sm:p-4 border-2 border-[#A7F3D0] space-y-2.5 shadow-xs flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1 pb-1.5 border-b border-emerald-300/60">
+                    <span className="px-2 xs:px-2.5 py-0.5 rounded-full bg-emerald-700 text-white text-[8.5px] xs:text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-2xs">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-300 shrink-0" />
+                      <span>Vannam</span>
+                    </span>
+                    <span className="font-heading font-black text-xs xs:text-sm sm:text-base text-emerald-950">
+                      {selectedComparisonModal.stat}
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    {selectedComparisonModal.vannamPoints.map((pt, i) => (
+                      <div key={i} className="flex items-start gap-1.5 p-1.5 xs:p-2 rounded-lg bg-white/95 border border-emerald-300/80 shadow-2xs min-h-[38px] xs:min-h-[42px]">
+                        <div className="w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-[9px] xs:text-[10px] shrink-0 mt-0.5">
+                          ✓
+                        </div>
+                        <span className="text-[9.5px] xs:text-[11px] sm:text-xs font-bold text-[#0F2963] leading-snug">
+                          {pt}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* RIGHT COLUMN: TRADITIONAL SCHOOLS (ROSE/SLATE THEME) */}
+              <div className="bg-gradient-to-br from-rose-50/80 to-slate-100/80 rounded-xl sm:rounded-2xl p-2.5 xs:p-3.5 sm:p-4 border-2 border-rose-200 space-y-2.5 shadow-xs flex flex-col justify-between">
+                <div className="space-y-2">
+                  <div className="flex flex-col xs:flex-row items-start xs:items-center justify-between gap-1 pb-1.5 border-b border-rose-200/70">
+                    <span className="px-2 xs:px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-200 text-[8.5px] xs:text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shadow-2xs">
+                      <X className="w-3 h-3 text-rose-400 shrink-0" />
+                      <span>Others</span>
+                    </span>
+                    <span className="font-heading font-bold text-[9px] xs:text-[10px] sm:text-xs text-slate-500">
+                      Baseline
+                    </span>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    {selectedComparisonModal.traditionalPoints.map((pt, i) => (
+                      <div key={i} className="flex items-start gap-1.5 p-1.5 xs:p-2 rounded-lg bg-white/90 border border-rose-200/80 shadow-2xs min-h-[38px] xs:min-h-[42px]">
+                        <div className="w-3.5 h-3.5 xs:w-4 xs:h-4 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-[9px] xs:text-[10px] shrink-0 mt-0.5">
+                          ✕
+                        </div>
+                        <span className="text-[9.5px] xs:text-[11px] sm:text-xs font-semibold text-slate-600 leading-snug">
+                          {pt}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Modal Footer Actions */}
+            <div className="pt-2.5 flex flex-col xs:flex-row gap-2 border-t border-slate-100">
+              <button
+                onClick={() => {
+                  setSelectedComparisonModal(null);
+                  setIsTourModalOpen(true);
+                }}
+                className="btn-primary flex-1 py-2.5 text-xs sm:text-sm font-bold flex items-center justify-center gap-2 shadow-md active:scale-95 transition-transform !min-h-0"
+              >
+                <Calendar className="w-4 h-4 text-vannam-yellow" />
+                <span>Book Campus Tour</span>
+              </button>
+              <button
+                onClick={() => setSelectedComparisonModal(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold transition !min-h-0"
+              >
+                Close
+              </button>
+            </div>
+
           </div>
         </div>
       )}

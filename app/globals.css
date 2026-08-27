@@ -380,15 +380,13 @@
   animation: wiggle-subtle 4s ease-in-out infinite;
 }
 
-/* Playful Multi-Color Polka Dots Grid */
+/* Playful Multi-Color Polka Dots Grid (Delicate minimal staggered pastel dot pattern) */
 .bg-playful-dots {
   background-image: 
-    radial-gradient(circle, #FDE68A 1.5px, transparent 1.5px), 
-    radial-gradient(circle, #BAE6FD 1.5px, transparent 1.5px),
-    radial-gradient(circle, #FECDD3 1.2px, transparent 1.2px),
-    radial-gradient(circle, #A7F3D0 1.2px, transparent 1.2px);
-  background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
-  background-position: 0 0, 20px 20px, 0 20px, 20px 0;
+    radial-gradient(circle, rgba(245, 158, 11, 0.40) 1.2px, transparent 1.2px), 
+    radial-gradient(circle, rgba(14, 165, 233, 0.36) 1.2px, transparent 1.2px);
+  background-size: 36px 36px, 36px 36px;
+  background-position: 0 0, 18px 18px;
   background-repeat: repeat;
 }
 
@@ -475,6 +473,69 @@ html, body {
   animation: spin-slow 24s linear infinite;
 }
 
+@keyframes float-bubble {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.7);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  85% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(-115vh) translateX(30px) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@keyframes bubble-wobble {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.06, 0.94) rotate(4deg);
+  }
+  66% {
+    transform: scale(0.95, 1.05) rotate(-4deg);
+  }
+}
+
+@keyframes paper-plane-glide {
+  0%, 100% {
+    transform: translateY(0) rotate(2deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(-3deg);
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.animate-float-bubble {
+  animation: float-bubble 14s linear forwards;
+}
+
+.animate-bubble-wobble {
+  animation: bubble-wobble 3.5s ease-in-out infinite;
+}
+
+.animate-paper-plane-glide {
+  animation: paper-plane-glide 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
 /* Playful Card Gradient Borders & Shadows */
 .border-playful-rainbow {
   border-image: linear-gradient(to right, #F43F5E, #F59E0B, #10B981, #00A8E8, #8B5CF6) 1;
@@ -549,18 +610,255 @@ html, body {
 .stagger-6 { transition-delay: 480ms; }
 
 /* ========================================
+   CONCEPTUAL SECTION-SPECIFIC ANIMATIONS
+   Each section has a unique reveal personality
+   ======================================== */
+
+/* 1. HERO — Sunrise Bloom: scale up from center with warm glow feel */
+.reveal-on-scroll.reveal-hero-bloom {
+  opacity: 0;
+  transform: scale(0.88) translate3d(0, 20px, 0);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-hero-bloom.revealed {
+  opacity: 1;
+  transform: scale(1) translate3d(0, 0, 0);
+}
+
+/* 2. ABOUT — Storybook Page Turn: 3D rotateY perspective reveal */
+.reveal-on-scroll.reveal-page-turn {
+  opacity: 0;
+  transform: perspective(1200px) rotateY(-8deg) translate3d(-30px, 10px, 0);
+  transform-origin: left center;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-page-turn.revealed {
+  opacity: 1;
+  transform: perspective(1200px) rotateY(0deg) translate3d(0, 0, 0);
+}
+
+/* 3. PROGRAMS — Toy Box Pop-Up: spring bounce scale */
+.reveal-on-scroll.reveal-pop-bounce {
+  opacity: 0;
+  transform: scale(0.75) translate3d(0, 40px, 0);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-on-scroll.reveal-pop-bounce.revealed {
+  opacity: 1;
+  transform: scale(1) translate3d(0, 0, 0);
+}
+
+/* 4. WHY US — Comparison Split Slide: slide from left */
+.reveal-on-scroll.reveal-split-left {
+  opacity: 0;
+  transform: translate3d(-50px, 0, 0) scale(0.96);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-split-left.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 4b. WHY US — Comparison Split Slide: slide from right */
+.reveal-on-scroll.reveal-split-right {
+  opacity: 0;
+  transform: translate3d(50px, 0, 0) scale(0.96);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-split-right.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 5. METHODOLOGY / TABS — Paint Brush Stroke: smooth scale and slide */
+.reveal-on-scroll.reveal-paint-stroke {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0) scale(0.96);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-paint-stroke.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 6. ACTIVITIES — Carnival Spin Drop: slight rotation + drop */
+.reveal-on-scroll.reveal-spin-drop {
+  opacity: 0;
+  transform: rotate(-6deg) translate3d(0, 35px, 0) scale(0.92);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-on-scroll.reveal-spin-drop.revealed {
+  opacity: 1;
+  transform: rotate(0deg) translate3d(0, 0, 0) scale(1);
+}
+
+/* 7. FACILITIES — Castle Gate Open: scale from center horizontally */
+.reveal-on-scroll.reveal-gate-open {
+  opacity: 0;
+  transform: scaleX(0.7) translate3d(0, 15px, 0);
+  transform-origin: center center;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-gate-open.revealed {
+  opacity: 1;
+  transform: scaleX(1) translate3d(0, 0, 0);
+}
+
+/* 8. SAFETY — Shield Pulse In: appear with protective pulse */
+@keyframes shield-ring-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+.reveal-on-scroll.reveal-shield-pulse {
+  opacity: 0;
+  transform: scale(0.85) translate3d(0, 20px, 0);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-shield-pulse.revealed {
+  opacity: 1;
+  transform: scale(1) translate3d(0, 0, 0);
+  animation: shield-ring-pulse 0.8s ease-out 0.3s 1;
+}
+
+/* 9. TEACHERS — Warm Heart Bloom: scale with warmth from center */
+.reveal-on-scroll.reveal-heart-grow {
+  opacity: 0;
+  transform: scale(0.8) translate3d(0, 25px, 0);
+  transform-origin: center 60%;
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.reveal-on-scroll.reveal-heart-grow.revealed {
+  opacity: 1;
+  transform: scale(1) translate3d(0, 0, 0);
+}
+
+/* 10. GALLERY — Polaroid Scatter: alternating rotations */
+.reveal-on-scroll.reveal-polaroid {
+  opacity: 0;
+  transform: rotate(4deg) translate3d(0, 30px, 0) scale(0.9);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-on-scroll.reveal-polaroid.revealed {
+  opacity: 1;
+  transform: rotate(0deg) translate3d(0, 0, 0) scale(1);
+}
+.reveal-on-scroll.reveal-polaroid-alt {
+  opacity: 0;
+  transform: rotate(-4deg) translate3d(0, 30px, 0) scale(0.9);
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.reveal-on-scroll.reveal-polaroid-alt.revealed {
+  opacity: 1;
+  transform: rotate(0deg) translate3d(0, 0, 0) scale(1);
+}
+
+/* 11. AWARDS — Trophy Glow Rise: rise from below with golden shimmer */
+@keyframes trophy-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.reveal-on-scroll.reveal-trophy-rise {
+  opacity: 0;
+  transform: translate3d(0, 45px, 0) scale(0.93);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-trophy-rise.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* 12. TESTIMONIALS — Speech Bubble Float: float up with wobble */
+.reveal-on-scroll.reveal-bubble-float {
+  opacity: 0;
+  transform: translate3d(0, 35px, 0) scale(0.92) rotate(1.5deg);
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.75s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+.reveal-on-scroll.reveal-bubble-float.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+}
+
+/* 13. EVENTS — Calendar Flip: subtle rotateX perspective flip */
+.reveal-on-scroll.reveal-calendar-flip {
+  opacity: 0;
+  transform: perspective(800px) rotateX(-10deg) translate3d(0, 25px, 0);
+  transform-origin: center top;
+  transition: opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-calendar-flip.revealed {
+  opacity: 1;
+  transform: perspective(800px) rotateX(0deg) translate3d(0, 0, 0);
+}
+
+/* 14. FAQs — Accordion Unfold: height expansion with subtle scale */
+.reveal-on-scroll.reveal-unfold {
+  opacity: 0;
+  transform: scaleY(0.85) translate3d(0, 15px, 0);
+  transform-origin: center top;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-unfold.revealed {
+  opacity: 1;
+  transform: scaleY(1) translate3d(0, 0, 0);
+}
+
+/* 15. CONTACT — Starlight Twinkle: fade in with subtle scale pulse */
+@keyframes starlight-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.08); }
+}
+.reveal-on-scroll.reveal-starlight {
+  opacity: 0;
+  transform: translate3d(0, 20px, 0) scale(0.95);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-starlight.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: starlight-pulse 2s ease-in-out 0.5s 2;
+}
+
+/* 16. FOOTER — Gentle Rise: smooth standard rise */
+.reveal-on-scroll.reveal-gentle-rise {
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-on-scroll.reveal-gentle-rise.revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* ========================================
    MOBILE-OPTIMIZED POLKA DOTS
    Smaller, softer dots on small screens
    ======================================== */
 @media (max-width: 640px) {
   .bg-playful-dots {
     background-image: 
-      radial-gradient(circle, #FDE68A 1px, transparent 1px), 
-      radial-gradient(circle, #BAE6FD 1px, transparent 1px),
-      radial-gradient(circle, #FECDD3 0.8px, transparent 0.8px),
-      radial-gradient(circle, #A7F3D0 0.8px, transparent 0.8px);
-    background-size: 32px 32px, 32px 32px, 32px 32px, 32px 32px;
-    background-position: 0 0, 16px 16px, 0 16px, 16px 0;
+      radial-gradient(circle, rgba(245, 158, 11, 0.38) 0.9px, transparent 0.9px), 
+      radial-gradient(circle, rgba(14, 165, 233, 0.35) 0.9px, transparent 0.9px);
+    background-size: 28px 28px, 28px 28px;
+    background-position: 0 0, 14px 14px;
   }
 }
 
@@ -673,3 +971,354 @@ html, body {
     box-shadow: 0 4px 12px -2px rgba(15, 41, 99, 0.08);
   }
 }
+
+/* =========================================================
+   UNIQUE CHILD-ATTRACTIVE THEMED SECTION BACKGROUNDS
+   WITH DELICATE, MINIMAL STAGGERED PASTEL DOT PATTERNS
+   Seamless full-bleed gradients with zero vertical seams.
+   ========================================================= */
+
+/* 1. HERO — Sunny Sunrise & Rainbow Sky */
+.bg-section-hero {
+  position: relative;
+  background-color: #FFFDF8;
+  background-image: linear-gradient(180deg, #FFF9EB 0%, #F0F9FF 50%, #FFFDF8 100%);
+}
+.bg-section-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    radial-gradient(circle, rgba(245, 158, 11, 0.40) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(2, 132, 199, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 20%, rgba(251, 191, 36, 0.15) 0%, transparent 40%),
+    radial-gradient(circle at 90% 15%, rgba(56, 189, 248, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(251, 113, 133, 0.08) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, black 0px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, black 0px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 2. ABOUT — Storybook Garden & Honey Meadow */
+.bg-section-about {
+  position: relative;
+  background-color: #FFFDF8;
+  background-image: linear-gradient(180deg, #FFFDF8 0%, #FFFBEB 45%, #FDF4FF 100%);
+}
+.bg-section-about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(245, 158, 11, 0.40) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(244, 63, 94, 0.35) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 85% 30%, rgba(254, 240, 138, 0.35) 0%, transparent 45%),
+    radial-gradient(circle at 15% 70%, rgba(253, 164, 175, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 10%, rgba(186, 230, 253, 0.2) 0%, transparent 40%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 3. PROGRAMS — Toyland & Imagination Wonderland (Lilac, Sky & Mint) */
+.bg-section-programs {
+  position: relative;
+  background-color: #FDF4FF;
+  background-image: linear-gradient(180deg, #FDF4FF 0%, #F0F9FF 50%, #ECFDF5 100%);
+}
+.bg-section-programs::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(147, 51, 234, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(16, 185, 129, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 15%, rgba(192, 132, 252, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(52, 211, 153, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.12) 0%, transparent 60%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 4. WHY CHOOSE US — STEAM Discovery Galaxy (Mint, Azure & Gold) */
+.bg-section-why-us {
+  position: relative;
+  background-color: #ECFDF5;
+  background-image: linear-gradient(180deg, #ECFDF5 0%, #EFF6FF 50%, #FFF7ED 100%);
+}
+.bg-section-why-us::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(16, 185, 129, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(2, 132, 199, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 15% 85%, rgba(251, 191, 36, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 20%, rgba(52, 211, 153, 0.15) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 5. METHODOLOGY — Montessori Treehouse & Nature Garden */
+.bg-section-methodology {
+  position: relative;
+  background-color: #FFF7ED;
+  background-image: linear-gradient(180deg, #FFF7ED 0%, #ECFDF5 50%, #FFF1F2 100%);
+}
+.bg-section-methodology::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(16, 185, 129, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(249, 115, 22, 0.35) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 15% 25%, rgba(52, 211, 153, 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 85% 75%, rgba(251, 146, 60, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 50%, rgba(254, 240, 138, 0.25) 0%, transparent 55%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 6. ACTIVITIES — Carnival Fiesta & Music Festival */
+.bg-section-activities {
+  position: relative;
+  background-color: #FFF1F2;
+  background-image: linear-gradient(180deg, #FFF1F2 0%, #FFFBEB 45%, #F0F9FF 100%);
+}
+.bg-section-activities::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(244, 63, 94, 0.35) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(245, 158, 11, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 20% 20%, rgba(251, 113, 133, 0.22) 0%, transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(251, 191, 36, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(56, 189, 248, 0.18) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 7. FACILITIES — Wonder Castle & Playground Kingdom */
+.bg-section-facilities {
+  position: relative;
+  background-color: #F0F9FF;
+  background-image: linear-gradient(180deg, #F0F9FF 0%, #EFF6FF 50%, #ECFDF5 100%);
+}
+.bg-section-facilities::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(2, 132, 199, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(147, 51, 234, 0.32) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 85% 60%, rgba(192, 132, 252, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 50% 90%, rgba(52, 211, 153, 0.15) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 8. SAFETY — Guardian Shield & Cloud Fortress */
+.bg-section-safety {
+  position: relative;
+  background-color: #ECFDF5;
+  background-image: linear-gradient(180deg, #ECFDF5 0%, #F0F9FF 50%, #FAF5FF 100%);
+}
+.bg-section-safety::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(16, 185, 129, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(2, 132, 199, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 20% 70%, rgba(0, 168, 232, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 30%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 9. TEACHERS — Warm Sunshine & Heartfelt Mentors */
+.bg-section-teachers {
+  position: relative;
+  background-color: #FAF5FF;
+  background-image: linear-gradient(180deg, #FAF5FF 0%, #FFF1F2 50%, #FFFBEB 100%);
+}
+.bg-section-teachers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(244, 63, 94, 0.35) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(245, 158, 11, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 15% 20%, rgba(251, 113, 133, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 85% 40%, rgba(251, 191, 36, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(192, 132, 252, 0.15) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 10. GALLERY — Scrapbook Studio & Art Corner */
+.bg-section-gallery {
+  position: relative;
+  background-color: #FFFBEB;
+  background-image: linear-gradient(180deg, #FFFBEB 0%, #FDF4FF 50%, #FFF7ED 100%);
+}
+.bg-section-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(245, 158, 11, 0.40) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(147, 51, 234, 0.34) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 20% 25%, rgba(251, 191, 36, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(192, 132, 252, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 15%, rgba(56, 189, 248, 0.15) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 11. TESTIMONIALS — Bedtime Storybook & Sweet Cloud Dreams */
+.bg-section-testimonials {
+  position: relative;
+  background-color: #FFF7ED;
+  background-image: linear-gradient(180deg, #FFF7ED 0%, #FAF5FF 50%, #EFF6FF 100%);
+}
+.bg-section-testimonials::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(147, 51, 234, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(2, 132, 199, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 15% 25%, rgba(192, 132, 252, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 85% 70%, rgba(56, 189, 248, 0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 40%, rgba(253, 164, 175, 0.15) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 12. CALCULATOR / TOUR / INTERACTIVE DOCK */
+.bg-section-interactive {
+  position: relative;
+  background-color: #EFF6FF;
+  background-image: linear-gradient(180deg, #EFF6FF 0%, #FFFBEB 50%, #FFFDF8 100%);
+}
+.bg-section-interactive::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(245, 158, 11, 0.38) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(16, 185, 129, 0.36) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 20% 30%, rgba(251, 191, 36, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 80% 70%, rgba(52, 211, 153, 0.2) 0%, transparent 45%);
+  background-size: 36px 36px, 36px 36px, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black calc(100% - 36px), transparent 100%);
+}
+
+/* 13. CONTACT / NIGHT SKY */
+.bg-section-contact {
+  position: relative;
+  background-color: #0F2963;
+  background-image: linear-gradient(180deg, #0F2963 0%, #0A1D47 50%, #06122E 100%);
+}
+.bg-section-contact::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle, rgba(253, 224, 71, 0.45) 1.2px, transparent 1.2px),
+    radial-gradient(circle, rgba(186, 230, 253, 0.42) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 10% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.22) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
+  background-size: 36px 36px, 36px 36px, auto, auto, auto;
+  background-position: 0 0, 18px 18px, 0 0, 0 0, 0 0;
+  background-repeat: repeat;
+  mask-image: linear-gradient(180deg, transparent 0px, black 36px, black 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0px, black 36px, black 100%);
+}
+
+/* Mobile Responsiveness for Section Dot Grids */
+@media (max-width: 640px) {
+  .bg-section-hero::before,
+  .bg-section-about::before,
+  .bg-section-programs::before,
+  .bg-section-why-us::before,
+  .bg-section-methodology::before,
+  .bg-section-activities::before,
+  .bg-section-facilities::before,
+  .bg-section-safety::before,
+  .bg-section-teachers::before,
+  .bg-section-gallery::before,
+  .bg-section-testimonials::before,
+  .bg-section-interactive::before,
+  .bg-section-contact::before {
+    background-size: 28px 28px, 28px 28px, auto, auto, auto;
+    background-position: 0 0, 14px 14px, 0 0, 0 0, 0 0;
+  }
+}
+

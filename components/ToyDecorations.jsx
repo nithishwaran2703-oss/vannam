@@ -483,60 +483,85 @@ export function PaperPlaneIcon({ className = "w-6 h-6", ...props }) {
   );
 }
 
-// Organic Playful Wave Divider between sections (Crisp & clearly visible on Mobile & Desktop)
-export function PlayfulWaveDivider({ variant = "cloud", className = "w-full", fillColor = "#FFFDF8", strokeColor = "#CBD8F6", flip = false }) {
+// Organic Playful Wave Divider between sections
+export function PlayfulWaveDivider({ 
+  variant = "cloud", 
+  className = "w-full", 
+  fillColor = "#FFFDF8", 
+  secondaryFill = "#E8EEFB",
+  strokeColor = "#CBD8F6", 
+  flip = false 
+}) {
+  const gradId = `wave-grad-${Math.random().toString(36).substring(2, 7)}`;
+
   if (variant === "wave") {
     return (
-      <div className={`overflow-hidden leading-none pointer-events-none ${flip ? "rotate-180" : ""} ${className}`}>
-        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 xs:h-10 sm:h-12 md:h-16" preserveAspectRatio="none">
+      <div className={`relative z-10 w-full overflow-hidden leading-none pointer-events-none translate-y-px ${flip ? "rotate-180" : ""} ${className}`}>
+        <svg viewBox="0 0 1440 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-6 xs:h-8 sm:h-10 md:h-12 block" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={fillColor} stopOpacity="0.4" />
+              <stop offset="60%" stopColor={fillColor} stopOpacity="0.85" />
+              <stop offset="100%" stopColor={fillColor} stopOpacity="1" />
+            </linearGradient>
+          </defs>
           {/* Secondary Ripple Under-layer */}
           <path
-            d="M0,45 C280,75 520,15 800,45 C1080,75 1320,15 1440,45 L1440,80 L0,80 Z"
-            fill="#E8EEFB"
-            opacity="0.6"
+            d="M0,25 C240,40 480,5 720,25 C960,40 1200,5 1440,25 L1440,41 L0,41 Z"
+            fill={secondaryFill}
+            opacity="0.5"
           />
-          {/* Main Wave Solid Fill */}
+          {/* Main Wave Solid/Gradient Fill */}
           <path
-            d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36 L1440,80 L0,80 Z"
-            fill={fillColor}
+            d="M0,20 C120,5 240,35 360,20 C480,5 600,35 720,20 C840,5 960,35 1080,20 C1200,5 1320,35 1440,20 L1440,41 L0,41 Z"
+            fill={`url(#${gradId})`}
           />
-          {/* High-Visibility Crisp Wave Contour Stroke */}
+          {/* Crisp Wave Contour Line */}
           <path
-            d="M0,36 C240,68 480,4 720,36 C960,68 1200,4 1440,36"
+            d="M0,20 C120,5 240,35 360,20 C480,5 600,35 720,20 C840,5 960,35 1080,20 C1200,5 1320,35 1440,20"
             stroke={strokeColor}
-            strokeWidth="3"
+            strokeWidth="2.5"
             strokeLinecap="round"
+            vectorEffect="non-scaling-stroke"
             fill="none"
-            opacity="0.9"
+            opacity="0.85"
           />
         </svg>
       </div>
     );
   }
 
-  // Default: Scalloped / Cloud-shaped playful wave with clearly visible curves on mobile
+  // Default: Scalloped / Cloud-shaped playful wave (Mathematically symmetrical across 1440px)
   return (
-    <div className={`overflow-hidden leading-none pointer-events-none ${flip ? "rotate-180" : ""} ${className}`}>
-      <svg viewBox="0 0 1200 60" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-8 xs:h-10 sm:h-12 md:h-16" preserveAspectRatio="none">
+    <div className={`relative z-10 w-full overflow-hidden leading-none pointer-events-none translate-y-px ${flip ? "rotate-180" : ""} ${className}`}>
+      <svg viewBox="0 0 1440 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-6 xs:h-8 sm:h-10 md:h-12 block" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={fillColor} stopOpacity="0.4" />
+            <stop offset="60%" stopColor={fillColor} stopOpacity="0.85" />
+            <stop offset="100%" stopColor={fillColor} stopOpacity="1" />
+          </linearGradient>
+        </defs>
         {/* Soft Secondary Depth Layer */}
         <path
-          d="M0,32 C60,12 120,12 180,32 C240,52 300,52 360,32 C420,12 480,12 540,32 C600,52 660,52 720,32 C780,12 840,12 900,32 C960,52 1020,52 1080,32 C1140,12 1200,12 1200,32 L1200,60 L0,60 Z"
-          fill="#E8EEFB"
-          opacity="0.6"
+          d="M0,22 C40,10 80,10 120,22 C160,34 200,34 240,22 C280,10 320,10 360,22 C400,34 440,34 480,22 C520,10 560,10 600,22 C640,34 680,34 720,22 C760,10 800,10 840,22 C880,34 920,34 960,22 C1000,10 1040,10 1080,22 C1120,34 1160,34 1200,22 C1240,10 1280,10 1320,22 C1360,34 1400,34 1440,22 L1440,37 L0,37 Z"
+          fill={secondaryFill}
+          opacity="0.5"
         />
-        {/* Main Scalloped Wave Solid Fill */}
+        {/* Main Scalloped Wave Solid/Gradient Fill */}
         <path
-          d="M0,26 C60,6 120,6 180,26 C240,46 300,46 360,26 C420,6 480,6 540,26 C600,46 660,46 720,26 C780,6 840,6 900,26 C960,46 1020,46 1080,26 C1140,6 1200,6 1200,26 L1200,60 L0,60 Z"
-          fill={fillColor}
+          d="M0,18 C40,4 80,4 120,18 C160,32 200,32 240,18 C280,4 320,4 360,18 C400,32 440,32 480,18 C520,4 560,4 600,18 C640,32 680,32 720,18 C760,4 800,4 840,18 C880,32 920,32 960,18 C1000,4 1040,4 1080,18 C1120,32 1160,32 1200,18 C1240,4 1280,4 1320,18 C1360,32 1400,32 1440,18 L1440,37 L0,37 Z"
+          fill={`url(#${gradId})`}
         />
-        {/* Bold, Crisp Wave Contour Line (3px stroke for high mobile clarity) */}
+        {/* Crisp Wave Contour Line */}
         <path
-          d="M0,26 C60,6 120,6 180,26 C240,46 300,46 360,26 C420,6 480,6 540,26 C600,46 660,46 720,26 C780,6 840,6 900,26 C960,46 1020,46 1080,26 C1140,6 1200,6 1200,26"
+          d="M0,18 C40,4 80,4 120,18 C160,32 200,32 240,18 C280,4 320,4 360,18 C400,32 440,32 480,18 C520,4 560,4 600,18 C640,32 680,32 720,18 C760,4 800,4 840,18 C880,32 920,32 960,18 C1000,4 1040,4 1080,18 C1120,32 1160,32 1200,18 C1240,4 1280,4 1320,18 C1360,32 1400,32 1440,18"
           stroke={strokeColor}
-          strokeWidth="3"
+          strokeWidth="2.5"
           strokeLinecap="round"
+          vectorEffect="non-scaling-stroke"
           fill="none"
-          opacity="0.9"
+          opacity="0.85"
         />
       </svg>
     </div>
@@ -638,7 +663,6 @@ export function StorybookTransitionBridge({
           <span className="text-[11px] sm:text-xs font-black text-[#0F2963] tracking-wide">
             &ldquo;{quote}&rdquo;
           </span>
-          <span className="text-xs">✨</span>
         </div>
 
         {/* Botanical Sprouts Accent */}
@@ -706,7 +730,7 @@ export function StemSceneGroup({ className = "" }) {
     <div className={`flex items-center gap-2 pointer-events-none select-none ${className}`}>
       <span className="text-base sm:text-lg animate-float">🚀</span>
       <span className="text-sm sm:text-base animate-wiggle">🔬</span>
-      <span className="text-xs sm:text-sm animate-twinkle">✨</span>
+      <span className="text-xs sm:text-sm">🌱</span>
     </div>
   );
 }

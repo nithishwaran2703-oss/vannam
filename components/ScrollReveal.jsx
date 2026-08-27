@@ -30,8 +30,8 @@ function getObserver() {
       });
     },
     {
-      threshold: 0.08,
-      rootMargin: "0px 0px -40px 0px",
+      threshold: 0.01,
+      rootMargin: "50px 0px 50px 0px",
     }
   );
 
@@ -52,9 +52,16 @@ export default function ScrollReveal({
     const el = ref.current;
     if (!el) return;
 
+    // Check if element is already within viewport or near it on mount/refresh
+    if (typeof window !== "undefined") {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight + 100 && rect.bottom > -100) {
+        el.classList.add("revealed");
+      }
+    }
+
     const observer = getObserver();
     if (!observer) {
-      // Fallback: just show it if IntersectionObserver is not available
       el.classList.add("revealed");
       return;
     }
