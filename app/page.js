@@ -1740,33 +1740,131 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* FEATURE SELECTOR CARDS (Click to pop up full comparison) */}
+          {/* FEATURE SELECTOR CARDS */}
           <ScrollReveal variant="reveal-pop-bounce" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3.5 items-stretch">
             {differentiators.map((item, idx) => {
+              const isSelected = activeWhyUsTab === idx;
               return (
                 <button
                   key={item.id}
                   type="button"
-                  onClick={() => setSelectedComparisonModal(item)}
-                  className="w-full p-3.5 sm:p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-between text-center gap-2.5 min-h-[112px] sm:min-h-[126px] h-full active:scale-95 cursor-pointer bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] hover:shadow-md shadow-2xs group relative overflow-hidden"
+                  onClick={() => {
+                    setActiveWhyUsTab(idx);
+                    if (typeof window !== "undefined" && window.innerWidth < 1024) {
+                      setSelectedComparisonModal(item);
+                    }
+                  }}
+                  className={`w-full p-3.5 sm:p-4 rounded-2xl border-2 transition-all duration-300 flex flex-col items-center justify-between text-center gap-2.5 min-h-[112px] sm:min-h-[126px] h-full active:scale-95 cursor-pointer shadow-2xs group relative overflow-hidden ${
+                    isSelected
+                      ? "bg-[#0F2963] text-white border-vannam-yellow shadow-md ring-2 ring-vannam-yellow/30"
+                      : "bg-white text-[#0F2963] border-[#CBD8F6]/80 hover:bg-[#F0F4FC] hover:border-[#00A8E8] hover:shadow-md"
+                  }`}
                 >
                   <span className="text-2xl sm:text-3xl transform group-hover:scale-115 transition-transform duration-300">{item.icon}</span>
-                  <span className="text-[11px] sm:text-xs font-extrabold leading-tight px-0.5 line-clamp-2 text-[#0F2963] group-hover:text-[#00A8E8] transition-colors">{item.shortTitle}</span>
+                  <span className={`text-[11px] sm:text-xs font-extrabold leading-tight px-0.5 line-clamp-2 ${
+                    isSelected ? "text-white" : "text-[#0F2963] group-hover:text-[#00A8E8]"
+                  }`}>{item.shortTitle}</span>
                   <div className="flex items-center gap-1">
-                    <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase px-2.5 py-0.5 rounded-full whitespace-nowrap bg-[#E8EEFB] text-[#00A8E8] group-hover:bg-[#00A8E8] group-hover:text-white transition-colors">
+                    <span className={`text-[8.5px] sm:text-[9.5px] font-black uppercase px-2.5 py-0.5 rounded-full whitespace-nowrap ${
+                      isSelected 
+                        ? "bg-vannam-yellow text-[#0F2963]" 
+                        : "bg-[#E8EEFB] text-[#00A8E8] group-hover:bg-[#00A8E8] group-hover:text-white"
+                    } transition-colors`}>
                       {item.stat}
                     </span>
-                    <span className="text-[10.5px] text-vannam-orange font-bold opacity-0 group-hover:opacity-100 transition-opacity">↗</span>
+                    <span className="text-[10.5px] text-vannam-orange font-bold lg:hidden opacity-80">↗</span>
                   </div>
                 </button>
               );
             })}
           </ScrollReveal>
 
-          {/* Hint text */}
-          <p className="text-center text-[10.5px] font-bold text-[#64748B] -mt-1 sm:-mt-2 flex items-center justify-center gap-1">
-            <span>👉 Tap any feature card above to view full comparison</span>
+          {/* Mobile Tap Hint (Mobile Only) */}
+          <p className="block lg:hidden text-center text-[10.5px] font-bold text-[#64748B] -mt-1 sm:-mt-2">
+            👉 Tap any feature card above to view full comparison
           </p>
+
+          {/* DESKTOP VIEW: DUAL-PANEL COMPARISON COCKPIT (Desktop Only - lg:block) */}
+          {(() => {
+            const current = differentiators[activeWhyUsTab];
+            return (
+              <div className="hidden lg:block">
+                <ScrollReveal variant="reveal-gate-open" className="bg-white rounded-3xl border-2 border-[#CBD8F6] shadow-lg p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
+                  
+                  {/* Cockpit Top Bar */}
+                  <div className="flex items-center justify-between gap-4 pb-5 border-b border-[#E8EEFB]">
+                    <div className="flex items-center gap-3.5">
+                      <span className="text-3xl p-2.5 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] shrink-0">{current.icon}</span>
+                      <div>
+                        <span className="text-xs font-black uppercase tracking-wider text-[#00A8E8] block">{current.highlight}</span>
+                        <h3 className="font-heading font-extrabold text-xl text-[#0F2963] leading-tight">{current.feature}</h3>
+                      </div>
+                    </div>
+
+                    <span className="px-4 py-1.5 rounded-full bg-vannam-yellow/15 border border-vannam-yellow/40 text-[#0F2963] text-xs font-black shadow-2xs">
+                      🏆 Verified Benchmark: {current.proofTag}
+                    </span>
+                  </div>
+
+                  {/* Split Dual-Panel Side-by-Side Cockpit */}
+                  <div className="grid grid-cols-2 gap-6 pt-6 items-stretch">
+                    
+                    {/* LEFT PANEL: VANNAM WORLD */}
+                    <div className="bg-gradient-to-br from-[#ECFDF5] to-[#D1FAE5] rounded-2xl p-5 border-2 border-[#A7F3D0] space-y-3 shadow-xs flex flex-col justify-between">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-1.5 border-b border-emerald-300/50">
+                          <span className="px-3 py-1 rounded-full bg-emerald-700 text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-2xs">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-300" />
+                            <span>Vannam Standard</span>
+                          </span>
+                          <span className="font-heading font-black text-xl text-emerald-950">{current.stat}</span>
+                        </div>
+
+                        {/* Visual Checkmark Pills */}
+                        <div className="space-y-2 pt-1">
+                          {current.vannamPoints.map((pt, i) => (
+                            <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl bg-white/95 border border-emerald-300/80 shadow-2xs min-h-[46px]">
+                              <div className="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center font-black text-xs shrink-0">
+                                ✓
+                              </div>
+                              <span className="text-sm font-bold text-[#0F2963] leading-snug">{pt}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* RIGHT PANEL: TRADITIONAL SCHOOLS */}
+                    <div className="bg-gradient-to-br from-rose-50/70 to-slate-100/70 rounded-2xl p-5 border-2 border-rose-200 space-y-3 shadow-xs flex flex-col justify-between">
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between pb-1.5 border-b border-rose-200/60">
+                          <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-200 text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-2xs">
+                            <X className="w-3.5 h-3.5 text-rose-400" />
+                            <span>Traditional Daycares</span>
+                          </span>
+                          <span className="font-heading font-bold text-sm text-slate-500">Baseline</span>
+                        </div>
+
+                        {/* Visual Warning Pills */}
+                        <div className="space-y-2 pt-1">
+                          {current.traditionalPoints.map((pt, i) => (
+                            <div key={i} className="flex items-center gap-2.5 p-3 rounded-xl bg-white/85 border border-rose-200/80 shadow-2xs min-h-[46px]">
+                              <div className="w-5 h-5 rounded-md bg-rose-100 text-rose-600 flex items-center justify-center font-black text-xs shrink-0">
+                                ✕
+                              </div>
+                              <span className="text-sm font-semibold text-slate-600 leading-snug">{pt}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </ScrollReveal>
+              </div>
+            );
+          })()}
 
           {/* Bottom Trust CTA Strip */}
           <ScrollReveal variant="reveal-hero-bloom" className="bento-card p-4 sm:p-5 bg-gradient-to-r from-vannam-yellow/15 via-white to-vannam-cyan/15 border-2 border-vannam-yellow/40 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-center sm:text-left shadow-xs">
