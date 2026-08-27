@@ -3185,9 +3185,9 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Contact Form - Glassmorphic Postcard with compact inputs */}
+            {/* Right Contact Form - Glassmorphic Postcard matching exact desktop screenshot */}
             <div className="lg:col-span-7 relative">
-              <div className="bg-white/10 backdrop-blur-2xl p-4 xs:p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+              <div className="bg-[#0A1D47]/80 sm:bg-white/10 backdrop-blur-2xl p-4 xs:p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
                 
                 {/* Form Internal Glow */}
                 <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
@@ -3219,25 +3219,25 @@ export default function Home() {
                     {/* Row 1: Parent Name & Child Name (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Parent Name *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Parent Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.parentName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, parentName: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/40 focus:border-[#F59E0B] transition-all placeholder:text-[#94A3B8] !min-h-0"
                           placeholder="e.g. Sarah"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Name *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Child Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.childName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childName: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/40 focus:border-[#F59E0B] transition-all placeholder:text-[#94A3B8] !min-h-0"
                           placeholder="e.g. Leo"
                         />
                       </div>
@@ -3246,25 +3246,25 @@ export default function Home() {
                     {/* Row 2: Phone & Email (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Phone *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Phone *</label>
                         <input
                           type="tel"
                           required
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/40 focus:border-[#00A8E8] transition-all placeholder:text-[#94A3B8] !min-h-0"
                           placeholder="+1 (555) 000"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Email *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Email *</label>
                         <input
                           type="email"
                           required
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
+                          className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/40 focus:border-[#00A8E8] transition-all placeholder:text-[#94A3B8] !min-h-0"
                           placeholder="parent@mail.com"
                         />
                       </div>
@@ -3273,11 +3273,11 @@ export default function Home() {
                     {/* Row 3: Child Age & Preferred Program (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Age *</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Child Age *</label>
                         <select
                           value={enquiryForm.childAge}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childAge: e.target.value })}
-                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
+                          className="w-full px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/40 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="12-24m">12-24m (Toddler)</option>
                           <option value="2-3">2-3 Yrs (Play Group)</option>
@@ -3288,11 +3288,11 @@ export default function Home() {
                       </div>
 
                       <div>
-                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Program</label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Program</label>
                         <select
                           value={enquiryForm.program}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, program: e.target.value })}
-                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
+                          className="w-full px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/40 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="toddler">Toddler Care</option>
                           <option value="playgroup">Play Group</option>
@@ -3304,21 +3304,21 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5">Message / Questions</label>
+                      <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5">Message / Questions</label>
                       <textarea
                         rows={2}
                         value={enquiryForm.message}
                         onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                        className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F43F5E]/30 focus:border-[#F43F5E] transition-all placeholder:text-[#64748B]/50 resize-none !min-h-0"
+                        className="w-full px-3 py-2 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F43F5E]/40 focus:border-[#F43F5E] transition-all placeholder:text-[#94A3B8] resize-none !min-h-0"
                         placeholder="Any specific questions..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="btn-yellow w-full py-2.5 sm:py-3 text-xs sm:text-sm font-black flex items-center justify-center gap-2 rounded-xl shadow-[0_8px_30px_-5px_rgba(245,158,11,0.5)] transition-all hover:-translate-y-0.5 mt-1.5 !min-h-0"
+                      className="w-full py-2.5 sm:py-3.5 rounded-2xl bg-gradient-to-r from-[#F59E0B] via-[#F97316] to-[#EA580C] text-[#0F2963] hover:brightness-105 active:scale-98 font-black text-xs sm:text-sm uppercase tracking-wider flex items-center justify-center gap-2 shadow-[0_8px_25px_-4px_rgba(245,158,11,0.6)] transition-all cursor-pointer !min-h-0 mt-2"
                     >
-                      <span className="uppercase tracking-wide">Submit Enquiry</span>
+                      <span className="tracking-wider">SUBMIT ENQUIRY</span>
                       <ArrowUpRight className="w-4 h-4 stroke-[3]" />
                     </button>
                   </form>
