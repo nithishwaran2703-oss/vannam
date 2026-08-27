@@ -2518,16 +2518,16 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* FACILITIES CARDS: 1-Col on Mobile, 2-Col on Tablet, 3-Col on Desktop */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3.5 sm:gap-5">
+          {/* HORIZONTAL CARDS: Horizontal Swipeable on Mobile/Tablet, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 overscroll-x-contain">
             {facilities.map((fac, idx) => (
-              <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className={`w-full bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
+              <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className={`w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
                 <div className="relative h-36 xs:h-40 sm:h-44 w-full overflow-hidden">
                   <Image 
                     src={fac.image} 
                     alt={fac.title} 
                     fill 
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 85vw, 33vw"
                     className="object-cover group-hover:scale-105 transition duration-500" 
                     priority={false}
                   />
@@ -2542,6 +2542,11 @@ export default function Home() {
               </ScrollReveal>
             ))}
           </div>
+
+          {/* Mobile Swipe Hint */}
+          <p className="block md:hidden text-center text-[10.5px] font-bold text-[#64748B] mt-1.5">
+            👉 Swipe horizontally to view all campus facilities
+          </p>
 
           <CloudBridge label="Safe Campus & Care" className="mt-6 -mb-4" />
 
