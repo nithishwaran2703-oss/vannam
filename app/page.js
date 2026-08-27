@@ -3145,157 +3145,139 @@ export default function Home() {
             {/* Left Info - VIP Invitation Vibe */}
             <div className="lg:col-span-5 space-y-3 sm:space-y-4 text-center lg:text-left">
               <div className="flex items-center justify-center lg:justify-start gap-2.5">
-                <SchoolBusToyIcon className="w-8 h-8 sm:w-9 sm:h-9 animate-bounce-gentle" />
-                <span className="px-3.5 py-1 rounded-full bg-white/15 border border-white/30 text-vannam-yellow text-[10.5px] sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-1.5 shadow-xs backdrop-blur-md">
-                  <Calendar className="w-3.5 h-3.5 text-vannam-yellow" />
-                  <span>Admissions Open 2025–26</span>
+                <SchoolBusToyIcon className="w-9 h-9 animate-bounce-gentle" />
+                <span className="px-3.5 py-1 rounded-full bg-white/10 border border-white/20 text-[#FDE68A] text-[10.5px] sm:text-xs font-black uppercase tracking-widest inline-flex items-center gap-1.5 shadow-sm backdrop-blur-md">
+                  <Calendar className="w-3.5 h-3.5 text-[#FDE68A]" />
+                  <span>Admissions Open</span>
                 </span>
-                <PaperPlaneIcon className="w-5 h-5 sm:w-6 sm:h-6 text-sky-300 animate-flutter" />
+                <PaperPlaneIcon className="w-6 h-6 text-sky-300 animate-flutter" />
               </div>
 
               <h2 className="font-heading text-xl xs:text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white drop-shadow-sm">
-                Begin Your Child&apos;s <br className="hidden sm:block" />
-                <span className="text-vannam-yellow underline decoration-vannam-cyan underline-offset-4 sm:underline-offset-6">Learning Journey.</span>
+                Begin Your Child&apos;s Learning Journey.
               </h2>
 
               <p className="text-xs sm:text-sm text-blue-100 font-medium leading-relaxed max-w-md mx-auto lg:mx-0">
-                Schedule a campus tour or submit an enquiry. Our friendly counselors are happy to guide your family.
+                Schedule a campus tour or submit an admission enquiry. Our friendly counselors are happy to help you through the process.
               </p>
 
-              <div className="space-y-2 sm:space-y-2.5 pt-1 text-left">
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md shadow-2xs hover:bg-white/15 transition group">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-amber-400 text-[#0F2963] flex items-center justify-center shadow-xs shrink-0 font-bold">
-                    <MapPin className="w-4 h-4" />
+              <div className="space-y-2.5 sm:space-y-3.5 pt-1 text-left">
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <MapPin className="w-4 h-4 text-[#F59E0B]" />
                   </div>
-                  <span className="font-bold text-white text-xs sm:text-sm leading-tight">Rainbow Gardens Campus, 124 Academy Drive</span>
+                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Rainbow Gardens Campus, 124 Academy Drive</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md shadow-2xs hover:bg-white/15 transition group">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-emerald-400 text-[#0F2963] flex items-center justify-center shadow-xs shrink-0 font-bold">
-                    <Phone className="w-4 h-4" />
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <Phone className="w-4 h-4 text-[#10B981]" />
                   </div>
-                  <a href="tel:+18005557529" className="font-bold text-white text-xs sm:text-sm leading-tight hover:underline">
-                    Direct Admissions: +1 (800) 555-PLAY
-                  </a>
+                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Direct Admissions: +1 (800) 555-PLAY</span>
                 </div>
 
-                <div className="flex items-center gap-2.5 sm:gap-3 p-2.5 rounded-2xl bg-white/10 border border-white/15 backdrop-blur-md shadow-2xs hover:bg-white/15 transition group">
-                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-sky-400 text-[#0F2963] flex items-center justify-center shadow-xs shrink-0 font-bold">
-                    <Mail className="w-4 h-4" />
+                <div className="flex items-center gap-2.5 sm:gap-3 group">
+                  <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
+                    <Mail className="w-4 h-4 text-[#00A8E8]" />
                   </div>
-                  <a href="mailto:admissions@vannamworld.edu" className="font-bold text-white text-xs sm:text-sm break-all hover:underline leading-tight">
-                    admissions@vannamworld.edu
-                  </a>
+                  <span className="font-bold text-blue-50 text-xs sm:text-sm break-all sm:break-normal">admissions@vannamworld.edu</span>
                 </div>
               </div>
             </div>
 
-            {/* Right Contact Form - Crisp High-Contrast Luminous Postcard Card */}
+            {/* Right Contact Form - Glassmorphic Postcard with compact inputs */}
             <div className="lg:col-span-7 relative">
-              <div className="bg-white/95 text-[#0F2963] backdrop-blur-xl p-4.5 xs:p-5 sm:p-7 md:p-8 rounded-3xl border-2 border-white/60 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.4)] relative overflow-hidden group">
+              <div className="bg-white/10 backdrop-blur-2xl p-4 xs:p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
                 
-                {/* Form Internal Glow Accent */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-amber-400/10 blur-[60px] rounded-full pointer-events-none" />
+                {/* Form Internal Glow */}
+                <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
 
                 <div className="relative z-10 mb-3 sm:mb-4 text-center sm:text-left">
-                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-100 border border-amber-300 text-[10px] font-black text-[#C2410C] uppercase tracking-wider mb-1">
-                    <span>✨ Fast Response Guaranteed</span>
-                  </div>
-                  <h3 className="font-heading text-lg sm:text-2xl font-extrabold text-[#0F2963] mb-0.5">
+                  <h3 className="font-heading text-lg sm:text-2xl font-extrabold text-white mb-0.5">
                     Admission Enquiry
                   </h3>
-                  <p className="text-[11px] sm:text-xs text-[#475569] font-medium">
-                    Fill out the quick form to receive our prospectus and fee schedule instantly.
+                  <p className="text-[11px] sm:text-xs text-blue-100 font-medium">
+                    Fill out the postcard below to receive our prospectus and fee schedule instantly.
                   </p>
                 </div>
 
                 {enquirySubmitted ? (
-                  <div className="p-5 sm:p-6 rounded-2xl bg-emerald-50 border-2 border-emerald-300 text-center space-y-3 animate-in zoom-in-95 duration-500">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-emerald-500/30">
+                  <div className="p-5 sm:p-6 rounded-2xl bg-white/10 border border-[#10B981]/50 backdrop-blur-md text-center space-y-3 animate-in zoom-in-95 duration-500">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-[#10B981] rounded-full flex items-center justify-center mx-auto shadow-lg shadow-[#10B981]/30">
                       <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                     </div>
-                    <h4 className="font-heading font-extrabold text-emerald-950 text-lg sm:text-xl">
+                    <h4 className="font-heading font-extrabold text-white text-lg sm:text-xl">
                       Enquiry Received!
                     </h4>
-                    <p className="text-xs text-emerald-800 font-semibold">
+                    <p className="text-xs text-blue-50 font-medium">
                       Thank you! Our admissions coordinator will reach out to you within 2 business hours.
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleEnquirySubmit} className="space-y-2.5 sm:space-y-3 relative z-10">
+                  <form onSubmit={handleEnquirySubmit} className="space-y-2 sm:space-y-3 relative z-10">
                     
-                    {/* Row 1: Parent Name & Child Name (2 cols per row) */}
+                    {/* Row 1: Parent Name & Child Name (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Parent Name *
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Parent Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.parentName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, parentName: e.target.value })}
-                          className="w-full px-3 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs sm:text-sm font-bold shadow-2xs focus:bg-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/20 transition-all placeholder:text-[#94A3B8] !min-h-0"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
                           placeholder="e.g. Sarah"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Child Name *
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Name *</label>
                         <input
                           type="text"
                           required
                           value={enquiryForm.childName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childName: e.target.value })}
-                          className="w-full px-3 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs sm:text-sm font-bold shadow-2xs focus:bg-white focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/20 transition-all placeholder:text-[#94A3B8] !min-h-0"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/30 focus:border-[#F59E0B] transition-all placeholder:text-[#64748B]/50 !min-h-0"
                           placeholder="e.g. Leo"
                         />
                       </div>
                     </div>
 
-                    {/* Row 2: Phone & Email (2 cols per row) */}
+                    {/* Row 2: Phone & Email (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Phone *
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Phone *</label>
                         <input
                           type="tel"
                           required
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
-                          className="w-full px-3 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs sm:text-sm font-bold shadow-2xs focus:bg-white focus:border-[#00A8E8] focus:ring-2 focus:ring-[#00A8E8]/20 transition-all placeholder:text-[#94A3B8] !min-h-0"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
                           placeholder="+1 (555) 000"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Email *
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Email *</label>
                         <input
                           type="email"
                           required
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                          className="w-full px-3 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs sm:text-sm font-bold shadow-2xs focus:bg-white focus:border-[#00A8E8] focus:ring-2 focus:ring-[#00A8E8]/20 transition-all placeholder:text-[#94A3B8] !min-h-0"
+                          className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/30 focus:border-[#00A8E8] transition-all placeholder:text-[#64748B]/50 !min-h-0"
                           placeholder="parent@mail.com"
                         />
                       </div>
                     </div>
 
-                    {/* Row 3: Child Age & Preferred Program (2 cols per row) */}
+                    {/* Row 3: Child Age & Preferred Program (2 cols per row on mobile) */}
                     <div className="grid grid-cols-2 gap-2 sm:gap-3.5">
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Child Age *
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Child Age *</label>
                         <select
                           value={enquiryForm.childAge}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childAge: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs font-bold shadow-2xs focus:bg-white focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 transition-all cursor-pointer !min-h-0"
+                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="12-24m">12-24m (Toddler)</option>
                           <option value="2-3">2-3 Yrs (Play Group)</option>
@@ -3306,13 +3288,11 @@ export default function Home() {
                       </div>
 
                       <div>
-                        <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5 truncate">
-                          Program
-                        </label>
+                        <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5 truncate">Program</label>
                         <select
                           value={enquiryForm.program}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, program: e.target.value })}
-                          className="w-full px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs font-bold shadow-2xs focus:bg-white focus:border-[#8B5CF6] focus:ring-2 focus:ring-[#8B5CF6]/20 transition-all cursor-pointer !min-h-0"
+                          className="w-full px-2 sm:px-3.5 py-1.5 sm:py-2.5 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/30 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
                         >
                           <option value="toddler">Toddler Care</option>
                           <option value="playgroup">Play Group</option>
@@ -3324,21 +3304,19 @@ export default function Home() {
                     </div>
 
                     <div>
-                      <label className="block text-[9.5px] sm:text-[10.5px] font-extrabold text-[#0F2963] uppercase tracking-wider mb-1 ml-0.5">
-                        Message / Questions
-                      </label>
+                      <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-0.5 ml-0.5">Message / Questions</label>
                       <textarea
                         rows={2}
                         value={enquiryForm.message}
                         onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                        className="w-full px-3 py-2 rounded-xl bg-[#F0F4FC] border-2 border-[#CBD8F6] text-[#0F2963] text-xs font-bold shadow-2xs focus:bg-white focus:border-[#F43F5E] focus:ring-2 focus:ring-[#F43F5E]/20 transition-all placeholder:text-[#94A3B8] resize-none !min-h-0"
+                        className="w-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-white/90 border-2 border-transparent text-[#0F2963] text-[11px] sm:text-xs font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F43F5E]/30 focus:border-[#F43F5E] transition-all placeholder:text-[#64748B]/50 resize-none !min-h-0"
                         placeholder="Any specific questions..."
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="btn-yellow w-full py-2.5 sm:py-3 text-xs sm:text-sm font-black flex items-center justify-center gap-2 rounded-xl shadow-[0_8px_30px_-5px_rgba(245,158,11,0.5)] transition-all hover:scale-[1.01] active:scale-95 text-[#0F2963] cursor-pointer mt-1 !min-h-0"
+                      className="btn-yellow w-full py-2.5 sm:py-3 text-xs sm:text-sm font-black flex items-center justify-center gap-2 rounded-xl shadow-[0_8px_30px_-5px_rgba(245,158,11,0.5)] transition-all hover:-translate-y-0.5 mt-1.5 !min-h-0"
                     >
                       <span className="uppercase tracking-wide">Submit Enquiry</span>
                       <ArrowUpRight className="w-4 h-4 stroke-[3]" />
