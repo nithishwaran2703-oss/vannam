@@ -40,24 +40,32 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const [enqRes, admRes, progRes, teachRes, galRes, annRes, logsRes] = await Promise.all([
+      const [enqRes, admRes, progRes, teachRes, galRes, annRes, logsRes, stdRes, clsRes, actRes, attRes] = await Promise.all([
         fetch('/api/admin/enquiries'),
         fetch('/api/admin/admissions'),
         fetch('/api/admin/programs'),
         fetch('/api/admin/teachers'),
         fetch('/api/admin/gallery'),
         fetch('/api/admin/announcements'),
-        fetch('/api/admin/logs')
+        fetch('/api/admin/logs'),
+        fetch('/api/admin/students'),
+        fetch('/api/admin/classes'),
+        fetch('/api/admin/activities'),
+        fetch('/api/admin/attendance')
       ]);
 
-      const [enq, adm, prog, teach, gal, ann, logs] = await Promise.all([
+      const [enq, adm, prog, teach, gal, ann, logs, std, cls, act, att] = await Promise.all([
         enqRes.json(),
         admRes.json(),
         progRes.json(),
         teachRes.json(),
         galRes.json(),
         annRes.json(),
-        logsRes.json()
+        logsRes.json(),
+        stdRes.json(),
+        clsRes.json(),
+        actRes.json(),
+        attRes.json()
       ]);
 
       setData({
@@ -69,7 +77,11 @@ export default function AdminDashboard() {
         teachers: teach.teachers || [],
         gallery: gal.gallery || [],
         announcements: ann.announcements || [],
-        logs: logs.logs || []
+        logs: logs.logs || [],
+        students: std.students || [],
+        classes: cls.classes || [],
+        activities: act.activities || [],
+        attendance: att.attendance || []
       });
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
@@ -118,15 +130,23 @@ export default function AdminDashboard() {
 
   const kpis = [
     {
-      label: 'New Enquiries',
-      value: data.enquiryStats?.new || 0,
-      subtext: `${data.enquiries.length} Total Received`,
-      icon: Mail,
-      color: 'from-rose-500 to-rose-600',
-      href: '/admin/enquiries'
+      label: 'Enrolled Students',
+      value: data.students?.length || 0,
+      subtext: `${data.classes?.length || 0} Active Classrooms`,
+      icon: GraduationCap,
+      color: 'from-[#0F2963] to-[#00A8E8]',
+      href: '/admin/students'
     },
     {
-      label: 'Admissions In-Review',
+      label: 'Today\'s Attendance',
+      value: `${data.attendance?.filter(a => a.status === 'PRESENT').length || data.students?.length || 0} Present`,
+      subtext: 'Classroom Registers',
+      icon: CheckCircle2,
+      color: 'from-emerald-500 to-teal-600',
+      href: '/admin/attendance'
+    },
+    {
+      label: 'Admissions Pipeline',
       value: data.admissionStats?.under_review || data.admissionStats?.new || 0,
       subtext: `${data.admissions.length} Total Applications`,
       icon: FileCheck2,
@@ -134,20 +154,12 @@ export default function AdminDashboard() {
       href: '/admin/admissions'
     },
     {
-      label: 'Active Programs',
-      value: data.programs.filter((p) => p.status === 'published').length,
-      subtext: `${data.programs.length} Configured`,
-      icon: GraduationCap,
-      color: 'from-[#00A8E8] to-blue-600',
-      href: '/admin/programs'
-    },
-    {
-      label: 'Certified Faculty',
-      value: data.teachers.filter((t) => t.active).length,
-      subtext: 'Montessori Certified',
-      icon: Users,
-      color: 'from-emerald-500 to-teal-600',
-      href: '/admin/teachers'
+      label: 'New Enquiries',
+      value: data.enquiryStats?.new || 0,
+      subtext: `${data.enquiries.length} Total Received`,
+      icon: Mail,
+      color: 'from-rose-500 to-rose-600',
+      href: '/admin/enquiries'
     }
   ];
 

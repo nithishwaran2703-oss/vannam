@@ -158,13 +158,23 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
+      group: 'School Management',
+      items: [
+        { label: 'Students Roster', href: '/admin/students', icon: GraduationCap },
+        { label: 'Classrooms', href: '/admin/classes', icon: Users },
+        { label: 'Student Activities', href: '/admin/activities', icon: Sparkles },
+        { label: 'Daily Attendance', href: '/admin/attendance', icon: CheckCircle2 },
+        { label: 'Homework & Tasks', href: '/admin/homework', icon: FileCheck2 },
+        { label: 'Educators / Faculty', href: '/admin/teachers', icon: UserCog }
+      ]
+    },
+    {
       group: 'Website Content',
       items: [
         { label: 'Homepage & Hero', href: '/admin/homepage', icon: Home },
         { label: 'About & Values', href: '/admin/about', icon: Info },
         { label: 'Programs & Fees', href: '/admin/programs', icon: GraduationCap },
         { label: 'Facilities', href: '/admin/facilities', icon: Sparkles },
-        { label: 'Teachers / Faculty', href: '/admin/teachers', icon: Users },
         { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
         { label: 'Gallery & Media', href: '/admin/gallery', icon: ImageIcon },
         { label: 'Announcements', href: '/admin/announcements', icon: Megaphone }
@@ -193,8 +203,8 @@ export default function AdminLayout({ children }) {
       group: 'System & Settings',
       items: [
         { label: 'Website Settings', href: '/admin/settings', icon: Settings },
-        { label: 'Activity Logs', href: '/admin/logs', icon: ShieldAlert },
-        { label: 'Admin Users', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' }
+        { label: 'Activity & Audit Logs', href: '/admin/logs', icon: ShieldAlert },
+        { label: 'Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' }
       ]
     }
   ];

@@ -1,9 +1,15 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   const store = getStore();
-  return NextResponse.json({ success: true, gallery: store.gallery || [] });
+  return NextResponse.json(
+    { success: true, gallery: store.gallery || [] },
+    { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate, max-age=0' } }
+  );
 }
 
 export async function POST(request) {

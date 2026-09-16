@@ -47,7 +47,6 @@ import {
   HeartHandshake,
   Eye,
   Filter,
-  Calculator,
   MessageSquare,
   Trophy,
   Medal,
@@ -56,7 +55,6 @@ import {
   Flame
 } from "lucide-react";
 import confetti from "canvas-confetti";
-import FeeCalculator from "../components/FeeCalculator";
 import VirtualTour from "../components/VirtualTour";
 import ParentPortalModal from "../components/ParentPortalModal";
 import TourSchedulerModal from "../components/TourSchedulerModal";
@@ -175,7 +173,6 @@ export default function Home() {
   // Modal States
   const [isTourModalOpen, setIsTourModalOpen] = useState(false);
   const [isPortalModalOpen, setIsPortalModalOpen] = useState(false);
-  const [isFeeCalcOpen, setIsFeeCalcOpen] = useState(false);
   const [isVirtualTourOpen, setIsVirtualTourOpen] = useState(false);
 
   // Gallery Filter & Lightbox State
@@ -1043,7 +1040,10 @@ export default function Home() {
 
             {/* Explore Dropdown for Secondary Sections */}
             <div className="relative group">
-              <button className="flex items-center gap-1 px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap cursor-pointer">
+              <button 
+                type="button"
+                className="flex items-center gap-1 px-2 xl:px-2.5 py-1.5 rounded-lg hover:text-[#00A8E8] hover:bg-[#F0F4FC] transition whitespace-nowrap cursor-pointer"
+              >
                 <span>Explore</span>
                 <ChevronDown className="w-3.5 h-3.5 group-hover:rotate-180 transition-transform duration-200" />
               </button>
@@ -1063,25 +1063,18 @@ export default function Home() {
           {/* Header Action CTAs */}
           <div className="hidden sm:flex items-center gap-1.5 xl:gap-2.5 shrink-0">
             <button
-              onClick={() => setIsFeeCalcOpen(true)}
-              className="p-2 rounded-full text-[#334155] hover:text-[#0F2963] hover:bg-[#E8EEFB] transition shrink-0"
-              title="Fee Calculator"
-              aria-label="Fee Calculator"
-            >
-              <Calculator className="w-4 h-4 xl:w-5 xl:h-5" />
-            </button>
-
-            <button
+              type="button"
               onClick={() => setIsPortalModalOpen(true)}
-              className="btn-secondary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-secondary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <Lock className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#0F2963]" />
               <span>Parent Portal</span>
             </button>
 
             <button
+              type="button"
               onClick={() => setIsTourModalOpen(true)}
-              className="btn-primary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0"
+              className="btn-primary px-3 xl:px-4 py-2 xl:py-2.5 text-xs xl:text-sm flex items-center gap-1.5 xl:gap-2 whitespace-nowrap shrink-0 cursor-pointer"
             >
               <Calendar className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-vannam-yellow" />
               <span>Book a Visit</span>
@@ -1090,6 +1083,7 @@ export default function Home() {
 
           {/* Mobile Hamburger Button */}
           <button
+            type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 rounded-xl bg-[#E8EEFB] text-[#0F2963] hover:bg-slate-200 active:scale-95 transition flex items-center justify-center shrink-0 min-w-[44px] min-h-[44px]"
             aria-label="Toggle Navigation Menu"
@@ -1113,6 +1107,7 @@ export default function Home() {
                   />
                 </div>
                 <button
+                  type="button"
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 rounded-full bg-[#F0F4FC] hover:bg-rose-50 text-[#0F2963] hover:text-[#E11D48] active:scale-95 transition border border-[#CBD8F6] flex items-center justify-center shadow-xs min-w-[44px] min-h-[44px]"
                   aria-label="Close Menu"
@@ -1146,33 +1141,26 @@ export default function Home() {
               {/* Action Buttons */}
               <div className="pt-2 flex flex-col gap-2.5 border-t border-[#E8EEFB]">
                 <button
+                  type="button"
                   onClick={() => { setMobileMenuOpen(false); triggerConfetti(); setIsTourModalOpen(true); }}
                   className="btn-primary w-full py-3.5 text-center text-xs sm:text-sm font-black flex items-center justify-center gap-2 shadow-md min-h-[48px]"
                 >
                   <Calendar className="w-4 h-4 text-vannam-yellow" />
                   <span>Book a Campus Tour</span>
                 </button>
-                <div className="grid grid-cols-2 gap-2">
-                  <button
-                    onClick={() => { setMobileMenuOpen(false); setIsFeeCalcOpen(true); }}
-                    className="btn-cyan w-full py-3 text-center text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm min-h-[44px]"
-                  >
-                    <Calculator className="w-4 h-4" />
-                    <span>Fee Calculator</span>
-                  </button>
-                  <button
-                    onClick={() => { setMobileMenuOpen(false); setIsPortalModalOpen(true); }}
-                    className="btn-secondary w-full py-3 text-center text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm min-h-[44px]"
-                  >
-                    <Lock className="w-4 h-4 text-[#0F2963]" />
-                    <span>Parent Portal</span>
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => { setMobileMenuOpen(false); setIsPortalModalOpen(true); }}
+                  className="btn-secondary w-full py-3 text-center text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm min-h-[44px]"
+                >
+                  <Lock className="w-4 h-4 text-[#0F2963]" />
+                  <span>Parent Portal</span>
+                </button>
               </div>
 
               <div className="pt-1 text-center text-xs font-bold text-[#64748B]">
-                <a href="tel:+18005557529" className="text-vannam-orange flex items-center justify-center gap-1.5 min-h-[44px]">
-                  <Phone className="w-3.5 h-3.5" /> Direct Admissions: +1 (800) 555-PLAY
+                <a href="tel:+917810087310" className="text-vannam-orange flex items-center justify-center gap-1.5 min-h-[44px]">
+                  <Phone className="w-3.5 h-3.5" /> Direct Admissions: +91 78100 87310
                 </a>
               </div>
 
@@ -1182,7 +1170,7 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section className="relative pt-4 pb-0 sm:pt-10 sm:pb-0 lg:pt-16 lg:pb-0 overflow-hidden bg-section-hero">
+      <section className="relative pt-8 pb-6 sm:pt-16 sm:pb-12 lg:pt-24 lg:pb-16 overflow-hidden bg-section-hero">
         {/* Subtle Background Organic Glows */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-r from-vannam-yellow/15 via-vannam-red/8 to-vannam-cyan/15 rounded-full blur-3xl -z-10 opacity-90 pointer-events-none" />
         {/* Mobile-only extra ambient glows for depth */}
@@ -1199,10 +1187,10 @@ export default function Home() {
         </div>
 
         {/* PLAYFUL DECORATIVE ANIMATIONS (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-16 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
+        <div className="hidden sm:block absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-16 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
           <RainbowIcon className="w-10 h-6 sm:w-20 sm:h-12 xl:w-24 xl:h-14 drop-shadow-xs" />
         </div>
-        <div className="absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-20 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
+        <div className="hidden sm:flex absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-20 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
           <div className="flex items-center gap-1 sm:gap-2">
             <HappyCloudIcon className="w-8 h-5 sm:w-14 sm:h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
             <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12 xl:w-14 xl:h-14 drop-shadow-xs" />
@@ -1237,12 +1225,12 @@ export default function Home() {
               </div>
 
               {/* Headline */}
-              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-tight">
+              <h1 className="font-heading text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-extrabold tracking-tight text-[#0F2963] leading-tight mobile-text-shadow">
                 Where Little Minds Begin <span className="text-vannam-yellow underline decoration-vannam-green decoration-2 sm:decoration-4 underline-offset-4 sm:underline-offset-8">Big Adventures</span> 🚀
               </h1>
 
               {/* Sub-paragraph */}
-              <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium">
+              <p className="text-xs xs:text-sm sm:text-base lg:text-lg text-[#334155] max-w-2xl mx-auto lg:mx-0 leading-relaxed font-medium mobile-readable-text">
                 A warm, joyful, and certified preschool designed for parents who seek absolute safety, Montessori-inspired STEAM learning, and loving early childhood care.
               </p>
 
@@ -1282,7 +1270,7 @@ export default function Home() {
                   {/* Floating Confetti Quick-Apply Button on Right Inside Frame */}
                   <button 
                     onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
-                    className="absolute bottom-2.5 right-2.5 z-20 btn-primary px-3 py-1 text-[10px] font-extrabold rounded-full shadow-md transition-transform active:scale-95 flex items-center gap-1 !min-h-0 h-auto"
+                    className="!absolute bottom-2.5 right-2.5 z-20 btn-primary px-3 py-1 text-[10px] font-extrabold rounded-full shadow-md transition-transform active:scale-95 flex items-center gap-1 !min-h-0 h-auto"
                   >
                     <span>Apply Now</span>
                     <ChevronRight className="w-3 h-3 text-vannam-yellow" />
@@ -1342,29 +1330,29 @@ export default function Home() {
               </div>
 
               {/* Main Visual Container */}
-              <div className="relative mx-auto max-w-md lg:max-w-none">
-                <div className="relative rounded-3xl overflow-hidden border-4 border-vannam-yellow/40 shadow-2xl bg-white aspect-square">
+              <div className="relative mx-auto max-w-[330px] lg:max-w-[360px] xl:max-w-[390px]">
+                <div className="relative rounded-3xl overflow-hidden border-[3px] border-vannam-yellow/40 shadow-xl bg-white aspect-[5/4] sm:aspect-square max-h-[380px]">
                   <Image 
                     src="/hero-kids.jpg" 
                     alt="Preschool children playing with colorful wooden blocks" 
                     fill 
-                    sizes="(max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 1200px) 360px, 390px"
                     className="object-cover" 
                     priority
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
                   
                   {/* Floating Badge 1 */}
-                  <div className="absolute bottom-4 left-4 right-4 bg-white/95 backdrop-blur-md p-4 rounded-2xl border border-[#E8EEFB] shadow-lg flex items-center justify-between gap-2">
+                  <div className="absolute bottom-3 left-3 right-3 bg-white/95 backdrop-blur-md p-3 rounded-2xl border border-[#E8EEFB] shadow-lg flex items-center justify-between gap-2">
                     <div>
-                      <span className="text-xs font-bold text-vannam-green flex items-center gap-1">
-                        <CheckCircle2 className="w-3.5 h-3.5 inline text-vannam-green" /> Admissions Open
+                      <span className="text-[11px] font-bold text-vannam-green flex items-center gap-1">
+                        <CheckCircle2 className="w-3 h-3 inline text-vannam-green" /> Admissions Open
                       </span>
-                      <span className="font-heading font-extrabold text-sm text-[#0F2963] block">Limited Seats Available</span>
+                      <span className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] block">Limited Seats Available</span>
                     </div>
                     <button 
                       onClick={() => setIsTourModalOpen(true)}
-                      className="btn-accent px-4 py-2 text-xs flex items-center gap-1 shrink-0"
+                      className="btn-accent px-3 py-1.5 text-xs flex items-center gap-1 shrink-0"
                     >
                       <span>Apply Now</span>
                     </button>
@@ -1372,20 +1360,20 @@ export default function Home() {
                 </div>
 
                 {/* Floating Decorative Card 2 - Teddy & Happy Graduates */}
-                <div className="flex absolute -top-6 -right-6 bg-white p-3.5 rounded-2xl border-2 border-vannam-green/30 shadow-xl animate-float items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-vannam-green/10 flex items-center justify-center text-vannam-green shadow-xs">
-                    <TeddyBearIcon className="w-7 h-7" />
+                <div className="flex absolute -top-4 -right-4 bg-white p-2.5 rounded-2xl border-2 border-vannam-green/30 shadow-lg animate-float items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-lg bg-vannam-green/10 flex items-center justify-center text-vannam-green shadow-xs">
+                    <TeddyBearIcon className="w-5 h-5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-[#64748B] block uppercase tracking-wider">Joyful Learners</span>
-                    <Counter end={1500} className="font-heading font-bold text-sm text-[#0F2963] block" />
+                    <span className="text-[9px] font-bold text-[#64748B] block uppercase tracking-wider">Joyful Learners</span>
+                    <Counter end={1500} className="font-heading font-bold text-xs sm:text-sm text-[#0F2963] block" />
                   </div>
                 </div>
 
                 {/* Floating Decorative Card 3 - Little Stars Seal */}
-                <div className="flex absolute -bottom-6 -left-6 bg-white p-2.5 rounded-2xl border-2 border-vannam-yellow/40 shadow-xl animate-bounce-gentle items-center gap-2">
-                  <SparkleStarsGroup color="amber" className="w-6 h-6" />
-                  <span className="text-xs font-extrabold text-[#0F2963]">5-Star Montessori</span>
+                <div className="flex absolute -bottom-4 -left-4 bg-white p-2 rounded-xl border-2 border-vannam-yellow/40 shadow-lg animate-bounce-gentle items-center gap-1.5">
+                  <SparkleStarsGroup color="amber" className="w-5 h-5" />
+                  <span className="text-[11px] font-extrabold text-[#0F2963]">5-Star Montessori</span>
                 </div>
 
               </div>
@@ -1396,54 +1384,35 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider to About */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#FDE68A" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#FDE68A" />
       </section>
 
       {/* ABOUT SECTION */}
-      <section id="about" className="scroll-mt-24 pt-8 pb-0 sm:pt-14 sm:pb-0 lg:pt-18 lg:pb-0 bg-section-about relative overflow-hidden">
+      <section id="about" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-about relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <StorybookStackIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 text-amber-500 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <BlossomFlowerIcon color="rose" className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-wiggle" />
-        </div>
-
-        {/* Floating Decorative Corner Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-3 right-3 sm:top-6 sm:right-10 animate-float pointer-events-none opacity-80 z-10">
-          <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-4 left-3 sm:bottom-8 sm:left-8 animate-float-reverse pointer-events-none opacity-80 z-10">
-          <SproutPlantIcon className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute top-1/2 left-2 -translate-y-1/2 animate-flutter pointer-events-none opacity-75 z-10">
-          <ButterflyIcon color="emerald" className="w-6 h-6 sm:w-7 sm:h-7" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20">
           
           {/* Header */}
           <ScrollReveal variant="reveal-page-turn" className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 relative">
-            <div className="flex items-center justify-center gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <PlantInPotIcon className="w-7 h-7 sm:w-8 sm:h-8 animate-bounce-gentle" />
               <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
               <StorybookStackIcon className="w-7 h-7 sm:w-8 sm:h-8 animate-float" />
             </div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-3.5 py-1 rounded-full shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-white/85 backdrop-blur-xs border border-amber-200 px-3.5 py-1 rounded-full shadow-xs">
               <Heart className="w-3.5 h-3.5 text-vannam-red" />
               <span>About Vannam World</span>
             </div>
-            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963] leading-tight">
+            <h2 className="font-heading text-2xl xs:text-3xl sm:text-4xl font-extrabold text-[#0F2963] leading-tight drop-shadow-xs mobile-text-shadow">
               Building a Safe & Inspiring Foundation
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#1E293B] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Combining Montessori exploration with early STEAM inquiry, structured around your child&apos;s natural curiosity and comfort.
             </p>
           </ScrollReveal>
 
           {/* 3 Pillars - Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6">
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6 px-1 sm:px-0">
             
             {/* Philosophy */}
             <ScrollReveal variant="reveal-pop-bounce" stagger={1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-amber p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
@@ -1525,64 +1494,44 @@ export default function Home() {
           </ScrollReveal>
 
           {/* Subtle Storytelling Bridge */}
-          <NatureBridge className="mt-6 -mb-4" />
+          <NatureBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Playful Organic Wave Divider to Programs */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FDF4FF" secondaryFill="#F0F9FF" strokeColor="#E9D5FF" />
+        <PlayfulWaveDivider className="mt-6 sm:mt-8 lg:mt-10" fillColor="#FDF4FF" secondaryFill="#F0F9FF" strokeColor="#E9D5FF" />
       </section>
 
       {/* AGE-BASED PROGRAMS SECTION */}
-      <section id="programs" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-programs relative overflow-hidden">
+      <section id="programs" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-programs relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PuzzlePieceIcon color="emerald" className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <StorybookIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-10 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <PuzzlePieceIcon color="emerald" className="w-7 h-7 sm:w-12 sm:h-12" />
-        </div>
-        <div className="absolute top-6 right-3 sm:top-12 sm:right-12 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <StorybookIcon className="w-7 h-7 sm:w-12 sm:h-12 drop-shadow-xs" />
-        </div>
-        <div className="absolute bottom-6 left-3 sm:bottom-12 sm:left-12 animate-wiggle pointer-events-none opacity-85 z-10">
-          <CrayonIcon color="rose" className="w-6 h-6 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-12 sm:right-12 animate-flutter pointer-events-none opacity-85 z-10">
-          <AlphabetBlock letter="P" color="purple" className="w-6 h-6 sm:w-9 sm:h-9" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20">
           
           <ScrollReveal variant="reveal-pop-bounce" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
-            <div className="flex justify-center mb-1">
+            <div className="hidden sm:flex justify-center mb-1">
               <LearningSceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-vannam-green/10 border border-vannam-green/30 px-3 py-1 rounded-full shadow-2xs">
-              <BookOpen className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-green bg-white/85 backdrop-blur-xs border border-emerald-200 px-3.5 py-1 rounded-full shadow-xs">
+              <BookOpen className="w-3.5 h-3.5 text-vannam-green" />
               <span>Tailored Programs</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight drop-shadow-xs mobile-text-shadow">
               Curriculum Built for <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Every Growth Stage</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#1E293B] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Select your child's age group below to discover learning objectives, teacher ratios, and activities.
             </p>
           </ScrollReveal>
 
           {/* Program Tabs - Touch Horizontal Scroll with Snap on Mobile */}
-          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
+          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-4 sm:px-0">
             {Object.keys(programsData).map((key) => {
               const prog = programsData[key];
               return (
                 <button
                   key={key}
+                  type="button"
+                  suppressHydrationWarning
                   onClick={() => setActiveProgramTab(key)}
                   className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition shrink-0 snap-center !min-h-0 ${
                     activeProgramTab === key
@@ -1689,53 +1638,34 @@ export default function Home() {
           )}
 
           {/* Rainbow Arc Bridge */}
-          <RainbowArcBridge className="mt-6 -mb-4" />
+          <RainbowArcBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Why Us */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#ECFDF5" secondaryFill="#EFF6FF" strokeColor="#A7F3D0" />
+        <PlayfulWaveDivider className="mt-6 sm:mt-8 lg:mt-10" fillColor="#ECFDF5" secondaryFill="#EFF6FF" strokeColor="#A7F3D0" />
       </section>
 
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
-      <section id="why-us" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-why-us relative overflow-hidden">
+      <section id="why-us" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-why-us relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <RainbowIcon className="w-12 h-8 xs:w-14 xs:h-10 sm:w-20 sm:h-14 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <TeddyBearIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-wiggle" />
-        </div>
-
-        {/* Floating Decorative Elements (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <RainbowIcon className="w-8 h-5 sm:w-14 sm:h-9 drop-shadow-sm" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
-          <PuzzlePieceIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
-        </div>
-        <div className="absolute top-20 right-3 sm:top-24 sm:right-10 animate-flutter pointer-events-none opacity-85 z-10">
-          <ButterflyIcon color="rose" className="w-6 h-6 sm:w-8 sm:h-8" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 space-y-4 sm:space-y-6">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20 space-y-4 sm:space-y-6">
           {/* Section Header */}
           <ScrollReveal variant="reveal-split-left" className="text-center max-w-3xl mx-auto space-y-1.5 sm:space-y-2 mb-2 sm:mb-4">
-            <div className="flex justify-center mb-1">
+            <div className="hidden sm:flex justify-center mb-1">
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-vannam-yellow/10 border border-vannam-yellow/30 text-vannam-orange text-[11px] font-extrabold uppercase tracking-widest shadow-2xs">
-              <Star className="w-3.5 h-3.5 shrink-0" />
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 backdrop-blur-xs border border-amber-200 text-vannam-orange text-[11px] font-extrabold uppercase tracking-widest shadow-xs">
+              <Star className="w-3.5 h-3.5 shrink-0 text-amber-500" />
               <span>Interactive Standard Comparison</span>
             </span>
             
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight drop-shadow-xs mobile-text-shadow">
               How We Differ From{" "}
               <span className="inline-block whitespace-nowrap text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-6">Other Schools</span>
             </h2>
             
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#1E293B] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Tap any feature parameter below to compare side-by-side:
             </p>
           </ScrollReveal>
@@ -1789,7 +1719,7 @@ export default function Home() {
             const current = differentiators[activeWhyUsTab];
             return (
               <div className="hidden lg:block">
-                <ScrollReveal variant="reveal-gate-open" className="bg-white rounded-3xl border-2 border-[#CBD8F6] shadow-lg p-6 lg:p-8 relative overflow-hidden animate-in fade-in zoom-in-95">
+                <ScrollReveal variant="reveal-gate-open" className="bg-white/94 backdrop-blur-md rounded-3xl border-2 border-[#CBD8F6]/90 shadow-xl p-5 lg:p-7 relative overflow-hidden animate-in fade-in zoom-in-95">
                   
                   {/* Cockpit Top Bar */}
                   <div className="flex items-center justify-between gap-4 pb-5 border-b border-[#E8EEFB]">
@@ -1888,59 +1818,37 @@ export default function Home() {
           </ScrollReveal>
 
           {/* Cloud Bridge */}
-          <CloudBridge label="7 Shades of Growth" className="mt-6 -mb-4" />
+          <CloudBridge label="7 Shades of Growth" className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into 7-Shades Methodology */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF7ED" secondaryFill="#ECFDF5" strokeColor="#FED7AA" />
+        <PlayfulWaveDivider className="mt-6 sm:mt-8 lg:mt-10" fillColor="#FFF7ED" secondaryFill="#ECFDF5" strokeColor="#FED7AA" />
       </section>
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
-      <section id="methodology" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-methodology relative overflow-hidden">
+      <section id="methodology" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-methodology relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <ArtPaletteIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <MusicNotesCluster className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <PaintSplatterIcon color="amber" className="w-7 h-7 sm:w-12 sm:h-12" />
-        </div>
-        <div className="absolute top-6 right-3 sm:top-12 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <MusicNotesCluster className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-6 left-3 sm:bottom-10 sm:left-10 animate-flutter pointer-events-none opacity-85 z-10">
-          <ButterflyIcon color="purple" className="w-6 h-6 sm:w-8 sm:h-8" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-12 sm:right-12 animate-wiggle pointer-events-none opacity-80 z-10">
-          <BlossomFlowerIcon color="sky" className="w-6 h-6 sm:w-9 sm:h-9" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="flex justify-center mb-1">
+            <div className="hidden sm:flex justify-center mb-1">
               <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-[#CBD8F6] shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 backdrop-blur-xs border border-amber-200 shadow-xs">
               <Compass className="w-3.5 h-3.5 text-[#0F2963] shrink-0" />
               <span className="text-[10.5px] sm:text-xs font-black uppercase tracking-wider text-[#0F2963]">
                 The 7-Shade Growth Spectrum
               </span>
             </div>
 
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight drop-shadow-xs mobile-text-shadow">
               How Children Learn & Flourish: <br className="hidden sm:block" />
               <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-6">The 7 Shades</span> of Development
             </h2>
 
-            <p className="text-xs sm:text-sm text-[#334155] font-medium leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#1E293B] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Rooted in our signature motto <em>&quot;Learning Through Every Shade of Play&quot;</em>. Tap each shade below to explore tools and milestones.
             </p>
           </div>
@@ -2318,58 +2226,17 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Daily Activities */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF1F2" secondaryFill="#FFFBEB" strokeColor="#FECDD3" />
+        <PlayfulWaveDivider className="mt-6 sm:mt-8 lg:mt-10" fillColor="#FFF1F2" secondaryFill="#FFFBEB" strokeColor="#FECDD3" />
       </section>
 
       {/* DAILY ACTIVITIES SECTION */}
-      <section id="activities" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-activities relative overflow-hidden">
+      <section id="activities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-activities relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <SmilingSunIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PaperPlaneIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-
-        {/* CHILD-ATTRACTIVE FLOATING DECORATIONS (Fills empty spaces on Mobile & Desktop) */}
-        <div className="absolute top-6 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
-          <SmilingSunIcon className="w-7 h-7 sm:w-11 sm:h-11 drop-shadow-xs" />
-          <RainbowIcon className="w-8 h-5 sm:w-12 sm:h-8 drop-shadow-xs hidden xs:block" />
-        </div>
-        <div className="absolute top-6 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
-          <HappyCloudIcon className="w-7 h-5 sm:w-11 sm:h-8" />
-          <FloatingBalloonsGroup className="w-7 h-9 sm:w-11 sm:h-14 drop-shadow-xs" />
-        </div>
-
-        {/* Mid-Flank Toy Accents */}
-        <div className="absolute top-1/3 left-1 sm:left-4 animate-bounce-gentle pointer-events-none opacity-80 z-10">
-          <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs p-1 rounded-xl border border-amber-200/80 shadow-2xs">
-            <AlphabetBlock letter="1" color="amber" className="w-4 h-4 sm:w-6 sm:h-6" />
-            <AlphabetBlock letter="2" color="sky" className="w-4 h-4 sm:w-6 sm:h-6 -mt-1" />
-            <AlphabetBlock letter="3" color="rose" className="w-4 h-4 sm:w-6 sm:h-6" />
-          </div>
-        </div>
-        <div className="absolute top-1/3 right-1 sm:right-4 animate-flutter pointer-events-none opacity-85 z-10 flex flex-col items-center gap-1">
-          <PinwheelToy className="w-6 h-6 sm:w-9 sm:h-9 animate-spin-slow" />
-          <ButterflyIcon color="rose" className="w-5 h-5 sm:w-7 sm:h-7" />
-        </div>
-
-        {/* Lower Corner Accents */}
-        <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-8 animate-drift pointer-events-none opacity-85 z-10 flex items-center gap-1.5">
-          <PaperPlaneIcon className="w-6 h-6 sm:w-9 sm:h-9" />
-          <CrayonIcon color="sky" className="w-5 h-5 sm:w-7 sm:h-7 hidden xs:block" />
-        </div>
-        <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-8 animate-wiggle pointer-events-none opacity-80 z-10 flex items-center gap-1">
-          <MusicNotesCluster className="w-6 h-6 sm:w-8 sm:h-8" />
-          <ToyCarIcon className="w-6 h-6 sm:w-8 sm:h-8 hidden xs:block" />
-        </div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header with Child-Attractive Mascot Scene */}
           <ScrollReveal variant="reveal-spin-drop" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
-            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-2 sm:gap-3 mb-1">
               <TeddyBearIcon className="w-7 h-7 sm:w-9 sm:h-9 animate-bounce-gentle" />
               <CreativitySceneGroup className="opacity-95 scale-90 sm:scale-100" />
               <PinwheelToy className="w-6 h-6 sm:w-8 sm:h-8 animate-float" />
@@ -2378,10 +2245,10 @@ export default function Home() {
               <Clock className="w-3.5 h-3.5" />
               <span>A Day at Vannam World Preschool</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Joyful <span className="text-vannam-red underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Daily Activities</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Every hour is balanced between structured learning, free play, organic dining, and restful quiet time.
             </p>
           </ScrollReveal>
@@ -2469,38 +2336,22 @@ export default function Home() {
           </div>
 
           {/* Doodle Divider */}
-          <DoodleDivider className="mt-6 -mb-4" />
+          <DoodleDivider className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Facilities */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#F0F9FF" secondaryFill="#EFF6FF" strokeColor="#BAE6FD" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#F0F9FF" secondaryFill="#EFF6FF" strokeColor="#BAE6FD" />
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-facilities relative overflow-hidden">
-        
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <SchoolCastleIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 text-blue-600 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PlaygroundSlideIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SchoolCastleIcon className="w-7 h-7 sm:w-12 sm:h-12" />
-        </div>
-        <div className="absolute top-6 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <SproutPlantIcon className="w-6 h-6 sm:w-10 sm:h-10" />
-        </div>
+      <section id="facilities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-facilities relative overflow-hidden">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
           <ScrollReveal variant="reveal-gate-open" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="flex items-center justify-center gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <SchoolCastleIcon className="w-8 h-8 text-vannam-navy animate-float" />
               <PlaygroundSlideIcon className="w-8 h-8 animate-bounce-gentle" />
               <SchoolBusToyIcon className="w-9 h-9 animate-wiggle" />
@@ -2509,11 +2360,11 @@ export default function Home() {
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>World-Class Campus</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Facilities Engineered for <br className="hidden sm:block" />
               <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Safety & Wonder</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Designed from the ground up with rounded edges, medical-grade air filtration, and engaging play environments.
             </p>
           </ScrollReveal>
@@ -2548,38 +2399,22 @@ export default function Home() {
             👉 Swipe horizontally to view all campus facilities
           </p>
 
-          <CloudBridge label="Safe Campus & Care" className="mt-6 -mb-4" />
+          <CloudBridge label="Safe Campus & Care" className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Safety */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#ECFDF5" secondaryFill="#F0F9FF" strokeColor="#A7F3D0" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#ECFDF5" secondaryFill="#F0F9FF" strokeColor="#A7F3D0" />
       </section>
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
-      <section id="safety" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-safety relative overflow-hidden">
-        
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <ShieldSecurityBadge className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-pulse-subtle" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <SparkleStarsGroup className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <SparkleStarsGroup className="w-7 h-7 sm:w-12 sm:h-12" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-80 z-10">
-          <ButterflyIcon color="emerald" className="w-6 h-6 sm:w-8 sm:h-8" />
-        </div>
+      <section id="safety" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-safety relative overflow-hidden">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
           <ScrollReveal variant="reveal-shield-pulse" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="flex items-center justify-center gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <ShieldSecurityBadge className="w-8 h-8 animate-pulse-subtle" />
               <SafetySceneGroup className="opacity-90 scale-90 sm:scale-100" />
               <ShieldSecurityBadge className="w-8 h-8 animate-pulse-subtle scale-x-[-1]" />
@@ -2588,11 +2423,11 @@ export default function Home() {
               <ShieldCheck className="w-3.5 h-3.5" />
               <span>Zero-Compromise Security Standard</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Your Child&apos;s Safety <br className="hidden sm:block" />
               <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Comes First. Always.</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
               From biometric pickup gates and 4K encrypted parent live streams to full-time pediatric CPR staff, we protect your peace of mind.
             </p>
           </ScrollReveal>
@@ -2701,32 +2536,16 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into Teachers */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FAF5FF" secondaryFill="#FFF1F2" strokeColor="#E9D5FF" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#FAF5FF" secondaryFill="#FFF1F2" strokeColor="#E9D5FF" />
       </section>
 
       {/* TEACHERS & LEADERSHIP SECTION */}
-      <section id="teachers" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-teachers relative overflow-hidden">
-        
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <TeacherApplesTrophy className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 text-amber-500 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <StorybookStackIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 text-sky-500 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <AlphabetBlock letter="T" color="amber" className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute top-6 right-3 sm:top-10 sm:right-10 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <CrayonIcon color="sky" className="w-6 h-6 sm:w-10 sm:h-10" />
-        </div>
+      <section id="teachers" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-teachers relative overflow-hidden">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           <ScrollReveal variant="reveal-heart-grow" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="flex items-center justify-center gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <TeacherApplesTrophy className="w-8 h-8 animate-bounce-gentle" />
               <NatureSceneGroup className="opacity-90 scale-90 sm:scale-100" />
               <StorybookStackIcon className="w-7 h-7 animate-float" />
@@ -2735,11 +2554,11 @@ export default function Home() {
               <Users className="w-3.5 h-3.5" />
               <span>Loving Educators</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Meet Our Certified & <br className="hidden sm:block" />
               <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-6">Warm Teachers</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Every educator at Vannam World Preschool holds early childhood degrees, background checks, and a deep love for guiding young learners.
             </p>
           </ScrollReveal>
@@ -2766,53 +2585,37 @@ export default function Home() {
             ))}
           </div>
 
-          <NatureBridge className="mt-6 -mb-4" />
+          <NatureBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Gallery */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFBEB" secondaryFill="#FDF4FF" strokeColor="#FDE68A" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#FFFBEB" secondaryFill="#FDF4FF" strokeColor="#FDE68A" />
       </section>
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
-      <section id="gallery" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-gallery relative overflow-hidden">
-        
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <ArtPaletteIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PinwheelToy className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <Camera className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-cyan" />
-        </div>
+      <section id="gallery" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-gallery relative overflow-hidden">
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           <ScrollReveal variant="reveal-polaroid" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="flex justify-center mb-1">
+            <div className="hidden sm:flex justify-center mb-1">
               <CreativitySceneGroup className="opacity-90 scale-90 sm:scale-100" />
             </div>
             <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <Camera className="w-3.5 h-3.5" />
               <span>Campus Scrapbook Moments</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Moments of <span className="text-vannam-cyan underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Joy & Discovery</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Explore snapshots of classroom STEAM activities, outdoor sports, and seasonal celebrations.
             </p>
           </ScrollReveal>
 
           {/* Filter Tabs - Compact Bento Pills */}
-          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-1 -mx-4 sm:mx-0 px-4 sm:px-0">
+          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-4 sm:px-0">
             {[
               { id: "all", label: "All Moments", icon: "✨" },
               { id: "classroom", label: "Classroom", icon: "📚" },
@@ -2904,50 +2707,34 @@ export default function Home() {
             })}
           </ScrollReveal>
 
-          <RainbowArcBridge className="mt-6 -mb-4" />
+          <RainbowArcBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Testimonials */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFF7ED" secondaryFill="#FAF5FF" strokeColor="#FED7AA" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#FFF7ED" secondaryFill="#FAF5FF" strokeColor="#FED7AA" />
       </section>
 
       {/* PARENT TESTIMONIALS SECTION */}
-      <section id="testimonials" className="scroll-mt-24 pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-testimonials relative overflow-hidden">
+      <section id="testimonials" className="scroll-mt-24 pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-testimonials relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <ParentLoveBadge className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <FloatingBalloonsGroup className="w-10 h-12 xs:w-12 xs:h-14 sm:w-18 sm:h-20 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <FloatingBalloonsGroup className="w-8 h-10 sm:w-12 sm:h-16" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <BlossomFlowerIcon color="rose" className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           <ScrollReveal variant="reveal-bubble-float" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
-            <div className="flex items-center justify-center gap-3 mb-1">
+            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle" />
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
               <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle scale-x-[-1]" />
             </div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-vannam-yellow/15 border border-vannam-yellow/30 px-3 py-1 rounded-full shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-orange bg-white/85 backdrop-blur-xs border border-vannam-yellow/40 px-3.5 py-1 rounded-full shadow-2xs">
               <MessageCircle className="w-3.5 h-3.5 text-vannam-orange" />
               <span>Parent Love & Reviews</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
               Trusted by Hundreds of{" "}
               <span className="text-vannam-yellow underline decoration-vannam-cyan underline-offset-4 sm:underline-offset-6">Happy Families</span>
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               Read authentic reviews from parents about their child's growth, safety experience, and academic readiness.
             </p>
           </ScrollReveal>
@@ -2955,7 +2742,7 @@ export default function Home() {
           {/* Testimonial Cards: 1-Col on Mobile, 3-Col on Desktop */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
             {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-full bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-gradient-to-br from-amber-50/40 via-white to-rose-50/30">
+              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-full bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-0.5 text-vannam-yellow">
@@ -2983,33 +2770,17 @@ export default function Home() {
             ))}
           </div>
 
-          <NatureBridge className="mt-6 -mb-4" />
+          <NatureBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
 
         {/* Wave Divider into Events */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#EFF6FF" secondaryFill="#FFFBEB" strokeColor="#BFDBFE" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#EFF6FF" secondaryFill="#FFFBEB" strokeColor="#BFDBFE" />
       </section>
 
       {/* UPCOMING SCHOOL EVENTS */}
-      <section className="pt-8 pb-0 sm:pt-12 sm:pb-0 lg:pt-16 lg:pb-0 bg-section-interactive relative overflow-hidden">
+      <section id="events" className="scroll-mt-24 pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-events relative overflow-hidden">
         
-        {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PartyCelebrationIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <BalloonIcon color="sky" className="w-10 h-12 xs:w-12 xs:h-15 sm:w-16 sm:h-20 animate-float-reverse" />
-        </div>
-
-        {/* Floating Storytelling Accents (Visible on Mobile & Desktop) */}
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <Calendar className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-yellow" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <PaperPlaneIcon className="w-6 h-6 sm:w-10 sm:h-10" />
-        </div>
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           <ScrollReveal variant="reveal-calendar-flip" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
@@ -3018,21 +2789,21 @@ export default function Home() {
               <BalloonIcon color="sky" className="w-6 h-8 animate-float" />
               <PartyCelebrationIcon className="w-8 h-8 animate-bounce-gentle scale-x-[-1]" />
             </div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-cyan bg-vannam-cyan/10 px-3 py-1 rounded-full shadow-2xs">
+            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-cyan bg-white/85 backdrop-blur-xs border border-vannam-cyan/30 px-3.5 py-1 rounded-full shadow-2xs">
               <Calendar className="w-3.5 h-3.5" />
               <span>School Calendar</span>
             </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight">
+            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight mobile-text-shadow">
               Upcoming School Events & Celebrations
             </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-[#334155] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
               We invite parents to participate in regular workshops, sports days, and cultural celebrations.
             </p>
           </ScrollReveal>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5 sm:gap-4">
             {upcomingEvents.map((ev, idx) => (
-              <div key={idx} className="bento-card p-3.5 sm:p-5 rounded-2xl flex flex-row items-center gap-3 sm:gap-4 hover:border-vannam-yellow/40 hover:-translate-y-0.5 transition-all duration-200 shadow-xs">
+              <div key={idx} className="bento-card p-3.5 sm:p-5 rounded-2xl flex flex-row items-center gap-3 sm:gap-4 hover:border-vannam-yellow/60 hover:-translate-y-0.5 transition-all duration-200 shadow-xs bg-white/90 backdrop-blur-xs border-2 border-amber-200/80">
                 <div className="w-12 h-12 xs:w-14 xs:h-14 sm:w-16 sm:h-16 rounded-2xl bg-vannam-yellow text-[#0F2963] flex flex-col items-center justify-center shrink-0 shadow-xs">
                   <span className="font-heading font-black text-sm xs:text-base sm:text-lg leading-none">{ev.date.split(" ")[1]}</span>
                   <span className="text-[8px] xs:text-[9px] font-extrabold uppercase tracking-widest">{ev.date.split(" ")[0]}</span>
@@ -3056,11 +2827,11 @@ export default function Home() {
         </div>
 
         {/* Wave Divider into FAQs */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#CBD8F6" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#FFFDF8" secondaryFill="#FFFBEB" strokeColor="#CBD8F6" />
       </section>
 
       {/* FAQS ACCORDION SECTION */}
-      <section className="pt-10 pb-0 sm:pt-14 sm:pb-0 lg:pt-18 lg:pb-0 bg-section-about relative overflow-hidden">
+      <section className="pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-faq relative overflow-hidden">
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -3117,11 +2888,11 @@ export default function Home() {
         </div>
 
         {/* Playful Organic Wave Divider into Contact */}
-        <PlayfulWaveDivider className="mt-8 sm:mt-12" fillColor="#0F2963" secondaryFill="#0A1D47" strokeColor="#1D4ED8" />
+        <PlayfulWaveDivider className="mt-14 sm:mt-20 lg:mt-28" fillColor="#0F2963" secondaryFill="#0A1D47" strokeColor="#1D4ED8" />
       </section>
 
       {/* ADMISSION CTA & CONTACT FORM SECTION - GLASSMORPHIC POSTCARD */}
-      <section id="contact" className="scroll-mt-24 py-8 sm:py-12 lg:py-16 bg-section-contact text-white relative overflow-hidden">
+      <section id="contact" className="scroll-mt-24 py-16 sm:py-24 lg:py-32 bg-section-contact text-white relative overflow-hidden">
         
         {/* Floating Background 3D Toys */}
         <div className="absolute top-10 left-10 opacity-35 animate-pulse pointer-events-none rotate-[-15deg]">
@@ -3171,14 +2942,14 @@ export default function Home() {
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
                     <MapPin className="w-4 h-4 text-[#F59E0B]" />
                   </div>
-                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Rainbow Gardens Campus, 124 Academy Drive</span>
+                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001</span>
                 </div>
 
                 <div className="flex items-center gap-2.5 sm:gap-3 group">
                   <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center shadow-md transition-transform group-hover:scale-105 shrink-0">
                     <Phone className="w-4 h-4 text-[#10B981]" />
                   </div>
-                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Direct Admissions: +1 (800) 555-PLAY</span>
+                  <span className="font-bold text-blue-50 text-xs sm:text-sm">Direct Admissions: +91 78100 87310</span>
                 </div>
 
                 <div className="flex items-center gap-2.5 sm:gap-3 group">
@@ -3228,6 +2999,7 @@ export default function Home() {
                         <input
                           type="text"
                           required
+                          suppressHydrationWarning
                           value={enquiryForm.parentName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, parentName: e.target.value })}
                           className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/40 focus:border-[#F59E0B] transition-all placeholder:text-[#94A3B8] !min-h-0"
@@ -3240,6 +3012,7 @@ export default function Home() {
                         <input
                           type="text"
                           required
+                          suppressHydrationWarning
                           value={enquiryForm.childName}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childName: e.target.value })}
                           className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#F59E0B]/40 focus:border-[#F59E0B] transition-all placeholder:text-[#94A3B8] !min-h-0"
@@ -3255,6 +3028,7 @@ export default function Home() {
                         <input
                           type="tel"
                           required
+                          suppressHydrationWarning
                           value={enquiryForm.phone}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, phone: e.target.value })}
                           className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/40 focus:border-[#00A8E8] transition-all placeholder:text-[#94A3B8] !min-h-0"
@@ -3267,6 +3041,7 @@ export default function Home() {
                         <input
                           type="email"
                           required
+                          suppressHydrationWarning
                           value={enquiryForm.email}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
                           className="w-full px-3 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#00A8E8]/40 focus:border-[#00A8E8] transition-all placeholder:text-[#94A3B8] !min-h-0"
@@ -3280,6 +3055,7 @@ export default function Home() {
                       <div>
                         <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Child Age *</label>
                         <select
+                          suppressHydrationWarning
                           value={enquiryForm.childAge}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, childAge: e.target.value })}
                           className="w-full px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/40 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
@@ -3295,6 +3071,7 @@ export default function Home() {
                       <div>
                         <label className="block text-[8.5px] sm:text-[10px] font-black text-blue-100 uppercase tracking-widest mb-1 ml-0.5 truncate">Program</label>
                         <select
+                          suppressHydrationWarning
                           value={enquiryForm.program}
                           onChange={(e) => setEnquiryForm({ ...enquiryForm, program: e.target.value })}
                           className="w-full px-2.5 py-2 sm:px-3.5 sm:py-2.5 rounded-xl bg-[#F1F5F9] border-2 border-transparent text-[#0F2963] text-xs sm:text-sm font-bold shadow-inner focus:outline-none focus:ring-2 focus:ring-[#8B5CF6]/40 focus:border-[#8B5CF6] transition-all cursor-pointer !min-h-0"
@@ -3338,7 +3115,7 @@ export default function Home() {
       </section>
 
       {/* SOPHISTICATED LIGHT ORANGE THEMED FOOTER */}
-      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-10 sm:pt-16 pb-12 sm:pb-16 border-t-2 border-[#FDBA74]">
+      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-16 sm:pt-24 pb-16 sm:pb-24 border-t-2 border-[#FDBA74]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
@@ -3476,16 +3253,16 @@ export default function Home() {
               </div>
               
               <p className="text-[11px] sm:text-xs text-[#475569] font-medium leading-snug">
-                124 Rainbow Gardens Drive, North Campus
+                Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
               </p>
 
               <div className="flex flex-col xs:flex-row gap-1.5 text-xs pt-0.5">
                 <a 
-                  href="tel:+18005557529" 
+                  href="tel:+917810087310" 
                   className="flex-1 px-2.5 py-1.5 rounded-xl bg-orange-50/80 border border-orange-200 text-[#C2410C] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-orange-100 transition"
                 >
                   <Phone className="w-3 h-3" />
-                  <span>+1 (800) 555-PLAY</span>
+                  <span>+91 78100 87310</span>
                 </a>
                 <a 
                   href="mailto:admissions@vannamworld.edu" 
@@ -3532,27 +3309,14 @@ export default function Home() {
         onClose={() => setIsPortalModalOpen(false)} 
       />
 
-      {isFeeCalcOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-900/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
-          <div className="bg-white max-w-2xl w-full rounded-3xl p-4 sm:p-7 relative border-2 border-[#CBD8F6] shadow-2xl my-auto max-h-[92vh] overflow-y-auto">
-            <button 
-              onClick={() => setIsFeeCalcOpen(false)} 
-              className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 bg-[#F0F4FC] text-[#0F2963] p-2 rounded-full hover:bg-[#E8EEFB] transition shadow-xs border border-[#CBD8F6]/60 flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9"
-              aria-label="Close Fee Calculator"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <FeeCalculator />
-          </div>
-        </div>
-      )}
-
       {isVirtualTourOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/90 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-white max-w-4xl w-full rounded-3xl overflow-hidden relative">
             <button 
+              type="button"
               onClick={() => setIsVirtualTourOpen(false)} 
-              className="absolute top-4 right-4 z-10 bg-slate-900 text-white p-2 rounded-full hover:bg-[#0F2963]"
+              className="absolute top-4 right-4 z-10 bg-slate-900 text-white p-2 rounded-full hover:bg-[#0F2963] cursor-pointer"
+              aria-label="Close Virtual Tour"
             >
               <X className="w-5 h-5" />
             </button>

@@ -67,9 +67,9 @@ export default function ContactClient() {
             <span className="inline-block bg-vannam-yellow/20/90 text-vannam-orange text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
               Main Flagship Branch
             </span>
-            <h3 className="font-heading text-2xl font-bold text-[#0F2963]">Rainbow Gardens Campus</h3>
+            <h3 className="font-heading text-2xl font-bold text-[#0F2963]">Coimbatore Main Campus</h3>
             <p className="text-xs sm:text-sm text-[#1E293B] font-medium leading-relaxed">
-              124 Rainbow Gardens Drive, Sector 4, North Academic Zone
+              Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
             </p>
           </div>
           <div className="pt-4 border-t border-vannam-yellow/20/80 text-xs text-vannam-orange font-bold flex items-center justify-center gap-1.5">
@@ -137,7 +137,7 @@ export default function ContactClient() {
               <div className="w-9 h-9 rounded-xl bg-vannam-yellow/10 text-vannam-orange flex items-center justify-center">
                 <Phone className="w-4 h-4" />
               </div>
-              <span>+1 (800) 826-6261 (Toll-Free)</span>
+              <a href="tel:+917810087310" className="hover:text-vannam-orange transition">+91 78100 87310</a>
             </div>
             <div className="flex items-center gap-3 text-sm text-[#1E293B] font-bold">
               <div className="w-9 h-9 rounded-xl bg-[#00A8E8]/10 text-[#00A8E8] flex items-center justify-center">

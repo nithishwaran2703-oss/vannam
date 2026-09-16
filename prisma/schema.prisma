@@ -1,0 +1,265 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  ADMIN
+  TEACHER
+  PARENT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+enum AnnouncementStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum HomeworkStatus {
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  ARCHIVED
+}
+
+model User {
+  id           String     @id @default(uuid())
+  name         String
+  email        String     @unique
+  passwordHash String
+  role         Role       @default(TEACHER)
+  avatar       String?
+  lastLogin    DateTime?
+  teacher      Teacher?
+  auditLogs    AuditLog[]
+  media        Media[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@index([email])
+  @@index([role])
+}
+
+model Teacher {
+  id             String       @id @default(uuid())
+  userId         String?      @unique
+  user           User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name           String
+  email          String       @unique
+  phone          String?
+  role           String       @default("Lead Educator")
+  experience     String       @default("5+ Years")
+  qualifications String       @default("AMI Montessori Certified")
+  bio            String?
+  image          String?
+  active         Boolean      @default(true)
+  classes        Class[]
+  activities     Activity[]
+  attendance     Attendance[]
+  homework       Homework[]
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([email])
+}
+
+model Class {
+  id           String       @id @default(uuid())
+  name         String       // e.g. "Pre-KG A", "LKG Explorers"
+  grade        String       // e.g. "Toddler", "Pre-KG", "LKG", "UKG"
+  room         String?
+  academicYear String       @default("2026-27")
+  capacity     Int          @default(15)
+  teacherId    String?
+  teacher      Teacher?     @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  students     Student[]
+  activities   Activity[]
+  attendance   Attendance[]
+  homework     Homework[]
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([teacherId])
+}
+
+model Student {
+  id               String       @id @default(uuid())
+  studentId        String       @unique // e.g. "VW-2026-001"
+  name             String
+  dob              DateTime?
+  gender           String?
+  photo            String?
+  classId          String?
+  class            Class?       @relation(fields: [classId], references: [id], onDelete: SetNull)
+  parentName       String?
+  parentEmail      String?
+  parentPhone      String?
+  emergencyContact String?
+  bloodGroup       String?
+  allergies        String?
+  status           String       @default("Active") // Active, Graduated, Inactive
+  activities       Activity[]
+  attendance       Attendance[]
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  @@index([studentId])
+  @@index([classId])
+}
+
+model Activity {
+  id          String          @id @default(uuid())
+  title       String
+  category    String          // Art, Phonics, Math, Outdoor, STEAM, Music, Play
+  description String
+  date        DateTime        @default(now())
+  classId     String?
+  class       Class?          @relation(fields: [classId], references: [id], onDelete: SetNull)
+  studentId   String?
+  student     Student?        @relation(fields: [studentId], references: [id], onDelete: SetNull)
+  teacherId   String?
+  teacher     Teacher?        @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  media       ActivityMedia[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  @@index([classId])
+  @@index([studentId])
+  @@index([teacherId])
+  @@index([date])
+}
+
+model ActivityMedia {
+  id         String   @id @default(uuid())
+  activityId String
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+  url        String
+  fileName   String?
+  mimeType   String?
+  createdAt  DateTime @default(now())
+
+  @@index([activityId])
+}
+
+model Attendance {
+  id        String           @id @default(uuid())
+  date      DateTime         @default(now())
+  status    AttendanceStatus @default(PRESENT)
+  remarks   String?
+  studentId String
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  classId   String
+  class     Class            @relation(fields: [classId], references: [id], onDelete: Cascade)
+  teacherId String?
+  teacher   Teacher?         @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  @@unique([studentId, date])
+  @@index([classId, date])
+  @@index([teacherId])
+}
+
+model Homework {
+  id          String         @id @default(uuid())
+  title       String
+  subject     String
+  description String
+  dueDate     DateTime
+  materials   String?        // JSON or text string
+  status      HomeworkStatus @default(ASSIGNED)
+  classId     String
+  class       Class          @relation(fields: [classId], references: [id], onDelete: Cascade)
+  teacherId   String?
+  teacher     Teacher?       @relation(fields: [teacherId], references: [id], onDelete: SetNull)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  @@index([classId])
+  @@index([teacherId])
+}
+
+model Announcement {
+  id        String             @id @default(uuid())
+  title     String
+  content   String
+  tag       String             @default("General")
+  badge     String?
+  status    AnnouncementStatus @default(PUBLISHED)
+  startDate DateTime           @default(now())
+  endDate   DateTime?
+  pinned    Boolean            @default(false)
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@index([status])
+  @@index([pinned])
+}
+
+model GalleryItem {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  category    String   // Campus, Montessori, Celebrations, Sports, Arts
+  url         String
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([published])
+}
+
+model WebsiteContent {
+  id         String   @id @default(uuid())
+  sectionKey String   @unique // e.g. "homepage", "about", "programs"
+  title      String?
+  subtitle   String?
+  content    String?  // JSON text for flexible structure
+  status     String   @default("published")
+  updatedAt  DateTime @updatedAt
+
+  @@index([sectionKey])
+}
+
+model Media {
+  id           String   @id @default(uuid())
+  fileName     String
+  url          String
+  storageKey   String?
+  mimeType     String?
+  size         Int?
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+
+  @@index([uploadedById])
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  entity    String
+  entityId  String?
+  details   String?
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userName  String?
+  ipAddress String?
+  timestamp DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([timestamp])
+}

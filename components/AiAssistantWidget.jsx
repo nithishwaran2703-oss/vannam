@@ -2,31 +2,30 @@
 
 import React, { useState } from "react";
 import { 
-  Bot, 
-  Sparkles, 
+  MessageCircle, 
   Send, 
   X, 
-  Cpu, 
-  Activity, 
+  Phone,
+  Calendar,
   CheckCircle2,
-  Brain,
-  Zap
+  Heart,
+  HelpCircle,
+  Sparkles
 } from "lucide-react";
 import confetti from "canvas-confetti";
-import { TwinkleStarIcon } from "./ToyDecorations";
 
 export default function AiAssistantWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: "Vannam AI", text: "Hello! Welcome to Vannam World Preschool. How can I assist you with admissions, child safety protocols, or campus tours today?" }
+    { sender: "Admissions Team", text: "Hello! Welcome to Vannam World Preschool. I'm Ms. Priya from the Admissions Office. How can we help you with enrollment, safety, or booking a campus tour today?" }
   ]);
   const [inputMsg, setInputMsg] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
   const predefinedPrompts = [
     "What is the teacher-to-child ratio?",
-    "How does live 4K parent streaming work?",
-    "Tell me about organic meal plans.",
+    "How does live parent streaming work?",
+    "Tell me about daily organic meals.",
     "Calculate estimated tuition fee."
   ];
 
@@ -39,24 +38,24 @@ export default function AiAssistantWidget() {
     if (!userText) setInputMsg("");
     setIsTyping(true);
 
-    // AI Response generation logic
+    // Warm, human response logic
     setTimeout(() => {
-      let reply = "Our Vannam World Preschool environment integrates AI biometrics, 1:6 teacher ratio, and 4K encrypted parent live stream for 100% peace of mind.";
+      let reply = "Thank you for asking! At Vannam World Preschool, we provide small batches, caring educators, and complete parent peace of mind.";
       const query = textToSend.toLowerCase();
 
       if (query.includes("ratio") || query.includes("teacher")) {
-        reply = "We maintain an ultra-exclusive ratio: 1:4 for Toddlers, 1:6 for Playgroup, 1:8 for Nursery, and 1:10 for Kindergarten, plus 2 assistant caregivers in every room.";
-      } else if (query.includes("stream") || query.includes("live") || query.includes("camera")) {
-        reply = "Our encrypted 4K Parent Stream allows verified parents to log into the Parent Portal app anytime from 8:00 AM - 6:00 PM to view live classroom feeds.";
-      } else if (query.includes("meal") || query.includes("food")) {
-        reply = "Our meals are 100% certified organic, chef-curated daily, and tailored to each child's allergy profile tracked in our real-time nutrition database.";
-      } else if (query.includes("fee") || query.includes("tuition")) {
-        reply = "Tuition ranges between $350/month for Playgroup up to $550/month for Senior KG. You can use our interactive Fee Calculator tool on the website!";
+        reply = "We maintain very close teacher ratios: 1:4 for Toddlers, 1:6 for Playgroup, 1:8 for Nursery, and 1:10 for Kindergarten, plus two loving assistant caregivers in every classroom.";
+      } else if (query.includes("stream") || query.includes("live") || query.includes("camera") || query.includes("cctv")) {
+        reply = "Our secure parent video stream lets verified families log into our Parent Portal app between 8:00 AM and 6:00 PM on school days to watch their child's classroom activities in real time.";
+      } else if (query.includes("meal") || query.includes("food") || query.includes("lunch")) {
+        reply = "Our school lunches and snacks are 100% organic, freshly cooked every morning by our in-house chef, and carefully adapted to each child's allergy profile.";
+      } else if (query.includes("fee") || query.includes("tuition") || query.includes("cost")) {
+        reply = "Tuition ranges from $350/month for Playgroup up to $550/month for Senior KG. Feel free to contact our admissions team or schedule a visit for complete details!";
       }
 
-      setMessages((prev) => [...prev, { sender: "Vannam AI", text: reply }]);
+      setMessages((prev) => [...prev, { sender: "Admissions Team", text: reply }]);
       setIsTyping(false);
-    }, 1000);
+    }, 800);
   };
 
   return (
@@ -66,85 +65,92 @@ export default function AiAssistantWidget() {
         <button
           onClick={() => {
             setIsOpen(!isOpen);
-            if (!isOpen) confetti({ particleCount: 40, spread: 50, origin: { x: 0.9, y: 0.9 } });
+            if (!isOpen) confetti({ particleCount: 30, spread: 45, origin: { x: 0.9, y: 0.9 } });
           }}
-          className="relative group p-[2px] sm:p-[2.5px] bg-gradient-to-r from-cyan-400 via-rose-500 to-amber-400 rounded-full shadow-2xl transition transform hover:scale-105 active:scale-95"
+          className="relative group p-[2px] sm:p-[2.5px] bg-gradient-to-r from-amber-400 via-rose-400 to-sky-400 rounded-full shadow-2xl transition transform hover:scale-105 active:scale-95"
+          aria-label="Chat with Admissions Office"
         >
-          <div className="bg-[#0B0F19] text-white font-heading text-xs sm:text-sm font-extrabold px-3 py-2.5 sm:px-5 sm:py-3.5 rounded-full flex items-center gap-2 sm:gap-3">
+          <div className="bg-[#0F2963] text-white font-heading text-xs sm:text-sm font-extrabold px-3 py-2.5 sm:px-5 sm:py-3.5 rounded-full flex items-center gap-2 sm:gap-2.5">
             <div className="relative flex items-center justify-center">
-              <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400 shrink-0" />
+              <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-amber-300 shrink-0" />
             </div>
-            <span className="bg-gradient-to-r from-cyan-300 via-pink-300 to-amber-300 bg-clip-text text-transparent font-black tracking-wide whitespace-nowrap text-xs sm:text-sm">
-              <span className="hidden xs:inline">Ask </span>Vannam AI
+            <span className="text-white font-bold tracking-wide whitespace-nowrap text-xs sm:text-sm flex items-center gap-1.5">
+              <span>Parent Help Desk</span>
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse hidden xs:inline-block" />
             </span>
           </div>
         </button>
       </div>
 
-      {/* AI Chat Window Drawer - Responsive full width / safe bounds on mobile */}
+      {/* Human Admissions Chat Window Drawer */}
       {isOpen && (
-        <div className="fixed inset-x-2.5 bottom-20 sm:inset-x-auto sm:bottom-24 sm:right-8 z-50 w-auto sm:w-full sm:max-w-md max-h-[70vh] sm:max-h-[80vh] bg-white rounded-3xl border-3 sm:border-4 border-vannam-yellow/30 shadow-2xl text-[#0F2963] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-x-2.5 bottom-20 sm:inset-x-auto sm:bottom-24 sm:right-8 z-50 w-auto sm:w-full sm:max-w-md max-h-[70vh] sm:max-h-[80vh] bg-white rounded-3xl border-3 sm:border-4 border-amber-300/60 shadow-2xl text-[#0F2963] overflow-hidden flex flex-col animate-in fade-in zoom-in duration-200">
           
           {/* Top Header */}
-          <div className="bg-[#0D1527] text-white p-4 border-b border-[#091A42] flex items-center justify-between">
+          <div className="bg-[#0F2963] text-white p-4 border-b border-[#0A1D47] flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-vannam-yellow rounded-2xl flex items-center justify-center text-[#0F2963] shadow-md">
-                <Sparkles className="w-6 h-6" />
+              <div className="w-10 h-10 bg-amber-400 rounded-2xl flex items-center justify-center text-[#0F2963] font-bold shadow-md">
+                <MessageCircle className="w-5 h-5 text-[#0F2963]" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-heading text-base font-extrabold text-white">Vannam AI Assistant</h4>
-                  <span className="bg-vannam-green/20 text-vannam-green text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-vannam-green/40">
+                  <h4 className="font-heading text-base font-extrabold text-white">Admissions Help Desk</h4>
+                  <span className="bg-emerald-500/20 text-emerald-300 text-[10px] font-extrabold px-2 py-0.5 rounded-full border border-emerald-400/40">
                     ONLINE
                   </span>
                 </div>
-                <p className="text-[11px] text-blue-200 font-medium">Preschool Parent Assistant</p>
+                <p className="text-[11px] text-blue-200 font-medium">Ms. Priya • Parent Counselor</p>
               </div>
             </div>
 
             <button
               onClick={() => setIsOpen(false)}
-              className="text-blue-200 hover:text-white p-2 rounded-full hover:bg-[#091A42] transition"
+              className="text-blue-200 hover:text-white p-2 rounded-full hover:bg-white/10 transition"
+              aria-label="Close chat"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
           {/* Messages Area */}
-          <div className="p-4 h-64 sm:h-80 overflow-y-auto space-y-4 text-xs bg-[#FAFBFD]">
+          <div className="p-4 h-64 sm:h-80 overflow-y-auto space-y-3.5 text-xs bg-[#FAFBFD]">
             {messages.map((msg, idx) => {
-              const isAi = msg.sender === "Vannam AI" || msg.sender === "AURA AI";
+              const isStaff = msg.sender === "Admissions Team";
               return (
-                <div key={idx} className={`flex flex-col ${isAi ? "items-start" : "items-end"}`}>
-                  <span className="text-[10px] text-blue-200 font-bold mb-1 px-1">{msg.sender}</span>
-                  <div className={`p-4 rounded-2xl max-w-[90%] font-medium text-xs leading-relaxed ${
-                    isAi 
-                      ? "bg-white text-[#0F2963] border border-[#CBD8F6]/90 shadow-xs" 
-                      : "bg-vannam-yellow text-[#0F2963] font-bold shadow-xs"
+                <div key={idx} className={`flex flex-col ${isStaff ? "items-start" : "items-end"}`}>
+                  <span className="text-[10px] text-slate-400 font-bold mb-1 px-1">{msg.sender}</span>
+                  <div className={`p-3.5 rounded-2xl max-w-[90%] font-medium text-xs leading-relaxed ${
+                    isStaff 
+                      ? "bg-white text-[#0F2963] border border-[#CBD8F6]/90 shadow-xs rounded-tl-xs" 
+                      : "bg-[#0F2963] text-white font-semibold shadow-xs rounded-tr-xs"
                   }`}>
                     {msg.text}
                   </div>
                 </div>
               );
             })}
-
+            
             {isTyping && (
-              <div className="flex items-center gap-2 text-vannam-orange text-xs font-bold animate-pulse p-2">
-                <Cpu className="w-4 h-4 animate-spin text-vannam-yellow" />
-                <span>Vannam AI is writing response...</span>
+              <div className="flex items-center gap-2 text-[#0F2963] text-xs font-semibold p-2">
+                <span className="flex gap-1 items-center">
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '300ms' }} />
+                </span>
+                <span className="text-slate-500 text-[11px]">Ms. Priya is typing...</span>
               </div>
             )}
           </div>
 
           {/* Prompt Chips */}
-          <div className="px-4 py-3 bg-white border-t border-[#E8EEFB] flex gap-2 overflow-x-auto">
+          <div className="px-4 py-2.5 bg-white border-t border-[#E8EEFB] flex gap-2 overflow-x-auto">
             {predefinedPrompts.map((prompt, i) => (
               <button
                 key={i}
                 onClick={() => handleSend(prompt)}
-                className="bg-vannam-yellow/5/80 hover:bg-vannam-yellow/10 text-[#0F2963] text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap transition border border-vannam-yellow/20 shrink-0"
+                className="bg-amber-50 hover:bg-amber-100 text-[#0F2963] text-[11px] font-bold px-3 py-1.5 rounded-full whitespace-nowrap transition border border-amber-200 shrink-0"
               >
-                ✨ {prompt}
+                💬 {prompt}
               </button>
             ))}
           </div>
@@ -153,16 +159,17 @@ export default function AiAssistantWidget() {
           <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="p-3 bg-white border-t border-[#CBD8F6] flex gap-2">
             <input
               type="text"
-              placeholder="Type your question..."
+              placeholder="Ask our admissions team a question..."
               value={inputMsg}
               onChange={(e) => setInputMsg(e.target.value)}
-              className="flex-1 bg-[#F0F4FC] border border-[#CBD8F6] rounded-full px-4 py-2.5 text-xs text-[#0F2963] focus:outline-none focus:ring-2 focus:ring-vannam-yellow"
+              className="flex-1 bg-[#F0F4FC] border border-[#CBD8F6] rounded-full px-4 py-2.5 text-xs text-[#0F2963] focus:outline-none focus:ring-2 focus:ring-amber-400"
             />
             <button
               type="submit"
-              className="bg-vannam-yellow hover:bg-vannam-yellow p-2.5 rounded-full text-[#0F2963] font-bold shrink-0 transition"
+              className="bg-[#0F2963] hover:bg-[#0A1D47] p-2.5 rounded-full text-white font-bold shrink-0 transition shadow-xs"
+              aria-label="Send message"
             >
-              <Send className="w-4 h-4" />
+              <Send className="w-4 h-4 text-amber-300" />
             </button>
           </form>
 

@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, CheckCircle2, Award, BookOpen, Clock, Sparkles } from "lucide-react";
-import FeeCalculator from "../../components/FeeCalculator";
 import {
   TeddyBearIcon,
   AlphabetBlock,
@@ -197,15 +196,6 @@ export default function ProgramsClient() {
           </div>
         </div>
 
-      </div>
-
-      {/* Interactive Fee Estimator */}
-      <div className="space-y-6 pt-6">
-        <div className="text-center space-y-2">
-          <span className="text-xs font-extrabold text-vannam-orange uppercase tracking-wider">Transparent Pricing</span>
-          <h2 className="font-heading text-3xl font-extrabold text-[#0F2963]">Estimate Your Child&apos;s Tuition</h2>
-        </div>
-        <FeeCalculator />
       </div>
 
       {/* Bottom CTA */}

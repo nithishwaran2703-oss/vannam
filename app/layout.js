@@ -30,7 +30,7 @@ export const metadata = {
     "nursery school enrollment",
     "safe preschool with live camera streaming",
     "organic food playschool",
-    "preschool fee calculator",
+    "preschool admissions",
     "early child development center"
   ],
   authors: [{ name: "Vannam World Preschool", url: "https://vannamworldpreschool.com" }],
@@ -104,17 +104,18 @@ export default function RootLayout({ children }) {
         },
         "image": "https://vannamworldpreschool.com/favicon.ico",
         "description": "Leading Montessori and STEAM preschool delivering progressive early childhood education with certified teachers, 4K live streaming, and organic chef nutrition.",
-        "telephone": "+1-800-826-6261",
+        "telephone": "+91-78100-87310",
         "email": "admissions@vannamworldpreschool.com",
-        "priceRange": "$$",
-        "currenciesAccepted": "USD",
-        "paymentAccepted": "Credit Card, Direct Debit, Online Banking",
+        "priceRange": "₹₹",
+        "currenciesAccepted": "INR",
+        "paymentAccepted": "Credit Card, Direct Debit, UPI, Online Banking",
         "address": {
           "@type": "PostalAddress",
-          "streetAddress": "124 Rainbow Gardens Drive, Sector 4",
-          "addressLocality": "North Academic Zone",
-          "postalCode": "10001",
-          "addressCountry": "US"
+          "streetAddress": "Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park",
+          "addressLocality": "Coimbatore",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "641001",
+          "addressCountry": "IN"
         },
         "geo": {
           "@type": "GeoCoordinates",
@@ -228,14 +229,14 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" className={`${fredoka.variable} ${plusJakarta.variable} scroll-smooth`}>
+    <html lang="en" className={`${fredoka.variable} ${plusJakarta.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
         />
       </head>
-      <body className="font-sans bg-[#FFFDF8] bg-playful-dots text-[#0F2963] antialiased selection:bg-vannam-yellow/30 selection:text-vannam-orange relative min-h-screen">
+      <body className="font-sans bg-[#FFFDF8] bg-playful-dots text-[#0F2963] antialiased selection:bg-vannam-yellow/30 selection:text-vannam-orange relative min-h-screen" suppressHydrationWarning>
         {children}
       </body>
     </html>
