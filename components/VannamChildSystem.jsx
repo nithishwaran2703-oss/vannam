@@ -699,14 +699,10 @@ export function HangingToyCanopy({
   const themeMap = {
     hero: [
       { type: "teddy", label: "Teddy", height: 46, delay: "0s", cordColor: "#FBBF24" },
-      { type: "block", letter: "A", color: "rose", height: 52, delay: "0.5s", cordColor: "#F43F5E" },
-      { type: "cloud", label: "Cloud", height: 38, delay: "0.8s", cordColor: "#BAE6FD" },
-      { type: "pinwheel", label: "Pinwheel", height: 48, delay: "1.2s", cordColor: "#38BDF8" },
-      { type: "rainbow", label: "Rainbow", height: 42, delay: "1.4s", cordColor: "#F59E0B" },
-      { type: "car", label: "Car", height: 48, delay: "1.9s", cordColor: "#10B981", hiddenMobile: true },
-      { type: "star", label: "Star", height: 56, delay: "1.8s", cordColor: "#FBBF24", hiddenMobile: true },
+      { type: "block", letter: "A", color: "rose", height: 50, delay: "0.5s", cordColor: "#F43F5E" },
+      { type: "rainbow", label: "Rainbow", height: 42, delay: "1.2s", cordColor: "#F59E0B" },
+      { type: "star", label: "Star", height: 50, delay: "1.8s", cordColor: "#FBBF24", hiddenMobile: true },
       { type: "airplane", label: "Flyer", height: 42, delay: "2.3s", cordColor: "#0284C7", hiddenMobile: true },
-      { type: "block", letter: "1", color: "amber", height: 46, delay: "0.4s", cordColor: "#10B981", hiddenMobile: true },
     ],
     about: [
       { type: "book", label: "Story", height: 48, delay: "0s", cordColor: "#F59E0B" },

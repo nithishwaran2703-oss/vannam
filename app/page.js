@@ -1190,27 +1190,15 @@ export default function Home() {
           <PinwheelToy className="w-10 h-10 xs:w-12 xs:h-12 sm:w-16 sm:h-16 animate-float-reverse" />
         </div>
 
-        {/* PLAYFUL DECORATIVE ANIMATIONS (Visible on Mobile & Desktop) */}
-        <div className="hidden sm:block absolute top-3 left-3 sm:top-4 sm:left-6 xl:left-16 animate-float pointer-events-none z-10 opacity-80 sm:opacity-100">
-          <RainbowIcon className="w-10 h-6 sm:w-20 sm:h-12 xl:w-24 xl:h-14 drop-shadow-xs" />
-        </div>
-        <div className="hidden sm:flex absolute top-3 right-3 sm:top-6 sm:right-8 xl:right-20 animate-float-reverse pointer-events-none z-10 opacity-85 sm:opacity-100">
-          <div className="flex items-center gap-1 sm:gap-2">
-            <HappyCloudIcon className="w-8 h-5 sm:w-14 sm:h-10 xl:w-16 xl:h-11 drop-shadow-xs" />
-            <SmilingSunIcon className="w-7 h-7 sm:w-12 sm:h-12 xl:w-14 xl:h-14 drop-shadow-xs" />
-          </div>
-        </div>
-        <div className="absolute bottom-6 left-2 sm:bottom-14 sm:left-10 animate-wiggle pointer-events-none z-10 opacity-80 sm:opacity-100">
+        {/* PLAYFUL DECORATIVE ANIMATIONS (Subtle, balanced accents) */}
+        <div className="absolute bottom-6 left-2 sm:bottom-14 sm:left-10 animate-wiggle pointer-events-none z-10 opacity-80 sm:opacity-90">
           <div className="flex items-center gap-1 sm:gap-1.5 bg-white/85 backdrop-blur-xs p-1 sm:p-2 rounded-xl sm:rounded-2xl border border-[#E8EEFB] shadow-xs">
             <AlphabetBlock letter="A" color="rose" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs" />
             <AlphabetBlock letter="B" color="amber" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs -mt-1" />
             <AlphabetBlock letter="C" color="sky" className="w-5 h-5 sm:w-8 sm:h-8 drop-shadow-xs" />
           </div>
         </div>
-        <div className="absolute top-32 left-2 sm:top-44 sm:left-4 xl:left-12 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-85">
-          <ButterflyIcon color="purple" className="w-5 h-5 sm:w-8 sm:h-8" />
-        </div>
-        <div className="absolute bottom-16 right-2 sm:bottom-24 sm:right-8 xl:right-16 animate-flutter pointer-events-none z-10 opacity-80 sm:opacity-90">
+        <div className="absolute bottom-16 right-2 sm:bottom-24 sm:right-8 xl:right-16 animate-flutter pointer-events-none z-10 opacity-70 sm:opacity-80">
           <ButterflyIcon color="amber" className="w-5 h-5 sm:w-8 sm:h-8" />
         </div>
 
