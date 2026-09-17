@@ -60,6 +60,7 @@ import ParentPortalModal from "../components/ParentPortalModal";
 import TourSchedulerModal from "../components/TourSchedulerModal";
 import ScrollReveal from "../components/ScrollReveal";
 import { getAcademicYear, getCurrentYear, formatDynamicYears } from "../lib/academicYear";
+import { HangingToyCanopy } from "../components/VannamChildSystem";
 
 import {
   TeddyBearIcon,
@@ -1177,6 +1178,9 @@ export default function Home() {
         <div className="lg:hidden absolute top-0 left-0 w-48 h-48 bg-gradient-to-br from-amber-200/40 to-rose-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
         <div className="lg:hidden absolute top-20 right-0 w-40 h-40 bg-gradient-to-bl from-sky-200/40 to-emerald-200/30 rounded-full blur-3xl -z-10 pointer-events-none" />
         <div className="lg:hidden absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-32 bg-gradient-to-r from-vannam-yellow/20 via-vannam-red/10 to-vannam-purple/15 rounded-full blur-2xl -z-10 pointer-events-none" />
+
+        {/* HANGING TOYS CANOPY (Congested nursery toy mobile) */}
+        <HangingToyCanopy theme="hero" ropeColor="#F59E0B" />
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop screens) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/3 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -1389,6 +1393,8 @@ export default function Home() {
 
       {/* ABOUT SECTION */}
       <section id="about" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-about relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="about" ropeColor="#F59E0B" />
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20">
           
@@ -1504,6 +1510,8 @@ export default function Home() {
 
       {/* AGE-BASED PROGRAMS SECTION */}
       <section id="programs" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-programs relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="programs" ropeColor="#EC4899" />
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20">
           
@@ -1648,6 +1656,8 @@ export default function Home() {
 
       {/* HOW WE DIFFER FROM OTHER SCHOOLS (WHY US) SECTION */}
       <section id="why-us" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-20 lg:pb-16 bg-section-why-us relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="whyUs" ropeColor="#3B82F6" />
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-16 relative z-20 space-y-4 sm:space-y-6">
           {/* Section Header */}
@@ -1828,6 +1838,8 @@ export default function Home() {
 
       {/* INNOVATIVE LEARNING METHODOLOGY SECTION (7 SHADES OF GROWTH) */}
       <section id="methodology" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-methodology relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="methodology" ropeColor="#10B981" />
         
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2231,6 +2243,41 @@ export default function Home() {
 
       {/* DAILY ACTIVITIES SECTION */}
       <section id="activities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-activities relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="activities" ropeColor="#F59E0B" />
+
+        {/* CHILD-ATTRACTIVE FLOATING DECORATIONS (Fills empty spaces on Mobile & Desktop) */}
+        <div className="absolute top-2 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
+          <SmilingSunIcon className="w-7 h-7 sm:w-11 sm:h-11 drop-shadow-xs" />
+          <RainbowIcon className="w-8 h-5 sm:w-12 sm:h-8 drop-shadow-xs hidden xs:block" />
+        </div>
+        <div className="absolute top-2 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
+          <HappyCloudIcon className="w-7 h-5 sm:w-11 sm:h-8" />
+          <FloatingBalloonsGroup className="w-7 h-9 sm:w-11 sm:h-14 drop-shadow-xs" />
+        </div>
+
+        {/* Mid-Flank Toy Accents */}
+        <div className="absolute top-1/3 left-1 sm:left-4 animate-bounce-gentle pointer-events-none opacity-80 z-10">
+          <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs p-1 rounded-xl border border-amber-200/80 shadow-2xs">
+            <AlphabetBlock letter="1" color="amber" className="w-4 h-4 sm:w-6 sm:h-6" />
+            <AlphabetBlock letter="2" color="sky" className="w-4 h-4 sm:w-6 sm:h-6 -mt-1" />
+            <AlphabetBlock letter="3" color="rose" className="w-4 h-4 sm:w-6 sm:h-6" />
+          </div>
+        </div>
+        <div className="absolute top-1/3 right-1 sm:right-4 animate-flutter pointer-events-none opacity-85 z-10 flex flex-col items-center gap-1">
+          <PinwheelToy className="w-6 h-6 sm:w-9 sm:h-9 animate-spin-slow" />
+          <ButterflyIcon color="rose" className="w-5 h-5 sm:w-7 sm:h-7" />
+        </div>
+
+        {/* Lower Corner Accents */}
+        <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-8 animate-drift pointer-events-none opacity-85 z-10 flex items-center gap-1.5">
+          <PaperPlaneIcon className="w-6 h-6 sm:w-9 sm:h-9" />
+          <CrayonIcon color="sky" className="w-5 h-5 sm:w-7 sm:h-7 hidden xs:block" />
+        </div>
+        <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-8 animate-wiggle pointer-events-none opacity-80 z-10 flex items-center gap-1">
+          <MusicNotesCluster className="w-6 h-6 sm:w-8 sm:h-8" />
+          <ToyCarIcon className="w-6 h-6 sm:w-8 sm:h-8 hidden xs:block" />
+        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2346,15 +2393,17 @@ export default function Home() {
 
       {/* FACILITIES SECTION */}
       <section id="facilities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-facilities relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="facilities" ropeColor="#10B981" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
           {/* Section Header */}
           <ScrollReveal variant="reveal-gate-open" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5 sm:space-y-2">
-            <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
-              <SchoolCastleIcon className="w-8 h-8 text-vannam-navy animate-float" />
-              <PlaygroundSlideIcon className="w-8 h-8 animate-bounce-gentle" />
-              <SchoolBusToyIcon className="w-9 h-9 animate-wiggle" />
+            <div className="flex items-center justify-center gap-2 sm:gap-3 mb-1">
+              <SchoolCastleIcon className="w-6 h-6 sm:w-8 sm:h-8 text-vannam-navy animate-float" />
+              <PlaygroundSlideIcon className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce-gentle" />
+              <SchoolBusToyIcon className="w-7 h-7 sm:w-9 sm:h-9 animate-wiggle" />
             </div>
             <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-emerald-800 bg-emerald-100 border border-emerald-300 px-3 py-1 rounded-full shadow-2xs">
               <ShieldCheck className="w-3.5 h-3.5" />
@@ -2409,6 +2458,8 @@ export default function Home() {
 
       {/* YOUR CHILD'S SAFETY & PROTECTION SECTION */}
       <section id="safety" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-safety relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="safety" ropeColor="#3B82F6" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2541,6 +2592,8 @@ export default function Home() {
 
       {/* TEACHERS & LEADERSHIP SECTION */}
       <section id="teachers" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-teachers relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="teachers" ropeColor="#EF4444" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2595,6 +2648,22 @@ export default function Home() {
 
       {/* GALLERY SECTION WITH LIGHTBOX */}
       <section id="gallery" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-gallery relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="gallery" ropeColor="#0284C7" />
+
+        {/* BACKGROUND ART & FLOATING TOYS */}
+        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
+          <ArtPaletteIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
+        </div>
+        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
+          <PinwheelToy className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
+        </div>
+        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
+          <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
+        </div>
+        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
+          <Camera className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-cyan" />
+        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2717,6 +2786,8 @@ export default function Home() {
 
       {/* PARENT TESTIMONIALS SECTION */}
       <section id="testimonials" className="scroll-mt-24 pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-testimonials relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="testimonials" ropeColor="#F43F5E" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2739,10 +2810,10 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* Testimonial Cards: 1-Col on Mobile, 3-Col on Desktop */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5 sm:gap-5">
+          {/* Testimonial Cards: Horizontal Scroll on Mobile, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 md:grid md:grid-cols-3 md:gap-5 px-1 sm:px-0">
             {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-full bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
+              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-0.5 text-vannam-yellow">
@@ -2780,6 +2851,8 @@ export default function Home() {
 
       {/* UPCOMING SCHOOL EVENTS */}
       <section id="events" className="scroll-mt-24 pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-events relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="events" ropeColor="#F59E0B" />
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2832,6 +2905,8 @@ export default function Home() {
 
       {/* FAQS ACCORDION SECTION */}
       <section className="pt-16 pb-6 sm:pt-24 sm:pb-10 lg:pt-32 lg:pb-16 bg-section-faq relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="faq" ropeColor="#F59E0B" />
         
         {/* BACKGROUND ART (Fills empty side whitespace on mobile & desktop) */}
         <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
@@ -2893,6 +2968,8 @@ export default function Home() {
 
       {/* ADMISSION CTA & CONTACT FORM SECTION - GLASSMORPHIC POSTCARD */}
       <section id="contact" className="scroll-mt-24 py-16 sm:py-24 lg:py-32 bg-section-contact text-white relative overflow-hidden">
+        {/* HANGING TOYS CANOPY */}
+        <HangingToyCanopy theme="contact" ropeColor="#FBBF24" />
         
         {/* Floating Background 3D Toys */}
         <div className="absolute top-10 left-10 opacity-35 animate-pulse pointer-events-none rotate-[-15deg]">

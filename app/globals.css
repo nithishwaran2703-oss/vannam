@@ -1143,7 +1143,7 @@ html, body {
 .bg-section-hero {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/hero-background.png');
+  background-image: url('/hero-background.jpg');
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
@@ -1151,7 +1151,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-hero {
-    background-image: url('/hero-background-mobile.png');
+    background-image: url('/hero-background-mobile.jpg');
     background-position: center top;
     background-size: cover;
   }
@@ -1170,8 +1170,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-about {
     background-image: url('/about-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1188,8 +1188,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-programs {
     background-image: url('/programs-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1206,8 +1206,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-why-us {
     background-image: url('/why-us-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1224,8 +1224,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-methodology {
     background-image: url('/methodology-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1242,8 +1242,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-activities {
     background-image: url('/activities-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1266,8 +1266,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-safety {
     background-image: url('/safety-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1284,8 +1284,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-teachers {
     background-image: url('/teachers-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1302,8 +1302,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-gallery {
     background-image: url('/gallery-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1320,8 +1320,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-testimonials {
     background-image: url('/testimonials-background-mobile-v3.png?v=3');
-    background-position: center top;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1340,8 +1340,8 @@ html, body {
   .bg-section-events,
   .bg-section-interactive {
     background-image: url('/events-background-mobile-v3.png?v=3');
-    background-position: center top;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1358,8 +1358,8 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-facilities {
     background-image: url('/facilities-background-mobile-v3.png?v=3');
-    background-position: center bottom;
-    background-size: cover;
+    background-position: center center;
+    background-size: 100% 100%;
   }
 }
 
@@ -1449,7 +1449,9 @@ html, body {
     left: auto !important;
   }
 
-  /* Harmonize section background positions on mobile */
+  /* Harmonize section background positions on mobile — 
+     Hero uses cover (9:16 portrait mobile image matches viewport ratio).
+     Other sections use 100% 100% to fill the full section height. */
   .bg-section-hero {
     background-position: center top !important;
     background-size: cover !important;
@@ -1469,7 +1471,97 @@ html, body {
   .bg-section-interactive,
   .bg-section-faq {
     background-position: center top !important;
-    background-size: cover !important;
+    background-size: 100% 100% !important;
+  }
+
+  /* Ensure section containers expand to fit their content */
+  section[class*="bg-section-"] {
+    min-height: fit-content !important;
+    position: relative !important;
+  }
+
+  /* ── MOBILE TEXT READABILITY ── */
+  /* Strong white text-shadow so headings pop over any background */
+  .mobile-readable-text,
+  section[class*="bg-section-"] p {
+    text-shadow: 0 1px 4px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 1) !important;
+  }
+
+  .mobile-text-shadow,
+  section[class*="bg-section-"] h2,
+  section[class*="bg-section-"] h3 {
+    text-shadow: 
+      0 1px 4px rgba(255, 255, 255, 1),
+      0 0 20px rgba(255, 255, 255, 1),
+      0 0 40px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  /* Frosted glass backdrop behind section header/text areas on mobile
+     so text is always readable even with background illustrations */
+  section[class*="bg-section-"] > div[class*="max-w-"] > div[class*="text-center"] {
+    background: rgba(255, 255, 255, 0.65);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 1.25rem;
+    padding: 1rem 0.75rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+  }
+
+  /* ── REDUCE TOY CANOPY VISUAL NOISE ON MOBILE ── */
+  section[class*="bg-section-"] > div[class*="absolute"][class*="pointer-events-none"][class*="z-20"] {
+    opacity: 0.35 !important;
+  }
+
+  /* ── MOBILE CARD GRID COLORS (BOOSTED SATURATION) ── */
+  /* Plain bento-cards get opaque white so text is readable on mobile */
+  .bento-card {
+    background: rgba(255, 255, 255, 0.97) !important;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* Color cards override the white with vivid, more saturated gradients on mobile */
+  .card-amber, .card-yellow {
+    background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%) !important;
+    border-color: #FFD54F !important;
+  }
+
+  .card-emerald, .card-green {
+    background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%) !important;
+    border-color: #81C784 !important;
+  }
+
+  .card-sky, .card-cyan {
+    background: linear-gradient(135deg, #E1F5FE 0%, #81D4FA 100%) !important;
+    border-color: #4FC3F7 !important;
+  }
+
+  .card-rose, .card-red {
+    background: linear-gradient(135deg, #FCE4EC 0%, #F48FB1 100%) !important;
+    border-color: #F06292 !important;
+  }
+
+  .card-orange {
+    background: linear-gradient(135deg, #FFF3E0 0%, #FFB74D 100%) !important;
+    border-color: #FF9800 !important;
+  }
+
+  .card-navy {
+    background: linear-gradient(135deg, #E8EAF6 0%, #9FA8DA 100%) !important;
+    border-color: #7986CB !important;
+  }
+
+  .card-purple {
+    background: linear-gradient(135deg, #F3E5F5 0%, #CE93D8 100%) !important;
+    border-color: #BA68C8 !important;
+  }
+
+  /* Ensure text containers have proper padding on mobile */
+  section[class*="bg-section-"] .max-w-6xl,
+  section[class*="bg-section-"] .max-w-7xl {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
   }
 
   /* Smooth mobile touch scrolling for swipeable tabs and card rows */

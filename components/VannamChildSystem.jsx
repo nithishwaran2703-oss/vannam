@@ -2,6 +2,13 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import {
+  TeddyBearIcon,
+  AlphabetBlock,
+  ToyCarIcon,
+  PinwheelToy,
+  SchoolBusToyIcon,
+} from "./ToyDecorations";
 
 // ============================================================================
 // 1. VANNAM CONSISTENT CHILD CHARACTERS (High-End Vector Storybook Family)
@@ -447,15 +454,16 @@ export function VannamHangingToys({
   ],
   className = "",
   containerHeight = "h-24 sm:h-32",
+  congested = true,
 }) {
   return (
     <div
-      className={`absolute top-0 left-0 right-0 pointer-events-none select-none z-20 flex justify-around items-start px-3 sm:px-12 overflow-visible ${containerHeight} ${className}`}
+      className={`absolute top-0 left-0 right-0 pointer-events-none select-none z-20 flex ${congested ? "justify-center gap-3 xs:gap-4 sm:gap-7 md:gap-10 max-w-4xl mx-auto" : "justify-around"} items-start px-3 sm:px-6 overflow-visible ${containerHeight} ${className}`}
       aria-hidden="true"
     >
       {items.map((item, idx) => {
-        // Strict Mobile Rule: Maximum 3 hanging toys on screens < 640px.
-        const isHiddenMobile = idx >= 3 || item.hiddenMobile;
+        // Mobile rule: show only 2 essential toys to keep text readable and view clean
+        const isHiddenMobile = (congested ? idx >= 2 : idx >= 2) || item.hiddenMobile;
         const swingClass = idx % 3 === 0
           ? "animate-pendulum-slow"
           : idx % 3 === 1
@@ -463,7 +471,7 @@ export function VannamHangingToys({
             : "animate-pendulum";
 
         const deskH = item.height || 48;
-        const mobH = Math.max(22, Math.round(deskH * 0.65));
+        const mobH = Math.max(20, Math.round(deskH * 0.65));
 
         return (
           <div
@@ -492,7 +500,7 @@ export function VannamHangingToys({
 
             {/* Oscillating Toy Head */}
             <div
-              className={`${swingClass} origin-top p-1 sm:p-1.5 rounded-2xl bg-white/90 backdrop-blur-xs border border-amber-200/80 shadow-xs flex items-center justify-center -mt-0.5 hover:scale-110 transition-transform`}
+              className={`${swingClass} origin-top p-1 sm:p-1.5 rounded-2xl bg-white/95 backdrop-blur-xs border border-amber-200/80 shadow-xs flex items-center justify-center -mt-0.5 hover:scale-110 transition-transform`}
               style={{ animationDelay: item.delay || "0s" }}
             >
               {item.type === "star" && <HangingStarIcon className="w-5 h-5 sm:w-7 sm:h-7" />}
@@ -511,19 +519,19 @@ export function VannamHangingToys({
               {item.type === "camera" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">📸</div>}
               {item.type === "shield" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">🛡️</div>}
               {item.type === "sprout" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">🌱</div>}
-              {item.type === "bus" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">🚌</div>}
+              {item.type === "bus" && <SchoolBusToyIcon className="w-5 h-5 sm:w-7 sm:h-7" />}
               {item.type === "sun" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">☀️</div>}
               {item.type === "flower" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">🌸</div>}
               {item.type === "letter" && <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-sm sm:text-base">💌</div>}
-              {item.type === "teddy" && (
-                <div className="w-5 h-5 sm:w-7 sm:h-7 flex items-center justify-center text-amber-600 font-bold">
-                  🧸
-                </div>
-              )}
+              {item.type === "car" && <ToyCarIcon className="w-5 h-5 sm:w-7 sm:h-7" />}
+              {item.type === "pinwheel" && <PinwheelToy className="w-5 h-5 sm:w-7 sm:h-7 animate-spin-slow" />}
+              {item.type === "teddy" && <TeddyBearIcon className="w-5 h-5 sm:w-7 sm:h-7" />}
               {item.type === "block" && (
-                <div className="w-5 h-5 sm:w-7 sm:h-7 rounded-md bg-amber-400 border border-amber-600 flex items-center justify-center text-[10px] sm:text-xs font-black text-amber-950">
-                  {item.letter || "A"}
-                </div>
+                <AlphabetBlock
+                  letter={item.letter || "A"}
+                  color={item.color || "amber"}
+                  className="w-5 h-5 sm:w-7 sm:h-7 drop-shadow-2xs"
+                />
               )}
               {item.type === "custom" && item.component}
             </div>
@@ -685,19 +693,20 @@ export function HangingToyCanopy({
   theme = "hero",
   items,
   ropeColor = "#F59E0B",
-  className = ""
+  className = "",
+  congested = true,
 }) {
   const themeMap = {
     hero: [
       { type: "teddy", label: "Teddy", height: 46, delay: "0s", cordColor: "#FBBF24" },
-      { type: "cloud", label: "Cloud", height: 54, delay: "0.8s", cordColor: "#BAE6FD" },
-      { type: "rainbow", label: "Rainbow", height: 40, delay: "1.4s", cordColor: "#F59E0B" },
-      { type: "block", letter: "A", height: 44, delay: "0.5s", cordColor: "#F43F5E", hiddenMobile: true },
-      { type: "star", label: "Star", height: 60, delay: "1.8s", cordColor: "#FBBF24", hiddenMobile: true },
-      { type: "airplane", label: "Flyer", height: 50, delay: "2.3s", cordColor: "#0284C7", hiddenMobile: true },
-      { type: "kite", label: "Kite", height: 58, delay: "1.9s", cordColor: "#F43F5E", hiddenMobile: true },
-      { type: "balloon", color: "sky", height: 52, delay: "2.6s", cordColor: "#00A8E8", hiddenMobile: true },
-      { type: "block", letter: "1", height: 42, delay: "0.4s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "block", letter: "A", color: "rose", height: 52, delay: "0.5s", cordColor: "#F43F5E" },
+      { type: "cloud", label: "Cloud", height: 38, delay: "0.8s", cordColor: "#BAE6FD" },
+      { type: "pinwheel", label: "Pinwheel", height: 48, delay: "1.2s", cordColor: "#38BDF8" },
+      { type: "rainbow", label: "Rainbow", height: 42, delay: "1.4s", cordColor: "#F59E0B" },
+      { type: "car", label: "Car", height: 48, delay: "1.9s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "star", label: "Star", height: 56, delay: "1.8s", cordColor: "#FBBF24", hiddenMobile: true },
+      { type: "airplane", label: "Flyer", height: 42, delay: "2.3s", cordColor: "#0284C7", hiddenMobile: true },
+      { type: "block", letter: "1", color: "amber", height: 46, delay: "0.4s", cordColor: "#10B981", hiddenMobile: true },
     ],
     about: [
       { type: "book", label: "Story", height: 48, delay: "0s", cordColor: "#F59E0B" },
@@ -705,17 +714,18 @@ export function HangingToyCanopy({
       { type: "teddy", label: "Teddy", height: 42, delay: "1.5s", cordColor: "#EA580C" },
       { type: "rainbow", label: "Rainbow", height: 50, delay: "0.6s", cordColor: "#F43F5E", hiddenMobile: true },
       { type: "cloud", label: "Cloud", height: 46, delay: "1.8s", cordColor: "#BAE6FD", hiddenMobile: true },
-      { type: "block", letter: "V", height: 52, delay: "2.2s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "block", letter: "V", color: "emerald", height: 52, delay: "2.2s", cordColor: "#10B981", hiddenMobile: true },
       { type: "heart", label: "Heart", height: 44, delay: "1.3s", cordColor: "#F43F5E", hiddenMobile: true },
     ],
     programs: [
-      { type: "block", letter: "A", height: 46, delay: "0s", cordColor: "#F43F5E" },
-      { type: "puzzle", label: "Puzzle", height: 54, delay: "0.7s", cordColor: "#F59E0B" },
-      { type: "balloon", color: "green", height: 42, delay: "1.4s", cordColor: "#10B981" },
-      { type: "block", letter: "B", height: 50, delay: "0.4s", cordColor: "#38BDF8", hiddenMobile: true },
-      { type: "star", label: "Star", height: 58, delay: "1.9s", cordColor: "#FBBF24", hiddenMobile: true },
-      { type: "block", letter: "C", height: 45, delay: "2.4s", cordColor: "#8B5CF6", hiddenMobile: true },
-      { type: "airplane", label: "Flyer", height: 52, delay: "1.2s", cordColor: "#0284C7", hiddenMobile: true },
+      { type: "block", letter: "A", color: "rose", height: 48, delay: "0s", cordColor: "#F43F5E" },
+      { type: "teddy", label: "Teddy", height: 54, delay: "0.6s", cordColor: "#F59E0B" },
+      { type: "puzzle", label: "Puzzle", height: 40, delay: "1.2s", cordColor: "#10B981" },
+      { type: "block", letter: "B", color: "sky", height: 50, delay: "0.4s", cordColor: "#38BDF8" },
+      { type: "balloon", color: "emerald", height: 44, delay: "1.4s", cordColor: "#10B981" },
+      { type: "star", label: "Star", height: 56, delay: "1.9s", cordColor: "#FBBF24", hiddenMobile: true },
+      { type: "block", letter: "C", color: "purple", height: 45, delay: "2.4s", cordColor: "#8B5CF6", hiddenMobile: true },
+      { type: "airplane", label: "Flyer", height: 50, delay: "1.2s", cordColor: "#0284C7", hiddenMobile: true },
     ],
     whyUs: [
       { type: "shield", label: "Trust", height: 48, delay: "0s", cordColor: "#3B82F6" },
@@ -736,67 +746,68 @@ export function HangingToyCanopy({
       { type: "airplane", label: "Soar", height: 50, delay: "2.6s", cordColor: "#00A8E8", hiddenMobile: true },
     ],
     activities: [
-      { type: "palette", label: "Art", height: 48, delay: "0s", cordColor: "#F43F5E" },
-      { type: "music", label: "Music", height: 54, delay: "0.8s", cordColor: "#8B5CF6" },
-      { type: "balloon", color: "amber", height: 40, delay: "1.6s", cordColor: "#F59E0B" },
-      { type: "kite", label: "Sports", height: 58, delay: "0.5s", cordColor: "#0284C7", hiddenMobile: true },
-      { type: "star", label: "Star", height: 44, delay: "2.2s", cordColor: "#FBBF24", hiddenMobile: true },
-      { type: "teddy", label: "Play", height: 50, delay: "1.3s", cordColor: "#EA580C", hiddenMobile: true },
-      { type: "block", letter: "P", height: 46, delay: "2.5s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "teddy", label: "Teddy", height: 46, delay: "0s", cordColor: "#F59E0B" },
+      { type: "pinwheel", label: "Pinwheel", height: 52, delay: "0.7s", cordColor: "#F43F5E" },
+      { type: "block", letter: "1", color: "amber", height: 40, delay: "1.4s", cordColor: "#FBBF24" },
+      { type: "car", label: "Toy Car", height: 48, delay: "0.5s", cordColor: "#38BDF8" },
+      { type: "kite", label: "Kite", height: 44, delay: "1.8s", cordColor: "#0284C7" },
+      { type: "star", label: "Star", height: 54, delay: "2.2s", cordColor: "#FBBF24", hiddenMobile: true },
+      { type: "palette", label: "Art", height: 46, delay: "1.1s", cordColor: "#8B5CF6", hiddenMobile: true },
+      { type: "bus", label: "Bus", height: 50, delay: "2.5s", cordColor: "#10B981", hiddenMobile: true },
     ],
     facilities: [
-      { type: "bus", label: "Campus", height: 46, delay: "0s", cordColor: "#FBBF24" },
-      { type: "airplane", label: "Fly", height: 54, delay: "0.7s", cordColor: "#0284C7" },
-      { type: "kite", label: "Play", height: 42, delay: "1.5s", cordColor: "#F43F5E" },
-      { type: "balloon", color: "sky", height: 50, delay: "0.4s", cordColor: "#00A8E8", hiddenMobile: true },
-      { type: "cloud", label: "Air", height: 58, delay: "2.0s", cordColor: "#BAE6FD", hiddenMobile: true },
-      { type: "star", label: "Safe", height: 44, delay: "1.1s", cordColor: "#F59E0B", hiddenMobile: true },
-      { type: "flower", label: "Garden", height: 48, delay: "2.4s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "bus", label: "School Bus", height: 48, delay: "0s", cordColor: "#FBBF24" },
+      { type: "car", label: "Car", height: 52, delay: "0.7s", cordColor: "#F43F5E" },
+      { type: "star", label: "Campus Star", height: 40, delay: "1.5s", cordColor: "#FBBF24" },
+      { type: "airplane", label: "Flyer", height: 48, delay: "0.5s", cordColor: "#0284C7" },
+      { type: "kite", label: "Play", height: 44, delay: "1.8s", cordColor: "#10B981" },
+      { type: "cloud", label: "Cloud", height: 50, delay: "2.1s", cordColor: "#BAE6FD", hiddenMobile: true },
+      { type: "puzzle", label: "Puzzle", height: 44, delay: "1.2s", cordColor: "#8B5CF6", hiddenMobile: true },
     ],
     safety: [
-      { type: "shield", label: "Shield", height: 48, delay: "0s", cordColor: "#10B981" },
-      { type: "heart", label: "Care", height: 54, delay: "0.8s", cordColor: "#F43F5E" },
-      { type: "star", label: "Star", height: 40, delay: "1.6s", cordColor: "#FBBF24" },
-      { type: "cloud", label: "Clean", height: 50, delay: "0.5s", cordColor: "#BAE6FD", hiddenMobile: true },
-      { type: "teddy", label: "Gentle", height: 44, delay: "2.1s", cordColor: "#EA580C", hiddenMobile: true },
-      { type: "sun", label: "Warm", height: 56, delay: "1.2s", cordColor: "#F59E0B", hiddenMobile: true },
-      { type: "flower", label: "Pure", height: 46, delay: "2.7s", cordColor: "#34D399", hiddenMobile: true },
+      { type: "shield", label: "Safe", height: 48, delay: "0s", cordColor: "#3B82F6" },
+      { type: "star", label: "Clean", height: 54, delay: "0.8s", cordColor: "#FBBF24" },
+      { type: "heart", label: "Love", height: 42, delay: "1.5s", cordColor: "#F43F5E" },
+      { type: "cloud", label: "Pure", height: 50, delay: "0.4s", cordColor: "#BAE6FD", hiddenMobile: true },
+      { type: "apple", label: "Health", height: 58, delay: "2.1s", cordColor: "#EF4444", hiddenMobile: true },
+      { type: "camera", label: "CCTV", height: 44, delay: "1.2s", cordColor: "#0284C7", hiddenMobile: true },
+      { type: "flower", label: "Care", height: 46, delay: "2.5s", cordColor: "#10B981", hiddenMobile: true },
     ],
     teachers: [
-      { type: "apple", label: "Educator", height: 48, delay: "0s", cordColor: "#EF4444" },
-      { type: "book", label: "Guidance", height: 54, delay: "0.7s", cordColor: "#F59E0B" },
-      { type: "star", label: "Leader", height: 42, delay: "1.4s", cordColor: "#FBBF24" },
-      { type: "heart", label: "Loving", height: 50, delay: "0.4s", cordColor: "#F43F5E", hiddenMobile: true },
-      { type: "block", letter: "T", height: 58, delay: "2.0s", cordColor: "#3B82F6", hiddenMobile: true },
-      { type: "cloud", label: "Patience", height: 44, delay: "1.2s", cordColor: "#BAE6FD", hiddenMobile: true },
-      { type: "palette", label: "Inspire", height: 46, delay: "2.5s", cordColor: "#8B5CF6", hiddenMobile: true },
+      { type: "apple", label: "Mentor", height: 48, delay: "0s", cordColor: "#EF4444" },
+      { type: "heart", label: "Care", height: 54, delay: "0.7s", cordColor: "#F43F5E" },
+      { type: "book", label: "Story", height: 40, delay: "1.4s", cordColor: "#F59E0B" },
+      { type: "star", label: "Inspire", height: 50, delay: "0.4s", cordColor: "#FBBF24", hiddenMobile: true },
+      { type: "palette", label: "Create", height: 58, delay: "2.0s", cordColor: "#8B5CF6", hiddenMobile: true },
+      { type: "block", letter: "T", color: "amber", height: 44, delay: "1.1s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "flower", label: "Nurture", height: 46, delay: "2.5s", cordColor: "#10B981", hiddenMobile: true },
     ],
     gallery: [
-      { type: "camera", label: "Capture", height: 48, delay: "0s", cordColor: "#0284C7" },
-      { type: "star", label: "Memory", height: 54, delay: "0.8s", cordColor: "#FBBF24" },
-      { type: "rainbow", label: "Moments", height: 40, delay: "1.5s", cordColor: "#F59E0B" },
-      { type: "balloon", color: "rose", height: 50, delay: "0.5s", cordColor: "#F43F5E", hiddenMobile: true },
-      { type: "kite", label: "Smile", height: 58, delay: "2.2s", cordColor: "#10B981", hiddenMobile: true },
-      { type: "heart", label: "Joy", height: 44, delay: "1.1s", cordColor: "#FB7185", hiddenMobile: true },
-      { type: "airplane", label: "Trip", height: 52, delay: "2.6s", cordColor: "#00A8E8", hiddenMobile: true },
+      { type: "camera", label: "Photo", height: 46, delay: "0s", cordColor: "#0284C7" },
+      { type: "star", label: "Smile", height: 54, delay: "0.7s", cordColor: "#FBBF24" },
+      { type: "palette", label: "Art", height: 42, delay: "1.5s", cordColor: "#F43F5E" },
+      { type: "pinwheel", label: "Play", height: 50, delay: "0.5s", cordColor: "#38BDF8" },
+      { type: "balloon", color: "rose", height: 44, delay: "1.9s", cordColor: "#FB7185" },
+      { type: "kite", label: "Cheer", height: 58, delay: "2.2s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "heart", label: "Love", height: 46, delay: "1.2s", cordColor: "#F43F5E", hiddenMobile: true },
     ],
     testimonials: [
-      { type: "letter", label: "Review", height: 48, delay: "0s", cordColor: "#F43F5E" },
-      { type: "heart", label: "Love", height: 54, delay: "0.7s", cordColor: "#FB7185" },
-      { type: "star", label: "5-Star", height: 42, delay: "1.5s", cordColor: "#FBBF24" },
-      { type: "teddy", label: "Family", height: 50, delay: "0.4s", cordColor: "#EA580C", hiddenMobile: true },
-      { type: "balloon", color: "amber", height: 58, delay: "2.0s", cordColor: "#F59E0B", hiddenMobile: true },
-      { type: "cloud", label: "Home", height: 44, delay: "1.2s", cordColor: "#BAE6FD", hiddenMobile: true },
-      { type: "rainbow", label: "Grateful", height: 46, delay: "2.5s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "heart", label: "Love", height: 48, delay: "0s", cordColor: "#F43F5E" },
+      { type: "letter", label: "Note", height: 54, delay: "0.8s", cordColor: "#F59E0B" },
+      { type: "star", label: "Gratitude", height: 42, delay: "1.6s", cordColor: "#FBBF24" },
+      { type: "flower", label: "Joy", height: 50, delay: "0.5s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "balloon", color: "sky", height: 44, delay: "2.0s", cordColor: "#00A8E8", hiddenMobile: true },
+      { type: "teddy", label: "Hugs", height: 56, delay: "1.3s", cordColor: "#EA580C", hiddenMobile: true },
+      { type: "sun", label: "Warmth", height: 46, delay: "2.5s", cordColor: "#FBBF24", hiddenMobile: true },
     ],
     events: [
-      { type: "balloon", color: "sky", height: 48, delay: "0s", cordColor: "#0284C7" },
-      { type: "star", label: "Fun", height: 54, delay: "0.8s", cordColor: "#FBBF24" },
-      { type: "kite", label: "Party", height: 40, delay: "1.6s", cordColor: "#F43F5E" },
-      { type: "music", label: "Dance", height: 50, delay: "0.5s", cordColor: "#8B5CF6", hiddenMobile: true },
-      { type: "rainbow", label: "Joy", height: 56, delay: "2.1s", cordColor: "#F59E0B", hiddenMobile: true },
-      { type: "airplane", label: "Celebrate", height: 44, delay: "1.3s", cordColor: "#10B981", hiddenMobile: true },
-      { type: "heart", label: "Cheer", height: 48, delay: "2.7s", cordColor: "#F43F5E", hiddenMobile: true },
+      { type: "balloon", color: "amber", height: 48, delay: "0s", cordColor: "#F59E0B" },
+      { type: "star", label: "Party", height: 56, delay: "0.7s", cordColor: "#FBBF24" },
+      { type: "music", label: "Sing", height: 42, delay: "1.5s", cordColor: "#8B5CF6" },
+      { type: "kite", label: "Fest", height: 52, delay: "0.4s", cordColor: "#0284C7", hiddenMobile: true },
+      { type: "rainbow", label: "Fun", height: 60, delay: "2.1s", cordColor: "#F43F5E", hiddenMobile: true },
+      { type: "heart", label: "Family", height: 44, delay: "1.1s", cordColor: "#F43F5E", hiddenMobile: true },
+      { type: "airplane", label: "Fly", height: 50, delay: "2.6s", cordColor: "#00A8E8", hiddenMobile: true },
     ],
     faq: [
       { type: "book", label: "Answers", height: 48, delay: "0s", cordColor: "#F59E0B" },
@@ -804,7 +815,7 @@ export function HangingToyCanopy({
       { type: "puzzle", label: "Solve", height: 42, delay: "1.5s", cordColor: "#3B82F6" },
       { type: "cloud", label: "Peace", height: 50, delay: "0.4s", cordColor: "#BAE6FD", hiddenMobile: true },
       { type: "heart", label: "Care", height: 58, delay: "2.0s", cordColor: "#F43F5E", hiddenMobile: true },
-      { type: "block", letter: "?", height: 44, delay: "1.1s", cordColor: "#10B981", hiddenMobile: true },
+      { type: "block", letter: "?", color: "emerald", height: 44, delay: "1.1s", cordColor: "#10B981", hiddenMobile: true },
       { type: "teddy", label: "Comfort", height: 46, delay: "2.4s", cordColor: "#EA580C", hiddenMobile: true },
     ],
     contact: [
@@ -823,24 +834,26 @@ export function HangingToyCanopy({
   return (
     <div className={`absolute top-0 left-0 right-0 w-full pointer-events-none select-none z-20 overflow-visible ${className}`}>
       {/* Curved Suspension Garland / Illustrated Rope across the top */}
-      <svg
-        viewBox="0 0 1440 28"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="w-full h-5 sm:h-7 opacity-85"
-        preserveAspectRatio="none"
-      >
-        <path
-          d="M0,6 Q360,24 720,12 T1440,10"
-          stroke={ropeColor}
-          strokeWidth="2.5"
-          strokeDasharray="6 4"
+      <div className="w-full max-w-4xl mx-auto px-4">
+        <svg
+          viewBox="0 0 800 24"
           fill="none"
-        />
-      </svg>
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full h-5 sm:h-7 opacity-85"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,6 Q400,22 800,8"
+            stroke={ropeColor}
+            strokeWidth="2.5"
+            strokeDasharray="6 4"
+            fill="none"
+          />
+        </svg>
+      </div>
 
       {/* Hanging Toys Array */}
-      <VannamHangingToys items={canopyToys} containerHeight="h-24 sm:h-32" />
+      <VannamHangingToys items={canopyToys} containerHeight="h-24 sm:h-32" congested={congested} />
     </div>
   );
 }
