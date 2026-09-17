@@ -1498,7 +1498,7 @@ html, body {
   /* Frosted glass backdrop behind section header/text areas on mobile
      so text is always readable even with background illustrations
      (excluding dark colored grids like the counter bar) */
-  section[class*="bg-section-"] > div[class*="max-w-"] > div[class*="text-center"]:not([class*="bg-["]) {
+  section[class*="bg-section-"] > div[class*="max-w-"] > div[class*="text-center"]:not(.bg-\[\#0F2963\]) {
     background: rgba(255, 255, 255, 0.92);
     border-radius: 1.25rem;
     padding: 1rem 0.75rem;
