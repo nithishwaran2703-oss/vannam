@@ -703,7 +703,10 @@ export default function Home() {
       badgeStyle: "bg-amber-100 text-[#9A3412] border-amber-300",
       roleColor: "text-[#C2410C]",
       experience: "14+ Yrs Exp",
-      tags: ["Early Literacy", "NEP 2020", "Curriculum"]
+      tags: ["Early Literacy", "NEP 2020", "Curriculum"],
+      accentGradient: "from-amber-300 via-yellow-400 to-orange-300",
+      ringColor: "ring-amber-300",
+      expBg: "bg-amber-50 text-amber-800 border-amber-200"
     },
     {
       name: "Ms. Priya Patel",
@@ -716,7 +719,10 @@ export default function Home() {
       badgeStyle: "bg-emerald-100 text-[#065F46] border-emerald-300",
       roleColor: "text-[#047857]",
       experience: "8+ Yrs Exp",
-      tags: ["Tactile Phonics", "Sensory Play", "Psychology"]
+      tags: ["Tactile Phonics", "Sensory Play", "Psychology"],
+      accentGradient: "from-emerald-300 via-green-400 to-teal-300",
+      ringColor: "ring-emerald-300",
+      expBg: "bg-emerald-50 text-emerald-800 border-emerald-200"
     },
     {
       name: "Mrs. Sarah Jenkins",
@@ -729,7 +735,10 @@ export default function Home() {
       badgeStyle: "bg-rose-100 text-[#9F1239] border-rose-300",
       roleColor: "text-[#BE123C]",
       experience: "6+ Yrs Exp",
-      tags: ["Gentle Routine", "First Aid", "Social Skills"]
+      tags: ["Gentle Routine", "First Aid", "Social Skills"],
+      accentGradient: "from-rose-300 via-pink-400 to-red-300",
+      ringColor: "ring-rose-300",
+      expBg: "bg-rose-50 text-rose-800 border-rose-200"
     },
     {
       name: "Mr. David Miller",
@@ -742,7 +751,10 @@ export default function Home() {
       badgeStyle: "bg-sky-100 text-[#075985] border-sky-300",
       roleColor: "text-[#0369A1]",
       experience: "7+ Yrs Exp",
-      tags: ["LEGO Robotics", "Motor Agility", "STEM Labs"]
+      tags: ["LEGO Robotics", "Motor Agility", "STEM Labs"],
+      accentGradient: "from-sky-300 via-blue-400 to-cyan-300",
+      ringColor: "ring-sky-300",
+      expBg: "bg-sky-50 text-sky-800 border-sky-200"
     }
   ];
 
@@ -2601,46 +2613,68 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* TEACHER CARDS: Rich Bento Cards with Distinct UI Colors per Educator */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+          {/* TEACHER CARDS: Premium Character Profile Cards */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {teachers.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`bento-card ${t.cardClass} p-3.5 sm:p-4.5 hover:-translate-y-1 transition-all duration-200 flex flex-col items-stretch gap-3 rounded-2xl sm:rounded-3xl border-2 shadow-xs hover:shadow-md`}>
+              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-white/80 shadow-[0_4px_20px_-4px_rgba(15,41,99,0.10)] hover:shadow-[0_12px_32px_-6px_rgba(15,41,99,0.18)] hover:-translate-y-1.5 transition-all duration-300`}>
                 
-                {/* Educator Photo */}
-                <div className="relative w-full h-44 xs:h-48 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs ring-2 ring-white/90">
-                  <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
-                  
-                  {/* Floating badge on photo */}
-                  <span className={`absolute top-2 right-2 px-2.5 py-0.5 rounded-full text-[9.5px] font-black uppercase tracking-wider ${t.badgeStyle} shadow-2xs backdrop-blur-xs`}>
-                    {t.badge}
+                {/* Colorful Gradient Accent Banner */}
+                <div className={`h-16 sm:h-20 bg-gradient-to-r ${t.accentGradient} relative overflow-hidden`}>
+                  {/* Decorative shimmer */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ backgroundSize: '200% 100%' }} />
+                  {/* Decorative pattern dots */}
+                  <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
+                </div>
+
+                {/* Centered Circular Portrait — overlaps banner */}
+                <div className="flex justify-center -mt-10 sm:-mt-12 relative z-10">
+                  <div className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-[3px] sm:ring-4 ${t.ringColor} ring-offset-2 ring-offset-white shadow-lg`}>
+                    <Image src={t.image} alt={t.name} fill sizes="96px" className="object-cover" />
+                  </div>
+                </div>
+
+                {/* Experience Ribbon */}
+                <div className="flex justify-center -mt-2.5 relative z-20">
+                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-wider border shadow-xs ${t.expBg}`}>
+                    <GraduationCap className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                    {t.experience}
                   </span>
                 </div>
 
-                {/* Details Container */}
-                <div className="flex-1 min-w-0 space-y-1">
-
-
+                {/* Card Body */}
+                <div className="px-3 sm:px-4 pt-2.5 sm:pt-3 pb-3 sm:pb-4 text-center space-y-2 sm:space-y-2.5">
+                  
+                  {/* Name & Role */}
                   <div>
-                    <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963] leading-tight truncate">
+                    <h3 className="font-heading font-extrabold text-xs sm:text-base text-[#0F2963] leading-tight truncate">
                       {t.name}
                     </h3>
-                    <span className={`text-[11px] sm:text-xs font-black ${t.roleColor} block truncate`}>
+                    <span className={`text-[10px] sm:text-xs font-black ${t.roleColor} block truncate mt-0.5`}>
                       {t.role}
                     </span>
-                    <div className="flex items-center gap-1 text-[9.5px] sm:text-[10.5px] font-bold text-slate-500 mt-0.5">
-                      <GraduationCap className="w-3 h-3 text-slate-400 shrink-0" />
-                      <span className="truncate">{t.qual}</span>
-                    </div>
                   </div>
 
-                  <p className="text-[10.5px] sm:text-xs text-[#1E293B] leading-snug line-clamp-2 pt-0.5 font-medium">
+                  {/* Badge */}
+                  <div className="flex justify-center">
+                    <span className={`inline-block px-2 sm:px-2.5 py-0.5 rounded-full text-[7.5px] sm:text-[9px] font-black uppercase tracking-wider border shadow-2xs ${t.badgeStyle}`}>
+                      {t.badge}
+                    </span>
+                  </div>
+
+                  {/* Qualification */}
+                  <p className="text-[8.5px] sm:text-[10.5px] font-semibold text-slate-500 leading-snug line-clamp-1 px-1">
+                    {t.qual}
+                  </p>
+
+                  {/* Intro */}
+                  <p className="text-[9px] sm:text-xs text-[#334155] leading-snug line-clamp-2 font-medium">
                     {t.intro}
                   </p>
 
                   {/* Specialty Tags */}
-                  <div className="flex flex-wrap gap-1 pt-1.5 border-t border-black/5">
+                  <div className="flex flex-wrap justify-center gap-1 pt-2 border-t border-black/5">
                     {t.tags.map((tag, i) => (
-                      <span key={i} className="text-[8.5px] sm:text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-white/85 text-[#0F2963] border border-black/5 shadow-2xs">
+                      <span key={i} className="text-[7.5px] sm:text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-50 text-[#0F2963] border border-slate-200/60 shadow-2xs">
                         {tag}
                       </span>
                     ))}
