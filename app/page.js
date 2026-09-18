@@ -1449,7 +1449,10 @@ export default function Home() {
           </ScrollReveal>
 
           {/* 3 Pillars - Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6 px-1 sm:px-0">
+          <div 
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 mb-6 sm:mb-8 md:grid md:grid-cols-3 md:gap-6 px-1 sm:px-0"
+            style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch', overscrollBehaviorY: 'none' }}
+          >
             
             {/* Philosophy */}
             <ScrollReveal variant="reveal-pop-bounce" stagger={1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card card-amber p-4 sm:p-6 rounded-2xl sm:rounded-3xl flex flex-col justify-between space-y-3 relative group">
@@ -2000,7 +2003,10 @@ export default function Home() {
 
           {/* MOBILE & TABLET VIEW: SHORT COMPACT CARDS (Click to pop up full card) */}
           <div className="block lg:hidden mb-6 sm:mb-8">
-            <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0">
+            <div 
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3 pb-3 -mx-4 px-4 sm:mx-0 sm:px-0"
+              style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch', overscrollBehaviorY: 'none' }}
+            >
               {methodologyShades.map((shade) => {
                 const Icon = shade.icon;
                 return (
@@ -2421,7 +2427,10 @@ export default function Home() {
           </ScrollReveal>
 
           {/* FACILITIES CARDS: Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
+          <div 
+            className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible"
+            style={{ touchAction: 'pan-x', WebkitOverflowScrolling: 'touch', overscrollBehaviorY: 'none' }}
+          >
             {facilities.map((fac, idx) => (
               <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 border-amber-200/80 group flex flex-col justify-between rounded-2xl sm:rounded-3xl">
                 <div className="relative h-40 sm:h-44 w-full overflow-hidden">
