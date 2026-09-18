@@ -2604,29 +2604,21 @@ export default function Home() {
           {/* TEACHER CARDS: Rich Bento Cards with Distinct UI Colors per Educator */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {teachers.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`bento-card ${t.cardClass} p-3.5 sm:p-4.5 hover:-translate-y-1 transition-all duration-200 flex flex-row sm:flex-col items-start sm:items-stretch gap-3 sm:gap-3 rounded-2xl sm:rounded-3xl border-2 shadow-xs hover:shadow-md`}>
+              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`bento-card ${t.cardClass} p-3.5 sm:p-4.5 hover:-translate-y-1 transition-all duration-200 flex flex-col items-stretch gap-3 rounded-2xl sm:rounded-3xl border-2 shadow-xs hover:shadow-md`}>
                 
-                {/* Educator Photo - Clean portrait without badge blocking the face */}
-                <div className="relative w-20 h-20 xs:w-24 xs:h-24 sm:w-full sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs ring-2 ring-white/90">
-                  <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 100px, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
+                {/* Educator Photo */}
+                <div className="relative w-full h-44 xs:h-48 sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs ring-2 ring-white/90">
+                  <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
                   
-                  {/* Desktop-only floating badge */}
-                  <span className={`hidden sm:inline-block absolute top-2 right-2 px-2.5 py-0.5 rounded-full text-[9.5px] font-black uppercase tracking-wider ${t.badgeStyle} shadow-2xs backdrop-blur-xs`}>
+                  {/* Floating badge on photo */}
+                  <span className={`absolute top-2 right-2 px-2.5 py-0.5 rounded-full text-[9.5px] font-black uppercase tracking-wider ${t.badgeStyle} shadow-2xs backdrop-blur-xs`}>
                     {t.badge}
                   </span>
                 </div>
 
                 {/* Details Container */}
                 <div className="flex-1 min-w-0 space-y-1">
-                  {/* Mobile-only badge header row (keeps photo clear of clutter) */}
-                  <div className="flex items-center justify-between gap-1 sm:hidden mb-0.5">
-                    <span className={`px-2 py-0.5 rounded-full text-[8.5px] font-black uppercase tracking-wider border shadow-2xs ${t.badgeStyle}`}>
-                      {t.badge}
-                    </span>
-                    <span className="text-[9px] font-black text-slate-500 bg-white/80 px-1.5 py-0.5 rounded-md border border-slate-200/60 shadow-2xs">
-                      {t.experience}
-                    </span>
-                  </div>
+
 
                   <div>
                     <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963] leading-tight truncate">
