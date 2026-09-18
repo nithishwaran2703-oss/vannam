@@ -1609,12 +1609,9 @@ html, body {
     overscroll-behavior-x: contain;
   }
 
-  /* Fix: Horizontal snap carousels must lock touch direction to pan-x
-     so swipe gestures scroll cards left/right instead of moving the page up/down.
-     pinch-zoom is kept so accessibility zoom still works. */
+  /* Horizontal snap carousels */
   .overflow-x-auto.snap-x {
-    touch-action: pan-x pinch-zoom;
-    overscroll-behavior-y: none;
+    /* touch-action and overscroll-behavior-y removed to allow vertical page scrolling */
   }
 }
 
