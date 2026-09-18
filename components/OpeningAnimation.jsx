@@ -213,18 +213,7 @@ export default function OpeningAnimation() {
         </div>
       </div>
 
-      {/* ── SKIP BUTTON (Top Right) ── */}
-      <button
-        onClick={() => {
-          setStage("exit");
-          setTimeout(() => setMounted(false), 200);
-        }}
-        className="absolute top-4 right-4 z-50 px-3.5 py-1.5 rounded-full bg-white/80 hover:bg-white text-[#0F2963] text-xs font-bold shadow-xs border border-amber-200/80 transition-all hover:scale-105 active:scale-95 cursor-pointer backdrop-blur-xs flex items-center gap-1"
-        aria-label="Skip intro animation"
-      >
-        <span>Skip</span>
-        <span className="text-amber-500 font-normal">✕</span>
-      </button>
+
     </div>
   );
 }
