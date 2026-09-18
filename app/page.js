@@ -52,15 +52,19 @@ import {
   Medal,
   GraduationCap,
   BadgeCheck,
-  Flame
+  Flame,
+  Sparkles,
+  ArrowRight
 } from "lucide-react";
 import confetti from "canvas-confetti";
-import VirtualTour from "../components/VirtualTour";
-import ParentPortalModal from "../components/ParentPortalModal";
-import TourSchedulerModal from "../components/TourSchedulerModal";
+import dynamic from "next/dynamic";
+const VirtualTour = dynamic(() => import("../components/VirtualTour"), { ssr: false });
+const ParentPortalModal = dynamic(() => import("../components/ParentPortalModal"), { ssr: false });
+const TourSchedulerModal = dynamic(() => import("../components/TourSchedulerModal"), { ssr: false });
 import ScrollReveal from "../components/ScrollReveal";
 import { getAcademicYear, getCurrentYear, formatDynamicYears } from "../lib/academicYear";
 import { HangingToyCanopy } from "../components/VannamChildSystem";
+import { JoyfulDailyActivities } from "../components/JoyfulDailyActivities";
 
 import {
   TeddyBearIcon,
@@ -186,6 +190,17 @@ export default function Home() {
 
   // Program Tab State
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
+  const [mobileProgramModal, setMobileProgramModal] = useState(null);
+
+  // Testimonials Auto-Runner State (Mobile - snappy 2000ms rotation)
+  const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveTestimonialIdx((prev) => (prev + 1) % 3);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Innovative 7-Shade Methodology State
   const [activeMethodologyShade, setActiveMethodologyShade] = useState("creative");
@@ -675,7 +690,7 @@ export default function Home() {
     }
   ];
 
-  // Teachers List
+  // Teachers List with Distinct Curated UI Colors
   const teachers = [
     {
       name: "Mrs. Clara Bennett",
@@ -683,8 +698,12 @@ export default function Home() {
       qual: "M.Ed Early Childhood Education (14+ Yrs)",
       image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
       intro: "Passionate about creating nurturing environments where every child feels seen, loved, and inspired to explore.",
-      badge: "Founder",
-      badgeColor: "bg-vannam-yellow/10 text-vannam-orange"
+      badge: "Founder & Visionary",
+      cardClass: "card-amber",
+      badgeStyle: "bg-amber-100 text-[#9A3412] border-amber-300",
+      roleColor: "text-[#C2410C]",
+      experience: "14+ Yrs Exp",
+      tags: ["Early Literacy", "NEP 2020", "Curriculum"]
     },
     {
       name: "Ms. Priya Patel",
@@ -693,7 +712,11 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80",
       intro: "Specializes in tactile sensory learning and building early phonics confidence through playful discovery.",
       badge: "Montessori Lead",
-      badgeColor: "bg-vannam-green/10 text-vannam-green"
+      cardClass: "card-emerald",
+      badgeStyle: "bg-emerald-100 text-[#065F46] border-emerald-300",
+      roleColor: "text-[#047857]",
+      experience: "8+ Yrs Exp",
+      tags: ["Tactile Phonics", "Sensory Play", "Psychology"]
     },
     {
       name: "Mrs. Sarah Jenkins",
@@ -701,8 +724,12 @@ export default function Home() {
       qual: "B.S. Child Development & Pediatric First Aid Certified",
       image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
       intro: "Loves introducing toddlers to their first group social experiences with gentle encouragement and hugs.",
-      badge: "Toddler Expert",
-      badgeColor: "bg-vannam-red/10 text-vannam-red"
+      badge: "Toddler Care Expert",
+      cardClass: "card-rose",
+      badgeStyle: "bg-rose-100 text-[#9F1239] border-rose-300",
+      roleColor: "text-[#BE123C]",
+      experience: "6+ Yrs Exp",
+      tags: ["Gentle Routine", "First Aid", "Social Skills"]
     },
     {
       name: "Mr. David Miller",
@@ -711,7 +738,11 @@ export default function Home() {
       image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
       intro: "Inspires young minds through spatial building projects, balance tracks, and fun scientific experiments.",
       badge: "STEAM Coach",
-      badgeColor: "bg-vannam-cyan/10 text-vannam-cyan"
+      cardClass: "card-sky",
+      badgeStyle: "bg-sky-100 text-[#075985] border-sky-300",
+      roleColor: "text-[#0369A1]",
+      experience: "7+ Yrs Exp",
+      tags: ["LEGO Robotics", "Motor Agility", "STEM Labs"]
     }
   ];
 
@@ -1519,20 +1550,34 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* Program Tabs - Touch Horizontal Scroll with Snap on Mobile */}
-          <ScrollReveal variant="reveal-paint-stroke" className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-2 mb-4 sm:mb-6 scrollbar-none snap-x justify-start sm:justify-center px-4 sm:px-0">
+          {/* Program Tabs - Vertical equal-sized stack on Mobile, Horizontal Row on Web */}
+          <ScrollReveal variant="reveal-paint-stroke" className="flex flex-col sm:flex-row items-stretch sm:items-center sm:justify-center gap-2 sm:gap-2 sm:overflow-x-auto pb-2 mb-4 sm:mb-6 sm:scrollbar-none sm:snap-x px-0 sm:px-0">
             {Object.keys(programsData).map((key) => {
               const prog = programsData[key];
+              const isSelectedOnDesktop = activeProgramTab === key;
+
+              // Explicit styles for desktop tabs to avoid any class leaks on mobile
+              const desktopTabActiveMap = {
+                toddler: "sm:bg-vannam-red sm:text-white sm:border-vannam-red sm:shadow-md sm:scale-105",
+                playgroup: "sm:bg-amber-400 sm:text-[#0F2963] sm:border-amber-400 sm:shadow-md sm:scale-105",
+                nursery: "sm:bg-vannam-green sm:text-white sm:border-vannam-green sm:shadow-md sm:scale-105",
+                lkg: "sm:bg-vannam-cyan sm:text-white sm:border-vannam-cyan sm:shadow-md sm:scale-105",
+                ukg: "sm:bg-vannam-purple sm:text-white sm:border-vannam-purple sm:shadow-md sm:scale-105"
+              };
+
               return (
                 <button
                   key={key}
                   type="button"
                   suppressHydrationWarning
-                  onClick={() => setActiveProgramTab(key)}
-                  className={`px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center gap-2 transition shrink-0 snap-center !min-h-0 ${
-                    activeProgramTab === key
-                      ? prog.activeTabStyle
-                      : "bg-white text-[#0F2963] hover:bg-[#E8EEFB] border border-[#CBD8F6] shadow-2xs"
+                  onClick={() => {
+                    setActiveProgramTab(key);
+                    setMobileProgramModal(prog);
+                  }}
+                  className={`w-full sm:w-auto h-12 sm:h-auto px-4 py-2.5 rounded-xl text-xs sm:text-sm font-extrabold flex items-center justify-center gap-2.5 transition sm:shrink-0 sm:snap-center !min-h-0 bg-white text-[#0F2963] border border-[#CBD8F6] shadow-2xs cursor-pointer active:scale-[0.98] ${
+                    isSelectedOnDesktop
+                      ? desktopTabActiveMap[key] || "sm:bg-amber-400 sm:text-[#0F2963]"
+                      : "sm:hover:bg-[#E8EEFB]"
                   }`}
                 >
                   {prog.toyType === "teddy" && <TeddyBearIcon className="w-4 h-4 shrink-0" />}
@@ -1546,9 +1591,97 @@ export default function Home() {
             })}
           </ScrollReveal>
 
-          {/* Active Program Card Showcase */}
+          {/* MOBILE PROGRAM POP-UP MODAL (Opens on click) */}
+          {mobileProgramModal && (
+            <div 
+              className="fixed inset-0 z-50 flex items-center justify-center p-3.5 sm:hidden bg-slate-900/60 backdrop-blur-sm animate-fade-in"
+              onClick={() => setMobileProgramModal(null)}
+            >
+              <div 
+                className={`bento-card ${mobileProgramModal.cardStyle} w-full max-w-sm max-h-[85vh] overflow-y-auto rounded-3xl p-5 shadow-2xl relative border-2 border-amber-300`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="flex items-start justify-between gap-2 mb-3">
+                  <div>
+                    <span className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border ${mobileProgramModal.badgeBg} mb-1 shadow-2xs`}>
+                      Age: {mobileProgramModal.age}
+                    </span>
+                    <h3 className="font-heading text-lg font-extrabold text-[#0F2963]">
+                      {mobileProgramModal.title}
+                    </h3>
+                  </div>
+                  <button
+                    onClick={() => setMobileProgramModal(null)}
+                    className="w-8 h-8 rounded-full bg-white/90 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-white text-xs font-black cursor-pointer shadow-xs shrink-0"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <div className="inline-block px-2.5 py-1 rounded-xl bg-white/90 font-black text-xs text-[#0F2963] border border-[#CBD8F6] shadow-2xs mb-3">
+                  Ratio: {mobileProgramModal.ratio}
+                </div>
+
+                <p className="text-xs text-[#0F2963] leading-relaxed mb-3.5 font-medium">
+                  {mobileProgramModal.description}
+                </p>
+
+                {/* Learning Objectives */}
+                <div className="bg-white/95 rounded-2xl p-3 border border-[#CBD8F6]/80 shadow-2xs space-y-1.5 mb-3">
+                  <h4 className="font-heading font-extrabold text-[#0F2963] text-xs flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-vannam-green shrink-0" />
+                    <span>Key Learning Objectives</span>
+                  </h4>
+                  <ul className="space-y-1 text-[11px] text-[#0F2963]">
+                    {mobileProgramModal.objectives.map((obj, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-vannam-yellow mt-1 shrink-0" />
+                        <span>{obj}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Daily Highlights */}
+                <div className="bg-white/95 rounded-2xl p-3 border border-[#CBD8F6]/80 shadow-2xs space-y-1.5 mb-4">
+                  <h4 className="font-heading font-extrabold text-[#0F2963] text-xs flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-vannam-orange shrink-0" />
+                    <span>Daily Highlights & Play</span>
+                  </h4>
+                  <ul className="space-y-1 text-[11px] text-[#0F2963]">
+                    {mobileProgramModal.activities.map((act, i) => (
+                      <li key={i} className="flex items-start gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-vannam-cyan mt-1 shrink-0" />
+                        <span>{act}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex gap-2">
+                  <a
+                    href="#contact"
+                    onClick={() => setMobileProgramModal(null)}
+                    className="flex-1 py-2.5 rounded-xl bg-[#0F2963] text-white text-xs font-black shadow-md text-center flex items-center justify-center gap-1 hover:bg-[#0A1D47]"
+                  >
+                    <span>Enquire Now</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => setMobileProgramModal(null)}
+                    className="px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 text-xs font-black hover:bg-slate-50 cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Desktop Active Program Card Showcase (Hidden on mobile, preserved on web) */}
           {activeProgramTab && (
-            <ScrollReveal variant="reveal-pop-bounce" className="max-w-4xl mx-auto">
+            <ScrollReveal variant="reveal-pop-bounce" className="hidden sm:block max-w-4xl mx-auto">
               <div className={`bento-card ${programsData[activeProgramTab].cardStyle} p-4 sm:p-6 md:p-8 transition-all duration-300 relative overflow-hidden`}>
                 
                 {/* Decorative Toy Watermark */}
@@ -1844,7 +1977,7 @@ export default function Home() {
             </div>
 
             <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] leading-tight drop-shadow-xs mobile-text-shadow">
-              How Children Learn & Flourish: <br className="hidden sm:block" />
+              How Children Learn & Flourish: <br />
               <span className="text-[#00A8E8] underline decoration-[#F59E0B] underline-offset-4 sm:underline-offset-6">The 7 Shades</span> of Development
             </h2>
 
@@ -2233,145 +2366,14 @@ export default function Home() {
       <section id="activities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-activities relative overflow-hidden">
         {/* HANGING TOYS CANOPY */}
         <HangingToyCanopy theme="activities" ropeColor="#F59E0B" />
-
-        {/* CHILD-ATTRACTIVE FLOATING DECORATIONS (Fills empty spaces on Mobile & Desktop) */}
-        <div className="absolute top-2 left-2 sm:top-6 sm:left-6 animate-float pointer-events-none opacity-85 z-10 flex items-center gap-1">
-          <SmilingSunIcon className="w-7 h-7 sm:w-11 sm:h-11 drop-shadow-xs" />
-          <RainbowIcon className="w-8 h-5 sm:w-12 sm:h-8 drop-shadow-xs hidden xs:block" />
-        </div>
-        <div className="absolute top-2 right-2 sm:top-6 sm:right-8 animate-float-reverse pointer-events-none opacity-90 z-10 flex items-center gap-1.5">
-          <HappyCloudIcon className="w-7 h-5 sm:w-11 sm:h-8" />
-          <FloatingBalloonsGroup className="w-7 h-9 sm:w-11 sm:h-14 drop-shadow-xs" />
-        </div>
-
-        {/* Mid-Flank Toy Accents */}
-        <div className="absolute top-1/3 left-1 sm:left-4 animate-bounce-gentle pointer-events-none opacity-80 z-10">
-          <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xs p-1 rounded-xl border border-amber-200/80 shadow-2xs">
-            <AlphabetBlock letter="1" color="amber" className="w-4 h-4 sm:w-6 sm:h-6" />
-            <AlphabetBlock letter="2" color="sky" className="w-4 h-4 sm:w-6 sm:h-6 -mt-1" />
-            <AlphabetBlock letter="3" color="rose" className="w-4 h-4 sm:w-6 sm:h-6" />
-          </div>
-        </div>
-        <div className="absolute top-1/3 right-1 sm:right-4 animate-flutter pointer-events-none opacity-85 z-10 flex flex-col items-center gap-1">
-          <PinwheelToy className="w-6 h-6 sm:w-9 sm:h-9 animate-spin-slow" />
-          <ButterflyIcon color="rose" className="w-5 h-5 sm:w-7 sm:h-7" />
-        </div>
-
-        {/* Lower Corner Accents */}
-        <div className="absolute bottom-4 left-2 sm:bottom-8 sm:left-8 animate-drift pointer-events-none opacity-85 z-10 flex items-center gap-1.5">
-          <PaperPlaneIcon className="w-6 h-6 sm:w-9 sm:h-9" />
-          <CrayonIcon color="sky" className="w-5 h-5 sm:w-7 sm:h-7 hidden xs:block" />
-        </div>
-        <div className="absolute bottom-4 right-2 sm:bottom-8 sm:right-8 animate-wiggle pointer-events-none opacity-80 z-10 flex items-center gap-1">
-          <MusicNotesCluster className="w-6 h-6 sm:w-8 sm:h-8" />
-          <ToyCarIcon className="w-6 h-6 sm:w-8 sm:h-8 hidden xs:block" />
-        </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          {/* Section Header with Child-Attractive Mascot Scene */}
-          <ScrollReveal variant="reveal-spin-drop" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
-            <div className="hidden sm:flex items-center justify-center gap-2 sm:gap-3 mb-1">
-              <TeddyBearIcon className="w-7 h-7 sm:w-9 sm:h-9 animate-bounce-gentle" />
-              <CreativitySceneGroup className="opacity-95 scale-90 sm:scale-100" />
-              <PinwheelToy className="w-6 h-6 sm:w-8 sm:h-8 animate-float" />
-            </div>
-            <div className="inline-flex items-center gap-1.5 text-xs font-extrabold uppercase tracking-widest text-vannam-red bg-rose-100 border border-rose-300 px-3 py-1 rounded-full shadow-2xs">
-              <Clock className="w-3.5 h-3.5" />
-              <span>A Day at Vannam World Preschool</span>
-            </div>
-            <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
-              Joyful <span className="text-vannam-red underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Daily Activities</span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
-              Every hour is balanced between structured learning, free play, organic dining, and restful quiet time.
-            </p>
-          </ScrollReveal>
-
-          <div className="grid lg:grid-cols-12 gap-3.5 sm:gap-6 items-start">
-            
-            {/* Timeline Tabs - 3-col Grid on Mobile, Sticky Column on Desktop */}
-            <ScrollReveal variant="reveal-calendar-flip" className="lg:col-span-4 grid grid-cols-3 lg:flex lg:flex-col gap-1.5 sm:gap-2.5 pb-1 lg:pb-0 lg:sticky lg:top-28 z-10">
-              {[
-                { id: "morning", label: "Morning", sub: "8:00 - 11:00 AM", icon: Sun, color: "text-[#F59E0B]", activeBorder: "border-[#F59E0B]", bg: "bg-amber-100" },
-                { id: "mid-day", label: "Mid-Day", sub: "11:00 - 12:00 PM", icon: Cloud, color: "text-[#F97316]", activeBorder: "border-[#F97316]", bg: "bg-orange-100" },
-                { id: "afternoon", label: "Afternoon", sub: "1:00 - 4:00 PM", icon: Moon, color: "text-[#8B5CF6]", activeBorder: "border-[#8B5CF6]", bg: "bg-purple-100" }
-              ].map((tab) => {
-                const isActive = activeRoutineTab === tab.id;
-                const Icon = tab.icon;
-                
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveRoutineTab(tab.id)}
-                    className={`w-full text-center sm:text-left p-2.5 sm:p-3.5 rounded-2xl transition-all duration-200 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 border-2 group !min-h-0 ${
-                      isActive 
-                        ? `bg-white shadow-md ${tab.activeBorder} scale-[1.01] sm:scale-102` 
-                        : "bg-white/70 border-[#CBD8F6]/60 hover:bg-white hover:border-[#CBD8F6]"
-                    }`}
-                  >
-                    <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${isActive ? tab.bg : "bg-[#F0F4FC] group-hover:bg-gray-100"}`}>
-                      <Icon className={`w-4 h-4 sm:w-5 sm:h-5 ${isActive ? tab.color : "text-gray-400 group-hover:text-gray-600"}`} />
-                    </div>
-                    <div className="min-w-0">
-                      <span className={`block font-heading font-extrabold text-[11px] sm:text-xs truncate ${isActive ? "text-[#0F2963]" : "text-gray-600"}`}>
-                        {tab.label}
-                      </span>
-                      <span className={`block text-[8.5px] sm:text-[10px] font-bold truncate ${isActive ? tab.color : "text-gray-400"}`}>
-                        {tab.sub}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </ScrollReveal>
-
-            {/* Dynamic Activity Cards Grid (2 Grids per row on mobile) */}
-            <div className="lg:col-span-8 relative">
-              <div className="grid grid-cols-2 xl:grid-cols-3 gap-2.5 sm:gap-3.5">
-                {dailyActivities
-                  .filter((act) => act.time === activeRoutineTab)
-                  .map((act, i) => {
-                    const CardIcon = act.Icon;
-                    
-                    return (
-                      <ScrollReveal 
-                        key={`${activeRoutineTab}-${i}`} 
-                        variant="reveal-spin-drop"
-                        stagger={((i % 3) + 1)}
-                        className={`relative overflow-hidden rounded-2xl border-2 bg-gradient-to-br ${act.bgClass} p-3 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 group hover:-translate-y-0.5 flex flex-col justify-between`}
-                      >
-                        {/* Background Watermark SVG */}
-                        <div className="absolute -right-3 -top-3 opacity-5 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none rotate-12">
-                          <CardIcon className="w-18 h-18 sm:w-28 sm:h-28" color={act.color} />
-                        </div>
-
-                        {/* Interactive Floating Icon */}
-                        <div className="relative z-10 bg-white w-8 h-8 sm:w-10 sm:h-10 rounded-xl shadow-xs border border-white/80 flex items-center justify-center mb-2 group-hover:scale-105 transition-transform duration-300 shrink-0">
-                          <CardIcon className="w-4 h-4 sm:w-6 sm:h-6" color={act.color} />
-                        </div>
-
-                        <div className="relative z-10 space-y-1">
-                          <span className="text-[8px] sm:text-[9px] font-black uppercase tracking-wider text-[#0F2963]/70 bg-white/80 px-2 py-0.5 rounded-md inline-block shadow-2xs">
-                            {act.time}
-                          </span>
-                          <h3 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm leading-tight">
-                            {act.title}
-                          </h3>
-                          <p className="text-[10.5px] sm:text-xs text-[#334155] font-medium leading-snug">
-                            {act.desc}
-                          </p>
-                        </div>
-                      </ScrollReveal>
-                    );
-                  })}
-              </div>
-            </div>
-
-          </div>
+          {/* INNOVATIVE JOYFUL DAILY ACTIVITIES & MONTESSORI EXPLORER */}
+          <JoyfulDailyActivities />
 
           {/* Doodle Divider */}
-          <DoodleDivider className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
+          <DoodleDivider className="mt-6 sm:mt-10 mb-2 sm:mb-4" />
 
         </div>
 
@@ -2398,7 +2400,7 @@ export default function Home() {
               <span>World-Class Campus</span>
             </div>
             <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
-              Facilities Engineered for <br className="hidden sm:block" />
+              Facilities Engineered for <br />
               <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Safety & Wonder</span>
             </h2>
             <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
@@ -2406,11 +2408,11 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* HORIZONTAL CARDS: Horizontal Swipeable on Mobile/Tablet, 3-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 overscroll-x-contain">
+          {/* FACILITIES CARDS: Horizontal Swipeable on Mobile, 3-Col Grid on Desktop */}
+          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 md:grid md:grid-cols-3 md:gap-5 md:overflow-visible">
             {facilities.map((fac, idx) => (
-              <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className={`w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 ${fac.accent} group flex flex-col justify-between rounded-2xl sm:rounded-3xl`}>
-                <div className="relative h-36 xs:h-40 sm:h-44 w-full overflow-hidden">
+              <ScrollReveal key={idx} variant="reveal-gate-open" stagger={((idx % 3) + 1)} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card overflow-hidden border-2 border-amber-200/80 group flex flex-col justify-between rounded-2xl sm:rounded-3xl">
+                <div className="relative h-40 sm:h-44 w-full overflow-hidden">
                   <Image 
                     src={fac.image} 
                     alt={fac.title} 
@@ -2430,11 +2432,6 @@ export default function Home() {
               </ScrollReveal>
             ))}
           </div>
-
-          {/* Mobile Swipe Hint */}
-          <p className="block md:hidden text-center text-[10.5px] font-bold text-[#64748B] mt-1.5">
-            👉 Swipe horizontally to view all campus facilities
-          </p>
 
           <CloudBridge label="Safe Campus & Care" className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
@@ -2463,7 +2460,7 @@ export default function Home() {
               <span>Zero-Compromise Security Standard</span>
             </div>
             <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
-              Your Child&apos;s Safety <br className="hidden sm:block" />
+              Your Child&apos;s Safety <br />
               <span className="text-vannam-green underline decoration-vannam-yellow underline-offset-4 sm:underline-offset-6">Comes First. Always.</span>
             </h2>
             <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
@@ -2596,7 +2593,7 @@ export default function Home() {
               <span>Loving Educators</span>
             </div>
             <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
-              Meet Our Certified & <br className="hidden sm:block" />
+              Meet Our Certified & <br />
               <span className="text-vannam-yellow underline decoration-vannam-green underline-offset-4 sm:underline-offset-6">Warm Teachers</span>
             </h2>
             <p className="text-xs sm:text-sm text-[#334155] leading-relaxed max-w-xl mx-auto mobile-readable-text">
@@ -2604,24 +2601,59 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* 2 Grids per row on Mobile, 4 on Desktop */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-5">
+          {/* TEACHER CARDS: Rich Bento Cards with Distinct UI Colors per Educator */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {teachers.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className="bento-card p-2.5 sm:p-4 space-y-2 sm:space-y-3 hover:-translate-y-1 transition duration-200 flex flex-col justify-between rounded-2xl">
-                <div>
-                  <div className="relative h-28 xs:h-32 sm:h-48 w-full rounded-xl overflow-hidden mb-2">
-                    <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
-                    <span className={`absolute top-1.5 right-1.5 px-2 py-0.5 rounded-full text-[8.5px] sm:text-[9.5px] font-extrabold ${t.badgeColor} shadow-2xs`}>
+              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`bento-card ${t.cardClass} p-3.5 sm:p-4.5 hover:-translate-y-1 transition-all duration-200 flex flex-row sm:flex-col items-start sm:items-stretch gap-3 sm:gap-3 rounded-2xl sm:rounded-3xl border-2 shadow-xs hover:shadow-md`}>
+                
+                {/* Educator Photo - Clean portrait without badge blocking the face */}
+                <div className="relative w-20 h-20 xs:w-24 xs:h-24 sm:w-full sm:h-48 rounded-xl sm:rounded-2xl overflow-hidden shrink-0 shadow-xs ring-2 ring-white/90">
+                  <Image src={t.image} alt={t.name} fill sizes="(max-width: 768px) 100px, (max-width: 1200px) 33vw, 25vw" className="object-cover" />
+                  
+                  {/* Desktop-only floating badge */}
+                  <span className={`hidden sm:inline-block absolute top-2 right-2 px-2.5 py-0.5 rounded-full text-[9.5px] font-black uppercase tracking-wider ${t.badgeStyle} shadow-2xs backdrop-blur-xs`}>
+                    {t.badge}
+                  </span>
+                </div>
+
+                {/* Details Container */}
+                <div className="flex-1 min-w-0 space-y-1">
+                  {/* Mobile-only badge header row (keeps photo clear of clutter) */}
+                  <div className="flex items-center justify-between gap-1 sm:hidden mb-0.5">
+                    <span className={`px-2 py-0.5 rounded-full text-[8.5px] font-black uppercase tracking-wider border shadow-2xs ${t.badgeStyle}`}>
                       {t.badge}
                     </span>
+                    <span className="text-[9px] font-black text-slate-500 bg-white/80 px-1.5 py-0.5 rounded-md border border-slate-200/60 shadow-2xs">
+                      {t.experience}
+                    </span>
                   </div>
-                  <div className="space-y-0.5">
-                    <h3 className="font-heading font-extrabold text-xs sm:text-base text-[#0F2963] truncate">{t.name}</h3>
-                    <span className="text-[10px] sm:text-xs font-bold text-vannam-orange block truncate">{t.role}</span>
-                    <span className="text-[9px] sm:text-[11px] font-semibold text-[#64748B] block truncate">{t.qual}</span>
+
+                  <div>
+                    <h3 className="font-heading font-extrabold text-sm sm:text-base text-[#0F2963] leading-tight truncate">
+                      {t.name}
+                    </h3>
+                    <span className={`text-[11px] sm:text-xs font-black ${t.roleColor} block truncate`}>
+                      {t.role}
+                    </span>
+                    <div className="flex items-center gap-1 text-[9.5px] sm:text-[10.5px] font-bold text-slate-500 mt-0.5">
+                      <GraduationCap className="w-3 h-3 text-slate-400 shrink-0" />
+                      <span className="truncate">{t.qual}</span>
+                    </div>
+                  </div>
+
+                  <p className="text-[10.5px] sm:text-xs text-[#1E293B] leading-snug line-clamp-2 pt-0.5 font-medium">
+                    {t.intro}
+                  </p>
+
+                  {/* Specialty Tags */}
+                  <div className="flex flex-wrap gap-1 pt-1.5 border-t border-black/5">
+                    {t.tags.map((tag, i) => (
+                      <span key={i} className="text-[8.5px] sm:text-[9.5px] font-extrabold px-1.5 py-0.5 rounded-md bg-white/85 text-[#0F2963] border border-black/5 shadow-2xs">
+                        {tag}
+                      </span>
+                    ))}
                   </div>
                 </div>
-                <p className="text-[10px] sm:text-xs text-[#334155] leading-snug line-clamp-2">{t.intro}</p>
               </ScrollReveal>
             ))}
           </div>
@@ -2638,20 +2670,6 @@ export default function Home() {
       <section id="gallery" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-gallery relative overflow-hidden">
         {/* HANGING TOYS CANOPY */}
         <HangingToyCanopy theme="gallery" ropeColor="#0284C7" />
-
-        {/* BACKGROUND ART & FLOATING TOYS */}
-        <div className="absolute -left-1 xs:left-1 sm:-left-2 2xl:left-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <ArtPaletteIcon className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float" />
-        </div>
-        <div className="absolute -right-1 xs:right-1 sm:-right-2 2xl:right-6 top-1/2 -translate-y-1/2 pointer-events-none opacity-15 sm:opacity-20 select-none z-0">
-          <PinwheelToy className="w-10 h-10 xs:w-12 xs:h-12 sm:w-18 sm:h-18 animate-float-reverse" />
-        </div>
-        <div className="absolute top-6 left-3 sm:top-8 sm:left-8 animate-float pointer-events-none opacity-80 z-10">
-          <ArtPaletteIcon className="w-7 h-7 sm:w-10 sm:h-10" />
-        </div>
-        <div className="absolute bottom-6 right-3 sm:bottom-8 sm:right-8 animate-float-reverse pointer-events-none opacity-85 z-10">
-          <Camera className="w-6 h-6 sm:w-10 sm:h-10 text-vannam-cyan" />
-        </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
@@ -2708,61 +2726,93 @@ export default function Home() {
             })}
           </ScrollReveal>
 
-          {/* COMPACT BENTO GRID CONTAINER */}
-          <ScrollReveal variant="reveal-gentle-rise" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
-            {filteredGallery.map((item, idx) => {
-              // Dynamic bento sizing with explicit responsive heights for 100% reliable rendering
-              let bentoClass = "col-span-1 h-36 xs:h-40 sm:h-48 lg:h-52";
-              if (galleryCategory === "all") {
-                if (idx === 0) {
-                  bentoClass = "col-span-2 sm:col-span-2 lg:col-span-2 lg:row-span-2 h-56 xs:h-64 sm:h-76 lg:h-[432px]";
-                } else if (idx === 3) {
-                  bentoClass = "col-span-2 sm:col-span-2 lg:col-span-2 h-36 xs:h-40 sm:h-48 lg:h-52";
-                }
-              }
+          {/* CREATIVE NOTICE BOARD PHOTO WALL CONTAINER (No Gaps In The Wall) */}
+          <div className="relative rounded-3xl border-4 border-[#F6D365]/60 bg-gradient-to-b from-[#FFFDF8]/95 to-[#FEF9ED]/95 backdrop-blur-md shadow-xl p-3 sm:p-5 lg:p-6 overflow-hidden">
+            
+            {/* Notice Board Header Bar */}
+            <div className="flex items-center justify-between mb-4 pb-2.5 border-b-2 border-dashed border-amber-200/90">
+              <div className="flex items-center gap-2">
+                <span className="text-base sm:text-lg">📌</span>
+                <span className="font-heading font-black text-xs sm:text-sm text-[#0F2963] uppercase tracking-wider">
+                  Campus Notice Board • Photo Wall
+                </span>
+              </div>
+              <span className="text-[10px] sm:text-xs font-black text-amber-700 bg-amber-100/90 px-3 py-0.5 rounded-full border border-amber-300/80 shadow-2xs">
+                {filteredGallery.length} Pinned Memories
+              </span>
+            </div>
 
-              return (
-                <div 
-                  key={item.id} 
-                  onClick={() => setActiveLightboxImage(item)}
-                  className={`group relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer border-2 border-[#CBD8F6]/80 shadow-xs hover:border-[#F59E0B] hover:shadow-lg transition-all duration-300 hover:scale-[1.015] bg-slate-900 ${bentoClass}`}
-                >
-                  <Image 
-                    src={item.src} 
-                    alt={item.title} 
-                    fill 
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover group-hover:scale-108 transition-transform duration-700 ease-out" 
-                  />
-                  
-                  {/* Subtle Top Gradient Bar */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#091A42]/85 via-[#091A42]/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
-                  
-                  {/* Decorative Polaroid Scrapbook Tag */}
-                  <div className="absolute top-2 left-2 sm:top-2.5 sm:left-2.5 bg-white/95 backdrop-blur-md border border-amber-300 text-[8.5px] sm:text-[9.5px] font-black text-[#0F2963] px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1 z-10">
-                    <span>📸</span>
-                    <span className="capitalize">{item.category}</span>
-                  </div>
+            {/* SEAMLESS PHOTO WALL GRID — ZERO GAPS */}
+            <ScrollReveal variant="reveal-gentle-rise" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+              {filteredGallery.map((item, idx) => {
+                // Playful natural scrapbook rotation tilts
+                const tilts = ["-rotate-1", "rotate-1", "-rotate-1.5", "rotate-1.5", "-rotate-0.5", "rotate-1", "-rotate-1", "rotate-0.5"];
+                const tilt = tilts[idx % tilts.length];
 
-                  {/* Top-Right Expand Icon */}
-                  <div className="absolute top-2 right-2 sm:top-2.5 sm:right-2.5 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-[#0F2963]/80 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100 shadow-xs z-10">
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </div>
+                // Vibrant pushpin color accents
+                const pinColors = [
+                  "text-rose-500",
+                  "text-amber-500",
+                  "text-emerald-500",
+                  "text-sky-500",
+                  "text-purple-500",
+                  "text-orange-500",
+                  "text-pink-500",
+                  "text-teal-500"
+                ];
+                const pinColor = pinColors[idx % pinColors.length];
 
-                  {/* Bottom Compact Caption Bar */}
-                  <div className="absolute bottom-0 left-0 right-0 p-2.5 sm:p-3.5 z-10 flex flex-col justify-end">
-                    <h3 className="font-heading font-extrabold text-xs sm:text-sm lg:text-base text-white leading-tight drop-shadow-sm line-clamp-1 group-hover:text-vannam-yellow transition-colors">
-                      {item.title}
-                    </h3>
-                    <div className="flex items-center justify-between mt-1 text-[9.5px] sm:text-[10.5px] text-blue-100 font-semibold opacity-90">
-                      <span>Click to view photo</span>
-                      <span className="group-hover:translate-x-1 transition-transform">↗</span>
+                return (
+                  <div 
+                    key={item.id} 
+                    onClick={() => setActiveLightboxImage(item)}
+                    className={`group relative bg-white p-2 pb-3.5 sm:p-2.5 sm:pb-4 rounded-2xl shadow-sm hover:shadow-xl border border-amber-200/80 hover:border-amber-400 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 hover:z-20 transform ${tilt} hover:rotate-0 flex flex-col justify-between`}
+                  >
+                    {/* Notice Board Pushpin & Washi Tape */}
+                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center pointer-events-none">
+                      {/* Washi Tape Strip */}
+                      <div className="w-10 sm:w-12 h-3 sm:h-3.5 bg-amber-200/85 -rotate-2 rounded-2xs shadow-2xs border-t border-b border-amber-300/60" />
+                      {/* 3D Pushpin */}
+                      <span className={`absolute -top-1 text-xs sm:text-sm drop-shadow-xs ${pinColor}`}>
+                        📌
+                      </span>
+                    </div>
+
+                    {/* Photo Container */}
+                    <div className="relative w-full h-32 xs:h-36 sm:h-44 lg:h-48 rounded-xl overflow-hidden bg-slate-100 shadow-inner">
+                      <Image 
+                        src={item.src} 
+                        alt={item.title} 
+                        fill 
+                        sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                        className="object-cover group-hover:scale-108 transition-transform duration-500 ease-out" 
+                      />
+                      
+                      {/* Top-Right Lightbox Expand Indicator */}
+                      <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#0F2963]/80 backdrop-blur-xs text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-75 group-hover:scale-100 shadow-xs z-10">
+                        <ArrowUpRight className="w-3.5 h-3.5" />
+                      </div>
+                    </div>
+
+                    {/* Polaroid Scrapbook Caption Margin */}
+                    <div className="mt-2 sm:mt-2.5 px-0.5 space-y-1">
+                      <div className="flex items-center justify-between gap-1">
+                        <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-vannam-orange bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200/80 shrink-0">
+                          {item.category}
+                        </span>
+                        <span className="text-[9px] font-bold text-slate-400 group-hover:text-vannam-navy transition-colors">
+                          View ↗
+                        </span>
+                      </div>
+                      <h3 className="font-heading font-extrabold text-[11px] xs:text-xs sm:text-sm text-[#0F2963] leading-tight line-clamp-1 group-hover:text-vannam-orange transition-colors">
+                        {item.title}
+                      </h3>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </ScrollReveal>
+                );
+              })}
+            </ScrollReveal>
+          </div>
 
           <RainbowArcBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
@@ -2790,7 +2840,7 @@ export default function Home() {
               <span>Parent Love & Reviews</span>
             </div>
             <h2 className="font-heading text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#0F2963] tracking-tight leading-tight mobile-text-shadow">
-              Trusted by Hundreds of{" "}
+              Trusted by Hundreds of <br />
               <span className="text-vannam-yellow underline decoration-vannam-cyan underline-offset-4 sm:underline-offset-6">Happy Families</span>
             </h2>
             <p className="text-xs sm:text-sm text-[#334155] font-semibold leading-relaxed max-w-xl mx-auto mobile-readable-text">
@@ -2798,10 +2848,55 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* Testimonial Cards: Horizontal Scroll on Mobile, 3-Col Grid on Desktop */}
-          <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-none gap-3.5 pb-2 md:grid md:grid-cols-3 md:gap-5 px-1 sm:px-0">
+          {/* MOBILE TESTIMONIALS: Vertical Auto-Running Card (Cycles automatically every 4s) */}
+          <div className="block md:hidden">
+            <div className="bento-card p-4 rounded-2xl border-2 border-amber-200/90 bg-white/95 shadow-sm space-y-3 transition-all duration-300">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-0.5 text-vannam-yellow">
+                  {[...Array(testimonials[activeTestimonialIdx].rating)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <span className="text-[10.5px] font-bold text-rose-500">💛 Verified Parent Review</span>
+              </div>
+
+              <p className="text-xs text-[#0F2963] italic leading-relaxed min-h-[64px]">
+                &ldquo;{testimonials[activeTestimonialIdx].quote}&rdquo;
+              </p>
+
+              <div className="flex items-center justify-between pt-2.5 border-t border-[#E8EEFB]">
+                <div className="flex items-center gap-2.5">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/50">
+                    <Image src={testimonials[activeTestimonialIdx].avatar} alt={testimonials[activeTestimonialIdx].parent} fill sizes="80px" className="object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="font-heading font-extrabold text-[#0F2963] text-xs">{testimonials[activeTestimonialIdx].parent}</h4>
+                    <span className="text-[10px] font-bold text-vannam-orange block">Parent of {testimonials[activeTestimonialIdx].child}</span>
+                  </div>
+                </div>
+
+                {/* Auto-runner dot indicator */}
+                <div className="flex items-center gap-1.5">
+                  {testimonials.map((_, dotIdx) => (
+                    <button
+                      key={dotIdx}
+                      type="button"
+                      aria-label={`Jump to review ${dotIdx + 1}`}
+                      onClick={() => setActiveTestimonialIdx(dotIdx)}
+                      className={`h-2 rounded-full transition-all cursor-pointer ${
+                        activeTestimonialIdx === dotIdx ? "w-5 bg-vannam-yellow" : "w-2 bg-slate-200"
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* DESKTOP TESTIMONIALS: Standard 3-Col Grid (Untouched on Web) */}
+          <div className="hidden md:grid md:grid-cols-3 md:gap-5 px-0 sm:px-0">
             {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-[82vw] xs:w-[290px] shrink-0 snap-center md:w-auto bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
+              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-full bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-0.5 text-vannam-yellow">
@@ -2973,8 +3068,8 @@ export default function Home() {
           <CrayonIcon color="amber" className="w-20 h-20 sm:w-32 sm:h-32" />
         </div>
 
-        {/* Ambient Light Glows */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+        {/* Ambient Light Glows (Hidden on mobile to avoid luminous light) */}
+        <div className="hidden sm:block absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
           <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-[#00A8E8]/20 blur-[100px] rounded-full" />
           <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-[#F59E0B]/20 blur-[100px] rounded-full" />
         </div>
@@ -2994,7 +3089,7 @@ export default function Home() {
                 <PaperPlaneIcon className="w-6 h-6 text-sky-300 animate-flutter" />
               </div>
 
-              <h2 className="font-heading text-xl xs:text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white drop-shadow-sm">
+              <h2 className="font-heading text-xl xs:text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-tight leading-[1.15] text-white">
                 Begin Your Child&apos;s Learning Journey.
               </h2>
 
@@ -3030,8 +3125,8 @@ export default function Home() {
             <div className="lg:col-span-7 relative">
               <div className="bg-[#0A1D47]/80 sm:bg-white/10 backdrop-blur-2xl p-4 xs:p-5 sm:p-7 md:p-8 rounded-2xl sm:rounded-3xl border-2 border-white/20 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
                 
-                {/* Form Internal Glow */}
-                <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
+                {/* Form Internal Glow (Hidden on mobile to avoid luminous light) */}
+                <div className="hidden sm:block absolute top-0 right-0 w-48 h-48 bg-white/10 blur-[80px] rounded-full pointer-events-none" />
 
                 <div className="relative z-10 mb-3 sm:mb-4 text-center sm:text-left">
                   <h3 className="font-heading text-lg sm:text-2xl font-extrabold text-white mb-0.5">

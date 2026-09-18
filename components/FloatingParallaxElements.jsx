@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 /**
  * FloatingParallaxElements
@@ -8,14 +8,25 @@ import React, { useState, useEffect } from "react";
  * friendly twinkling stars, and smiling clouds that add magical depth without distracting.
  */
 export default function FloatingParallaxElements() {
-  const [scrollY, setScrollY] = useState(0);
+  const planeRef = useRef(null);
+  const balloonRef = useRef(null);
+  const starRef = useRef(null);
 
   useEffect(() => {
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY);
+          const scrollY = window.scrollY;
+          if (planeRef.current) {
+            planeRef.current.style.transform = `translate3d(${Math.sin(scrollY * 0.0015) * 60}px, ${scrollY * -0.08}px, 0)`;
+          }
+          if (balloonRef.current) {
+            balloonRef.current.style.transform = `translate3d(0, ${scrollY * -0.05}px, 0)`;
+          }
+          if (starRef.current) {
+            starRef.current.style.transform = `translate3d(0, ${scrollY * -0.04}px, 0)`;
+          }
           ticking = false;
         });
         ticking = true;
@@ -33,8 +44,8 @@ export default function FloatingParallaxElements() {
     >
       {/* Gliding Origami Paper Plane 1 (Top Left to Right) */}
       <div 
+        ref={planeRef}
         style={{
-          transform: `translate3d(${Math.sin(scrollY * 0.0015) * 60}px, ${scrollY * -0.08}px, 0)`,
           transition: "transform 0.1s linear",
         }}
         className="absolute top-28 left-[6%] opacity-60 hidden md:block animate-paper-plane-glide"
@@ -48,8 +59,8 @@ export default function FloatingParallaxElements() {
 
       {/* Floating Hot Air Balloon (Right side) */}
       <div
+        ref={balloonRef}
         style={{
-          transform: `translate3d(0, ${scrollY * -0.05}px, 0)`,
           transition: "transform 0.1s linear",
         }}
         className="absolute top-[35vh] right-[4%] opacity-50 hidden lg:block animate-float-slow"
@@ -69,9 +80,7 @@ export default function FloatingParallaxElements() {
 
       {/* Floating Sparkle Star (Bottom Left) */}
       <div 
-        style={{
-          transform: `translate3d(0, ${scrollY * -0.04}px, 0)`,
-        }}
+        ref={starRef}
         className="absolute bottom-[20vh] left-[5%] opacity-40 animate-pulse"
       >
         <svg width="32" height="32" viewBox="0 0 24 24" fill="#F59E0B" xmlns="http://www.w3.org/2000/svg">

@@ -298,56 +298,56 @@
 .bento-card {
   background: #FFFFFF;
   border: 2px solid #E8EEFB;
-  box-shadow: 0px 10px 30px -5px rgba(15, 41, 99, 0.07), 0px 6px 0px 0px #F0F4FC;
+  box-shadow: 0px 10px 30px -5px rgba(15, 41, 99, 0.07);
   border-radius: 1.75rem;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .bento-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0px 20px 40px -5px rgba(15, 41, 99, 0.12), 0px 10px 0px 0px #CBD8F6;
+  box-shadow: 0px 20px 40px -5px rgba(15, 41, 99, 0.12);
   border-color: #CBD8F6;
 }
 
 .card-navy {
-  background: linear-gradient(135deg, #F0F4FC 0%, #E8EEFB 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 60%, #F0F4FC 100%);
   border: 2px solid #CBD8F6;
-  box-shadow: 0px 6px 0px 0px #0F2963;
+  box-shadow: 0px 4px 16px -2px rgba(15, 41, 99, 0.07);
 }
 
 .card-amber, .card-yellow {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 60%, #FEF9E7 100%);
   border: 2px solid #FDE68A;
-  box-shadow: 0px 6px 0px 0px #F59E0B;
+  box-shadow: 0px 4px 16px -2px rgba(245, 158, 11, 0.07);
 }
 
 .card-emerald, .card-green {
-  background: linear-gradient(135deg, #ECFDF5 0%, #D1FAE5 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F9FDFB 60%, #ECFDF5 100%);
   border: 2px solid #A7F3D0;
-  box-shadow: 0px 6px 0px 0px #10B981;
+  box-shadow: 0px 4px 16px -2px rgba(16, 185, 129, 0.07);
 }
 
 .card-sky, .card-cyan {
-  background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #F9FCFF 60%, #F0F9FF 100%);
   border: 2px solid #BAE6FD;
-  box-shadow: 0px 6px 0px 0px #00A8E8;
+  box-shadow: 0px 4px 16px -2px rgba(14, 165, 233, 0.07);
 }
 
 .card-rose, .card-red {
-  background: linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FCF8F9 60%, #FFF1F2 100%);
   border: 2px solid #FECDD3;
-  box-shadow: 0px 6px 0px 0px #F43F5E;
+  box-shadow: 0px 4px 16px -2px rgba(244, 63, 94, 0.07);
 }
 
 .card-orange {
-  background: linear-gradient(135deg, #FFF7ED 0%, #FFEDD5 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFFBF7 60%, #FFF7ED 100%);
   border: 2px solid #FED7AA;
-  box-shadow: 0px 6px 0px 0px #F97316;
+  box-shadow: 0px 4px 16px -2px rgba(249, 115, 22, 0.07);
 }
 
 .card-purple {
-  background: linear-gradient(135deg, #FAF5FF 0%, #F3E8FF 100%);
+  background: linear-gradient(135deg, #FFFFFF 0%, #FAF8FD 60%, #FAF5FF 100%);
   border: 2px solid #E9D5FF;
-  box-shadow: 0px 6px 0px 0px #8B5CF6;
+  box-shadow: 0px 4px 16px -2px rgba(139, 92, 246, 0.07);
 }
 
 /* Floating & Playful Animations */
@@ -1096,13 +1096,15 @@ html, body {
   }
 }
 
-/* Mobile trust badge glass effect */
-@media (max-width: 640px) {
+/* Mobile bento card clean elevation (removes awkward solid offset bottom slab) */
+@media (max-width: 768px) {
   .bento-card {
-    box-shadow: 0px 8px 24px -4px rgba(15, 41, 99, 0.08), 0px 6px 0px 0px #F0F4FC;
+    box-shadow: 0px 4px 16px -2px rgba(15, 41, 99, 0.08), 0px 1px 3px 0px rgba(0, 0, 0, 0.04) !important;
   }
-  .bento-card:hover {
-    box-shadow: 0px 16px 32px -4px rgba(15, 41, 99, 0.12), 0px 8px 0px 0px #CBD8F6;
+  .bento-card:hover,
+  .bento-card:active {
+    box-shadow: 0px 6px 20px -2px rgba(15, 41, 99, 0.12) !important;
+    transform: none !important;
   }
 }
 
@@ -1120,11 +1122,9 @@ html, body {
    ========================================================= */
 
 .bg-section-methodology::before,
-.bg-section-activities::before,
 .bg-section-facilities::before,
 .bg-section-safety::before,
-.bg-section-teachers::before,
-.bg-section-gallery::before {
+.bg-section-teachers::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -1231,8 +1231,8 @@ html, body {
 /* 6. ACTIVITIES — Joyful Daily Activities Storybook World Background (Web & Mobile Responsive) */
 .bg-section-activities {
   position: relative;
-  background-color: #FEFCEF;
-  background-image: url('/activities-background-v3.png?v=3');
+  background-color: #FFFDF1;
+  background-image: url('/activities-background-v3.png?v=4');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1240,8 +1240,8 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-activities {
-    background-image: url('/activities-background-mobile-v3.png?v=3');
-    background-position: center center;
+    background-image: url('/activities-background-mobile-v3.png?v=4');
+    background-position: center top;
     background-size: 100% 100%;
   }
 }
@@ -1291,8 +1291,8 @@ html, body {
 /* 10. GALLERY — Campus Scrapbook Moments Background (Web & Mobile Responsive) */
 .bg-section-gallery {
   position: relative;
-  background-color: #FEFCEF;
-  background-image: url('/gallery-background-v3.png?v=3');
+  background-color: #FFFDF1;
+  background-image: url('/gallery-background-v3.png?v=4');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1300,8 +1300,8 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-gallery {
-    background-image: url('/gallery-background-mobile-v3.png?v=3');
-    background-position: center center;
+    background-image: url('/gallery-background-mobile-v3.png?v=4');
+    background-position: center top;
     background-size: 100% 100%;
   }
 }
@@ -1309,8 +1309,8 @@ html, body {
 /* 11. TESTIMONIALS / HAPPY FAMILIES — Illustrated Storybook World Background (Web & Mobile Responsive) */
 .bg-section-testimonials {
   position: relative;
-  background-color: #FEFCEF;
-  background-image: url('/testimonials-background-v3.png?v=3');
+  background-color: #FFFDF1;
+  background-image: url('/testimonials-background-v3.png?v=4');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1318,8 +1318,8 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-testimonials {
-    background-image: url('/testimonials-background-mobile-v3.png?v=3');
-    background-position: center center;
+    background-image: url('/testimonials-background-mobile-v3.png?v=4');
+    background-position: center top;
     background-size: 100% 100%;
   }
 }
@@ -1409,11 +1409,9 @@ html, body {
 /* Mobile Responsiveness for Section Dot Grids */
 @media (max-width: 640px) {
   .bg-section-methodology::before,
-  .bg-section-activities::before,
   .bg-section-facilities::before,
   .bg-section-safety::before,
-  .bg-section-teachers::before,
-  .bg-section-gallery::before {
+  .bg-section-teachers::before {
     background-size: 60px 60px, 60px 60px;
     background-position: 0 0, 30px 30px;
   }
@@ -1430,13 +1428,13 @@ html, body {
    Does NOT alter desktop styles in any way.
    ========================================================= */
 @media (max-width: 768px) {
-  /* Subtle text readability enhancements against background illustrations */
+  /* Subtle text readability enhancements against background illustrations without luminous halo */
   .mobile-readable-text {
-    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.85);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
   }
 
   .mobile-text-shadow {
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.95), 0 0 14px rgba(255, 255, 255, 0.9);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   }
 
   /* Fix mobile hero frame: pin Apply Now to bottom right without overflowing or jumping */
@@ -1479,20 +1477,26 @@ html, body {
     position: relative !important;
   }
 
-  /* ── MOBILE TEXT READABILITY ── */
-  /* Strong white text-shadow so headings pop over any background */
+  /* ── MOBILE TEXT READABILITY (Crisp, subtle shadow without blinding luminosity) ── */
   .mobile-readable-text,
-  section[class*="bg-section-"] p {
-    text-shadow: 0 1px 4px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 1) !important;
+  section[class*="bg-section-"]:not(.bg-section-contact):not(#contact) p {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75) !important;
   }
 
   .mobile-text-shadow,
-  section[class*="bg-section-"] h2,
-  section[class*="bg-section-"] h3 {
-    text-shadow: 
-      0 1px 4px rgba(255, 255, 255, 1),
-      0 0 20px rgba(255, 255, 255, 1),
-      0 0 40px rgba(255, 255, 255, 0.8) !important;
+  section[class*="bg-section-"]:not(.bg-section-contact):not(#contact) h2,
+  section[class*="bg-section-"]:not(.bg-section-contact):not(#contact) h3 {
+    text-wrap: balance !important;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  /* Deep navy contact section: completely crisp white text with ZERO glowing luminosity */
+  #contact,
+  #contact *,
+  .bg-section-contact,
+  .bg-section-contact * {
+    text-shadow: none !important;
+    filter: none !important;
   }
 
   /* Frosted glass backdrop behind section header/text areas on mobile
@@ -1512,46 +1516,59 @@ html, body {
     opacity: 0.35 !important;
   }
 
-  /* ── MOBILE CARD GRID COLORS (BOOSTED SATURATION) ── */
-  /* Plain bento-cards get opaque white so text is readable on mobile */
-  .bento-card {
-    background: rgba(255, 255, 255, 0.98) !important;
+  /* Disable luminous light and glowing radial overlays before footer on mobile */
+  .bg-section-contact::before {
+    display: none !important;
   }
 
-  /* Color cards override the white with vivid, more saturated gradients on mobile */
+  /* ── MOBILE CARD GRID COLORS (BOOSTED SATURATION) ── */
+  /* Plain bento-cards get opaque white and clean soft shadow on mobile */
+  .bento-card {
+    background: rgba(255, 255, 255, 0.98) !important;
+    box-shadow: 0px 4px 16px -2px rgba(15, 41, 99, 0.08) !important;
+  }
+
+  /* Color cards: Soft, soothing pastel whisper washes (never hard, glaring, or saturated) */
   .card-amber, .card-yellow {
-    background: linear-gradient(135deg, #FFF8E1 0%, #FFE082 100%) !important;
-    border-color: #FFD54F !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFDF7 50%, #FEF9E7 100%) !important;
+    border-color: #FDE68A !important;
+    box-shadow: 0 4px 14px -2px rgba(245, 158, 11, 0.08) !important;
   }
 
   .card-emerald, .card-green {
-    background: linear-gradient(135deg, #E8F5E9 0%, #A5D6A7 100%) !important;
-    border-color: #81C784 !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9FDFB 50%, #ECFDF5 100%) !important;
+    border-color: #A7F3D0 !important;
+    box-shadow: 0 4px 14px -2px rgba(16, 185, 129, 0.08) !important;
   }
 
   .card-sky, .card-cyan {
-    background: linear-gradient(135deg, #E1F5FE 0%, #81D4FA 100%) !important;
-    border-color: #4FC3F7 !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F9FCFF 50%, #F0F9FF 100%) !important;
+    border-color: #BAE6FD !important;
+    box-shadow: 0 4px 14px -2px rgba(14, 165, 233, 0.08) !important;
   }
 
   .card-rose, .card-red {
-    background: linear-gradient(135deg, #FCE4EC 0%, #F48FB1 100%) !important;
-    border-color: #F06292 !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FCF8F9 50%, #FFF1F2 100%) !important;
+    border-color: #FECDD3 !important;
+    box-shadow: 0 4px 14px -2px rgba(244, 63, 94, 0.08) !important;
   }
 
   .card-orange {
-    background: linear-gradient(135deg, #FFF3E0 0%, #FFB74D 100%) !important;
-    border-color: #FF9800 !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FFFBF7 50%, #FFF7ED 100%) !important;
+    border-color: #FED7AA !important;
+    box-shadow: 0 4px 14px -2px rgba(249, 115, 22, 0.08) !important;
   }
 
   .card-navy {
-    background: linear-gradient(135deg, #E8EAF6 0%, #9FA8DA 100%) !important;
-    border-color: #7986CB !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 50%, #F0F4FC 100%) !important;
+    border-color: #CBD8F6 !important;
+    box-shadow: 0 4px 14px -2px rgba(15, 41, 99, 0.08) !important;
   }
 
   .card-purple {
-    background: linear-gradient(135deg, #F3E5F5 0%, #CE93D8 100%) !important;
-    border-color: #BA68C8 !important;
+    background: linear-gradient(135deg, #FFFFFF 0%, #FAF8FD 50%, #FAF5FF 100%) !important;
+    border-color: #E9D5FF !important;
+    box-shadow: 0 4px 14px -2px rgba(139, 92, 246, 0.08) !important;
   }
 
   /* Ensure text containers have proper padding on mobile */
@@ -1609,4 +1626,160 @@ html, body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* =========================================================
+/* =========================================================
+   INNOVATIVE VANNAM SPECTRUM BLOOM & LIQUID IRIS OPENING (WEB & MOBILE)
+   Features Prismatic Color Droplet, Organic 7-Shades Bloom,
+   3D Clay Montessori Alphabet Blocks & Expanding Liquid Iris Portal
+   ========================================================= */
+
+@keyframes vannam-droplet-fall {
+  0% {
+    opacity: 0;
+    transform: translateY(-90px) scale(0.5, 1.5);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(0px) scale(0.9, 1.1);
+  }
+  65% {
+    transform: translateY(0px) scale(1.4, 0.65);
+  }
+  80% {
+    transform: translateY(-8px) scale(1.05, 0.95);
+  }
+  100% {
+    transform: translateY(0px) scale(1, 1);
+    opacity: 0;
+  }
+}
+
+@keyframes vannam-ripple-expand {
+  0% {
+    transform: scale(0.15);
+    opacity: 0.95;
+    border-width: 6px;
+  }
+  60% {
+    opacity: 0.6;
+    border-width: 3px;
+  }
+  100% {
+    transform: scale(3.2);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+@keyframes vannam-mascot-spring {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-14deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.18) rotate(3deg);
+  }
+  70% {
+    transform: scale(0.92) rotate(-1.5deg);
+  }
+  85% {
+    transform: scale(1.04) rotate(0.8deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes vannam-letter-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.4) rotate(-8deg);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(8px) scale(1.15) rotate(3deg);
+  }
+  80% {
+    transform: translateY(-3px) scale(0.96) rotate(-1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes vannam-gleam-sweep {
+  0% {
+    transform: translateX(-150%) skewX(-20deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 0.75;
+  }
+  100% {
+    transform: translateX(250%) skewX(-20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes vannam-aura-spin {
+  0% {
+    transform: rotate(0deg) scale(0.96);
+    opacity: 0.45;
+  }
+  50% {
+    transform: rotate(180deg) scale(1.08);
+    opacity: 0.75;
+  }
+  100% {
+    transform: rotate(360deg) scale(0.96);
+    opacity: 0.45;
+  }
+}
+
+@keyframes vannam-float-gentle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(2deg);
+  }
+}
+
+.animate-vannam-droplet {
+  animation: vannam-droplet-fall 0.45s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-vannam-mascot {
+  animation: vannam-mascot-spring 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-vannam-letter {
+  opacity: 0;
+  animation: vannam-letter-pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-vannam-gleam {
+  animation: vannam-gleam-sweep 1.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-vannam-aura {
+  animation: vannam-aura-spin 8s linear infinite;
+  will-change: transform;
+}
+
+.animate-vannam-gentle-float {
+  animation: vannam-float-gentle 3s ease-in-out infinite;
+  will-change: transform;
+}
+
+
+
 
