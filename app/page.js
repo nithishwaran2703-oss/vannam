@@ -2394,7 +2394,7 @@ export default function Home() {
       </section>
 
       {/* FACILITIES SECTION */}
-      <section id="facilities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-facilities relative overflow-hidden">
+      <section id="facilities" className="scroll-mt-24 pt-10 pb-8 sm:pt-14 sm:pb-10 lg:pt-18 lg:pb-16 bg-section-facilities relative">
         {/* HANGING TOYS CANOPY */}
         <HangingToyCanopy theme="facilities" ropeColor="#10B981" />
 
