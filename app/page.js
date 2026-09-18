@@ -2614,7 +2614,7 @@ export default function Home() {
           </ScrollReveal>
 
           {/* TEACHER CARDS: Premium Character Profile Cards */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
             {teachers.map((t, idx) => (
               <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-white/80 shadow-[0_4px_20px_-4px_rgba(15,41,99,0.10)] hover:shadow-[0_12px_32px_-6px_rgba(15,41,99,0.18)] hover:-translate-y-1.5 transition-all duration-300`}>
                 
