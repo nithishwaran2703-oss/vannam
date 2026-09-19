@@ -192,15 +192,17 @@ export default function Home() {
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
   const [mobileProgramModal, setMobileProgramModal] = useState(null);
 
-  // Testimonials Auto-Runner State (Mobile - snappy 2000ms rotation)
+  // Testimonials Auto-Runner State (Mobile - smooth 5000ms rotation with pause)
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
+  const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
   useEffect(() => {
+    if (isTestimonialPaused) return;
     const timer = setInterval(() => {
       setActiveTestimonialIdx((prev) => (prev + 1) % 3);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [isTestimonialPaused]);
 
   // Innovative 7-Shade Methodology State
   const [activeMethodologyShade, setActiveMethodologyShade] = useState("creative");
@@ -219,7 +221,36 @@ export default function Home() {
   const [activeAwardTab, setActiveAwardTab] = useState(0);
   const [selectedAwardModal, setSelectedAwardModal] = useState(null);
   const [selectedComparisonModal, setSelectedComparisonModal] = useState(null);
+  const [selectedTeacherModal, setSelectedTeacherModal] = useState(null);
   const [showCitationDetails, setShowCitationDetails] = useState(false);
+  const [teacherHighFives, setTeacherHighFives] = useState({
+    clara: 248,
+    priya: 189,
+    sarah: 215,
+    david: 276,
+  });
+
+  const handleTeacherHighFive = (e, teacherId) => {
+    e.stopPropagation();
+    setTeacherHighFives((prev) => ({
+      ...prev,
+      [teacherId]: (prev[teacherId] || 0) + 1,
+    }));
+    try {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        particleCount: 30,
+        spread: 60,
+        origin: { x, y },
+        colors: ["#F43F5E", "#F59E0B", "#10B981", "#00A8E8", "#8B5CF6", "#FBBF24"],
+        disableForReducedMotion: true,
+      });
+    } catch {
+      // ignore
+    }
+  };
 
   // Dynamic Content & Announcements from Admin Store
   const [dynamicAnnouncements, setDynamicAnnouncements] = useState([]);
@@ -253,6 +284,24 @@ export default function Home() {
     program: "nursery",
     message: ""
   });
+
+
+  const handleRocketLaunch = (e) => {
+    try {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = (rect.left + rect.width / 2) / window.innerWidth;
+      const y = (rect.top + rect.height / 2) / window.innerHeight;
+      confetti({
+        particleCount: 40,
+        spread: 70,
+        origin: { x, y },
+        colors: ["#F97316", "#F59E0B", "#38BDF8", "#10B981", "#8B5CF6"],
+        disableForReducedMotion: true,
+      });
+    } catch {}
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
 
   const triggerConfetti = () => {
     confetti({
@@ -690,71 +739,123 @@ export default function Home() {
     }
   ];
 
-  // Teachers List with Distinct Curated UI Colors
+  // Teachers List with Child-Centric Personas, Superpowers & Pedagogical Credentials
   const teachers = [
     {
+      id: "clara",
       name: "Mrs. Clara Bennett",
+      kidName: "Teacher Clara",
+      heroRole: "Founding Storyteller & Principal",
       role: "Principal & Founder",
-      qual: "M.Ed Early Childhood Education (14+ Yrs)",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
+      superpower: "Turns simple picture books into magical living adventures!",
+      favoriteCorner: "Enchanted Reading Tepee ⛺",
+      kidsLove: "Expressive animated voices & comforting morning hugs",
+      qual: "M.Ed Early Childhood Education & Leadership",
+      shortQual: "M.Ed Early Ed",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
       intro: "Passionate about creating nurturing environments where every child feels seen, loved, and inspired to explore.",
-      badge: "Founder & Visionary",
-      cardClass: "card-amber-soft",
-      badgeStyle: "bg-amber-100 text-[#9A3412] border-amber-300",
-      roleColor: "text-[#C2410C]",
-      experience: "14+ Yrs Exp",
-      tags: ["Early Literacy", "NEP 2020", "Curriculum"],
-      accentGradient: "from-amber-300 via-yellow-400 to-orange-300",
-      ringColor: "ring-amber-300",
-      expBg: "bg-amber-50 text-amber-800 border-amber-200"
+      badge: "Master Storyteller",
+      experience: "14+ Yrs of Smiles",
+      tags: ["Story Magic", "Montessori Leader", "Warm Hugs"],
+      accentGradient: "from-amber-400 via-orange-400 to-yellow-500",
+      themeColor: "#D97706",
+      mascotEmoji: "🦁",
+      mascotTitle: "Gentle Lion Buddy",
+      tapeColor: "bg-amber-300 text-[#78350F] border-amber-400",
+      cardBg: "from-[#FFFDF5] via-[#FFF9EA] to-[#FFF3D6]",
+      cardBorder: "border-amber-300",
+      quoteBg: "#FFFBEB",
+      quoteBorder: "#FDE68A",
+      quoteColor: "#92400E",
+      highFives: 248,
+      story: "With over 14 years in early childhood development, Mrs. Bennett founded Vannam World Preschool to champion child-led exploration. Her research-backed framework blends Scandinavian inquiry with Montessori self-directed focus, ensuring every young mind blossoms in confidence."
     },
     {
+      id: "priya",
       name: "Ms. Priya Patel",
+      kidName: "Teacher Priya",
+      heroRole: "Nature & Tactile Phonics Wizard",
       role: "Montessori Lead Educator",
-      qual: "Certified Montessori Trainer & Child Psychologist",
-      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80",
+      superpower: "Can teach reading through secret treasure hunt games!",
+      favoriteCorner: "Tactile Sensory Discovery Trays 🌿",
+      kidsLove: "Making colorful clay creatures & playful phonics rhymes",
+      qual: "AMI Certified Montessori Trainer & Child Psychologist",
+      shortQual: "AMI Montessori",
+      image: "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=600&q=80",
       intro: "Specializes in tactile sensory learning and building early phonics confidence through playful discovery.",
-      badge: "Montessori Lead",
-      cardClass: "card-emerald-soft",
-      badgeStyle: "bg-emerald-100 text-[#065F46] border-emerald-300",
-      roleColor: "text-[#047857]",
-      experience: "8+ Yrs Exp",
-      tags: ["Tactile Phonics", "Sensory Play", "Psychology"],
-      accentGradient: "from-emerald-300 via-green-400 to-teal-300",
-      ringColor: "ring-emerald-300",
-      expBg: "bg-emerald-50 text-emerald-800 border-emerald-200"
+      badge: "Phonics Explorer",
+      experience: "8+ Yrs of Discovery",
+      tags: ["Tactile Phonics", "Nature Trays", "Gentle Calm"],
+      accentGradient: "from-emerald-400 via-teal-400 to-green-500",
+      themeColor: "#059669",
+      mascotEmoji: "🦉",
+      mascotTitle: "Wise Phonics Owl",
+      tapeColor: "bg-emerald-300 text-[#064E3B] border-emerald-400",
+      cardBg: "from-[#F7FDF9] via-[#EFFFF6] to-[#DCFCE7]",
+      cardBorder: "border-emerald-300",
+      quoteBg: "#ECFDF5",
+      quoteBorder: "#A7F3D0",
+      quoteColor: "#065F46",
+      highFives: 189,
+      story: "Ms. Priya pairs AMI-certified Montessori mastery with gentle developmental psychology. She curates hands-on tactile discovery trays that allow preschoolers to naturally internalize numeracy, phonetic fluency, and independent emotional calm."
     },
     {
+      id: "sarah",
       name: "Mrs. Sarah Jenkins",
+      kidName: "Teacher Sarah",
+      heroRole: "Toddler Sunshine Bestie & Hug Guide",
       role: "Playgroup & Toddler Lead",
-      qual: "B.S. Child Development & Pediatric First Aid Certified",
-      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+      superpower: "Makes morning goodbye tears dissolve into giggles in 10 seconds!",
+      favoriteCorner: "Cozy Blanket Fort & Puppet Theatre 🧸",
+      kidsLove: "Catching rainbow soap bubbles & puppet cuddle circles",
+      qual: "B.S. Child Development & Certified Pediatric First Aid",
+      shortQual: "B.S. Child Dev",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=600&q=80",
       intro: "Loves introducing toddlers to their first group social experiences with gentle encouragement and hugs.",
-      badge: "Toddler Care Expert",
-      cardClass: "card-rose-soft",
-      badgeStyle: "bg-rose-100 text-[#9F1239] border-rose-300",
-      roleColor: "text-[#BE123C]",
-      experience: "6+ Yrs Exp",
-      tags: ["Gentle Routine", "First Aid", "Social Skills"],
-      accentGradient: "from-rose-300 via-pink-400 to-red-300",
-      ringColor: "ring-rose-300",
-      expBg: "bg-rose-50 text-rose-800 border-rose-200"
+      badge: "Sunshine Bestie",
+      experience: "6+ Yrs of Joy",
+      tags: ["Gentle Transition", "Bubble Games", "Puppet Rhymes"],
+      accentGradient: "from-rose-400 via-pink-400 to-red-400",
+      themeColor: "#E11D48",
+      mascotEmoji: "🐨",
+      mascotTitle: "Cozy Koala Buddy",
+      tapeColor: "bg-rose-300 text-[#881337] border-rose-400",
+      cardBg: "from-[#FFF9FA] via-[#FFF2F5] to-[#FFE4E8]",
+      cardBorder: "border-rose-300",
+      quoteBg: "#FFF1F2",
+      quoteBorder: "#FECDD3",
+      quoteColor: "#9F1239",
+      highFives: 215,
+      story: "Mrs. Sarah is celebrated by parents for transforming morning separation anxiety into radiant smiles. Her playgroup environment blends rhythmic musical circle times, sensory storytelling, and gentle reassurance so toddlers thrive away from home."
     },
     {
+      id: "david",
       name: "Mr. David Miller",
+      kidName: "Coach David",
+      heroRole: "Giant LEGO & Space Agility Rocket",
       role: "STEAM & Agility Coach",
+      superpower: "Builds giant castles & indoor obstacle balance runways!",
+      favoriteCorner: "Rocket LEGO Runway & Agility Mats 🚀",
+      kidsLove: "Rocket countdown launches & high-five balance games",
       qual: "B.Ed Physical Education & LEGO Education Instructor",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
+      shortQual: "B.Ed Physical Ed",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=600&q=80",
       intro: "Inspires young minds through spatial building projects, balance tracks, and fun scientific experiments.",
-      badge: "STEAM Coach",
-      cardClass: "card-sky-soft",
-      badgeStyle: "bg-sky-100 text-[#075985] border-sky-300",
-      roleColor: "text-[#0369A1]",
-      experience: "7+ Yrs Exp",
-      tags: ["LEGO Robotics", "Motor Agility", "STEM Labs"],
-      accentGradient: "from-sky-300 via-blue-400 to-cyan-300",
-      ringColor: "ring-sky-300",
-      expBg: "bg-sky-50 text-sky-800 border-sky-200"
+      badge: "LEGO Explorer",
+      experience: "7+ Yrs of Energy",
+      tags: ["Giant LEGO", "Obstacle Agility", "Curiosity Labs"],
+      accentGradient: "from-sky-400 via-cyan-400 to-blue-500",
+      themeColor: "#0284C7",
+      mascotEmoji: "🚀",
+      mascotTitle: "Space Rocket Buddy",
+      tapeColor: "bg-sky-300 text-[#0C4A6E] border-sky-400",
+      cardBg: "from-[#F6FBFF] via-[#EEF7FF] to-[#E0F2FE]",
+      cardBorder: "border-sky-300",
+      quoteBg: "#F0F9FF",
+      quoteBorder: "#BAE6FD",
+      quoteColor: "#075985",
+      highFives: 276,
+      story: "Coach David ignites foundational problem-solving through kinetic discovery. Whether guiding learners with oversized robotics blocks or engineering indoor agility balance tracks, he makes science, engineering, and motor coordination an exhilarating daily quest."
     }
   ];
 
@@ -1065,11 +1166,11 @@ export default function Home() {
         <div className="max-w-[1440px] mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2.5 sm:gap-3 xl:gap-6">
           
           {/* Logo & School Name */}
-          <Link href="/" className="flex items-center group shrink-0">
+          <Link href="/" className="flex items-center shrink-0">
             <img 
               src="/logo.png" 
               alt="Vannam World Preschool Logo" 
-              className="h-9 xs:h-10 sm:h-12 lg:h-13 xl:h-14 w-auto object-contain group-hover:scale-105 transition transform"
+              className="h-8 xs:h-9 sm:h-10 lg:h-11 xl:h-12 w-auto object-contain"
             />
           </Link>
 
@@ -2619,71 +2720,113 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* TEACHER CARDS: Premium Character Profile Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
+          {/* TEACHER CARDS: Color-Filled, Innovative & Child-Attractive Educator Profiles */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pt-2 items-stretch">
             {teachers.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-heart-grow" stagger={((idx % 4) + 1)} className={`group relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border-2 border-white/80 shadow-[0_4px_20px_-4px_rgba(15,41,99,0.10)] hover:shadow-[0_12px_32px_-6px_rgba(15,41,99,0.18)] hover:-translate-y-1.5 transition-all duration-300`}>
-                
-                {/* Colorful Gradient Accent Banner */}
-                <div className={`h-16 sm:h-20 bg-gradient-to-r ${t.accentGradient} relative overflow-hidden`}>
-                  {/* Decorative shimmer */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ backgroundSize: '200% 100%' }} />
-                  {/* Decorative pattern dots */}
-                  <div className="absolute inset-0 opacity-15" style={{ backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '12px 12px' }} />
-                </div>
+              <ScrollReveal 
+                key={t.id || idx} 
+                variant="reveal-up" 
+                stagger={((idx % 4) + 1)} 
+                className="group relative flex flex-col h-full"
+              >
+                {/* Modern Innovative Color-Filled Card Container */}
+                <div 
+                  onClick={() => setSelectedTeacherModal(t)}
+                  className={`w-full h-full bg-gradient-to-b ${t.cardBg} rounded-[28px] p-4 sm:p-5 border-2 ${t.cardBorder} shadow-[0_10px_28px_-10px_rgba(15,41,99,0.08)] hover:shadow-[0_22px_45px_-10px_rgba(15,41,99,0.18)] hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between relative overflow-hidden cursor-pointer`}
+                >
+                  {/* Vibrant Ambient Color Bar Along Top */}
+                  <div 
+                    className="absolute top-0 left-0 right-0 h-1.5 opacity-95" 
+                    style={{ backgroundColor: t.themeColor }} 
+                  />
 
-                {/* Centered Circular Portrait — overlaps banner */}
-                <div className="flex justify-center -mt-10 sm:-mt-12 relative z-10">
-                  <div className={`relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden ring-[3px] sm:ring-4 ${t.ringColor} ring-offset-2 ring-offset-white shadow-lg`}>
-                    <Image src={t.image} alt={t.name} fill sizes="96px" className="object-cover" />
-                  </div>
-                </div>
-
-                {/* Experience Ribbon */}
-                <div className="flex justify-center -mt-2.5 relative z-20">
-                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[8px] sm:text-[9px] font-black uppercase tracking-wider border shadow-xs ${t.expBg}`}>
-                    <GraduationCap className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                    {t.experience}
-                  </span>
-                </div>
-
-                {/* Card Body */}
-                <div className="px-3 sm:px-4 pt-2.5 sm:pt-3 pb-3 sm:pb-4 text-center space-y-2 sm:space-y-2.5">
-                  
-                  {/* Name & Role */}
-                  <div>
-                    <h3 className="font-heading font-extrabold text-xs sm:text-base text-[#0F2963] leading-tight truncate">
-                      {t.name}
-                    </h3>
-                    <span className={`text-[10px] sm:text-xs font-black ${t.roleColor} block truncate mt-0.5`}>
-                      {t.role}
-                    </span>
-                  </div>
-
-                  {/* Badge */}
-                  <div className="flex justify-center">
-                    <span className={`inline-block px-2 sm:px-2.5 py-0.5 rounded-full text-[7.5px] sm:text-[9px] font-black uppercase tracking-wider border shadow-2xs ${t.badgeStyle}`}>
-                      {t.badge}
-                    </span>
-                  </div>
-
-                  {/* Qualification */}
-                  <p className="text-[8.5px] sm:text-[10.5px] font-semibold text-slate-500 leading-snug line-clamp-1 px-1">
-                    {t.qual}
-                  </p>
-
-                  {/* Intro */}
-                  <p className="text-[9px] sm:text-xs text-[#334155] leading-snug line-clamp-2 font-medium">
-                    {t.intro}
-                  </p>
-
-                  {/* Specialty Tags */}
-                  <div className="flex flex-wrap justify-center gap-1 pt-2 border-t border-black/5">
-                    {t.tags.map((tag, i) => (
-                      <span key={i} className="text-[7.5px] sm:text-[9px] font-extrabold px-1.5 py-0.5 rounded-md bg-slate-50 text-[#0F2963] border border-slate-200/60 shadow-2xs">
-                        {tag}
+                  {/* Top Content Area */}
+                  <div className="flex flex-col flex-1">
+                    {/* Top Bar: Persona Pill & Experience (Filled Color Styling) */}
+                    <div className="h-8 flex items-center justify-between gap-2 mb-3">
+                      <span 
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-black shadow-2xs bg-white/95 border"
+                        style={{ 
+                          color: t.themeColor, 
+                          borderColor: t.quoteBorder 
+                        }}
+                      >
+                        <span className="truncate max-w-[130px]">{t.badge}</span>
                       </span>
-                    ))}
+                      <span className="text-[11px] font-bold text-[#0F2963] bg-white/90 shadow-2xs border border-white px-2.5 py-1 rounded-full shrink-0">
+                        {t.experience}
+                      </span>
+                    </div>
+
+                    {/* Character Portrait with White Border Contrast & Smooth Zoom */}
+                    <div className="relative h-48 sm:h-52 w-full rounded-2xl overflow-hidden border-2 border-white shadow-sm group-hover:shadow-md transition-shadow shrink-0">
+                      <Image 
+                        src={t.image} 
+                        alt={t.name} 
+                        fill 
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" 
+                        className="object-cover object-top group-hover:scale-106 transition-transform duration-700 ease-out" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0F2963]/60 via-transparent to-transparent pointer-events-none" />
+
+                      {/* Bottom Persona Pill on Photo */}
+                      <div className="absolute bottom-2.5 left-2.5 right-2.5">
+                        <span className="px-2.5 py-1 rounded-lg text-xs font-extrabold text-white bg-black/45 backdrop-blur-md border border-white/20 shadow-xs block text-center truncate">
+                          {t.heroRole}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Teacher Name & Pedagogical Role */}
+                    <div className="mt-3.5 space-y-1">
+                      <div>
+                        <h3 className="font-heading font-black text-lg sm:text-xl text-[#0F2963] leading-tight group-hover:text-vannam-orange transition-colors">
+                          {t.kidName}
+                        </h3>
+                        <p className="text-xs font-bold text-slate-500">
+                          {t.name}
+                        </p>
+                      </div>
+                      <p className="text-xs font-black uppercase tracking-wider" style={{ color: t.themeColor }}>
+                        {t.role}
+                      </p>
+                    </div>
+
+                    {/* Classroom Superpower Quote Box (Crisp White Island Card on Colored Canvas) */}
+                    <div 
+                      className="mt-3 p-3 rounded-2xl bg-white/95 backdrop-blur-sm border shadow-2xs text-xs relative space-y-1 min-h-[82px] flex flex-col justify-center"
+                      style={{ 
+                        borderColor: t.quoteBorder 
+                      }}
+                    >
+                      <div className="flex items-center gap-1.5 text-[10.5px] font-black uppercase tracking-wider" style={{ color: t.themeColor }}>
+                        <Sparkles className="w-3.5 h-3.5 shrink-0" />
+                        <span>Classroom Superpower</span>
+                      </div>
+                      <p className="text-slate-800 font-medium italic leading-relaxed line-clamp-2">
+                        &ldquo;{t.superpower}&rdquo;
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Modern Sleek Action Footer with Color-Matched Button */}
+                  <div className="mt-4 pt-3 border-t border-black/5 flex items-center justify-between gap-2">
+                    <span className="text-[11px] font-bold text-[#0F2963] flex items-center gap-1.5 shrink-0 whitespace-nowrap" title={t.qual}>
+                      <GraduationCap className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+                      <span>{t.shortQual}</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedTeacherModal(t);
+                      }}
+                      style={{ backgroundColor: t.themeColor }}
+                      className="px-3.5 py-1.5 rounded-full text-xs font-extrabold text-white shadow-xs hover:brightness-110 active:scale-95 transition-all flex items-center gap-1.5 cursor-pointer shrink-0"
+                    >
+                      <span>Meet Story</span>
+                      <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </button>
                   </div>
                 </div>
               </ScrollReveal>
@@ -2861,7 +3004,7 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
           
-          <ScrollReveal variant="reveal-bubble-float" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
+          <ScrollReveal variant="reveal-up" className="text-center max-w-3xl mx-auto mb-4 sm:mb-6 space-y-1.5">
             <div className="hidden sm:flex items-center justify-center gap-3 mb-1">
               <ParentLoveBadge className="w-8 h-8 animate-bounce-gentle" />
               <PlaySceneGroup className="opacity-90 scale-90 sm:scale-100" />
@@ -2880,21 +3023,33 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* MOBILE TESTIMONIALS: Vertical Auto-Running Card (Cycles automatically every 4s) */}
-          <div className="block md:hidden">
-            <div className="bento-card p-4 rounded-2xl border-2 border-amber-200/90 bg-white/95 shadow-sm space-y-3 transition-all duration-300">
+          {/* MOBILE TESTIMONIALS: Vertical Auto-Running Card with fixed stable height */}
+          <div 
+            className="block md:hidden"
+            onMouseEnter={() => setIsTestimonialPaused(true)}
+            onMouseLeave={() => setIsTestimonialPaused(false)}
+            onTouchStart={() => setIsTestimonialPaused(true)}
+            onTouchEnd={() => setIsTestimonialPaused(false)}
+          >
+            <div className="p-4 rounded-2xl border-2 border-amber-200/90 bg-white/95 shadow-sm space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-0.5 text-vannam-yellow">
                   {[...Array(testimonials[activeTestimonialIdx].rating)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <span className="text-[10.5px] font-bold text-rose-500">💛 Verified Parent Review</span>
+                <span className="text-[10.5px] font-bold text-rose-500 flex items-center gap-1">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                  <span>Verified Parent Review</span>
+                </span>
               </div>
 
-              <p className="text-xs text-[#0F2963] italic leading-relaxed min-h-[64px]">
-                &ldquo;{testimonials[activeTestimonialIdx].quote}&rdquo;
-              </p>
+              {/* Fixed height quote container so height never changes or jumps */}
+              <div className="min-h-[76px] flex items-center">
+                <p className="text-xs text-[#0F2963] italic leading-relaxed transition-opacity duration-300">
+                  &ldquo;{testimonials[activeTestimonialIdx].quote}&rdquo;
+                </p>
+              </div>
 
               <div className="flex items-center justify-between pt-2.5 border-t border-[#E8EEFB]">
                 <div className="flex items-center gap-2.5">
@@ -2925,31 +3080,36 @@ export default function Home() {
             </div>
           </div>
 
-          {/* DESKTOP TESTIMONIALS: Standard 3-Col Grid (Untouched on Web) */}
+          {/* DESKTOP TESTIMONIALS: Standard 3-Col Grid with Stable Hover */}
           <div className="hidden md:grid md:grid-cols-3 md:gap-5 px-0 sm:px-0">
             {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-bubble-float" stagger={idx + 1} className="w-full bento-card p-4 sm:p-6 space-y-2.5 sm:space-y-3.5 flex flex-col justify-between hover:-translate-y-1 transition-all duration-200 rounded-2xl shadow-xs border-2 border-amber-200/80 bg-white/90 backdrop-blur-xs">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-0.5 text-vannam-yellow">
-                      {[...Array(t.rating)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                      ))}
+              <ScrollReveal key={idx} variant="reveal-up" stagger={idx + 1} className="w-full h-full">
+                <div className="w-full h-full p-5 sm:p-6 space-y-3 flex flex-col justify-between rounded-2xl shadow-sm hover:shadow-md border-2 border-amber-200/80 bg-white/95 backdrop-blur-xs hover:-translate-y-1.5 transition-all duration-300 ease-out">
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-0.5 text-vannam-yellow">
+                        {[...Array(t.rating)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                        ))}
+                      </div>
+                      <span className="text-xs text-rose-500 font-bold flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                        <span>Verified Family</span>
+                      </span>
                     </div>
-                    <span className="text-xs text-rose-500 animate-pulse-subtle">💛 Verified Family</span>
+                    <p className="text-xs sm:text-sm text-[#0F2963] italic leading-relaxed">
+                      &ldquo;{t.quote}&rdquo;
+                    </p>
                   </div>
-                  <p className="text-xs sm:text-sm text-[#0F2963] italic leading-relaxed">
-                    &ldquo;{t.quote}&rdquo;
-                  </p>
-                </div>
 
-                <div className="flex items-center gap-2.5 pt-2.5 border-t border-[#E8EEFB]">
-                  <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/40">
-                    <Image src={t.avatar} alt={t.parent} fill sizes="100px" className="object-cover" />
-                  </div>
-                  <div>
-                    <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm">{t.parent}</h4>
-                    <span className="text-[10px] sm:text-[11px] font-bold text-vannam-orange block">Parent of {t.child}</span>
+                  <div className="flex items-center gap-2.5 pt-3 border-t border-[#E8EEFB]">
+                    <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/40">
+                      <Image src={t.avatar} alt={t.parent} fill sizes="100px" className="object-cover" />
+                    </div>
+                    <div>
+                      <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm">{t.parent}</h4>
+                      <span className="text-[10px] sm:text-[11px] font-bold text-vannam-orange block">Parent of {t.child}</span>
+                    </div>
                   </div>
                 </div>
               </ScrollReveal>
@@ -3306,24 +3466,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SOPHISTICATED LIGHT ORANGE THEMED FOOTER */}
-      <footer className="bg-gradient-to-b from-[#FFFDF9] via-[#FFF7ED] to-[#FFEDD5] text-[#0F2963] pt-16 sm:pt-24 pb-16 sm:pb-24 border-t-2 border-[#FDBA74]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8 sm:space-y-12">
+      {/* CREATIVE WHITE THEMED FOOTER WITH PLAYFUL SPECTRUM & WHIMSICAL ACCENTS */}
+      <footer className="relative bg-white text-[#0F2963] border-t border-slate-100 shadow-xs overflow-hidden">
+        {/* 7-Shades Spectrum Rainbow Wave Ribbon */}
+        <div className="h-1.5 sm:h-2 w-full bg-gradient-to-r from-[#F59E0B] via-[#10B981] via-[#0284C7] via-[#8B5CF6] via-[#F43F5E] to-[#F97316] relative z-20 shadow-xs" />
+
+        {/* Whimsical Background Floating Elements (Subtle & Playful) */}
+        <div className="absolute top-12 right-8 opacity-15 pointer-events-none select-none hidden lg:block animate-float">
+          <HappyCloudIcon className="w-28 h-28" />
+        </div>
+        <div className="absolute bottom-16 left-6 opacity-10 pointer-events-none select-none hidden lg:block animate-bounce-gentle">
+          <KiteIcon className="w-24 h-24" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-10 sm:pb-14 space-y-8 sm:space-y-10 relative z-10">
           
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-start">
             
             {/* Brand Column (Span 4 on Desktop) */}
             <div className="lg:col-span-4 space-y-3.5 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start">
-                <div className="bg-white p-2.5 rounded-2xl inline-block shadow-xs border border-[#FED7AA]">
-                  <Image 
+                <Link href="/" className="inline-block focus:outline-hidden">
+                  <img 
                     src="/logo.png" 
                     alt="Vannam World Preschool Logo" 
-                    width={180}
-                    height={48}
-                    className="h-9 sm:h-12 w-auto object-contain"
+                    className="h-12 xs:h-14 sm:h-16 w-auto object-contain drop-shadow-2xs"
                   />
-                </div>
+                </Link>
               </div>
               
               <p className="text-xs sm:text-sm text-[#475569] leading-relaxed max-w-sm font-medium mx-auto sm:mx-0">
@@ -3332,26 +3501,26 @@ export default function Home() {
               
               {/* Trust Badges */}
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-1.5 pt-0.5">
-                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                <span className="px-2.5 py-1 rounded-full bg-amber-50/80 border border-amber-200 text-[10.5px] sm:text-xs font-black text-amber-900 shadow-2xs">
                   🏆 #1 Preschool
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-50/80 border border-emerald-200 text-[10.5px] sm:text-xs font-black text-emerald-900 shadow-2xs">
                   🛡️ 100% Child Safe
                 </span>
-                <span className="px-2.5 py-0.5 rounded-full bg-white/90 border border-[#FED7AA] text-[10px] sm:text-xs font-bold text-[#0F2963] shadow-2xs">
+                <span className="px-2.5 py-1 rounded-full bg-sky-50/80 border border-sky-200 text-[10.5px] sm:text-xs font-black text-sky-900 shadow-2xs">
                   🌱 STEAM Accredited
                 </span>
               </div>
 
-              {/* Social Media Links */}
+              {/* Vibrant Social Media Links */}
               <div className="flex items-center justify-center sm:justify-start gap-2.5 pt-1">
-                {/* Instagram */}
                 <a 
                   href="https://instagram.com/vannamworldpreschool" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="Instagram"
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  title="Follow us on Instagram"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-50 text-slate-600 border border-slate-200 flex items-center justify-center hover:bg-gradient-to-tr hover:from-amber-500 hover:via-rose-500 hover:to-purple-600 hover:text-white hover:border-transparent transition-all shadow-2xs hover:scale-115 active:scale-95"
                 >
                   <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
@@ -3360,26 +3529,26 @@ export default function Home() {
                   </svg>
                 </a>
 
-                {/* Facebook */}
                 <a 
                   href="https://facebook.com/vannamworld" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="Facebook"
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  title="Like us on Facebook"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-50 text-slate-600 border border-slate-200 flex items-center justify-center hover:bg-[#1877F2] hover:text-white hover:border-transparent transition-all shadow-2xs hover:scale-115 active:scale-95"
                 >
                   <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                   </svg>
                 </a>
 
-                {/* YouTube */}
                 <a 
                   href="https://youtube.com/@vannamworldpreschool" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="YouTube"
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  title="Watch us on YouTube"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-50 text-slate-600 border border-slate-200 flex items-center justify-center hover:bg-[#FF0000] hover:text-white hover:border-transparent transition-all shadow-2xs hover:scale-115 active:scale-95"
                 >
                   <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
@@ -3387,13 +3556,13 @@ export default function Home() {
                   </svg>
                 </a>
 
-                {/* LinkedIn */}
                 <a 
                   href="https://linkedin.com/company/vannam-preschool" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   aria-label="LinkedIn"
-                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white text-[#EA580C] border border-[#FED7AA] flex items-center justify-center hover:bg-[#EA580C] hover:text-white transition-all shadow-2xs hover:scale-110"
+                  title="Connect on LinkedIn"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-50 text-slate-600 border border-slate-200 flex items-center justify-center hover:bg-[#0A66C2] hover:text-white hover:border-transparent transition-all shadow-2xs hover:scale-115 active:scale-95"
                 >
                   <svg className="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
@@ -3406,85 +3575,186 @@ export default function Home() {
 
             {/* Quick Links & Programs (2-COLUMNS ON MOBILE, SPAN 5 ON DESKTOP) */}
             <div className="lg:col-span-5 grid grid-cols-2 gap-3 sm:gap-6 pt-1 sm:pt-0">
-              {/* Quick Links */}
-              <div className="space-y-1.5 sm:space-y-2">
-                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider">Quick Links</h4>
-                <ul className="space-y-1.5 text-xs text-[#475569] font-semibold">
-                  <li><a href="#about" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> About School</a></li>
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Our Programs</a></li>
-                  <li><a href="#facilities" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Campus Facilities</a></li>
-                  <li><a href="#safety" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Child Safety</a></li>
-                  <li><a href="#teachers" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Educators & Staff</a></li>
+              {/* Quick Links Card */}
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-amber-50/40 border border-amber-100/80 shadow-2xs space-y-2">
+                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#EA580C] uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-amber-100">
+                  <span>✨</span>
+                  <span>Explore Vannam</span>
+                </h4>
+                <ul className="space-y-2 text-xs text-[#475569] font-semibold">
+                  <li>
+                    <a href="#about" className="hover:text-[#EA580C] hover:translate-x-1 transition-all flex items-center gap-1.5 group">
+                      <span className="text-amber-500 group-hover:scale-125 transition-transform">🏡</span>
+                      <span>About School</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#EA580C] hover:translate-x-1 transition-all flex items-center gap-1.5 group">
+                      <span className="text-rose-500 group-hover:scale-125 transition-transform">🎨</span>
+                      <span>Our Programs</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#facilities" className="hover:text-[#EA580C] hover:translate-x-1 transition-all flex items-center gap-1.5 group">
+                      <span className="text-sky-500 group-hover:scale-125 transition-transform">🏰</span>
+                      <span>Campus Facilities</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#safety" className="hover:text-[#EA580C] hover:translate-x-1 transition-all flex items-center gap-1.5 group">
+                      <span className="text-emerald-500 group-hover:scale-125 transition-transform">🛡️</span>
+                      <span>Child Safety (CCTV)</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#teachers" className="hover:text-[#EA580C] hover:translate-x-1 transition-all flex items-center gap-1.5 group">
+                      <span className="text-purple-500 group-hover:scale-125 transition-transform">👩‍🏫</span>
+                      <span>Certified Teachers</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
 
-              {/* Programs */}
-              <div className="space-y-1.5 sm:space-y-2">
-                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider">Programs</h4>
+              {/* Programs Card */}
+              <div className="p-3.5 sm:p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100/80 shadow-2xs space-y-2">
+                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#059669] uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-emerald-100">
+                  <span>🎓</span>
+                  <span>Age Programs</span>
+                </h4>
                 <ul className="space-y-1.5 text-xs text-[#475569] font-semibold">
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Toddler Care</a></li>
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Play Group</a></li>
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> Nursery STEAM</a></li>
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> LKG Kindergarten</a></li>
-                  <li><a href="#programs" className="hover:text-[#EA580C] transition flex items-center gap-1"><span>•</span> UKG Senior</a></li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#059669] hover:translate-x-1 transition-all flex items-center justify-between group">
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-amber-500">🧸</span>
+                        <span>Toddler Care</span>
+                      </span>
+                      <span className="text-[9.5px] px-1.5 py-0.2 bg-amber-100/80 text-amber-800 rounded-md font-bold">1.5 - 2.5y</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#059669] hover:translate-x-1 transition-all flex items-center justify-between group">
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-emerald-500">🎈</span>
+                        <span>Play Group</span>
+                      </span>
+                      <span className="text-[9.5px] px-1.5 py-0.2 bg-emerald-100/80 text-emerald-800 rounded-md font-bold">2 - 3y</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#059669] hover:translate-x-1 transition-all flex items-center justify-between group">
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-sky-500">🔬</span>
+                        <span>Nursery STEAM</span>
+                      </span>
+                      <span className="text-[9.5px] px-1.5 py-0.2 bg-sky-100/80 text-sky-800 rounded-md font-bold">2.5 - 3.5y</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#059669] hover:translate-x-1 transition-all flex items-center justify-between group">
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-purple-500">📚</span>
+                        <span>LKG Junior</span>
+                      </span>
+                      <span className="text-[9.5px] px-1.5 py-0.2 bg-purple-100/80 text-purple-800 rounded-md font-bold">3.5 - 4.5y</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#programs" className="hover:text-[#059669] hover:translate-x-1 transition-all flex items-center justify-between group">
+                      <span className="flex items-center gap-1.5">
+                        <span className="text-rose-500">🚀</span>
+                        <span>UKG Senior</span>
+                      </span>
+                      <span className="text-[9.5px] px-1.5 py-0.2 bg-rose-100/80 text-rose-800 rounded-md font-bold">4.5 - 5.5y</span>
+                    </a>
+                  </li>
                 </ul>
               </div>
             </div>
 
-            {/* Campus Contact Bento Box (COMPACT SHORT CARD) */}
-            <div className="lg:col-span-3 bg-white/90 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-[#FED7AA] shadow-xs space-y-2">
-              <div className="flex items-center justify-between">
-                <h4 className="font-heading font-extrabold text-[11px] sm:text-xs text-[#C2410C] uppercase tracking-wider flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-[#EA580C]" />
-                  <span>Campus Contact</span>
-                </h4>
-                <span className="text-[10px] text-[#64748B] flex items-center gap-1 font-semibold">
-                  <Clock className="w-3 h-3 text-[#EA580C]" />
-                  <span>8 AM - 6 PM</span>
+            {/* Creative Campus Contact Postcard Box */}
+            <div className="lg:col-span-3 bg-gradient-to-b from-amber-50/70 via-white to-orange-50/50 rounded-3xl p-4 sm:p-5 border-2 border-amber-200/90 shadow-sm space-y-3 relative overflow-hidden group">
+              {/* Postcard Stamp Indicator */}
+              <div className="flex items-center justify-between pb-1.5 border-b border-amber-200/60">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-100/90 text-emerald-800 text-[10px] font-black border border-emerald-300">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  <span>Open 8 AM - 6 PM</span>
+                </span>
+                <span className="text-[9.5px] font-black uppercase text-amber-800/80 bg-amber-100/80 px-2 py-0.5 rounded-md border border-dashed border-amber-300">
+                  📮 CBE • 641 001
                 </span>
               </div>
-              
-              <p className="text-[11px] sm:text-xs text-[#475569] font-medium leading-snug">
-                Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
-              </p>
 
-              <div className="flex flex-col xs:flex-row gap-1.5 text-xs pt-0.5">
+              <div>
+                <h4 className="font-heading font-black text-xs text-[#0F2963] uppercase tracking-wider flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#EA580C]" />
+                  <span>Campus Location</span>
+                </h4>
+                <p className="text-[11px] sm:text-xs text-[#475569] font-medium leading-snug mt-1">
+                  Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
+                </p>
+              </div>
+
+              {/* Action Buttons: Phone & Official WhatsApp (2-columns, Map removed) */}
+              <div className="grid grid-cols-2 gap-2 pt-0.5">
                 <a 
                   href="tel:+917810087310" 
-                  className="flex-1 px-2.5 py-1.5 rounded-xl bg-orange-50/80 border border-orange-200 text-[#C2410C] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-orange-100 transition"
+                  className="px-3 py-2 rounded-xl bg-white border border-amber-200 text-[#C2410C] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-amber-100/60 transition shadow-2xs active:scale-95 text-center"
                 >
-                  <Phone className="w-3 h-3" />
-                  <span>+91 78100 87310</span>
+                  <Phone className="w-3.5 h-3.5 text-[#EA580C] shrink-0" />
+                  <span className="whitespace-nowrap font-heading font-black">Call Us</span>
                 </a>
                 <a 
-                  href="mailto:admissions@vannamworld.edu" 
-                  className="flex-1 px-2.5 py-1.5 rounded-xl bg-blue-50/80 border border-blue-200 text-[#0F2963] font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-blue-100 transition truncate"
-                  title="admissions@vannamworld.edu"
+                  href="https://wa.me/917810087310?text=Hello%20Vannam%20Preschool!%20I%20would%20like%20to%20know%20more%20about%20admissions." 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-2 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-[#128C7E] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-[#25D366]/20 transition shadow-2xs active:scale-95 text-center"
                 >
-                  <Mail className="w-3 h-3 text-[#00A8E8] shrink-0" />
-                  <span className="truncate">Email Us</span>
+                  {/* Official WhatsApp Logo */}
+                  <svg className="w-4 h-4 fill-[#25D366] shrink-0" viewBox="0 0 24 24">
+                    <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.41a8.165 8.165 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.216 8.216 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.71 4.29 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.3z" />
+                  </svg>
+                  <span className="whitespace-nowrap font-heading font-black">WhatsApp</span>
                 </a>
               </div>
 
+              {/* Book Visit Button */}
               <button
+                type="button"
                 onClick={() => setIsTourModalOpen(true)}
-                className="btn-primary w-full py-1.5 text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs !min-h-0 active:scale-95 transition-transform mt-1"
+                className="w-full py-2.5 rounded-2xl bg-[#0F2963] hover:bg-[#EA580C] text-white text-xs font-black flex items-center justify-center gap-1.5 shadow-sm hover:shadow active:scale-95 transition-all cursor-pointer"
               >
                 <Calendar className="w-3.5 h-3.5 text-vannam-yellow" />
-                <span>Book Campus Visit</span>
+                <span>Book Free Campus Visit</span>
               </button>
             </div>
 
           </div>
 
-          {/* Bottom Copyright & Policy Strip */}
-          <div className="pt-6 sm:pt-8 border-t border-[#FED7AA] flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-[#64748B]">
-            <p className="text-center sm:text-left">© {getCurrentYear()} Vannam World Preschool. All Rights Reserved.</p>
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+
+          {/* Bottom Copyright & Policy Strip with Confetti Rocket Back-to-Top */}
+          <div className="pt-6 sm:pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-4 text-xs text-[#64748B]">
+            <p className="text-center sm:text-left font-medium flex items-center gap-1">
+              <span>© {getCurrentYear()} Vannam World Preschool. Made with</span>
+              <span className="text-rose-500 animate-pulse">❤️</span>
+              <span>for curious little minds in Coimbatore.</span>
+            </p>
+            
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 font-semibold">
               <a href="#" className="hover:text-[#0F2963] transition">Privacy Policy</a>
               <a href="#" className="hover:text-[#0F2963] transition">Terms of Service</a>
               <a href="#" className="hover:text-[#0F2963] transition">Child Protection Policy</a>
             </div>
+
+            {/* Creative Back to Top Button with Rocket Confetti Launch */}
+            <button
+              type="button"
+              onClick={handleRocketLaunch}
+              className="px-4 py-1.5 rounded-full bg-slate-50 hover:bg-[#0F2963] text-slate-700 hover:text-white border border-slate-200 text-[11px] font-black transition-all shadow-2xs hover:scale-105 active:scale-95 cursor-pointer flex items-center gap-1.5 shrink-0 group"
+              title="Fly back to top of page"
+            >
+              <span className="group-hover:-translate-y-0.5 transition-transform">🚀</span>
+              <span>Fly to Top</span>
+            </button>
           </div>
 
         </div>
@@ -3873,6 +4143,144 @@ export default function Home() {
               </button>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* TEACHER SPOTLIGHT MODAL */}
+      {selectedTeacherModal && (
+        <div 
+          className="fixed inset-0 z-50 bg-[#091A42]/80 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setSelectedTeacherModal(null)}
+        >
+          <div 
+            className="bg-white max-w-xl w-full rounded-3xl p-5 sm:p-7 relative border-3 shadow-2xl my-auto max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200"
+            style={{ borderColor: selectedTeacherModal.themeColor }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Top Close Button */}
+            <button 
+              onClick={() => setSelectedTeacherModal(null)}
+              className="absolute top-4 right-4 z-30 bg-slate-100 text-[#0F2963] hover:bg-slate-200 p-2 rounded-full transition shadow-xs flex items-center justify-center w-9 h-9 cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-5 pb-5 border-b border-slate-100">
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden shadow-md shrink-0 border-2 border-white ring-2 ring-slate-100">
+                <Image 
+                  src={selectedTeacherModal.image} 
+                  alt={selectedTeacherModal.name} 
+                  fill 
+                  className="object-cover object-top" 
+                />
+              </div>
+
+              <div className="text-center sm:text-left space-y-1.5 flex-1">
+                <div 
+                  className="inline-flex items-center px-3 py-0.5 rounded-full text-xs font-black" 
+                  style={{ backgroundColor: selectedTeacherModal.quoteBg, color: selectedTeacherModal.quoteColor, border: `1px solid ${selectedTeacherModal.quoteBorder}` }}
+                >
+                  <span>{selectedTeacherModal.heroRole}</span>
+                </div>
+                <div className="flex flex-wrap items-baseline gap-2 justify-center sm:justify-start">
+                  <h3 className="font-heading font-black text-2xl text-[#0F2963]">
+                    {selectedTeacherModal.kidName}
+                  </h3>
+                  <span className="text-xs font-bold text-slate-500">
+                    ({selectedTeacherModal.name})
+                  </span>
+                </div>
+                <p className="text-xs sm:text-sm font-black uppercase tracking-wider" style={{ color: selectedTeacherModal.themeColor }}>
+                  {selectedTeacherModal.role}
+                </p>
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 text-xs font-semibold text-slate-500">
+                  <div className="flex items-center gap-1">
+                    <GraduationCap className="w-4 h-4 text-slate-400" />
+                    <span>{selectedTeacherModal.experience}</span>
+                  </div>
+                  <span>•</span>
+                  <span className="text-emerald-600 font-bold flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Background Verified
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="py-4 space-y-3.5 text-left">
+              {/* 🪄 Kid Superpower Banner */}
+              <div className="p-3.5 rounded-2xl bg-amber-50/70 border-2 border-dashed border-amber-300 shadow-2xs space-y-1">
+                <div className="flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-vannam-orange">
+                  <span>🪄</span>
+                  <span>Classroom Superpower</span>
+                </div>
+                <p className="text-xs sm:text-sm font-extrabold text-[#0F2963]">
+                  &ldquo;{selectedTeacherModal.superpower}&rdquo;
+                </p>
+              </div>
+
+              {/* 💖 Kids Love & Corner */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <span className="font-bold text-[#0F2963] block mb-0.5">💖 What Kids Love:</span>
+                  <span className="text-slate-600 font-medium">{selectedTeacherModal.kidsLove}</span>
+                </div>
+                <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <span className="font-bold text-[#0F2963] block mb-0.5">📍 Favorite Classroom Corner:</span>
+                  <span className="text-slate-600 font-medium">{selectedTeacherModal.favoriteCorner}</span>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">
+                  Degrees & Certifications
+                </h4>
+                <p className="text-xs sm:text-sm font-bold text-[#0F2963] flex items-center gap-2">
+                  <Award className="w-4 h-4 shrink-0" style={{ color: selectedTeacherModal.themeColor }} />
+                  <span>{selectedTeacherModal.qual}</span>
+                </p>
+              </div>
+
+              <div>
+                <h4 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-1">
+                  About & Teaching Approach
+                </h4>
+                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-medium">
+                  {selectedTeacherModal.story}
+                </p>
+              </div>
+
+              {/* Verified Credentials Assurance Card */}
+              <div className="p-3.5 rounded-2xl bg-emerald-50/80 border border-emerald-200/80 flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold shrink-0">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                </div>
+                <div>
+                  <span className="text-xs font-extrabold text-emerald-950 block">Certified & Background-Verified Educator</span>
+                  <span className="text-[11px] text-emerald-800 font-medium">Verified early childhood degree, government background check & pediatric first aid certified.</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <span className="text-xs text-slate-500 font-medium text-center sm:text-left">
+                Experience our nurturing classrooms firsthand
+              </span>
+              <button
+                onClick={() => {
+                  setSelectedTeacherModal(null);
+                  setIsTourModalOpen(true);
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-full bg-[#0F2963] hover:bg-vannam-orange text-white font-heading font-black text-xs sm:text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Calendar className="w-4 h-4 text-vannam-yellow" />
+                <span>Book Campus Tour</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
