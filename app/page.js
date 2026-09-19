@@ -56,8 +56,19 @@ import {
   Sparkles,
   ArrowRight
 } from "lucide-react";
-import confetti from "canvas-confetti";
 import dynamic from "next/dynamic";
+
+const triggerConfetti = async (opts = {}) => {
+  try {
+    const confetti = (await import("canvas-confetti")).default;
+    confetti({
+      particleCount: 100,
+      spread: 80,
+      origin: { y: 0.6 },
+      ...opts
+    });
+  } catch {}
+};
 const VirtualTour = dynamic(() => import("../components/VirtualTour"), { ssr: false });
 const ParentPortalModal = dynamic(() => import("../components/ParentPortalModal"), { ssr: false });
 const TourSchedulerModal = dynamic(() => import("../components/TourSchedulerModal"), { ssr: false });
@@ -240,7 +251,7 @@ export default function Home() {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
-      confetti({
+      triggerConfetti({
         particleCount: 30,
         spread: 60,
         origin: { x, y },
@@ -291,7 +302,7 @@ export default function Home() {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = (rect.left + rect.width / 2) / window.innerWidth;
       const y = (rect.top + rect.height / 2) / window.innerHeight;
-      confetti({
+      triggerConfetti({
         particleCount: 40,
         spread: 70,
         origin: { x, y },
@@ -300,15 +311,6 @@ export default function Home() {
       });
     } catch {}
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-
-  const triggerConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
   };
 
   const handleEnquirySubmit = async (e) => {
@@ -1170,6 +1172,9 @@ export default function Home() {
             <img 
               src="/logo.png" 
               alt="Vannam World Preschool Logo" 
+              width={564}
+              height={169}
+              fetchPriority="high"
               className="h-8 xs:h-9 sm:h-10 lg:h-11 xl:h-12 w-auto object-contain"
             />
           </Link>
@@ -1379,7 +1384,7 @@ export default function Home() {
                 {/* Main Die-Cut Photo Frame with 3D Rounded Borders */}
                 <div className="relative rounded-2xl overflow-hidden border-2 sm:border-[3px] border-white shadow-lg bg-white aspect-[16/10] mobile-hero-frame">
                   <Image 
-                    src="/hero-kids.jpg" 
+                    src="/hero-kids.webp" 
                     alt="Preschool children playing with colorful wooden blocks" 
                     fill 
                     sizes="(max-width: 768px) 320px, 50vw"
@@ -1469,7 +1474,7 @@ export default function Home() {
               <div className="relative mx-auto max-w-[330px] lg:max-w-[360px] xl:max-w-[390px]">
                 <div className="relative rounded-3xl overflow-hidden border-[3px] border-vannam-yellow/40 shadow-xl bg-white aspect-[5/4] sm:aspect-square max-h-[380px]">
                   <Image 
-                    src="/hero-kids.jpg" 
+                    src="/hero-kids.webp" 
                     alt="Preschool children playing with colorful wooden blocks" 
                     fill 
                     sizes="(max-width: 1200px) 360px, 390px"

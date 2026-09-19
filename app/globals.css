@@ -1167,7 +1167,7 @@ html, body {
 .bg-section-hero {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/hero-background.jpg');
+  background-image: url('/hero-background.webp');
   background-repeat: no-repeat;
   background-position: center bottom;
   background-size: cover;
@@ -1175,7 +1175,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-hero {
-    background-image: url('/hero-background-mobile.jpg');
+    background-image: url('/hero-background-mobile.webp');
     background-position: center top;
     background-size: cover;
   }
@@ -1185,7 +1185,7 @@ html, body {
 .bg-section-about {
   position: relative;
   background-color: #FFFDF1;
-  background-image: url('/about-background-v3.png?v=3');
+  background-image: url('/about-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1193,7 +1193,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-about {
-    background-image: url('/about-background-mobile-v3.png?v=3');
+    background-image: url('/about-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1203,7 +1203,7 @@ html, body {
 .bg-section-programs {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/programs-background-v3.png?v=3');
+  background-image: url('/programs-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1211,7 +1211,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-programs {
-    background-image: url('/programs-background-mobile-v3.png?v=3');
+    background-image: url('/programs-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1221,7 +1221,7 @@ html, body {
 .bg-section-why-us {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/why-us-background-v3.png?v=3');
+  background-image: url('/why-us-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1229,7 +1229,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-why-us {
-    background-image: url('/why-us-background-mobile-v3.png?v=3');
+    background-image: url('/why-us-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1239,7 +1239,7 @@ html, body {
 .bg-section-methodology {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/methodology-background-v3.png?v=3');
+  background-image: url('/methodology-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1247,7 +1247,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-methodology {
-    background-image: url('/methodology-background-mobile-v3.png?v=3');
+    background-image: url('/methodology-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1257,7 +1257,7 @@ html, body {
 .bg-section-activities {
   position: relative;
   background-color: #FFFDF1;
-  background-image: url('/activities-background-v3.png?v=4');
+  background-image: url('/activities-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1265,7 +1265,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-activities {
-    background-image: url('/activities-background-mobile-v3.png?v=4');
+    background-image: url('/activities-background-mobile-v3.webp');
     background-position: center top;
     background-size: 100% 100%;
   }
@@ -1281,7 +1281,7 @@ html, body {
 .bg-section-safety {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/safety-background-v3.png?v=3');
+  background-image: url('/safety-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1289,7 +1289,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-safety {
-    background-image: url('/safety-background-mobile-v3.png?v=3');
+    background-image: url('/safety-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1299,7 +1299,7 @@ html, body {
 .bg-section-teachers {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/teachers-background-v3.png?v=3');
+  background-image: url('/teachers-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1307,7 +1307,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-teachers {
-    background-image: url('/teachers-background-mobile-v3.png?v=3');
+    background-image: url('/teachers-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1317,7 +1317,7 @@ html, body {
 .bg-section-gallery {
   position: relative;
   background-color: #FFFDF1;
-  background-image: url('/gallery-background-v3.png?v=4');
+  background-image: url('/gallery-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1325,7 +1325,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-gallery {
-    background-image: url('/gallery-background-mobile-v3.png?v=4');
+    background-image: url('/gallery-background-mobile-v3.webp');
     background-position: center top;
     background-size: 100% 100%;
   }
@@ -1335,7 +1335,7 @@ html, body {
 .bg-section-testimonials {
   position: relative;
   background-color: #FFFDF1;
-  background-image: url('/testimonials-background-v3.png?v=4');
+  background-image: url('/testimonials-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1343,7 +1343,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-testimonials {
-    background-image: url('/testimonials-background-mobile-v3.png?v=4');
+    background-image: url('/testimonials-background-mobile-v3.webp');
     background-position: center top;
     background-size: 100% 100%;
   }
@@ -1354,7 +1354,7 @@ html, body {
 .bg-section-interactive {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/events-background-v3.png?v=3');
+  background-image: url('/events-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1363,7 +1363,7 @@ html, body {
 @media (max-width: 1023px) {
   .bg-section-events,
   .bg-section-interactive {
-    background-image: url('/events-background-mobile-v3.png?v=3');
+    background-image: url('/events-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1373,7 +1373,7 @@ html, body {
 .bg-section-facilities {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/facilities-background-v3.png?v=3');
+  background-image: url('/facilities-background-v3.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -1381,7 +1381,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-facilities {
-    background-image: url('/facilities-background-mobile-v3.png?v=3');
+    background-image: url('/facilities-background-mobile-v3.webp');
     background-position: center center;
     background-size: 100% 100%;
   }
@@ -1391,7 +1391,7 @@ html, body {
 .bg-section-faq {
   position: relative;
   background-color: #FEFCEF;
-  background-image: url('/faq-background.png?v=1');
+  background-image: url('/faq-background.webp');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -1399,7 +1399,7 @@ html, body {
 
 @media (max-width: 1023px) {
   .bg-section-faq {
-    background-image: url('/faq-background-mobile.png?v=1');
+    background-image: url('/faq-background-mobile.webp');
     background-position: center center;
     background-size: cover;
   }
