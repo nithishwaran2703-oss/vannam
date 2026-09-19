@@ -1840,25 +1840,6 @@ html, body {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Content Visibility: Auto for below-the-fold heavy sections */
-/* Skips off-screen rendering until approaching viewport, drastically reducing initial paint and memory */
-#about,
-#programs,
-#why-us,
-#methodology,
-#activities,
-#facilities,
-#safety,
-#teachers,
-#gallery,
-#testimonials,
-#events,
-#contact,
-footer {
-  content-visibility: auto;
-  contain-intrinsic-size: 1px 750px;
-}
-
 /* Fast snappy reveal animations on mobile (eliminates frame drops while scrolling) */
 @media (max-width: 768px) {
   .reveal-on-scroll {
