@@ -30,8 +30,8 @@ function getObserver() {
       });
     },
     {
-      threshold: 0.01,
-      rootMargin: "50px 0px 50px 0px",
+      threshold: 0,
+      rootMargin: "100px 0px 100px 0px",
     }
   );
 
@@ -51,14 +51,6 @@ export default function ScrollReveal({
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
-    // Check if element is already within viewport or near it on mount/refresh
-    if (typeof window !== "undefined") {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight + 100 && rect.bottom > -100) {
-        el.classList.add("revealed");
-      }
-    }
 
     const observer = getObserver();
     if (!observer) {

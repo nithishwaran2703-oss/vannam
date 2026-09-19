@@ -1810,6 +1810,52 @@ html, body {
   will-change: transform;
 }
 
+/* ==========================================================================
+   PERFORMANCE ENGINE: 60FPS SMOOTH SCROLLING & ACCELERATION FOR MOBILE & WEB
+   ========================================================================== */
 
+/* Hardware acceleration on key animated elements */
+.animate-float,
+.animate-bounce-gentle,
+.animate-float-reverse,
+.animate-wiggle,
+.animate-flutter,
+.animate-paper-plane-glide,
+.animate-pulse,
+.animate-float-slow {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
 
+/* Fast text rendering */
+body {
+  text-rendering: optimizeSpeed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
+/* iOS & Android momentum smooth scroll */
+html, body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Content Visibility: Auto for below-the-fold heavy sections */
+/* Skips off-screen rendering until approaching viewport, drastically reducing initial paint and memory */
+#facilities,
+#safety,
+#teachers,
+#gallery,
+#events,
+#faq {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
+}
+
+/* Fast snappy reveal animations on mobile (eliminates frame drops while scrolling) */
+@media (max-width: 768px) {
+  .reveal-on-scroll {
+    transition-duration: 0.3s !important;
+    will-change: transform, opacity;
+  }
+}

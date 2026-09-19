@@ -5,12 +5,16 @@ const fredoka = Fredoka({
   subsets: ["latin"],
   variable: "--font-fredoka",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+  preload: true,
 });
 
 const plusJakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-jakarta",
   weight: ["400", "500", "600", "700", "800"],
+  display: "swap",
+  preload: true,
 });
 
 export const metadata = {
@@ -231,6 +235,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${fredoka.variable} ${plusJakarta.variable} scroll-smooth`} suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
