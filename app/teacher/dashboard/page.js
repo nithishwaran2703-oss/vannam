@@ -24,6 +24,7 @@ import {
   Phone,
   AlertCircle
 } from 'lucide-react';
+import { broadcastAdminUpdate } from '@/lib/sync';
 
 export default function TeacherDashboard() {
   const router = useRouter();
@@ -148,6 +149,7 @@ export default function TeacherDashboard() {
         })
       });
       showToastMsg(`Attendance marked as ${status}`);
+      broadcastAdminUpdate('attendance');
     } catch {
       showToastMsg('Error saving attendance');
     }
@@ -180,6 +182,7 @@ export default function TeacherDashboard() {
 
       if (!res.ok) throw new Error('Failed to post activity');
       showToastMsg('Activity logged successfully!');
+      broadcastAdminUpdate('activities');
       setIsActivityModalOpen(false);
       setActivityForm({
         title: '',
@@ -218,6 +221,7 @@ export default function TeacherDashboard() {
 
       if (!res.ok) throw new Error('Failed to assign homework');
       showToastMsg('Homework assigned to classroom!');
+      broadcastAdminUpdate('homework');
       setIsHwModalOpen(false);
       setHwForm({
         title: '',

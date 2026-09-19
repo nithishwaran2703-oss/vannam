@@ -49,13 +49,17 @@ export default function AdminLayout({ children }) {
   const [toasts, setToasts] = useState([]);
   const [previewModalOpen, setPreviewModalOpen] = useState(false);
 
-  // Helper to show toasts
+  // Helper to show toasts and broadcast live sync to public website ("Nuclear Option")
   const showToast = (message, type = 'success') => {
     const id = Date.now();
     setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 4000);
+
+    if (type === 'success') {
+      import('@/lib/sync').then((mod) => mod.broadcastAdminUpdate()).catch(() => {});
+    }
   };
 
   // Check auth session

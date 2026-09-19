@@ -675,6 +675,33 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789799838354",
+      "action": "Mark Attendance",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Attendance",
+      "details": "Logged daily attendance records (1 students)",
+      "timestamp": "2026-09-19T06:37:18.354Z"
+    },
+    {
+      "id": "log-1789799782054",
+      "action": "Mark Attendance",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Attendance",
+      "details": "Logged daily attendance records (1 students)",
+      "timestamp": "2026-09-19T06:36:22.054Z"
+    },
+    {
+      "id": "log-1789799699323",
+      "action": "Post Student Activity",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Activities",
+      "details": "Logged activity \"Montessori Cosmic Space Exploration\" for Aarav Sharma",
+      "timestamp": "2026-09-19T06:34:59.323Z"
+    },
+    {
       "id": "log-1788755258352",
       "action": "Updated Testimonials Content",
       "userId": "usr-1",
@@ -924,6 +951,21 @@
   ],
   "activities": [
     {
+      "id": "act-1789799699323",
+      "title": "Montessori Cosmic Space Exploration",
+      "category": "STEAM",
+      "description": "Aarav built a 3-stage wooden rocket model and named the planets.",
+      "date": "2026-08-30",
+      "studentId": "std-1",
+      "studentName": "Aarav Sharma",
+      "classId": "class-pre-kg-a",
+      "className": "Pre-KG Explorers",
+      "teacherId": null,
+      "teacherName": "Educator",
+      "photos": [],
+      "createdAt": "2026-09-19T06:34:59.323Z"
+    },
+    {
       "id": "act-1",
       "studentId": "std-1",
       "studentName": "Aarav Sharma",
@@ -977,6 +1019,17 @@
     }
   ],
   "attendance": [
+    {
+      "id": "att-1789799782054-xsow5n",
+      "studentId": "std-1",
+      "studentName": "Aarav Sharma",
+      "classId": "class-pre-kg-a",
+      "teacherId": "",
+      "date": "2026-09-19",
+      "status": "PRESENT",
+      "remarks": "",
+      "updatedAt": "2026-09-19T06:37:18.354Z"
+    },
     {
       "id": "att-1",
       "studentId": "std-1",

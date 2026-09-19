@@ -263,22 +263,59 @@ export default function Home() {
     }
   };
 
-  // Dynamic Content & Announcements from Admin Store
+  // Dynamic Content & Announcements from Admin Store (Real-time Live Sync / "Nuclear Option")
   const [dynamicAnnouncements, setDynamicAnnouncements] = useState([]);
   const [dynamicContent, setDynamicContent] = useState(null);
 
-  useEffect(() => {
-    fetch('/api/content')
+  const fetchLiveContent = () => {
+    fetch(`/api/content?t=${Date.now()}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.announcements && data.announcements.length > 0) {
-          setDynamicAnnouncements(data.announcements);
+        if (data.announcements) {
+          setDynamicAnnouncements(data.announcements.filter((a) => a.active !== false));
         }
         if (data) {
           setDynamicContent(data);
         }
       })
-      .catch((err) => console.error('Failed to load dynamic announcements:', err));
+      .catch((err) => console.error('Failed to load dynamic content:', err));
+  };
+
+  useEffect(() => {
+    fetchLiveContent();
+
+    // 1. BroadcastChannel for instant 0ms cross-tab sync from Admin CMS
+    let channel;
+    try {
+      channel = new BroadcastChannel('vannam_store_sync');
+      channel.onmessage = () => {
+        fetchLiveContent();
+      };
+    } catch {}
+
+    // 2. Storage event listener (localStorage sync trigger across tabs/windows)
+    const handleStorage = (e) => {
+      if (e.key === 'vannam_sync_trigger') {
+        fetchLiveContent();
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+
+    // 3. Tab focus listener (instantly refreshes if user switched from Admin tab)
+    const handleFocus = () => {
+      fetchLiveContent();
+    };
+    window.addEventListener('focus', handleFocus);
+
+    // 4. Background heartbeat sync (polls every 4s so remote devices sync without refresh)
+    const heartbeat = setInterval(fetchLiveContent, 4000);
+
+    return () => {
+      if (channel) channel.close();
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(heartbeat);
+    };
   }, []);
 
   // FAQ Accordion State
@@ -696,7 +733,7 @@ export default function Home() {
   ];
 
   // Facilities List
-  const facilities = [
+  const defaultFacilities = [
     {
       title: "Smart Classrooms",
       desc: "Interactive touch panels, ergonomic child-sized furniture, and anti-glare natural lighting.",
@@ -742,7 +779,7 @@ export default function Home() {
   ];
 
   // Teachers List with Child-Centric Personas, Superpowers & Pedagogical Credentials
-  const teachers = [
+  const defaultTeachers = [
     {
       id: "clara",
       name: "Mrs. Clara Bennett",
@@ -861,8 +898,8 @@ export default function Home() {
     }
   ];
 
-  // Gallery Images with Categories
-  const galleryItems = [
+  // Gallery Images with Categories (Default)
+  const defaultGalleryItems = [
     { id: 1, title: "Montessori Math Exploration", category: "classroom", src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80" },
     { id: 2, title: "Outdoor Agility Race", category: "sports", src: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80" },
     { id: 3, title: "Annual Cultural Dance", category: "celebrations", src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" },
@@ -873,12 +910,8 @@ export default function Home() {
     { id: 8, title: "Little Scientists Lab", category: "activities", src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80" }
   ];
 
-  const filteredGallery = galleryCategory === "all" 
-    ? galleryItems 
-    : galleryItems.filter(item => item.category === galleryCategory);
-
-  // Testimonials List
-  const testimonials = [
+  // Testimonials List (Default)
+  const defaultTestimonials = [
     {
       parent: "Dr. Ananya Sharma",
       child: "Aarav (Nursery)",
@@ -901,6 +934,60 @@ export default function Home() {
       quote: "The STEAM Lego lab and phonics program prepared Vihaan so well for Grade 1. He looks forward to school every single morning!"
     }
   ];
+
+  // --- Live Dynamic CMS Data ("Nuclear Option" Real-Time Bindings) ---
+  const facilities = (dynamicContent?.facilities && dynamicContent.facilities.length > 0)
+    ? dynamicContent.facilities.map((f, idx) => ({
+        ...defaultFacilities[idx % defaultFacilities.length],
+        ...f
+      }))
+    : defaultFacilities;
+
+  const teachers = (dynamicContent?.teachers && dynamicContent.teachers.length > 0)
+    ? dynamicContent.teachers.map((t, idx) => {
+        const fallback = defaultTeachers[idx % defaultTeachers.length];
+        return {
+          ...fallback,
+          ...t,
+          kidName: t.kidName || t.name || fallback.kidName,
+          qual: t.qualifications || t.qual || fallback.qual,
+          shortQual: t.qualifications || t.shortQual || fallback.shortQual,
+          intro: t.bio || t.intro || fallback.intro,
+          experience: t.experience || fallback.experience,
+          badge: t.badge || fallback.badge,
+          image: t.image || fallback.image,
+          role: t.role || fallback.role,
+        };
+      })
+    : defaultTeachers;
+
+  const galleryItems = (dynamicContent?.gallery && dynamicContent.gallery.length > 0)
+    ? dynamicContent.gallery.map(g => ({
+        id: g.id,
+        title: g.title,
+        category: g.category || 'activities',
+        src: g.url || g.src || (defaultGalleryItems[0] && defaultGalleryItems[0].src)
+      }))
+    : defaultGalleryItems;
+
+  const filteredGallery = galleryCategory === "all" 
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === galleryCategory);
+
+  const testimonials = (dynamicContent?.testimonials && dynamicContent.testimonials.length > 0)
+    ? dynamicContent.testimonials.map((item, idx) => {
+        const fallback = defaultTestimonials[idx % defaultTestimonials.length];
+        return {
+          ...fallback,
+          ...item,
+          parent: item.parent || item.name || fallback.parent,
+          child: item.child || item.relation || fallback.child,
+          quote: item.quote || item.text || fallback.quote,
+          avatar: item.avatar || item.image || fallback.avatar,
+          rating: item.rating || fallback.rating || 5,
+        };
+      })
+    : defaultTestimonials;
 
   // Upcoming Events List
   const upcomingEvents = [
@@ -1161,8 +1248,28 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen font-sans text-[#0F2963] bg-[#FFFDF8] bg-playful-dots selection:bg-vannam-yellow/20 selection:text-vannam-orange">
-
-
+      {/* Dynamic Announcement Ribbon from Admin CMS ("Nuclear Option") */}
+      {dynamicAnnouncements && dynamicAnnouncements.length > 0 && (
+        <aside aria-label="School Announcements" className="bg-gradient-to-r from-[#0F2963] via-[#00A8E8] to-[#F59E0B] text-white py-2 px-3 sm:px-4 text-xs sm:text-sm font-medium shadow-inner transition-all duration-300">
+          <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+              <span className="bg-white/20 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 rounded-full uppercase tracking-wider shrink-0 animate-pulse">
+                📢 {dynamicAnnouncements[0].type || 'Notice'}
+              </span>
+              <span className="font-bold truncate">{dynamicAnnouncements[0].title}:</span>
+              <span className="text-white/90 truncate hidden md:inline">{dynamicAnnouncements[0].message}</span>
+            </div>
+            {dynamicAnnouncements[0].link && (
+              <a 
+                href={dynamicAnnouncements[0].link} 
+                className="shrink-0 bg-white text-[#0F2963] hover:bg-yellow-300 px-3 py-1 rounded-full text-xs font-bold transition shadow-xs"
+              >
+                {dynamicAnnouncements[0].linkText || 'Learn More →'}
+              </a>
+            )}
+          </div>
+        </aside>
+      )}
 
       <header className="sticky top-0 z-50 bg-white  shadow-xs">
         <div className="max-w-[1440px] mx-auto px-3.5 xs:px-4 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2.5 sm:gap-3 xl:gap-6">

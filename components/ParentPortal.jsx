@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   CheckCircle2, 
   Clock, 
@@ -226,21 +226,87 @@ export default function ParentPortal({ isModal = false, onClose }) {
     cam4: { name: "Organic Dining Suite", status: "STANDBY", viewers: 0, icon: "🍎" }
   };
 
-  const currentChild = childrenData[activeChildId];
+  // Live Data Fetching & Multi-Channel Real-time Sync ("Nuclear Option")
+  const loadLivePortalData = () => {
+    fetch(`/api/portal/data?t=${Date.now()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.childrenData && Object.keys(data.childrenData).length > 0) {
+          setChildrenData(data.childrenData);
+          setActiveChildId((prev) => (data.childrenData[prev] ? prev : Object.keys(data.childrenData)[0]));
+        }
+      })
+      .catch((err) => console.error("Error loading portal live data:", err));
+  };
+
+  useEffect(() => {
+    loadLivePortalData();
+
+    // 1. BroadcastChannel for instant 0ms cross-tab sync from Teacher/Admin panel
+    let channel;
+    try {
+      channel = new BroadcastChannel('vannam_store_sync');
+      channel.onmessage = () => {
+        loadLivePortalData();
+      };
+    } catch {}
+
+    // 2. LocalStorage trigger across separate windows
+    const handleStorage = (e) => {
+      if (e.key === 'vannam_sync_trigger') {
+        loadLivePortalData();
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+
+    // 3. Focus trigger
+    const handleFocus = () => {
+      loadLivePortalData();
+    };
+    window.addEventListener('focus', handleFocus);
+
+    // 4. Background heartbeat polling (every 4 seconds)
+    const heartbeat = setInterval(loadLivePortalData, 4000);
+
+    return () => {
+      if (channel) channel.close();
+      window.removeEventListener('storage', handleStorage);
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(heartbeat);
+    };
+  }, []);
+
+  const currentChild = childrenData[activeChildId] || Object.values(childrenData)[0] || {
+    id: "default",
+    name: "Preschool Learner",
+    avatarEmoji: "🎒",
+    avatarBg: "from-cyan-400 to-blue-500",
+    grade: "Preschool Group",
+    campusId: "VW-2026-001",
+    teacher: "Teacher Lead",
+    attendance: "98%",
+    todayStatus: "PRESENT",
+    overallProgress: 85,
+    homeworkCompletion: 90,
+    insight: "Happy and productive classroom participation today!",
+    activities: [],
+    homework: []
+  };
 
   // Calculate Progress Stats Dynamically
-  const completedActivitiesCount = currentChild.activities.filter(a => a.status === "completed").length;
-  const totalActivitiesCount = currentChild.activities.length;
+  const childActivities = currentChild.activities || [];
+  const completedActivitiesCount = childActivities.filter(a => a.status === "completed").length;
+  const totalActivitiesCount = childActivities.length || 1;
   const todayProgressPercent = Math.round((completedActivitiesCount / totalActivitiesCount) * 100);
 
   // Filtered Activities
-  const filteredActivities = currentChild.activities.filter(act => {
+  const filteredActivities = childActivities.filter(act => {
     if (activityFilter === "completed") return act.status === "completed";
     if (activityFilter === "pending") return act.status !== "completed";
     return true;
   });
 
-  // Handle Quick Neon Login
+  // Handle Quick Neon Login (Matches real students or falls back seamlessly)
   const handleNeonLogin = (e) => {
     if (e) e.preventDefault();
     setIsLoggingIn(true);
@@ -248,9 +314,26 @@ export default function ParentPortal({ isModal = false, onClose }) {
 
     setTimeout(() => {
       setIsLoggingIn(false);
+
+      const query = (loginEmail || "").trim().toLowerCase();
+      // Look for match in live students list
+      const matchedChild = Object.values(childrenData).find(
+        (c) =>
+          c.parentEmail?.toLowerCase() === query ||
+          c.studentId?.toLowerCase() === query ||
+          c.name?.toLowerCase().includes(query) ||
+          c.parentPhone?.includes(query)
+      );
+
+      if (matchedChild) {
+        setActiveChildId(matchedChild.id);
+      } else if (Object.keys(childrenData).length > 0) {
+        setActiveChildId(Object.keys(childrenData)[0]);
+      }
+
       setIsAuthenticated(true);
       confetti({ particleCount: 60, spread: 60, origin: { y: 0.6 } });
-    }, 700);
+    }, 600);
   };
 
   // Toggle Activity Status
@@ -425,8 +508,8 @@ export default function ParentPortal({ isModal = false, onClose }) {
                   ⚡
                 </div>
                 <div>
-                  <p className="text-[11px] font-black text-white leading-tight">Parent Demo: Andrew</p>
-                  <p className="text-[9px] text-cyan-300 font-medium">Ananya & Vihaan</p>
+                  <p className="text-[11px] font-black text-white leading-tight">Quick Parent Access</p>
+                  <p className="text-[9px] text-cyan-300 font-medium">Aarav, Ananya & Vihaan</p>
                 </div>
               </div>
               <button
@@ -534,11 +617,17 @@ export default function ParentPortal({ isModal = false, onClose }) {
             <div>
               <div className="flex flex-wrap items-center gap-2">
                 <h1 className="font-heading font-extrabold text-lg sm:text-2xl text-[#0F2963] leading-tight">
-                  Good morning, Andrew 👋
+                  Good morning, {currentChild.parentName?.split(' ')[0] || 'Andrew'} 👋
                 </h1>
-                <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-black border border-emerald-300 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span>In Campus</span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-black border flex items-center gap-1 ${
+                  currentChild.todayStatus === 'ABSENT'
+                    ? 'bg-rose-100 text-rose-800 border-rose-300'
+                    : 'bg-emerald-100 text-emerald-800 border-emerald-300'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${
+                    currentChild.todayStatus === 'ABSENT' ? 'bg-rose-500' : 'bg-emerald-500 animate-pulse'
+                  }`} />
+                  <span>{currentChild.todayStatus === 'ABSENT' ? 'Absent Today' : 'In Campus'}</span>
                 </span>
               </div>
 
@@ -551,33 +640,23 @@ export default function ParentPortal({ isModal = false, onClose }) {
           {/* Child Switcher + Quick Actions */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-3 self-start lg:self-center">
             
-            {/* Child Selector Pills */}
-            <div className="bg-[#F1F5F9] p-1 rounded-xl flex items-center gap-1 border border-[#E2E8F0]">
-              <button
-                onClick={() => setActiveChildId("ananya")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
-                  activeChildId === "ananya"
-                    ? "bg-white text-[#0F2963] shadow-xs border border-[#CBD5E1]"
-                    : "text-[#64748B] hover:text-[#0F2963]"
-                }`}
-              >
-                <span>👧</span>
-                <span>Ananya</span>
-                <span className="text-[9px] text-amber-600 font-bold hidden sm:inline">(Playgroup)</span>
-              </button>
-
-              <button
-                onClick={() => setActiveChildId("vihaan")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 ${
-                  activeChildId === "vihaan"
-                    ? "bg-white text-[#0F2963] shadow-xs border border-[#CBD5E1]"
-                    : "text-[#64748B] hover:text-[#0F2963]"
-                }`}
-              >
-                <span>👦</span>
-                <span>Vihaan</span>
-                <span className="text-[9px] text-blue-600 font-bold hidden sm:inline">(UKG)</span>
-              </button>
+            {/* Dynamic Child Selector Pills */}
+            <div className="bg-[#F1F5F9] p-1 rounded-xl flex items-center gap-1 border border-[#E2E8F0] overflow-x-auto max-w-full">
+              {Object.values(childrenData).map((child) => (
+                <button
+                  key={child.id}
+                  onClick={() => setActiveChildId(child.id)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-black transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    activeChildId === child.id
+                      ? "bg-white text-[#0F2963] shadow-xs border border-[#CBD5E1]"
+                      : "text-[#64748B] hover:text-[#0F2963]"
+                  }`}
+                >
+                  <span>{child.avatarEmoji || '🎒'}</span>
+                  <span>{child.name?.split(' ')[0]}</span>
+                  <span className="text-[9px] text-amber-600 font-bold hidden sm:inline">({child.grade?.split(' ')[0] || 'Class'})</span>
+                </button>
+              ))}
             </div>
 
             {/* Date Badge */}
