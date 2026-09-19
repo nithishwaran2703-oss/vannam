@@ -192,7 +192,7 @@ export default function Home() {
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
   const [mobileProgramModal, setMobileProgramModal] = useState(null);
 
-  // Testimonials Auto-Runner State (Mobile - smooth 5000ms rotation with pause)
+  // Testimonials Auto-Runner State (1.5 sec / 1500ms automatic running delay)
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
@@ -200,7 +200,7 @@ export default function Home() {
     if (isTestimonialPaused) return;
     const timer = setInterval(() => {
       setActiveTestimonialIdx((prev) => (prev + 1) % 3);
-    }, 5000);
+    }, 1500);
     return () => clearInterval(timer);
   }, [isTestimonialPaused]);
 
@@ -3023,7 +3023,7 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* MOBILE TESTIMONIALS: Vertical Auto-Running Card with fixed stable height */}
+          {/* MOBILE TESTIMONIALS: Vertical Auto-Running Card with 1.5s delay */}
           <div 
             className="block md:hidden"
             onMouseEnter={() => setIsTestimonialPaused(true)}
@@ -3031,7 +3031,7 @@ export default function Home() {
             onTouchStart={() => setIsTestimonialPaused(true)}
             onTouchEnd={() => setIsTestimonialPaused(false)}
           >
-            <div className="p-4 rounded-2xl border-2 border-amber-200/90 bg-white/95 shadow-sm space-y-3">
+            <div className="p-4 rounded-2xl border-2 border-amber-300 bg-white shadow-md space-y-3 transition-all duration-300">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-0.5 text-vannam-yellow">
                   {[...Array(testimonials[activeTestimonialIdx].rating)].map((_, i) => (
@@ -3039,21 +3039,21 @@ export default function Home() {
                   ))}
                 </div>
                 <span className="text-[10.5px] font-bold text-rose-500 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
                   <span>Verified Parent Review</span>
                 </span>
               </div>
 
-              {/* Fixed height quote container so height never changes or jumps */}
+              {/* Fixed height quote container with smooth key transition */}
               <div className="min-h-[76px] flex items-center">
-                <p className="text-xs text-[#0F2963] italic leading-relaxed transition-opacity duration-300">
+                <p key={activeTestimonialIdx} className="text-xs text-[#0F2963] italic leading-relaxed animate-in fade-in duration-300">
                   &ldquo;{testimonials[activeTestimonialIdx].quote}&rdquo;
                 </p>
               </div>
 
               <div className="flex items-center justify-between pt-2.5 border-t border-[#E8EEFB]">
-                <div className="flex items-center gap-2.5">
-                  <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/50">
+                <div key={`author-${activeTestimonialIdx}`} className="flex items-center gap-2.5 animate-in fade-in duration-300">
+                  <div className="relative w-10 h-10 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/50 shadow-2xs">
                     <Image src={testimonials[activeTestimonialIdx].avatar} alt={testimonials[activeTestimonialIdx].parent} fill sizes="80px" className="object-cover" />
                   </div>
                   <div>
@@ -3070,8 +3070,8 @@ export default function Home() {
                       type="button"
                       aria-label={`Jump to review ${dotIdx + 1}`}
                       onClick={() => setActiveTestimonialIdx(dotIdx)}
-                      className={`h-2 rounded-full transition-all cursor-pointer ${
-                        activeTestimonialIdx === dotIdx ? "w-5 bg-vannam-yellow" : "w-2 bg-slate-200"
+                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                        activeTestimonialIdx === dotIdx ? "w-5 bg-vannam-yellow shadow-2xs" : "w-2 bg-slate-200"
                       }`}
                     />
                   ))}
@@ -3080,39 +3080,68 @@ export default function Home() {
             </div>
           </div>
 
-          {/* DESKTOP TESTIMONIALS: Standard 3-Col Grid with Stable Hover */}
-          <div className="hidden md:grid md:grid-cols-3 md:gap-5 px-0 sm:px-0">
-            {testimonials.map((t, idx) => (
-              <ScrollReveal key={idx} variant="reveal-up" stagger={idx + 1} className="w-full h-full">
-                <div className="w-full h-full p-5 sm:p-6 space-y-3 flex flex-col justify-between rounded-2xl shadow-sm hover:shadow-md border-2 border-amber-200/80 bg-white/95 backdrop-blur-xs hover:-translate-y-1.5 transition-all duration-300 ease-out">
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-0.5 text-vannam-yellow">
-                        {[...Array(t.rating)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
-                        ))}
+          {/* DESKTOP TESTIMONIALS: 3-Col Grid with 1.5s Auto-Running Active Spotlight */}
+          <div 
+            className="hidden md:grid md:grid-cols-3 md:gap-5 px-0 sm:px-0"
+            onMouseEnter={() => setIsTestimonialPaused(true)}
+            onMouseLeave={() => setIsTestimonialPaused(false)}
+          >
+            {testimonials.map((t, idx) => {
+              const isActive = activeTestimonialIdx === idx;
+              return (
+                <div key={idx} className="w-full h-full">
+                  <div 
+                    onClick={() => setActiveTestimonialIdx(idx)}
+                    className={`w-full h-full p-5 sm:p-6 space-y-3 flex flex-col justify-between rounded-2xl transition-all duration-500 ease-out cursor-pointer ${
+                      isActive 
+                        ? "border-2 border-amber-400 bg-white shadow-xl -translate-y-2 ring-4 ring-amber-300/40" 
+                        : "border-2 border-amber-200/70 bg-white/90 shadow-xs hover:border-amber-300 hover:-translate-y-1"
+                    }`}
+                  >
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-0.5 text-vannam-yellow">
+                          {[...Array(t.rating)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
+                          ))}
+                        </div>
+                        <span className="text-xs text-rose-500 font-bold flex items-center gap-1.5">
+                          <span className={`w-1.5 h-1.5 rounded-full bg-rose-500 ${isActive ? "animate-pulse" : ""}`}></span>
+                          <span>Verified Family</span>
+                        </span>
                       </div>
-                      <span className="text-xs text-rose-500 font-bold flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
-                        <span>Verified Family</span>
-                      </span>
+                      <p className="text-xs sm:text-sm text-[#0F2963] italic leading-relaxed">
+                        &ldquo;{t.quote}&rdquo;
+                      </p>
                     </div>
-                    <p className="text-xs sm:text-sm text-[#0F2963] italic leading-relaxed">
-                      &ldquo;{t.quote}&rdquo;
-                    </p>
-                  </div>
 
-                  <div className="flex items-center gap-2.5 pt-3 border-t border-[#E8EEFB]">
-                    <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/40">
-                      <Image src={t.avatar} alt={t.parent} fill sizes="100px" className="object-cover" />
-                    </div>
-                    <div>
-                      <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm">{t.parent}</h4>
-                      <span className="text-[10px] sm:text-[11px] font-bold text-vannam-orange block">Parent of {t.child}</span>
+                    <div className="flex items-center gap-2.5 pt-3 border-t border-[#E8EEFB]">
+                      <div className="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden shrink-0 border-2 border-vannam-yellow/40 shadow-2xs">
+                        <Image src={t.avatar} alt={t.parent} fill sizes="100px" className="object-cover" />
+                      </div>
+                      <div>
+                        <h4 className="font-heading font-extrabold text-[#0F2963] text-xs sm:text-sm">{t.parent}</h4>
+                        <span className="text-[10px] sm:text-[11px] font-bold text-vannam-orange block">Parent of {t.child}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </ScrollReveal>
+              );
+            })}
+          </div>
+
+          {/* Desktop Auto-Runner Progress Dots */}
+          <div className="hidden md:flex items-center justify-center gap-2 mt-6">
+            {testimonials.map((t, dotIdx) => (
+              <button
+                key={dotIdx}
+                type="button"
+                aria-label={`Select review by ${t.parent}`}
+                onClick={() => setActiveTestimonialIdx(dotIdx)}
+                className={`h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                  activeTestimonialIdx === dotIdx ? "w-8 bg-vannam-yellow shadow-xs" : "w-2.5 bg-amber-200/80 hover:bg-amber-300"
+                }`}
+              />
             ))}
           </div>
 
