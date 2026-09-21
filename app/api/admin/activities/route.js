@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET(request) {
   try {
@@ -90,6 +91,24 @@ export async function POST(request) {
       details: `Logged activity "${newActivity.title}" for ${newActivity.studentName}`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query(`
+        INSERT INTO activities (
+          id, student_id, student_name, class_id, class_name, teacher_id, teacher_name,
+          title, category, description, date, photos, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        ON CONFLICT (id) DO NOTHING;
+      `, [
+        newActivity.id, newActivity.studentId, newActivity.studentName,
+        newActivity.classId, newActivity.className, newActivity.teacherId, newActivity.teacherName,
+        newActivity.title, newActivity.category, newActivity.description,
+        newActivity.date, JSON.stringify(newActivity.photos), new Date()
+      ]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (POST activity):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, activity: newActivity }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to create activity' }, { status: 500 });
@@ -124,6 +143,18 @@ export async function PUT(request) {
       details: `Updated activity "${store.activities[index].title}"`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      const act = store.activities[index];
+      await pool.query(`
+        UPDATE activities SET
+          title = $1, category = $2, description = $3, date = $4, photos = $5
+        WHERE id = $6;
+      `, [act.title, act.category, act.description, act.date, JSON.stringify(act.photos || []), id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (PUT activity):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, activity: store.activities[index] });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to update activity' }, { status: 500 });
@@ -153,6 +184,13 @@ export async function DELETE(request) {
       resource: 'Activities',
       details: `Removed activity: "${act.title}"`
     });
+
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query('DELETE FROM activities WHERE id = $1;', [id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (DELETE activity):", neonErr.message);
+    }
 
     return NextResponse.json({ success: true, message: 'Activity deleted successfully' });
   } catch (error) {

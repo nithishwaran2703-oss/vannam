@@ -156,7 +156,7 @@ export default function AdminLayout({ children }) {
 
   const navSections = [
     {
-      group: 'Parent Portal & Students',
+      group: 'Parent Portal Hub',
       items: [
         { label: 'Students & Logins', href: '/admin/students', icon: GraduationCap },
         { label: 'Daily Attendance', href: '/admin/attendance', icon: CheckCircle2 },
@@ -177,17 +177,17 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
-      group: 'Operations & Settings',
+      group: 'System & Admissions',
       items: [
         {
-          label: 'Admissions & Enquiries',
+          label: 'Admissions Queue',
           href: '/admin/admissions',
           icon: FileCheck2,
           badge: (badges.newAdmissions || 0) + (badges.newEnquiries || 0) > 0 ? (badges.newAdmissions || 0) + (badges.newEnquiries || 0) : null,
           badgeColor: 'bg-amber-500 text-white'
         },
-        { label: 'Website Settings', href: '/admin/settings', icon: Settings },
-        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' }
+        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' },
+        { label: 'School Settings', href: '/admin/settings', icon: Settings }
       ]
     }
   ];
@@ -253,6 +253,17 @@ export default function AdminLayout({ children }) {
           {/* Right Action Icons */}
           <div className="flex items-center gap-3">
             
+            {/* Parent Portal Link */}
+            <Link
+              href="/portal"
+              target="_blank"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition border border-emerald-200"
+              title="Open Parent Portal in New Tab"
+            >
+              <span>Parent Portal</span>
+              <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+            </Link>
+
             {/* Live Website Preview Button */}
             <button
               type="button"

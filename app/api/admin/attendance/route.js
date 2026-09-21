@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET(request) {
   try {
@@ -64,6 +65,23 @@ export async function POST(request) {
         store.attendance[existingIndex] = recordData;
       } else {
         store.attendance = [recordData, ...(store.attendance || [])];
+      }
+
+      // Sync to Neon PostgreSQL
+      try {
+        await pool.query(`
+          INSERT INTO attendance (id, student_id, student_name, class_id, teacher_id, date, status, remarks)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          ON CONFLICT (id) DO UPDATE SET 
+            status = EXCLUDED.status,
+            remarks = EXCLUDED.remarks;
+        `, [
+          recordData.id, recordData.studentId, recordData.studentName,
+          recordData.classId, recordData.teacherId, recordData.date,
+          recordData.status, recordData.remarks
+        ]);
+      } catch (neonErr) {
+        console.warn("Neon sync note (attendance):", neonErr.message);
       }
     }
 

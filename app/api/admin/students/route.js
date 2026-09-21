@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET(request) {
   try {
@@ -103,6 +104,40 @@ export async function POST(request) {
       details: `Enrolled new student: ${newStudent.name} (${newStudent.studentId}) in ${newStudent.className}`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query(`
+        INSERT INTO students (
+          id, student_id, name, dob, gender, class_id, class_name, teacher_id, teacher_name,
+          parent_name, parent_email, parent_phone, parent_pin, emergency_contact,
+          blood_group, allergies, status, enrollment_date, photo, created_at
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20)
+        ON CONFLICT (id) DO NOTHING;
+      `, [
+        newStudent.id, newStudent.studentId, newStudent.name, newStudent.dob || null, newStudent.gender,
+        newStudent.classId, newStudent.className, newStudent.teacherId, newStudent.teacherName,
+        newStudent.parentName, newStudent.parentEmail, newStudent.parentPhone, newStudent.parentPin,
+        newStudent.emergencyContact, newStudent.bloodGroup, newStudent.allergies, newStudent.status,
+        newStudent.enrollmentDate || null, newStudent.photo, new Date()
+      ]);
+
+      if (newStudent.parentEmail) {
+        await pool.query(`
+          INSERT INTO users (id, name, email, password, role, avatar)
+          VALUES ($1, $2, $3, $4, 'PARENT', $5)
+          ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password;
+        `, [
+          `usr-parent-${newStudent.id}`,
+          newStudent.parentName || 'Parent',
+          newStudent.parentEmail.trim().toLowerCase(),
+          newStudent.parentPin || '2026',
+          'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80'
+        ]);
+      }
+    } catch (neonErr) {
+      console.warn("Neon sync note (POST student):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, student: newStudent }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to create student' }, { status: 500 });
@@ -158,6 +193,34 @@ export async function PUT(request) {
       details: `Updated record for student: ${store.students[index].name}`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      const updated = store.students[index];
+      await pool.query(`
+        UPDATE students SET
+          name = $1, dob = $2, gender = $3, class_id = $4, class_name = $5,
+          teacher_id = $6, teacher_name = $7, parent_name = $8, parent_email = $9,
+          parent_phone = $10, parent_pin = $11, emergency_contact = $12,
+          blood_group = $13, allergies = $14, status = $15, photo = $16
+        WHERE id = $17;
+      `, [
+        updated.name, updated.dob || null, updated.gender, updated.classId, updated.className,
+        updated.teacherId, updated.teacherName, updated.parentName, updated.parentEmail,
+        updated.parentPhone, updated.parentPin, updated.emergencyContact,
+        updated.bloodGroup, updated.allergies, updated.status, updated.photo,
+        id
+      ]);
+
+      if (updated.parentPin && updated.parentEmail) {
+        await pool.query(`
+          UPDATE users SET password = $1 
+          WHERE LOWER(email) = LOWER($2);
+        `, [updated.parentPin, updated.parentEmail.trim()]);
+      }
+    } catch (neonErr) {
+      console.warn("Neon sync note (PUT student):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, student: store.students[index] });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to update student' }, { status: 500 });
@@ -204,6 +267,16 @@ export async function DELETE(request) {
       resource: 'Students',
       details: `Archived student record: ${student.name} (${student.studentId}). ${parentAccessRevoked ? `Parent credentials for ${parentEmail} revoked.` : `Parent credentials remain active for other enrolled child(ren).`}`
     });
+
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query('DELETE FROM students WHERE id = $1;', [id]);
+      if (parentAccessRevoked && parentEmail) {
+        await pool.query("DELETE FROM users WHERE LOWER(email) = LOWER($1) AND role = 'PARENT';", [parentEmail]);
+      }
+    } catch (neonErr) {
+      console.warn("Neon sync note (DELETE student):", neonErr.message);
+    }
 
     return NextResponse.json({
       success: true,

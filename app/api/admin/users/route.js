@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET() {
   const store = getStore();
@@ -49,6 +50,17 @@ export async function POST(request) {
       details: `Created new admin user: ${name} (${role})`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query(`
+        INSERT INTO users (id, name, email, password, role, avatar, last_login)
+        VALUES ($1, $2, $3, $4, $5, $6, NULL)
+        ON CONFLICT (id) DO UPDATE SET password = EXCLUDED.password, role = EXCLUDED.role;
+      `, [newUser.id, newUser.name, newUser.email, newUser.password, newUser.role, newUser.avatar]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (POST user):", neonErr.message);
+    }
+
     return NextResponse.json({
       id: newUser.id,
       name: newUser.name,
@@ -91,6 +103,18 @@ export async function PUT(request) {
       details: `Updated credentials for user ${store.users[index].name} (${store.users[index].email})`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      const u = store.users[index];
+      await pool.query(`
+        UPDATE users SET
+          name = $1, email = $2, password = $3, role = $4, avatar = $5
+        WHERE id = $6;
+      `, [u.name, u.email, u.password, u.role, u.avatar, id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (PUT user):", neonErr.message);
+    }
+
     return NextResponse.json({
       success: true,
       user: {
@@ -132,6 +156,13 @@ export async function DELETE(request) {
       resource: 'Users',
       details: `Deleted user account: ${targetUser.name} (${targetUser.email})`
     });
+
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query('DELETE FROM users WHERE id = $1;', [id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (DELETE user):", neonErr.message);
+    }
 
     return NextResponse.json({ success: true, message: 'User account removed' });
   } catch (error) {

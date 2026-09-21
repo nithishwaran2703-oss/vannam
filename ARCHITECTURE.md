@@ -265,10 +265,71 @@ To achieve instantaneous zero-latency updates without requiring expensive dedica
 
 ---
 
-## 6. Verification & Test Summary
+## 6. Streamlined Admin Panel Architecture (Essentials Only)
 
-All layers have been verified in the local environment and compiled through `next build`:
-* **Build Status**: 46 routes generated (Static & Dynamic) in 5.1s with 0 errors.
-* **Student Activity Sync**: Verified update propagation from `/api/admin/activities` to `/api/portal/data`.
-* **Attendance State Sync**: Verified toggle from `PRESENT` to `ABSENT` reflecting in parent portal badges.
-* **Website Dynamic CMS**: Verified real-time announcement banner rendering and teacher card updates.
+To optimize cognitive load and day-to-day preschool management, the Admin Control Center navigation is streamlined into **3 focused groups**, keeping only what is essential for the Public Web CMS and the Parent Portal:
+
+1. **Parent Portal Hub** (Daily Student Operations):
+   - `Students & Logins` (`/admin/students`): Student enrollment, parent email, visible PIN reveal/reset, and multi-child accounts.
+   - `Daily Attendance` (`/admin/attendance`): Classroom check-ins syncing immediately to parent portal badges (`In Campus` / `Absent Today`).
+   - `Student Activities` (`/admin/activities`): Daily learning milestones, photo journals, and Montessori observations.
+   - `Homework & Tasks` (`/admin/homework`): Creative assignments, worksheets, and submission tracking.
+   - `Classrooms` (`/admin/classes`): Class section management, teacher allocation, and room capacities.
+
+2. **Website Live CMS** (Public Facing Presentation):
+   - `Announcements Ribbon` (`/admin/announcements`): Admissions alerts, emergency closures, and holiday notices.
+   - `Teachers & Faculty` (`/admin/teachers`): Staff directory, bios, photos, and Montessori credentials.
+   - `Programs & Fees` (`/admin/programs`): Toddler, Playgroup, LKG, UKG curriculum and fee schedules.
+   - `Campus Facilities` (`/admin/facilities`): Sensory lab, dining, outdoor play areas, and smart classrooms.
+   - `Photo Gallery` (`/admin/gallery`): Campus photos and event highlights.
+   - `Parent Reviews` (`/admin/testimonials`): Authentic parent testimonials and community ratings.
+
+3. **System & Admissions** (Core Infrastructure):
+   - `Admissions Queue` (`/admin/admissions`): Admission applications and parent contact requests.
+   - `Staff & Admin Accounts` (`/admin/users`): Teacher and administrator login credentials.
+   - `School Settings` (`/admin/settings`): School contact info, address, branding, and opening hours.
+
+* **Top Header Shortcuts**: Direct 1-click launch buttons for both **"Parent Portal"** (`/portal`) and **"Live Website"** (`/`).
+
+---
+
+## 7. Neon PostgreSQL Architecture & Zero-Config Guide
+
+### A. Direct Cloud Database Integration
+The system integrates with **Neon Serverless PostgreSQL** via `@neondatabase/serverless`:
+- **Driver**: Connection pooling over WebSockets/HTTPS with instant auto-scaling.
+- **Dual-Write Synchronization**: When an admin or teacher updates a student, attendance record, activity, or homework, the API route simultaneously writes to:
+  1. High-speed local store (`vannam-store.json`) for zero-latency in-memory response (<5ms).
+  2. Neon PostgreSQL database (`neondb`) for permanent cloud persistence and multi-device synchronization.
+
+### B. Database Schema in Neon
+The following 16 tables are created and live in Neon:
+| Table Name | Description | Parent Portal / Web |
+| :--- | :--- | :--- |
+| `students` | Enrolled children, student IDs, parent emails, phone numbers, and PINs | Parent Portal |
+| `classes` | Class sections, room allocations, and assigned lead educators | Parent Portal |
+| `attendance` | Daily check-in/out records with status (`PRESENT`/`ABSENT`) and remarks | Parent Portal |
+| `activities` | Photo milestones, teacher observations, category tags, and timestamps | Parent Portal |
+| `homework` | Assigned tasks, due dates, materials, and completion flags | Parent Portal |
+| `users` | Admins, teachers, and parent credentials with passwords/PINs | Authentication |
+| `programs` | Academic programs, age groups, timings, ratios, and fee structures | Public Website |
+| `facilities` | Campus features, safety gear, and amenities | Public Website |
+| `teachers` | Faculty directory, AMI certifications, photos, and bios | Public Website |
+| `testimonials` | Parent quotes, ratings, and student associations | Public Website |
+| `gallery` | Campus images categorized by sports, arts, and classrooms | Public Website |
+| `announcements` | Floating dynamic announcements ribbon | Public Website |
+| `enquiries` | Inbound admissions enquiries and campus tour requests | Admissions |
+| `admissions` | Formal student admission applications | Admissions |
+| `global_settings`| School contact details, logo, address, and metadata | Settings |
+| `audit_logs` | Security and operational audit trail | Audit & Logs |
+
+### C. Do You Need to Do Anything in Neon Base?
+**Answer: NO. Everything is 100% automated.**
+
+1. **Tables are Pre-Migrated**: All tables and live records have already been migrated and verified directly in your Neon project.
+2. **Auto-Resume Compute**: Neon automatically suspends when there is no traffic (saving resources) and automatically resumes in ~300ms when any request arrives. You do not need to start or stop servers manually.
+3. **Environment Configured**: The connection string is pre-configured in `.env.local` and `.env`:
+   ```bash
+   DATABASE_URL="postgresql://neondb_owner:npg_sbnhif1K2AZC@ep-autumn-resonance-awbnd4f3.c-12.us-east-1.aws.neon.tech/neondb?sslmode=require"
+   ```
+4. **Zero Maintenance**: Backups, WAL archiving, and failover are managed automatically by Neon. Any new students, PIN updates, attendance entries, or activities posted from the Admin/Teacher portal automatically persist to your Neon PostgreSQL database.

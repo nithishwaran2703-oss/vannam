@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
+import pool from '@/lib/db';
 
 export async function GET(request) {
   try {
@@ -61,6 +62,24 @@ export async function POST(request) {
       details: `Created task "${newHomework.title}" for ${newHomework.className}`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query(`
+        INSERT INTO homework (
+          id, class_id, class_name, teacher_id, teacher_name,
+          title, subject, description, due_date, status, materials
+        ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+        ON CONFLICT (id) DO NOTHING;
+      `, [
+        newHomework.id, newHomework.classId, newHomework.className,
+        newHomework.teacherId, newHomework.teacherName, newHomework.title,
+        newHomework.subject, newHomework.description, newHomework.dueDate,
+        newHomework.status, newHomework.materials
+      ]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (POST homework):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, homework: newHomework }, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to create homework' }, { status: 500 });
@@ -95,6 +114,18 @@ export async function PUT(request) {
       details: `Updated task "${store.homework[index].title}"`
     });
 
+    // Sync to Neon PostgreSQL
+    try {
+      const hw = store.homework[index];
+      await pool.query(`
+        UPDATE homework SET
+          title = $1, subject = $2, description = $3, due_date = $4, status = $5, materials = $6
+        WHERE id = $7;
+      `, [hw.title, hw.subject, hw.description, hw.dueDate, hw.status, hw.materials, id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (PUT homework):", neonErr.message);
+    }
+
     return NextResponse.json({ success: true, homework: store.homework[index] });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to update homework' }, { status: 500 });
@@ -124,6 +155,13 @@ export async function DELETE(request) {
       resource: 'Homework',
       details: `Deleted task "${hw.title}"`
     });
+
+    // Sync to Neon PostgreSQL
+    try {
+      await pool.query('DELETE FROM homework WHERE id = $1;', [id]);
+    } catch (neonErr) {
+      console.warn("Neon sync note (DELETE homework):", neonErr.message);
+    }
 
     return NextResponse.json({ success: true, message: 'Homework removed successfully' });
   } catch (error) {

@@ -684,6 +684,42 @@
   ],
   "auditLogs": [
     {
+      "id": "log-1789961761266",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Admissions Open for Academic Year 2026–27 (Active: false)",
+      "timestamp": "2026-09-21T03:36:01.266Z"
+    },
+    {
+      "id": "log-1789961758672",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Admissions Open for Academic Year 2026–27 (Active: true)",
+      "timestamp": "2026-09-21T03:35:58.672Z"
+    },
+    {
+      "id": "log-1789961756378",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Grand Weekend Open House & Child Sensory Camp (Active: false)",
+      "timestamp": "2026-09-21T03:35:56.378Z"
+    },
+    {
+      "id": "log-1789961749863",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Grand Weekend Open House & Child Sensory Camp (Active: true)",
+      "timestamp": "2026-09-21T03:35:49.863Z"
+    },
+    {
       "id": "log-1789961336971",
       "action": "Updated Testimonials Content",
       "userId": "usr-1",
