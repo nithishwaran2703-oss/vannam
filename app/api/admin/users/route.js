@@ -8,6 +8,7 @@ export async function GET() {
     id: u.id,
     name: u.name,
     email: u.email,
+    password: u.password,
     role: u.role,
     avatar: u.avatar,
     lastLogin: u.lastLogin
