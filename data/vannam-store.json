@@ -284,6 +284,15 @@
   ],
   "testimonials": [
     {
+      "id": "test-1789961336932",
+      "name": "fhjejknwekj",
+      "relation": "ar nhjerhj",
+      "rating": 4,
+      "text": "sjfnsnuduinujs",
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80",
+      "status": "published"
+    },
+    {
       "id": "test-ananya",
       "name": "Dr. Ananya Sharma",
       "parent": "Dr. Ananya Sharma",
@@ -642,7 +651,7 @@
       "password": "Admin@Vannam2026",
       "role": "ADMIN",
       "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
-      "lastLogin": "2026-08-29T04:20:57.843Z"
+      "lastLogin": "2026-09-21T03:27:46.268Z"
     },
     {
       "id": "usr-2",
@@ -674,6 +683,24 @@
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789961336971",
+      "action": "Updated Testimonials Content",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "testimonials",
+      "details": "Modified website section: testimonials",
+      "timestamp": "2026-09-21T03:28:56.971Z"
+    },
+    {
+      "id": "log-1789961266269",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-21T03:27:46.269Z"
+    },
     {
       "id": "log-1789799838354",
       "action": "Mark Attendance",

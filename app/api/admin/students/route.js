@@ -65,6 +65,7 @@ export async function POST(request) {
       parentName: body.parentName || '',
       parentEmail: body.parentEmail || '',
       parentPhone: body.parentPhone || '',
+      parentPin: body.parentPin || '2026',
       emergencyContact: body.emergencyContact || body.parentPhone || '',
       bloodGroup: body.bloodGroup || '',
       allergies: body.allergies || 'None',
@@ -73,6 +74,26 @@ export async function POST(request) {
       photo: body.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&q=80',
       createdAt: new Date().toISOString()
     };
+
+    // Auto-create or ensure Parent user credentials in users store
+    if (newStudent.parentEmail) {
+      const parentEmailLower = newStudent.parentEmail.trim().toLowerCase();
+      const existingUser = (store.users || []).find(u => u.email?.toLowerCase() === parentEmailLower);
+      if (!existingUser) {
+        store.users = [
+          ...(store.users || []),
+          {
+            id: `usr-parent-${Date.now()}`,
+            name: newStudent.parentName || 'Parent',
+            email: parentEmailLower,
+            password: newStudent.parentPin || '2026',
+            role: 'PARENT',
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80',
+            lastLogin: null
+          }
+        ];
+      }
+    }
 
     store.students = [newStudent, ...(store.students || [])];
 
@@ -114,6 +135,17 @@ export async function PUT(request) {
       }
     }
 
+    // Sync PIN update to parent user in users store
+    if (updates.parentPin || updates.parentEmail) {
+      const emailToSync = (updates.parentEmail || store.students[index].parentEmail)?.trim().toLowerCase();
+      if (emailToSync) {
+        const userIndex = (store.users || []).findIndex(u => u.email?.toLowerCase() === emailToSync);
+        if (userIndex !== -1 && updates.parentPin) {
+          store.users[userIndex].password = updates.parentPin;
+        }
+      }
+    }
+
     store.students[index] = {
       ...store.students[index],
       ...updates,
@@ -148,15 +180,36 @@ export async function DELETE(request) {
       return NextResponse.json({ error: 'Student not found' }, { status: 404 });
     }
 
+    const parentEmail = student.parentEmail?.trim().toLowerCase();
+
+    // Remove student
     store.students = (store.students || []).filter(s => s.id !== id);
+
+    // Multi-child check: Does the parent have any OTHER enrolled student in school?
+    const hasOtherChildren = (store.students || []).some(
+      s => s.parentEmail?.trim().toLowerCase() === parentEmail
+    );
+
+    let parentAccessRevoked = false;
+    if (!hasOtherChildren && parentEmail) {
+      // Remove parent login credentials from users store
+      store.users = (store.users || []).filter(
+        u => u.email?.trim().toLowerCase() !== parentEmail
+      );
+      parentAccessRevoked = true;
+    }
 
     saveStore(store, {
       action: 'Archive Student',
       resource: 'Students',
-      details: `Archived student record: ${student.name} (${student.studentId})`
+      details: `Archived student record: ${student.name} (${student.studentId}). ${parentAccessRevoked ? `Parent credentials for ${parentEmail} revoked.` : `Parent credentials remain active for other enrolled child(ren).`}`
     });
 
-    return NextResponse.json({ success: true, message: 'Student archived successfully' });
+    return NextResponse.json({
+      success: true,
+      message: 'Student archived successfully',
+      parentAccessRevoked
+    });
   } catch (error) {
     return NextResponse.json({ error: error.message || 'Failed to delete student' }, { status: 500 });
   }

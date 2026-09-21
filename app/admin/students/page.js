@@ -30,6 +30,7 @@ export default function StudentsManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [showPinMap, setShowPinMap] = useState({});
 
   const [form, setForm] = useState({
     name: '',
@@ -40,6 +41,7 @@ export default function StudentsManager() {
     parentName: '',
     parentEmail: '',
     parentPhone: '',
+    parentPin: '2026',
     emergencyContact: '',
     bloodGroup: 'B+',
     allergies: 'None',
@@ -84,6 +86,7 @@ export default function StudentsManager() {
       parentName: '',
       parentEmail: '',
       parentPhone: '',
+      parentPin: '2026',
       emergencyContact: '',
       bloodGroup: 'B+',
       allergies: 'None',
@@ -104,6 +107,7 @@ export default function StudentsManager() {
       parentName: student.parentName || '',
       parentEmail: student.parentEmail || '',
       parentPhone: student.parentPhone || '',
+      parentPin: student.parentPin || '2026',
       emergencyContact: student.emergencyContact || '',
       bloodGroup: student.bloodGroup || 'B+',
       allergies: student.allergies || 'None',
@@ -111,6 +115,24 @@ export default function StudentsManager() {
       photo: student.photo || 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&q=80'
     });
     setIsModalOpen(true);
+  };
+
+  const handleQuickResetPin = async (student) => {
+    try {
+      const res = await fetch('/api/admin/students', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: student.id,
+          parentPin: '2026'
+        })
+      });
+      if (!res.ok) throw new Error('Failed to reset PIN');
+      showToast(`Parent PIN for ${student.name} reset to 2026`);
+      fetchData();
+    } catch (err) {
+      showToast(err.message, 'error');
+    }
   };
 
   const handleSaveStudent = async (e) => {
@@ -142,9 +164,10 @@ export default function StudentsManager() {
       const res = await fetch(`/api/admin/students?id=${id}`, {
         method: 'DELETE'
       });
-      if (!res.ok) throw new Error('Failed to archive student');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to archive student');
 
-      showToast('Student record archived');
+      showToast(data.parentAccessRevoked ? 'Student archived & parent login access revoked' : 'Student record archived');
       setDeleteConfirmId(null);
       fetchData();
     } catch (err) {
@@ -241,7 +264,7 @@ export default function StudentsManager() {
                   <th className="px-6 py-4">Student</th>
                   <th className="px-6 py-4">Classroom</th>
                   <th className="px-6 py-4">Parent / Guardian</th>
-                  <th className="px-6 py-4">Emergency Contact</th>
+                  <th className="px-6 py-4">Parent Portal Login (Email & PIN)</th>
                   <th className="px-6 py-4">Health & Blood</th>
                   <th className="px-6 py-4">Status</th>
                   <th className="px-6 py-4 text-right">Actions</th>
@@ -285,9 +308,32 @@ export default function StudentsManager() {
                     </td>
 
                     <td className="px-6 py-4">
-                      <div className="text-xs font-semibold text-slate-800 flex items-center gap-1">
-                        <Phone className="w-3 h-3 text-emerald-600" />
-                        {student.emergencyContact || student.parentPhone || 'N/A'}
+                      <div className="space-y-1">
+                        <div className="text-xs font-semibold text-slate-800 flex items-center gap-1">
+                          <Mail className="w-3.5 h-3.5 text-[#00A8E8] shrink-0" />
+                          <span className="truncate max-w-[170px]" title={student.parentEmail}>{student.parentEmail || 'No email assigned'}</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-[11px] font-mono font-bold bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200">
+                            PIN: {showPinMap[student.id] ? (student.parentPin || '2026') : '••••'}
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => setShowPinMap(prev => ({ ...prev, [student.id]: !prev[student.id] }))}
+                            className="p-1 text-slate-400 hover:text-slate-700 text-xs rounded hover:bg-slate-100 transition cursor-pointer"
+                            title={showPinMap[student.id] ? "Hide PIN" : "Reveal PIN"}
+                          >
+                            {showPinMap[student.id] ? '🙈' : '👁️'}
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleQuickResetPin(student)}
+                            className="text-[10px] font-bold text-[#00A8E8] hover:text-[#0F2963] px-1.5 py-0.5 rounded bg-sky-50 border border-sky-200 hover:bg-sky-100 transition cursor-pointer"
+                            title="Reset PIN to 2026 if parent forgot"
+                          >
+                            Reset
+                          </button>
+                        </div>
                       </div>
                     </td>
 
@@ -345,9 +391,9 @@ export default function StudentsManager() {
             <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mb-4">
               <AlertCircle className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-slate-900">Archive Student Record?</h3>
+            <h3 className="text-lg font-bold text-slate-900">Archive Student / Revoke Access?</h3>
             <p className="text-xs text-slate-500 mt-1 leading-relaxed">
-              This student will be removed from active class attendance rosters. You can restore records anytime.
+              This student will be removed from active classroom rosters. If the family has no other active children enrolled, their Parent Portal login access will be automatically revoked.
             </p>
             <div className="flex items-center justify-end gap-2.5 mt-6">
               <button
@@ -358,9 +404,9 @@ export default function StudentsManager() {
               </button>
               <button
                 onClick={() => handleDeleteStudent(deleteConfirmId)}
-                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md transition cursor-pointer"
               >
-                Archive Record
+                Archive & Revoke
               </button>
             </div>
           </div>
@@ -505,6 +551,18 @@ export default function StudentsManager() {
                     onChange={(e) => setForm({ ...form, parentEmail: e.target.value })}
                     className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#00A8E8] text-slate-800"
                   />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Parent Portal PIN / Password</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 2026"
+                    value={form.parentPin || ''}
+                    onChange={(e) => setForm({ ...form, parentPin: e.target.value })}
+                    className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-[#00A8E8] text-slate-800 font-mono font-bold"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">Default is 2026. Parent uses this to log into /portal.</p>
                 </div>
 
                 <div>

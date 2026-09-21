@@ -156,59 +156,38 @@ export default function AdminLayout({ children }) {
 
   const navSections = [
     {
-      group: 'Overview',
+      group: 'Parent Portal & Students',
       items: [
-        { label: 'Dashboard', href: '/admin', icon: LayoutDashboard }
-      ]
-    },
-    {
-      group: 'School Management',
-      items: [
-        { label: 'Students Roster', href: '/admin/students', icon: GraduationCap },
-        { label: 'Classrooms', href: '/admin/classes', icon: Users },
-        { label: 'Student Activities', href: '/admin/activities', icon: Sparkles },
+        { label: 'Students & Logins', href: '/admin/students', icon: GraduationCap },
         { label: 'Daily Attendance', href: '/admin/attendance', icon: CheckCircle2 },
+        { label: 'Student Activities', href: '/admin/activities', icon: Sparkles },
         { label: 'Homework & Tasks', href: '/admin/homework', icon: FileCheck2 },
-        { label: 'Educators / Faculty', href: '/admin/teachers', icon: UserCog }
+        { label: 'Classrooms', href: '/admin/classes', icon: Users }
       ]
     },
     {
-      group: 'Website Content',
+      group: 'Website Live CMS',
       items: [
-        { label: 'Homepage & Hero', href: '/admin/homepage', icon: Home },
-        { label: 'About & Values', href: '/admin/about', icon: Info },
+        { label: 'Announcements Ribbon', href: '/admin/announcements', icon: Megaphone },
+        { label: 'Teachers & Faculty', href: '/admin/teachers', icon: UserCog },
         { label: 'Programs & Fees', href: '/admin/programs', icon: GraduationCap },
-        { label: 'Facilities', href: '/admin/facilities', icon: Sparkles },
-        { label: 'Testimonials', href: '/admin/testimonials', icon: MessageSquareQuote },
-        { label: 'Gallery & Media', href: '/admin/gallery', icon: ImageIcon },
-        { label: 'Announcements', href: '/admin/announcements', icon: Megaphone }
+        { label: 'Campus Facilities', href: '/admin/facilities', icon: Sparkles },
+        { label: 'Photo Gallery', href: '/admin/gallery', icon: ImageIcon },
+        { label: 'Parent Reviews', href: '/admin/testimonials', icon: MessageSquareQuote }
       ]
     },
     {
-      group: 'Leads & Admissions',
+      group: 'Operations & Settings',
       items: [
         {
-          label: 'Contact Enquiries',
-          href: '/admin/enquiries',
-          icon: Mail,
-          badge: badges.newEnquiries > 0 ? badges.newEnquiries : null,
-          badgeColor: 'bg-rose-500 text-white'
-        },
-        {
-          label: 'Admissions Pipeline',
+          label: 'Admissions & Enquiries',
           href: '/admin/admissions',
           icon: FileCheck2,
-          badge: badges.newAdmissions > 0 ? badges.newAdmissions : null,
+          badge: (badges.newAdmissions || 0) + (badges.newEnquiries || 0) > 0 ? (badges.newAdmissions || 0) + (badges.newEnquiries || 0) : null,
           badgeColor: 'bg-amber-500 text-white'
-        }
-      ]
-    },
-    {
-      group: 'System & Settings',
-      items: [
+        },
         { label: 'Website Settings', href: '/admin/settings', icon: Settings },
-        { label: 'Activity & Audit Logs', href: '/admin/logs', icon: ShieldAlert },
-        { label: 'Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' }
+        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' }
       ]
     }
   ];

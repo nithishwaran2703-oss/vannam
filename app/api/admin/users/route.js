@@ -50,16 +50,90 @@ export async function POST(request) {
     });
 
     return NextResponse.json({
+      id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+      role: newUser.role,
+      avatar: newUser.avatar
+    }, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request) {
+  try {
+    const body = await request.json();
+    const { id, name, email, password, role, avatar, user } = body;
+
+    if (!id) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    const store = getStore();
+    const index = (store.users || []).findIndex(u => u.id === id);
+
+    if (index === -1) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    if (name) store.users[index].name = name.trim();
+    if (email) store.users[index].email = email.trim().toLowerCase();
+    if (password) store.users[index].password = password.trim();
+    if (role) store.users[index].role = role;
+    if (avatar) store.users[index].avatar = avatar;
+
+    saveStore(store, {
+      action: 'Updated User Credentials',
+      userId: user?.id || 'usr-1',
+      userName: user?.name || 'Administrator',
+      resource: 'Users',
+      details: `Updated credentials for user ${store.users[index].name} (${store.users[index].email})`
+    });
+
+    return NextResponse.json({
       success: true,
       user: {
-        id: newUser.id,
-        name: newUser.name,
-        email: newUser.email,
-        role: newUser.role,
-        avatar: newUser.avatar
+        id: store.users[index].id,
+        name: store.users[index].name,
+        email: store.users[index].email,
+        role: store.users[index].role,
+        avatar: store.users[index].avatar
       },
-      message: 'Admin user created successfully'
+      message: 'Credentials updated successfully'
     });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+
+    const store = getStore();
+    const targetUser = (store.users || []).find(u => u.id === id);
+
+    if (!targetUser) {
+      return NextResponse.json({ error: 'User not found' }, { status: 404 });
+    }
+
+    store.users = (store.users || []).filter(u => u.id !== id);
+
+    saveStore(store, {
+      action: 'Deleted User Account',
+      userId: 'usr-1',
+      userName: 'Administrator',
+      resource: 'Users',
+      details: `Deleted user account: ${targetUser.name} (${targetUser.email})`
+    });
+
+    return NextResponse.json({ success: true, message: 'User account removed' });
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
