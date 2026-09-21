@@ -670,36 +670,36 @@
       "role": "PARENT",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
       "lastLogin": null
-    },
-    {
-      "id": "usr-parent-std-1",
-      "name": "Deepak Sharma",
-      "email": "deepak.sharma@example.com",
-      "password": "2026",
-      "role": "PARENT",
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
-      "lastLogin": null
-    },
-    {
-      "id": "usr-parent-std-2",
-      "name": "Ramesh Sundaram",
-      "email": "ramesh.s@example.com",
-      "password": "2026",
-      "role": "PARENT",
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
-      "lastLogin": null
-    },
-    {
-      "id": "usr-parent-std-3",
-      "name": "Karthik Venkatesh",
-      "email": "karthik.v@example.com",
-      "password": "2026",
-      "role": "PARENT",
-      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
-      "lastLogin": null
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789963293724",
+      "action": "Archive Student",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Students",
+      "details": "Archived student record: Vihaan Karthik (VW-2026-003). Parent credentials for karthik.v@example.com revoked.",
+      "timestamp": "2026-09-21T04:01:33.724Z"
+    },
+    {
+      "id": "log-1789963284566",
+      "action": "Archive Student",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Students",
+      "details": "Archived student record: Ananya Ramesh (VW-2026-002). Parent credentials for ramesh.s@example.com revoked.",
+      "timestamp": "2026-09-21T04:01:24.566Z"
+    },
+    {
+      "id": "log-1789963272701",
+      "action": "Archive Student",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Students",
+      "details": "Archived student record: Aarav Sharma (VW-2026-001). Parent credentials for deepak.sharma@example.com revoked.",
+      "timestamp": "2026-09-21T04:01:12.701Z"
+    },
     {
       "id": "log-1789961761266",
       "action": "Updated Announcement",
@@ -967,68 +967,7 @@
       "academicYear": "2026-27"
     }
   ],
-  "students": [
-    {
-      "id": "std-1",
-      "studentId": "VW-2026-001",
-      "name": "Aarav Sharma",
-      "dob": "2023-04-15",
-      "gender": "Boy",
-      "classId": "class-pre-kg-a",
-      "className": "Pre-KG Explorers",
-      "teacherId": "priya-sharma",
-      "teacherName": "Mrs. Priya Sharma",
-      "parentName": "Deepak Sharma",
-      "parentEmail": "deepak.sharma@example.com",
-      "parentPhone": "+91 98401 23456",
-      "emergencyContact": "+91 98401 23456",
-      "bloodGroup": "B+",
-      "allergies": "None",
-      "status": "Active",
-      "enrollmentDate": "2026-06-01",
-      "photo": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=200&q=80"
-    },
-    {
-      "id": "std-2",
-      "studentId": "VW-2026-002",
-      "name": "Ananya Ramesh",
-      "dob": "2023-08-22",
-      "gender": "Girl",
-      "classId": "class-pre-kg-a",
-      "className": "Pre-KG Explorers",
-      "teacherId": "priya-sharma",
-      "teacherName": "Mrs. Priya Sharma",
-      "parentName": "Ramesh Sundaram",
-      "parentEmail": "ramesh.s@example.com",
-      "parentPhone": "+91 98402 34567",
-      "emergencyContact": "+91 98402 34567",
-      "bloodGroup": "O+",
-      "allergies": "Peanut sensitivity",
-      "status": "Active",
-      "enrollmentDate": "2026-06-01",
-      "photo": "https://images.unsplash.com/photo-1595454223600-91fbdd7726b2?w=200&q=80"
-    },
-    {
-      "id": "std-3",
-      "studentId": "VW-2026-003",
-      "name": "Vihaan Karthik",
-      "dob": "2022-11-10",
-      "gender": "Boy",
-      "classId": "class-lkg-a",
-      "className": "Junior Kindergarten STEAM",
-      "teacherId": "ananya-deshmukh",
-      "teacherName": "Ms. Ananya Deshmukh",
-      "parentName": "Karthik Venkatesh",
-      "parentEmail": "karthik.v@example.com",
-      "parentPhone": "+91 98403 45678",
-      "emergencyContact": "+91 98403 45678",
-      "bloodGroup": "A+",
-      "allergies": "None",
-      "status": "Active",
-      "enrollmentDate": "2026-06-01",
-      "photo": "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80"
-    }
-  ],
+  "students": [],
   "activities": [
     {
       "id": "act-1789799699323",

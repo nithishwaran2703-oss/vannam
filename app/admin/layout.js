@@ -154,40 +154,77 @@ export default function AdminLayout({ children }) {
     );
   }
 
+  const userRole = (user?.role || 'ADMIN').toUpperCase();
+  const isSuperAdmin = userRole === 'ADMIN' || userRole === 'SUPER_ADMIN';
+  const isTeacher = userRole === 'TEACHER';
+  const isContentManager = userRole === 'CONTENT_MANAGER';
+  const isEnquiryManager = userRole === 'ENQUIRY_MANAGER';
+
+  // Route protection by role
+  useEffect(() => {
+    if (!user || pathname === '/admin/login') return;
+
+    if (isSuperAdmin) return; // Full access to entire web
+
+    if (isTeacher) {
+      const allowedTeacherRoutes = ['/admin/activities', '/admin/attendance', '/admin/homework', '/admin/classes', '/admin/students', '/admin'];
+      if (!allowedTeacherRoutes.includes(pathname)) {
+        showToast('Teacher access: Restricted to student activities & classroom operations', 'info');
+        router.push('/admin/activities');
+      }
+    } else if (isContentManager) {
+      const allowedContentRoutes = ['/admin/announcements', '/admin/teachers', '/admin/programs', '/admin/facilities', '/admin/gallery', '/admin/testimonials', '/admin/about', '/admin/homepage', '/admin'];
+      if (!allowedContentRoutes.includes(pathname)) {
+        showToast('Content access: Restricted to Website Live CMS', 'info');
+        router.push('/admin/announcements');
+      }
+    } else if (isEnquiryManager) {
+      const allowedEnquiryRoutes = ['/admin/admissions', '/admin/enquiries', '/admin'];
+      if (!allowedEnquiryRoutes.includes(pathname)) {
+        showToast('Enquiry Manager access: Restricted to Admissions', 'info');
+        router.push('/admin/admissions');
+      }
+    }
+  }, [user, pathname, router, isSuperAdmin, isTeacher, isContentManager, isEnquiryManager]);
+
   const navSections = [
     {
       group: 'Parent Portal Hub',
+      visible: isSuperAdmin || isTeacher,
       items: [
-        { label: 'Students & Logins', href: '/admin/students', icon: GraduationCap },
-        { label: 'Daily Attendance', href: '/admin/attendance', icon: CheckCircle2 },
-        { label: 'Student Activities', href: '/admin/activities', icon: Sparkles },
-        { label: 'Homework & Tasks', href: '/admin/homework', icon: FileCheck2 },
-        { label: 'Classrooms', href: '/admin/classes', icon: Users }
+        { label: 'Student Activities', href: '/admin/activities', icon: Sparkles, visible: isSuperAdmin || isTeacher },
+        { label: 'Daily Attendance', href: '/admin/attendance', icon: CheckCircle2, visible: isSuperAdmin || isTeacher },
+        { label: 'Homework & Tasks', href: '/admin/homework', icon: FileCheck2, visible: isSuperAdmin || isTeacher },
+        { label: 'Classrooms', href: '/admin/classes', icon: Users, visible: isSuperAdmin || isTeacher },
+        { label: 'Students & Logins', href: '/admin/students', icon: GraduationCap, visible: isSuperAdmin || isTeacher }
       ]
     },
     {
       group: 'Website Live CMS',
+      visible: isSuperAdmin || isContentManager,
       items: [
-        { label: 'Announcements Ribbon', href: '/admin/announcements', icon: Megaphone },
-        { label: 'Teachers & Faculty', href: '/admin/teachers', icon: UserCog },
-        { label: 'Programs & Fees', href: '/admin/programs', icon: GraduationCap },
-        { label: 'Campus Facilities', href: '/admin/facilities', icon: Sparkles },
-        { label: 'Photo Gallery', href: '/admin/gallery', icon: ImageIcon },
-        { label: 'Parent Reviews', href: '/admin/testimonials', icon: MessageSquareQuote }
+        { label: 'Announcements Ribbon', href: '/admin/announcements', icon: Megaphone, visible: isSuperAdmin || isContentManager },
+        { label: 'Teachers & Faculty', href: '/admin/teachers', icon: UserCog, visible: isSuperAdmin || isContentManager },
+        { label: 'Programs & Fees', href: '/admin/programs', icon: GraduationCap, visible: isSuperAdmin || isContentManager },
+        { label: 'Campus Facilities', href: '/admin/facilities', icon: Sparkles, visible: isSuperAdmin || isContentManager },
+        { label: 'Photo Gallery', href: '/admin/gallery', icon: ImageIcon, visible: isSuperAdmin || isContentManager },
+        { label: 'Parent Reviews', href: '/admin/testimonials', icon: MessageSquareQuote, visible: isSuperAdmin || isContentManager }
       ]
     },
     {
       group: 'System & Admissions',
+      visible: isSuperAdmin || isEnquiryManager,
       items: [
         {
           label: 'Admissions Queue',
           href: '/admin/admissions',
           icon: FileCheck2,
+          visible: isSuperAdmin || isEnquiryManager,
           badge: (badges.newAdmissions || 0) + (badges.newEnquiries || 0) > 0 ? (badges.newAdmissions || 0) + (badges.newEnquiries || 0) : null,
           badgeColor: 'bg-amber-500 text-white'
         },
-        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, restricted: user?.role !== 'super_admin' && user?.role !== 'ADMIN' },
-        { label: 'School Settings', href: '/admin/settings', icon: Settings }
+        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, visible: isSuperAdmin },
+        { label: 'School Settings', href: '/admin/settings', icon: Settings, visible: isSuperAdmin }
       ]
     }
   ];
@@ -379,17 +416,21 @@ export default function AdminLayout({ children }) {
 
             {/* Nav Menu Items */}
             <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin">
-              {navSections.map((section, idx) => (
-                <div key={idx}>
-                  <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-[#CBD8F6]/50 mb-2">
-                    {section.group}
-                  </div>
-                  <nav className="space-y-1">
-                    {section.items
-                      .filter((item) => !item.restricted)
-                      .map((item) => {
-                        const Icon = item.icon;
-                        const isActive = pathname === item.href;
+              {navSections
+                .filter((section) => section.visible !== false)
+                .map((section, idx) => {
+                  const visibleItems = section.items.filter((item) => item.visible !== false);
+                  if (visibleItems.length === 0) return null;
+
+                  return (
+                    <div key={idx}>
+                      <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-[#CBD8F6]/50 mb-2">
+                        {section.group}
+                      </div>
+                      <nav className="space-y-1">
+                        {visibleItems.map((item) => {
+                          const Icon = item.icon;
+                          const isActive = pathname === item.href;
 
                         return (
                           <Link
@@ -423,9 +464,10 @@ export default function AdminLayout({ children }) {
                           </Link>
                         );
                       })}
-                  </nav>
-                </div>
-              ))}
+                      </nav>
+                    </div>
+                  );
+                })}
             </div>
 
             {/* Sidebar Bottom Footer User Tile */}

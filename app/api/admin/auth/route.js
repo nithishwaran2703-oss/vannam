@@ -23,16 +23,16 @@ export async function POST(request) {
     }
 
     // Role check if requesting teacher or admin specifically
-    if (portal === 'teacher' && user.role !== 'TEACHER' && user.role !== 'ADMIN') {
+    if (portal === 'teacher' && user.role !== 'TEACHER' && user.role !== 'ADMIN' && user.role !== 'super_admin') {
       return NextResponse.json(
         { error: 'Access denied: You do not have Teacher access permissions.' },
         { status: 403 }
       );
     }
 
-    if (portal === 'admin' && user.role !== 'ADMIN' && user.role !== 'super_admin') {
+    if (portal === 'admin' && user.role === 'PARENT') {
       return NextResponse.json(
-        { error: 'Access denied: Administrator privileges required.' },
+        { error: 'Access denied: Parents should log in to the Parent Portal at /portal.' },
         { status: 403 }
       );
     }
