@@ -284,15 +284,6 @@
   ],
   "testimonials": [
     {
-      "id": "test-1789961336932",
-      "name": "fhjejknwekj",
-      "relation": "ar nhjerhj",
-      "rating": 4,
-      "text": "sjfnsnuduinujs",
-      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80",
-      "status": "published"
-    },
-    {
       "id": "test-ananya",
       "name": "Dr. Ananya Sharma",
       "parent": "Dr. Ananya Sharma",
@@ -524,6 +515,19 @@
   ],
   "admissions": [
     {
+      "id": "adm-203",
+      "parentName": "Karthik Srinivasan",
+      "childName": "Diya Srinivasan",
+      "childDob": "2024-01-10",
+      "email": "karthik.s@fintech.co",
+      "phone": "+91 99401 77665",
+      "program": "Toddler Playgroup",
+      "preferredDate": "2026-10-01",
+      "status": "new",
+      "notes": [],
+      "createdAt": "2026-08-17T08:00:00Z"
+    },
+    {
       "id": "adm-201",
       "parentName": "Rohan & Sneha Kapoor",
       "childName": "Vihaan Kapoor",
@@ -560,19 +564,6 @@
         }
       ],
       "createdAt": "2026-08-14T11:00:00Z"
-    },
-    {
-      "id": "adm-203",
-      "parentName": "Karthik Srinivasan",
-      "childName": "Diya Srinivasan",
-      "childDob": "2024-01-10",
-      "email": "karthik.s@fintech.co",
-      "phone": "+91 99401 77665",
-      "program": "Toddler Playgroup",
-      "preferredDate": "2026-10-01",
-      "status": "new",
-      "notes": [],
-      "createdAt": "2026-08-17T08:00:00Z"
     }
   ],
   "settings": {
@@ -590,7 +581,7 @@
       "phone": "+91 78100 87310",
       "email": "admissions@vannamworld.edu",
       "address": "Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001",
-      "mapsUrl": "https://maps.google.com/?q=Vannam+World+Preschool",
+      "mapsUrl": "https://maps.app.goo.gl/AYaRRh5jPhJiWCSw5",
       "whatsapp": "+91 78100 87310",
       "hours": "Monday – Friday: 8:30 AM – 6:30 PM | Saturday: 9:00 AM – 1:30 PM"
     },
@@ -601,9 +592,9 @@
       "linkedin": "https://linkedin.com/company/vannam-preschool"
     },
     "seo": {
-      "metaTitle": "Vannam World Preschool | Best Montessori & Play School in Chennai",
+      "metaTitle": "Vannam World Preschool | Best Montessori & Play School in Coimbatore ",
       "metaDescription": "Award-winning early childhood sanctuary offering 7-Shade developmental learning, certified Montessori apparatus, encrypted CCTV security, and joyful daycare.",
-      "keywords": "preschool, montessori school, play school chennai, daycare, early childhood education, kindergarten admissions",
+      "keywords": "preschool, montessori school, play school Coimbatore, daycare, early childhood education, kindergarten admissions",
       "ogImage": "/hero-kids.jpg"
     },
     "navigation": [
@@ -646,18 +637,18 @@
   "users": [
     {
       "id": "usr-1",
-      "name": "Dr. Gayathri R. (Super Admin)",
-      "email": "admin@vannam.edu",
-      "password": "Admin@Vannam2026",
+      "name": "(Super Admin)",
+      "email": "nithish@gmail.com",
+      "password": "nithish",
       "role": "ADMIN",
       "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
-      "lastLogin": "2026-09-21T03:48:03.135Z"
+      "lastLogin": "2026-09-21T08:26:57.346Z"
     },
     {
       "id": "usr-teacher-1",
       "name": "Teacher Sarah Jenkins",
-      "email": "teacher@vannam.edu",
-      "password": "Teacher@Vannam2026",
+      "email": "nithish@gmail.com",
+      "password": "nithish",
       "role": "TEACHER",
       "avatar": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&q=80",
       "lastLogin": null
@@ -670,9 +661,118 @@
       "role": "PARENT",
       "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
       "lastLogin": null
+    },
+    {
+      "id": "usr-teacher-1",
+      "name": "Mrs. Priya Sharma",
+      "email": "teacher@vannam.edu",
+      "password": "Teacher@Vannam2026",
+      "role": "TEACHER",
+      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
+      "teacherId": "priya-sharma",
+      "lastLogin": "2026-08-29T09:00:00Z"
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1789979427879",
+      "action": "Updated Testimonials Content",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "testimonials",
+      "details": "Modified website section: testimonials",
+      "timestamp": "2026-09-21T08:30:27.879Z"
+    },
+    {
+      "id": "log-1789979329594",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Grand Weekend Open House & Child Sensory Camp (Active: false)",
+      "timestamp": "2026-09-21T08:28:49.594Z"
+    },
+    {
+      "id": "log-1789979320221",
+      "action": "Updated Announcement",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Announcements",
+      "details": "Updated announcement: Grand Weekend Open House & Child Sensory Camp (Active: true)",
+      "timestamp": "2026-09-21T08:28:40.221Z"
+    },
+    {
+      "id": "log-1789979217346",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-21T08:26:57.346Z"
+    },
+    {
+      "id": "log-1789979095774",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-21T08:24:55.774Z"
+    },
+    {
+      "id": "log-1789978501592",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user Teacher Sarah Jenkins (nithish@gmail.com)",
+      "timestamp": "2026-09-21T08:15:01.592Z"
+    },
+    {
+      "id": "log-1789978497905",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user Teacher Sarah Jenkins (nithish@gmail.com)",
+      "timestamp": "2026-09-21T08:14:57.905Z"
+    },
+    {
+      "id": "log-1789978469056",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user (Super Admin) (nithish@gmail.com)",
+      "timestamp": "2026-09-21T08:14:29.056Z"
+    },
+    {
+      "id": "log-1789978463328",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user (Super Admin) (nithish@gmail.com)",
+      "timestamp": "2026-09-21T08:14:23.328Z"
+    },
+    {
+      "id": "log-1789978006458",
+      "action": "Updated Website Settings",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Settings",
+      "details": "Updated global site branding, SEO, contact, and navigation settings",
+      "timestamp": "2026-09-21T08:06:46.458Z"
+    },
+    {
+      "id": "log-1789977969005",
+      "action": "Updated Website Settings",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Settings",
+      "details": "Updated global site branding, SEO, contact, and navigation settings",
+      "timestamp": "2026-09-21T08:06:09.005Z"
+    },
     {
       "id": "log-1789963293724",
       "action": "Archive Student",

@@ -62,11 +62,22 @@ export default function AdminLayout({ children }) {
     }
   };
 
-  // Check auth session
+  // Check auth session with instant optimistic localStorage hydration
   useEffect(() => {
     if (pathname === '/admin/login') {
       setLoading(false);
       return;
+    }
+
+    // Instantly hydrate user from localStorage so the admin UI renders immediately without blocking spinner!
+    if (typeof window !== 'undefined') {
+      const cached = localStorage.getItem('vannam_admin_user');
+      if (cached) {
+        try {
+          setUser(JSON.parse(cached));
+          setLoading(false);
+        } catch {}
+      }
     }
 
     const checkSession = async () => {
@@ -80,16 +91,16 @@ export default function AdminLayout({ children }) {
             localStorage.setItem('vannam_admin_user', JSON.stringify(data.user));
           }
         } else {
-          // Fallback to local storage
           const stored = typeof window !== 'undefined' ? localStorage.getItem('vannam_admin_user') : null;
-          if (stored) {
-            setUser(JSON.parse(stored));
-          } else {
+          if (!stored) {
             router.push('/admin/login');
           }
         }
       } catch {
-        router.push('/admin/login');
+        const stored = typeof window !== 'undefined' ? localStorage.getItem('vannam_admin_user') : null;
+        if (!stored) {
+          router.push('/admin/login');
+        }
       } finally {
         setLoading(false);
       }
@@ -98,7 +109,7 @@ export default function AdminLayout({ children }) {
     checkSession();
   }, [pathname, router]);
 
-  // Fetch live unread counts for badges
+  // Fetch live unread counts for badges (deferred slightly so it doesn't block initial page render)
   useEffect(() => {
     if (pathname === '/admin/login') return;
 
@@ -121,9 +132,12 @@ export default function AdminLayout({ children }) {
       }
     };
 
-    fetchBadgeCounts();
+    const initialTimer = setTimeout(fetchBadgeCounts, 1200);
     const interval = setInterval(fetchBadgeCounts, 30000);
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(initialTimer);
+      clearInterval(interval);
+    };
   }, [pathname]);
 
   const userRole = (user?.role || 'ADMIN').toUpperCase();
@@ -229,9 +243,97 @@ export default function AdminLayout({ children }) {
     }
   ];
 
+  const renderNavLinks = () => (
+    <div className="space-y-6">
+      {navSections
+        .filter((section) => section.visible !== false)
+        .map((section, idx) => {
+          const visibleItems = section.items.filter((item) => item.visible !== false);
+          if (visibleItems.length === 0) return null;
+
+          return (
+            <div key={idx}>
+              <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-[#CBD8F6]/50 mb-2">
+                {section.group}
+              </div>
+              <nav className="space-y-1">
+                {visibleItems.map((item) => {
+                  const Icon = item.icon;
+                  const isActive = pathname === item.href;
+
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => setSidebarOpen(false)}
+                      className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition group ${
+                        isActive
+                          ? 'bg-white/15 text-white shadow-sm ring-1 ring-white/20 font-bold'
+                          : 'text-[#CBD8F6]/80 hover:bg-white/8 hover:text-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Icon
+                          className={`w-4 h-4 transition ${
+                            isActive ? 'text-[#00A8E8]' : 'text-[#CBD8F6]/60 group-hover:text-white'
+                          }`}
+                        />
+                        <span>{item.label}</span>
+                      </div>
+
+                      {item.badge && (
+                        <span
+                          className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            item.badgeColor || 'bg-[#00A8E8] text-white'
+                          }`}
+                        >
+                          {item.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          );
+        })}
+    </div>
+  );
+
+  const renderSidebarFooter = () => (
+    <div className="p-4 border-t border-white/10 bg-[#0A1B44]/60 shrink-0">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2.5 min-w-0">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#F59E0B] to-[#FBBF24] text-[#0F2963] font-black text-xs flex items-center justify-center shadow-md shrink-0">
+            {user?.name ? user.name.charAt(0) : 'A'}
+          </div>
+          <div className="text-left min-w-0">
+            <div className="text-xs font-bold text-white truncate max-w-[110px]">
+              {user?.name || 'Administrator'}
+            </div>
+            <div className="text-[10px] text-emerald-400 flex items-center gap-1 font-medium">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+              Online
+            </div>
+          </div>
+        </div>
+
+        <a
+          href="/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition shrink-0"
+          title="Open Public Site in New Tab"
+        >
+          <ExternalLink className="w-3.5 h-3.5" />
+        </a>
+      </div>
+    </div>
+  );
+
   return (
     <ToastContext.Provider value={{ showToast }}>
-      <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] flex flex-col antialiased">
+      <div className="h-screen flex overflow-hidden bg-[#F8FAFC] text-[#0F172A] antialiased">
         
         {/* Top Floating Toast Notification Stack */}
         <div className="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none">
@@ -254,263 +356,219 @@ export default function AdminLayout({ children }) {
           ))}
         </div>
 
-        {/* Top Header Bar */}
-        <header className="sticky top-0 z-30 h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shadow-2xs">
-          
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition"
-              aria-label="Toggle Sidebar"
-            >
-              {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
-
-            {/* Logo in Header (Mobile/Tablet) */}
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#0F2963] p-1 flex items-center justify-center">
-                <Image src="/logo.png" alt="Logo" width={24} height={24} className="object-contain" />
-              </div>
-              <span className="font-extrabold text-sm text-[#0F2963] tracking-tight hidden sm:inline-block">
-                Vannam Control Center
-              </span>
+        {/* Permanent Desktop Sidebar (lg and up) */}
+        <aside className="hidden lg:flex lg:w-64 flex-col bg-[#0F2963] text-white shrink-0 h-full border-r border-slate-800">
+          {/* Sidebar Top Header */}
+          <div className="h-16 px-5 border-b border-white/10 flex items-center gap-3 shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-white/10 p-1.5 flex items-center justify-center ring-2 ring-white/10 shrink-0">
+              <Image src="/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
             </div>
-
-            {/* Breadcrumb Path */}
-            <div className="hidden md:flex items-center gap-1.5 text-xs text-slate-400 pl-4 border-l border-slate-200">
-              <span>Admin</span>
-              <ChevronRight className="w-3 h-3 text-slate-300" />
-              <span className="font-semibold text-slate-700 capitalize">
-                {pathname.split('/')[2] || 'Dashboard'}
-              </span>
+            <div className="min-w-0">
+              <div className="font-extrabold text-sm tracking-tight text-white truncate">Vannam Preschool</div>
+              <div className="text-[10px] font-semibold text-[#CBD8F6]/70 uppercase tracking-wider">
+                Control Center
+              </div>
             </div>
           </div>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-3">
-            
-            {/* Parent Portal Link */}
-            <Link
-              href="/portal"
-              target="_blank"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition border border-emerald-200"
-              title="Open Parent Portal in New Tab"
-            >
-              <span>Parent Portal</span>
-              <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
-            </Link>
-
-            {/* Live Website Preview Button */}
-            <button
-              type="button"
-              onClick={() => setPreviewModalOpen(true)}
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0F2963] bg-[#E8EEFB] hover:bg-[#D4E2F9] transition border border-[#CBD8F6]"
-            >
-              <span>Live Website</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#00A8E8]" />
-            </button>
-
-            {/* Notification Bell */}
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => setNotificationsOpen(!notificationsOpen)}
-                className="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition"
-                title="Notifications"
-              >
-                <Bell className="w-4 h-4" />
-                {(badges.newEnquiries > 0 || badges.newAdmissions > 0) && (
-                  <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
-                )}
-              </button>
-
-              {/* Notifications Dropdown Popover */}
-              {notificationsOpen && (
-                <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 z-50 text-xs">
-                  <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
-                    <span className="font-bold text-slate-800">Recent Alerts</span>
-                    <span className="text-[10px] text-slate-400">Real-Time Sync</span>
-                  </div>
-                  <div className="space-y-2">
-                    <Link
-                      href="/admin/enquiries"
-                      onClick={() => setNotificationsOpen(false)}
-                      className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#E8EEFB] transition flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-2">
-                        <Mail className="w-4 h-4 text-[#00A8E8]" />
-                        <span className="font-semibold text-slate-700">New Contact Leads</span>
-                      </div>
-                      <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px]">
-                        {badges.newEnquiries} New
-                      </span>
-                    </Link>
-                    <Link
-                      href="/admin/admissions"
-                      onClick={() => setNotificationsOpen(false)}
-                      className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#E8EEFB] transition flex items-center justify-between"
-                    >
-                      <div className="flex items-center gap-2">
-                        <FileCheck2 className="w-4 h-4 text-amber-500" />
-                        <span className="font-semibold text-slate-700">Admissions Queue</span>
-                      </div>
-                      <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">
-                        {badges.newAdmissions} Pending
-                      </span>
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* User Profile Pill */}
-            <div className="flex items-center gap-2.5 pl-2 sm:pl-3 border-l border-slate-200">
-              <div className="w-8 h-8 rounded-full bg-[#0F2963] text-white flex items-center justify-center text-xs font-bold ring-2 ring-[#00A8E8]/30">
-                {user?.name ? user.name.charAt(0) : 'A'}
-              </div>
-              <div className="hidden lg:block text-left">
-                <div className="text-xs font-extrabold text-[#0F2963] leading-tight truncate max-w-[120px]">
-                  {user?.name || 'Administrator'}
-                </div>
-                <div className="text-[10px] font-semibold text-slate-400 capitalize">
-                  {user?.role?.replace('_', ' ') || 'Admin'}
-                </div>
-              </div>
-
-              {/* Logout Button */}
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition ml-1"
-                title="Sign Out of Admin"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-
+          {/* Nav Menu Items */}
+          <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
+            {renderNavLinks()}
           </div>
-        </header>
 
-        {/* Main Body Area (Sidebar + Page Content) */}
-        <div className="flex-1 flex overflow-hidden">
-          
-          {/* Sidebar Navigation */}
-          <aside
-            className={`fixed inset-y-0 left-0 z-40 w-64 bg-[#0F2963] text-white flex flex-col transition-transform duration-300 ease-in-out lg:static lg:translate-x-0 pt-16 lg:pt-0 ${
-              sidebarOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full'
-            }`}
-          >
-            {/* Sidebar Top Header */}
-            <div className="p-5 border-b border-white/10 hidden lg:flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-white/10 p-1.5 flex items-center justify-center ring-2 ring-white/10">
-                <Image src="/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
-              </div>
-              <div>
-                <div className="font-extrabold text-sm tracking-tight text-white">Vannam Preschool</div>
-                <div className="text-[10px] font-semibold text-[#CBD8F6]/70 uppercase tracking-wider">
-                  Control Center
-                </div>
-              </div>
-            </div>
+          {/* Sidebar Bottom Footer User Tile */}
+          {renderSidebarFooter()}
+        </aside>
 
-            {/* Nav Menu Items */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-6 scrollbar-thin">
-              {navSections
-                .filter((section) => section.visible !== false)
-                .map((section, idx) => {
-                  const visibleItems = section.items.filter((item) => item.visible !== false);
-                  if (visibleItems.length === 0) return null;
-
-                  return (
-                    <div key={idx}>
-                      <div className="px-3 text-[10px] font-extrabold uppercase tracking-widest text-[#CBD8F6]/50 mb-2">
-                        {section.group}
-                      </div>
-                      <nav className="space-y-1">
-                        {visibleItems.map((item) => {
-                          const Icon = item.icon;
-                          const isActive = pathname === item.href;
-
-                        return (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={() => setSidebarOpen(false)}
-                            className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-xs font-semibold transition group ${
-                              isActive
-                                ? 'bg-white/15 text-white shadow-sm ring-1 ring-white/20 font-bold'
-                                : 'text-[#CBD8F6]/80 hover:bg-white/8 hover:text-white'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <Icon
-                                className={`w-4 h-4 transition ${
-                                  isActive ? 'text-[#00A8E8]' : 'text-[#CBD8F6]/60 group-hover:text-white'
-                                }`}
-                              />
-                              <span>{item.label}</span>
-                            </div>
-
-                            {item.badge && (
-                              <span
-                                className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                                  item.badgeColor || 'bg-[#00A8E8] text-white'
-                                }`}
-                              >
-                                {item.badge}
-                              </span>
-                            )}
-                          </Link>
-                        );
-                      })}
-                      </nav>
-                    </div>
-                  );
-                })}
-            </div>
-
-            {/* Sidebar Bottom Footer User Tile */}
-            <div className="p-4 border-t border-white/10 bg-[#0A1B44]/60">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#F59E0B] to-[#FBBF24] text-[#0F2963] font-black text-xs flex items-center justify-center shadow-md">
-                    {user?.name ? user.name.charAt(0) : 'A'}
-                  </div>
-                  <div className="text-left overflow-hidden">
-                    <div className="text-xs font-bold text-white truncate max-w-[110px]">
-                      {user?.name || 'Administrator'}
-                    </div>
-                    <div className="text-[10px] text-emerald-400 flex items-center gap-1 font-medium">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                      Online
-                    </div>
-                  </div>
-                </div>
-
-                <a
-                  href="/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-white transition"
-                  title="Open Public Site in New Tab"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
-              </div>
-            </div>
-          </aside>
-
-          {/* Sidebar Mobile Backdrop */}
-          {sidebarOpen && (
+        {/* Mobile / Tablet Drawer Sidebar Overlay */}
+        {sidebarOpen && (
+          <div className="fixed inset-0 z-50 lg:hidden flex">
+            {/* Backdrop */}
             <div
               onClick={() => setSidebarOpen(false)}
-              className="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-30 lg:hidden"
-            ></div>
-          )}
+              className="fixed inset-0 bg-slate-950/60 backdrop-blur-xs transition-opacity duration-300"
+            />
+
+            {/* Slide-out Drawer */}
+            <aside className="relative w-72 max-w-[85vw] bg-[#0F2963] text-white flex flex-col h-full shadow-2xl z-50 animate-in slide-in-from-left duration-200">
+              {/* Drawer Top Header with Close Button */}
+              <div className="h-16 px-4 border-b border-white/10 flex items-center justify-between shrink-0">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="w-8 h-8 rounded-lg bg-white/10 p-1 flex items-center justify-center shrink-0">
+                    <Image src="/logo.png" alt="Logo" width={24} height={24} className="object-contain" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="font-extrabold text-xs text-white truncate">Vannam Preschool</div>
+                    <div className="text-[9px] font-semibold text-[#CBD8F6]/70 uppercase tracking-wider">
+                      Control Center
+                    </div>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setSidebarOpen(false)}
+                  className="p-1.5 rounded-lg text-white/70 hover:text-white hover:bg-white/10 transition"
+                  aria-label="Close menu"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Drawer Nav Items */}
+              <div className="flex-1 overflow-y-auto p-4 scrollbar-thin">
+                {renderNavLinks()}
+              </div>
+
+              {/* Drawer Footer */}
+              {renderSidebarFooter()}
+            </aside>
+          </div>
+        )}
+
+        {/* Main Content Area */}
+        <div className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
+          
+          {/* Top Header Bar */}
+          <header className="h-16 bg-white border-b border-slate-200 px-4 sm:px-6 flex items-center justify-between shrink-0 shadow-2xs z-20">
+            
+            <div className="flex items-center gap-3 min-w-0">
+              {/* Hamburger Button for Mobile / Tablet */}
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(true)}
+                className="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100 hover:text-slate-900 transition shrink-0"
+                aria-label="Open Sidebar"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+
+              {/* Mobile Brand Logo */}
+              <div className="flex items-center gap-2 lg:hidden shrink-0">
+                <div className="w-7 h-7 rounded-lg bg-[#0F2963] p-1 flex items-center justify-center shrink-0">
+                  <Image src="/logo.png" alt="Logo" width={20} height={20} className="object-contain" />
+                </div>
+                <span className="font-extrabold text-xs text-[#0F2963] tracking-tight hidden sm:inline-block">
+                  Vannam
+                </span>
+              </div>
+
+              {/* Clean Breadcrumb Path */}
+              <div className="flex items-center gap-1.5 text-xs text-slate-400 pl-2 sm:pl-3 border-l border-slate-200 min-w-0">
+                <span className="hidden sm:inline">Admin</span>
+                <ChevronRight className="w-3 h-3 text-slate-300 hidden sm:inline shrink-0" />
+                <span className="font-bold text-slate-800 capitalize truncate max-w-[140px] sm:max-w-none">
+                  {pathname.split('/')[2] || 'Dashboard'}
+                </span>
+              </div>
+            </div>
+
+            {/* Right Action Icons */}
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              
+              {/* Parent Portal Link */}
+              <Link
+                href="/portal"
+                target="_blank"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition border border-emerald-200"
+                title="Open Parent Portal in New Tab"
+              >
+                <span>Parent Portal</span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+              </Link>
+
+              {/* Live Website Preview Button */}
+              <button
+                type="button"
+                onClick={() => setPreviewModalOpen(true)}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold text-[#0F2963] bg-[#E8EEFB] hover:bg-[#D4E2F9] transition border border-[#CBD8F6]"
+              >
+                <span>Live Website</span>
+                <ExternalLink className="w-3.5 h-3.5 text-[#00A8E8]" />
+              </button>
+
+              {/* Notification Bell */}
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setNotificationsOpen(!notificationsOpen)}
+                  className="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-800 transition"
+                  title="Notifications"
+                >
+                  <Bell className="w-4 h-4" />
+                  {(badges.newEnquiries > 0 || badges.newAdmissions > 0) && (
+                    <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+                  )}
+                </button>
+
+                {/* Notifications Dropdown Popover */}
+                {notificationsOpen && (
+                  <div className="absolute right-0 mt-2 w-72 sm:w-80 bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 z-50 text-xs">
+                    <div className="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+                      <span className="font-bold text-slate-800">Recent Alerts</span>
+                      <span className="text-[10px] text-slate-400">Real-Time Sync</span>
+                    </div>
+                    <div className="space-y-2">
+                      <Link
+                        href="/admin/enquiries"
+                        onClick={() => setNotificationsOpen(false)}
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#E8EEFB] transition flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-2">
+                          <Mail className="w-4 h-4 text-[#00A8E8]" />
+                          <span className="font-semibold text-slate-700">New Contact Leads</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 font-bold text-[10px]">
+                          {badges.newEnquiries} New
+                        </span>
+                      </Link>
+                      <Link
+                        href="/admin/admissions"
+                        onClick={() => setNotificationsOpen(false)}
+                        className="p-2.5 rounded-xl bg-slate-50 hover:bg-[#E8EEFB] transition flex items-center justify-between"
+                      >
+                        <div className="flex items-center gap-2">
+                          <FileCheck2 className="w-4 h-4 text-amber-500" />
+                          <span className="font-semibold text-slate-700">Admissions Queue</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-700 font-bold text-[10px]">
+                          {badges.newAdmissions} New
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* User Profile Pill */}
+              <div className="flex items-center gap-2 sm:gap-2.5 pl-2 sm:pl-3 border-l border-slate-200">
+                <div className="w-8 h-8 rounded-full bg-[#0F2963] text-white flex items-center justify-center text-xs font-bold ring-2 ring-[#00A8E8]/30 shrink-0">
+                  {user?.name ? user.name.charAt(0) : 'A'}
+                </div>
+                <div className="hidden xl:block text-left">
+                  <div className="text-xs font-extrabold text-[#0F2963] leading-tight truncate max-w-[120px]">
+                    {user?.name || 'Administrator'}
+                  </div>
+                  <div className="text-[10px] font-semibold text-slate-400 capitalize">
+                    {user?.role?.replace('_', ' ') || 'Admin'}
+                  </div>
+                </div>
+
+                {/* Logout Button */}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="p-2 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition"
+                  title="Sign Out of Admin"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+
+            </div>
+          </header>
 
           {/* Dynamic Page Content Wrapper */}
-          <main className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+          <main className="flex-1 overflow-y-auto p-3 sm:p-5 lg:p-8">
             <div className="max-w-7xl mx-auto">{children}</div>
           </main>
         </div>
@@ -518,22 +576,22 @@ export default function AdminLayout({ children }) {
         {/* Live Preview Modal Overlay */}
         {previewModalOpen && (
           <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex flex-col">
-            <div className="h-14 bg-slate-900 text-white px-6 flex items-center justify-between border-b border-slate-800 shrink-0">
-              <div className="flex items-center gap-3">
-                <span className="w-3 h-3 rounded-full bg-emerald-500"></span>
-                <span className="font-bold text-sm">Live Public Website Preview</span>
-                <span className="text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md font-mono">
+            <div className="h-14 bg-slate-900 text-white px-4 sm:px-6 flex items-center justify-between border-b border-slate-800 shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 shrink-0"></span>
+                <span className="font-bold text-xs sm:text-sm truncate">Live Public Website Preview</span>
+                <span className="hidden sm:inline text-xs text-slate-400 bg-slate-800 px-2 py-0.5 rounded-md font-mono">
                   Target: /
                 </span>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
                 <a
                   href="/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition flex items-center gap-1.5"
+                  className="text-xs font-semibold px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white transition flex items-center gap-1.5"
                 >
-                  <span>Open in Full Browser</span>
+                  <span className="hidden sm:inline">Open in Full Browser</span>
                   <ExternalLink className="w-3.5 h-3.5 text-[#00A8E8]" />
                 </a>
                 <button

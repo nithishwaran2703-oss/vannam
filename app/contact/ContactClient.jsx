@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowLeft, Phone, Mail, MapPin, Clock, Calendar, Sparkles, Navigation } from "lucide-react";
+import { ArrowLeft, Phone, Mail, MapPin, Clock, Calendar, Sparkles, Navigation, ExternalLink } from "lucide-react";
 import { 
   TwinkleStarIcon, 
   TeddyBearIcon,
@@ -72,9 +72,20 @@ export default function ContactClient() {
               Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
             </p>
           </div>
-          <div className="pt-4 border-t border-vannam-yellow/20/80 text-xs text-vannam-orange font-bold flex items-center justify-center gap-1.5">
-            <Clock className="w-3.5 h-3.5 text-vannam-orange" />
-            <span>Mon - Fri: 8:00 AM - 6:00 PM</span>
+          <div className="pt-4 border-t border-vannam-yellow/20/80 text-xs text-vannam-orange font-bold flex flex-col gap-2">
+            <div className="flex items-center justify-center gap-1.5">
+              <Clock className="w-3.5 h-3.5 text-vannam-orange" />
+              <span>Mon - Fri: 8:00 AM - 6:00 PM</span>
+            </div>
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=10.9954152,76.9507372"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-xl bg-vannam-yellow/20 hover:bg-vannam-yellow text-[#0F2963] text-xs font-extrabold transition shadow-2xs"
+            >
+              <Navigation className="w-3.5 h-3.5 text-[#0F2963]" />
+              <span>Get Directions on Map →</span>
+            </a>
           </div>
         </div>
 
@@ -118,6 +129,60 @@ export default function ContactClient() {
           </div>
         </div>
 
+      </div>
+
+      {/* Interactive Live Campus Location Map */}
+      <div className="bento-card p-5 sm:p-8 border-2 border-vannam-navy/10 bg-white max-w-5xl mx-auto space-y-4 shadow-lg">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black uppercase tracking-wider mb-1">
+              <MapPin className="w-3 h-3 text-amber-600" />
+              <span>Coimbatore Flagship Live Map</span>
+            </div>
+            <h3 className="font-heading text-xl sm:text-2xl font-black text-[#0F2963]">
+              Find & Navigate to Our Campus
+            </h3>
+            <p className="text-xs text-[#64748B] font-medium mt-0.5">
+              Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
+            </p>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=10.9954152,76.9507372"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-primary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95"
+            >
+              <Navigation className="w-3.5 h-3.5" />
+              <span>Live Directions</span>
+            </a>
+            <a
+              href="https://maps.app.goo.gl/AYaRRh5jPhJiWCSw5"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-secondary px-4 py-2 text-xs font-bold flex items-center gap-1.5 shadow-sm active:scale-95"
+            >
+              <ExternalLink className="w-3.5 h-3.5" />
+              <span>Open in Maps</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Google Map iframe */}
+        <div className="relative w-full h-[320px] sm:h-[400px] rounded-2xl overflow-hidden shadow-inner border border-slate-200 bg-slate-100">
+          <iframe
+            title="Coimbatore Campus Live Map"
+            src="https://maps.google.com/maps?q=10.9954152,76.9507372+(VANNAM+WORLD)&t=&z=17&ie=UTF8&iwloc=B&output=embed"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="w-full h-full"
+          />
+        </div>
       </div>
 
       {/* Direct Contact Bento Card */}

@@ -123,8 +123,8 @@ export default function RootLayout({ children }) {
         },
         "geo": {
           "@type": "GeoCoordinates",
-          "latitude": 40.7128,
-          "longitude": -74.0060
+          "latitude": 10.9954152,
+          "longitude": 76.9507372
         },
         "hasOfferCatalog": {
           "@type": "OfferCatalog",

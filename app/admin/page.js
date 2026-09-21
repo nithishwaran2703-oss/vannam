@@ -40,49 +40,27 @@ export default function AdminDashboard() {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const [enqRes, admRes, progRes, teachRes, galRes, annRes, logsRes, stdRes, clsRes, actRes, attRes] = await Promise.all([
-        fetch('/api/admin/enquiries'),
-        fetch('/api/admin/admissions'),
-        fetch('/api/admin/programs'),
-        fetch('/api/admin/teachers'),
-        fetch('/api/admin/gallery'),
-        fetch('/api/admin/announcements'),
-        fetch('/api/admin/logs'),
-        fetch('/api/admin/students'),
-        fetch('/api/admin/classes'),
-        fetch('/api/admin/activities'),
-        fetch('/api/admin/attendance')
-      ]);
-
-      const [enq, adm, prog, teach, gal, ann, logs, std, cls, act, att] = await Promise.all([
-        enqRes.json(),
-        admRes.json(),
-        progRes.json(),
-        teachRes.json(),
-        galRes.json(),
-        annRes.json(),
-        logsRes.json(),
-        stdRes.json(),
-        clsRes.json(),
-        actRes.json(),
-        attRes.json()
-      ]);
-
-      setData({
-        enquiries: enq.enquiries || [],
-        enquiryStats: enq.stats || {},
-        admissions: adm.admissions || [],
-        admissionStats: adm.stats || {},
-        programs: prog.programs || [],
-        teachers: teach.teachers || [],
-        gallery: gal.gallery || [],
-        announcements: ann.announcements || [],
-        logs: logs.logs || [],
-        students: std.students || [],
-        classes: cls.classes || [],
-        activities: act.activities || [],
-        attendance: att.attendance || []
-      });
+      const res = await fetch('/api/admin/dashboard');
+      if (res.ok) {
+        const d = await res.json();
+        setData({
+          enquiries: d.enquiries || [],
+          enquiryStats: d.enquiryStats || {},
+          admissions: d.admissions || [],
+          admissionStats: d.admissionStats || {},
+          programs: d.programs || [],
+          teachers: d.teachers || [],
+          gallery: d.gallery || [],
+          announcements: d.announcements || [],
+          logs: d.logs || [],
+          students: d.students || [],
+          classes: d.classes || [],
+          activities: d.activities || [],
+          attendance: d.attendance || []
+        });
+      } else {
+        throw new Error('Failed to load dashboard');
+      }
     } catch (err) {
       console.error('Failed to load dashboard data:', err);
       showToast('Error loading dashboard data', 'error');

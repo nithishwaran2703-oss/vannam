@@ -13,7 +13,10 @@ import {
   Eye,
   X,
   Sparkles,
-  AlertTriangle
+  AlertTriangle,
+  Upload,
+  Check,
+  Loader2
 } from 'lucide-react';
 import { useAdminToast } from '../layout';
 
@@ -26,6 +29,8 @@ export default function GalleryManager() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+  const [uploadMode, setUploadMode] = useState('file'); // 'file' | 'url'
+  const [uploading, setUploading] = useState(false);
 
   const [form, setForm] = useState({
     title: '',
@@ -54,10 +59,52 @@ export default function GalleryManager() {
     fetchGallery();
   }, []);
 
+  const handleFileUpload = async (file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      showToast('Please select an image file (JPEG, PNG, WebP)', 'error');
+      return;
+    }
+
+    try {
+      setUploading(true);
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) throw new Error('Upload failed');
+      const data = await res.json();
+      setForm((prev) => ({
+        ...prev,
+        url: data.url,
+        title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
+      }));
+      showToast('Image uploaded successfully!');
+    } catch {
+      // Fallback to base64 Data URL if server upload fails
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setForm((prev) => ({
+          ...prev,
+          url: e.target.result,
+          title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
+        }));
+        showToast('Image loaded from device!');
+      };
+      reader.readAsDataURL(file);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleAddImage = async (e) => {
     e.preventDefault();
     if (!form.url) {
-      showToast('Please enter an image URL', 'error');
+      showToast('Please upload an image or enter an image URL', 'error');
       return;
     }
 
@@ -321,15 +368,103 @@ export default function GalleryManager() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Image URL (Unsplash or Direct Link) *</label>
-                <input
-                  type="url"
-                  required
-                  value={form.url}
-                  onChange={(e) => setForm({ ...form, url: e.target.value })}
-                  placeholder="https://images.unsplash.com/..."
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-mono"
-                />
+                <label className="block text-xs font-bold text-slate-700 mb-2">Image Source *</label>
+                
+                {/* Tabs */}
+                <div className="flex rounded-xl bg-slate-100 p-1 mb-3">
+                  <button
+                    type="button"
+                    onClick={() => setUploadMode('file')}
+                    className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                      uploadMode === 'file'
+                        ? 'bg-white text-[#0F2963] shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <Upload className="w-3.5 h-3.5 text-[#00A8E8]" />
+                    Upload from Device
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setUploadMode('url')}
+                    className={`flex-1 py-1.5 px-3 rounded-lg text-xs font-bold transition flex items-center justify-center gap-1.5 ${
+                      uploadMode === 'url'
+                        ? 'bg-white text-[#0F2963] shadow-xs'
+                        : 'text-slate-600 hover:text-slate-900'
+                    }`}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-[#00A8E8]" />
+                    Paste Image URL
+                  </button>
+                </div>
+
+                {uploadMode === 'file' ? (
+                  <div className="space-y-2">
+                    <label className="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-slate-200 hover:border-[#00A8E8] rounded-2xl cursor-pointer bg-slate-50/50 hover:bg-sky-50/30 transition group">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        disabled={uploading}
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            handleFileUpload(e.target.files[0]);
+                          }
+                        }}
+                        className="sr-only"
+                      />
+                      {uploading ? (
+                        <div className="flex flex-col items-center gap-2 text-slate-500 py-2">
+                          <Loader2 className="w-8 h-8 text-[#00A8E8] animate-spin" />
+                          <span className="text-xs font-semibold">Uploading image...</span>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center text-center gap-2">
+                          <div className="w-10 h-10 rounded-full bg-sky-100 text-[#00A8E8] flex items-center justify-center group-hover:scale-110 transition">
+                            <Upload className="w-5 h-5" />
+                          </div>
+                          <div>
+                            <span className="text-xs font-bold text-slate-700">Click to browse or drag & drop</span>
+                            <p className="text-[11px] text-slate-500 mt-0.5">PNG, JPG, WebP, GIF up to 10MB</p>
+                          </div>
+                        </div>
+                      )}
+                    </label>
+                  </div>
+                ) : (
+                  <div>
+                    <input
+                      type="url"
+                      value={form.url}
+                      onChange={(e) => setForm({ ...form, url: e.target.value })}
+                      placeholder="https://images.unsplash.com/... or direct image link"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-xs font-mono focus:ring-2 focus:ring-[#00A8E8] focus:outline-none"
+                    />
+                  </div>
+                )}
+
+                {/* Selected/Preview thumbnail */}
+                {form.url && (
+                  <div className="mt-3 p-2 rounded-xl bg-slate-50 border border-slate-200 flex items-center gap-3">
+                    <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-slate-200 shrink-0 border border-slate-300">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={form.url} alt="Upload preview" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-1 text-emerald-600 text-[11px] font-bold">
+                        <Check className="w-3.5 h-3.5" /> Image attached
+                      </div>
+                      <p className="text-[11px] text-slate-500 truncate font-mono">{form.url}</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, url: '' })}
+                      className="p-1 text-slate-400 hover:text-red-500 transition rounded-lg hover:bg-red-50"
+                      title="Remove image"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+                )}
               </div>
 
               <div>

@@ -54,7 +54,9 @@ import {
   BadgeCheck,
   Flame,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Navigation,
+  ExternalLink
 } from "lucide-react";
 import dynamic from "next/dynamic";
 
@@ -1533,7 +1535,7 @@ export default function Home() {
                   onClick={() => { triggerConfetti(); setIsTourModalOpen(true); }}
                   className="btn-primary w-full sm:w-auto px-5 sm:px-8 py-3 sm:py-4 text-xs sm:text-base flex items-center justify-center gap-2 shadow-lg whitespace-nowrap min-h-[46px] sm:min-h-[52px] active:scale-95 transition-transform"
                 >
-                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0 animate-bounce-gentle" />
+                  <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-vannam-yellow shrink-0" />
                   <span>Book a Campus Visit</span>
                 </button>
 
@@ -2832,8 +2834,8 @@ export default function Home() {
             </p>
           </ScrollReveal>
 
-          {/* TEACHER CARDS: Color-Filled, Innovative & Child-Attractive Educator Profiles */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pt-2 items-stretch">
+          {/* TEACHER CARDS: DESKTOP & TABLET VIEW (UNCHANGED ON WEB) */}
+          <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 pt-2 items-stretch">
             {teachers.map((t, idx) => (
               <ScrollReveal 
                 key={t.id || idx} 
@@ -2945,6 +2947,83 @@ export default function Home() {
             ))}
           </div>
 
+          {/* MOBILE VIEW ONLY: Compact Horizontal Bars (Matches the 3-Bar List Layout Icon - Tapping opens full popup) */}
+          <div className="sm:hidden flex flex-col gap-2.5 pt-1">
+            <div className="flex items-center justify-between px-1 mb-0.5 text-xs">
+              <span className="font-extrabold text-[#0F2963] flex items-center gap-1 text-[11px]">
+                <Users className="w-3 h-3 text-vannam-orange" />
+                <span>Our Educators ({teachers.length})</span>
+              </span>
+              <span className="text-[10px] font-bold text-[#64748B] flex items-center gap-1">
+                <span>Tap any row for bio</span>
+                <Sparkles className="w-3 h-3 text-amber-500" />
+              </span>
+            </div>
+
+            {teachers.map((t, idx) => (
+              <div 
+                key={t.id || idx}
+                onClick={() => setSelectedTeacherModal(t)}
+                className={`w-full rounded-2xl p-2.5 bg-gradient-to-r ${t.cardBg} border-2 ${t.cardBorder} shadow-2xs hover:shadow-sm active:scale-[0.98] transition-all flex items-center justify-between gap-2.5 relative overflow-hidden cursor-pointer`}
+                role="button"
+                tabIndex={0}
+                aria-label={`View details for ${t.kidName || t.name}`}
+              >
+                {/* Ambient Color Bar Along Left Edge */}
+                <div 
+                  className="absolute left-0 top-0 bottom-0 w-1.5 opacity-95" 
+                  style={{ backgroundColor: t.themeColor }} 
+                />
+
+                {/* Left Side: Thumbnail Photo + Name + Role */}
+                <div className="flex items-center gap-2.5 min-w-0 pl-1.5 flex-1">
+                  {/* Compact Rounded Thumbnail */}
+                  <div className="relative w-11 h-11 rounded-xl overflow-hidden border-2 border-white shadow-xs shrink-0">
+                    <Image 
+                      src={t.image} 
+                      alt={t.name} 
+                      fill 
+                      sizes="44px" 
+                      className="object-cover object-top" 
+                    />
+                  </div>
+
+                  {/* Teacher Info */}
+                  <div className="min-w-0 flex-1 text-left">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <h3 className="font-heading font-black text-xs xs:text-sm text-[#0F2963] truncate">
+                        {t.kidName}
+                      </h3>
+                      <span className="text-[9.5px] font-bold text-slate-500 truncate">
+                        ({t.name})
+                      </span>
+                    </div>
+                    <p className="text-[10.5px] font-black uppercase tracking-wider truncate" style={{ color: t.themeColor }}>
+                      {t.heroRole || t.role}
+                    </p>
+                    <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-slate-500">
+                      <span className="text-emerald-700 bg-emerald-50 px-1 py-0.2 rounded font-extrabold">
+                        {t.experience}
+                      </span>
+                      <span>•</span>
+                      <span className="truncate">{t.badge}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side: Circular Chevron Button */}
+                <div className="flex items-center gap-1 shrink-0">
+                  <div 
+                    style={{ backgroundColor: t.themeColor }}
+                    className="w-7 h-7 rounded-full flex items-center justify-center text-white shadow-xs"
+                  >
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
           <NatureBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
 
         </div>
@@ -3013,10 +3092,10 @@ export default function Home() {
             })}
           </ScrollReveal>
 
-          {/* CREATIVE NOTICE BOARD PHOTO WALL CONTAINER (No Gaps In The Wall) */}
-          <div className="relative rounded-3xl border-4 border-[#F6D365]/60 bg-gradient-to-b from-[#FFFDF8]/95 to-[#FEF9ED]/95 backdrop-blur-md shadow-xl p-3 sm:p-5 lg:p-6 overflow-hidden">
+          {/* CREATIVE NOTICE BOARD PHOTO WALL CONTAINER */}
+          <div className="relative rounded-3xl bg-gradient-to-b from-[#FFFDF8]/90 to-[#FEF9ED]/90 backdrop-blur-md shadow-md p-3 sm:p-5 lg:p-6 overflow-hidden">
             
-            {/* Notice Board Header Bar */}
+            {/* Notice Board Header Bar (Yellow boundary and 8 pinned memories badge removed) */}
             <div className="flex items-center justify-between mb-4 pb-2.5 border-b-2 border-dashed border-amber-200/90">
               <div className="flex items-center gap-2">
                 <span className="text-base sm:text-lg">📌</span>
@@ -3024,49 +3103,21 @@ export default function Home() {
                   Campus Notice Board • Photo Wall
                 </span>
               </div>
-              <span className="text-[10px] sm:text-xs font-black text-amber-700 bg-amber-100/90 px-3 py-0.5 rounded-full border border-amber-300/80 shadow-2xs">
-                {filteredGallery.length} Pinned Memories
-              </span>
             </div>
 
-            {/* SEAMLESS PHOTO WALL GRID — ZERO GAPS */}
-            <ScrollReveal variant="reveal-gentle-rise" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3.5">
+            {/* SEAMLESS PHOTO WALL GRID — MODERN EDGE-TO-EDGE CARDS (NO BOX-IN-BOX) */}
+            <ScrollReveal variant="reveal-gentle-rise" className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-4">
               {filteredGallery.map((item, idx) => {
-                // Playful natural scrapbook rotation tilts
-                const tilts = ["-rotate-1", "rotate-1", "-rotate-1.5", "rotate-1.5", "-rotate-0.5", "rotate-1", "-rotate-1", "rotate-0.5"];
-                const tilt = tilts[idx % tilts.length];
-
-                // Vibrant pushpin color accents
-                const pinColors = [
-                  "text-rose-500",
-                  "text-amber-500",
-                  "text-emerald-500",
-                  "text-sky-500",
-                  "text-purple-500",
-                  "text-orange-500",
-                  "text-pink-500",
-                  "text-teal-500"
-                ];
-                const pinColor = pinColors[idx % pinColors.length];
-
                 return (
                   <div 
                     key={item.id} 
                     onClick={() => setActiveLightboxImage(item)}
-                    className={`group relative bg-white p-2 pb-3.5 sm:p-2.5 sm:pb-4 rounded-2xl shadow-sm hover:shadow-xl border border-amber-200/80 hover:border-amber-400 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:-translate-y-1 hover:z-20 transform ${tilt} hover:rotate-0 flex flex-col justify-between`}
+                    className={`group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-200/90 hover:border-amber-300/80 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 hover:z-20 overflow-hidden flex flex-col justify-between ${
+                      idx >= 4 ? "hidden sm:flex" : "flex"
+                    }`}
                   >
-                    {/* Notice Board Pushpin & Washi Tape */}
-                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 z-20 flex items-center justify-center pointer-events-none">
-                      {/* Washi Tape Strip */}
-                      <div className="w-10 sm:w-12 h-3 sm:h-3.5 bg-amber-200/85 -rotate-2 rounded-2xs shadow-2xs border-t border-b border-amber-300/60" />
-                      {/* 3D Pushpin */}
-                      <span className={`absolute -top-1 text-xs sm:text-sm drop-shadow-xs ${pinColor}`}>
-                        📌
-                      </span>
-                    </div>
-
-                    {/* Photo Container */}
-                    <div className="relative w-full h-32 xs:h-36 sm:h-44 lg:h-48 rounded-xl overflow-hidden bg-slate-100 shadow-inner">
+                    {/* Top Flush Edge-to-Edge Photo Container (No Box-in-Box Nested Border/Padding) */}
+                    <div className="relative w-full h-36 xs:h-40 sm:h-48 lg:h-52 overflow-hidden bg-slate-100">
                       <Image 
                         src={item.src} 
                         alt={item.title} 
@@ -3075,30 +3126,47 @@ export default function Home() {
                         className="object-cover group-hover:scale-108 transition-transform duration-500 ease-out" 
                       />
                       
+                      {/* Top-Left Category Badge on Photo */}
+                      <div className="absolute top-2.5 left-2.5 z-10">
+                        <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-white bg-[#0F2963]/80 backdrop-blur-xs px-2 py-0.5 rounded-md shadow-xs">
+                          {item.category}
+                        </span>
+                      </div>
+
                       {/* Top-Right Lightbox Expand Indicator */}
-                      <div className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#0F2963]/80 backdrop-blur-xs text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-75 group-hover:scale-100 shadow-xs z-10">
+                      <div className="absolute top-2.5 right-2.5 w-6 h-6 rounded-full bg-white/90 backdrop-blur-xs text-[#0F2963] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-75 group-hover:scale-100 shadow-xs z-10">
                         <ArrowUpRight className="w-3.5 h-3.5" />
                       </div>
                     </div>
 
-                    {/* Polaroid Scrapbook Caption Margin */}
-                    <div className="mt-2 sm:mt-2.5 px-0.5 space-y-1">
-                      <div className="flex items-center justify-between gap-1">
-                        <span className="text-[8.5px] sm:text-[9.5px] font-black uppercase tracking-wider text-vannam-orange bg-orange-50 px-2 py-0.5 rounded-full border border-orange-200/80 shrink-0">
-                          {item.category}
-                        </span>
-                        <span className="text-[9px] font-bold text-slate-400 group-hover:text-vannam-navy transition-colors">
-                          View ↗
-                        </span>
-                      </div>
-                      <h3 className="font-heading font-extrabold text-[11px] xs:text-xs sm:text-sm text-[#0F2963] leading-tight line-clamp-1 group-hover:text-vannam-orange transition-colors">
+                    {/* Clean Caption Area */}
+                    <div className="p-3 sm:p-3.5 space-y-1 bg-white flex-1 flex flex-col justify-between">
+                      <h3 className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] leading-snug line-clamp-2 group-hover:text-vannam-orange transition-colors">
                         {item.title}
                       </h3>
+                      <div className="pt-1.5 flex items-center justify-between text-[10px] sm:text-xs text-slate-400 font-semibold border-t border-slate-100">
+                        <span className="capitalize">{item.category}</span>
+                        <span className="text-vannam-orange font-bold group-hover:translate-x-0.5 transition-transform flex items-center gap-0.5">
+                          <span>View</span>
+                          <span>↗</span>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 );
               })}
             </ScrollReveal>
+
+            {/* Explore More Button Directing to Dedicated Gallery Page */}
+            <div className="mt-6 sm:mt-8 flex justify-center">
+              <Link
+                href="/gallery"
+                className="px-6 py-3 rounded-full bg-[#0F2963] hover:bg-vannam-orange text-white font-heading font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-2 group cursor-pointer"
+              >
+                <span>Explore More Memories</span>
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
           </div>
 
           <RainbowArcBridge className="mt-10 sm:mt-16 mb-2 sm:mb-4" />
@@ -3604,6 +3672,91 @@ export default function Home() {
 
           </div>
 
+          {/* Interactive Live Campus Map & Navigation Card */}
+          <div className="mt-8 sm:mt-12 pt-8 sm:pt-10 border-t border-white/15">
+            <div className="bg-white/10 backdrop-blur-xl rounded-3xl p-4 sm:p-6 border-2 border-white/20 shadow-2xl space-y-4">
+              
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 text-white">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F59E0B] text-[#0F2963] text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-xs mb-1.5">
+                    <MapPin className="w-3.5 h-3.5" />
+                    <span>Live Campus Location</span>
+                  </div>
+                  <h3 className="font-heading text-lg sm:text-2xl font-black tracking-tight text-white">
+                    Visit Our Coimbatore Flagship Campus
+                  </h3>
+                  <p className="text-xs sm:text-sm text-blue-100 font-medium mt-0.5">
+                    Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 flex-wrap">
+                  <a
+                    href="https://www.google.com/maps/dir/?api=1&destination=10.9954152,76.9507372"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#10B981] to-[#059669] hover:brightness-110 text-white font-heading font-black text-xs flex items-center gap-2 shadow-md transition-all active:scale-95"
+                  >
+                    <Navigation className="w-3.5 h-3.5" />
+                    <span>Get Directions</span>
+                  </a>
+
+                  <a
+                    href="https://maps.app.goo.gl/AYaRRh5jPhJiWCSw5"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2.5 rounded-xl bg-white/20 hover:bg-white/30 text-white font-heading font-bold text-xs flex items-center gap-2 border border-white/30 backdrop-blur-md transition-all active:scale-95"
+                  >
+                    <ExternalLink className="w-3.5 h-3.5" />
+                    <span>Open in Google Maps</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Embedded Live Google Map */}
+              <div className="relative w-full h-[280px] xs:h-[340px] sm:h-[400px] rounded-2xl overflow-hidden shadow-inner border border-white/30 bg-slate-900/40">
+                <iframe
+                  title="Vannam World Preschool Campus Location"
+                  src="https://maps.google.com/maps?q=10.9954152,76.9507372+(VANNAM+WORLD)&t=&z=17&ie=UTF8&iwloc=B&output=embed"
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  className="w-full h-full"
+                />
+
+                {/* Live Campus Beacon Overlay */}
+                <div className="absolute top-3 left-3 pointer-events-none bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-xl border border-slate-200 shadow-md flex items-center gap-2 text-xs font-bold text-[#0F2963]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
+                  <span className="font-heading font-black text-[11px] sm:text-xs">Vannam World • Sullivan St Campus</span>
+                </div>
+              </div>
+
+              {/* Campus Highlights / Accessibility Badges */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-1">
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/15">
+                  <span className="block text-xs sm:text-sm font-black text-amber-300">📍 Central Landmark</span>
+                  <span className="text-[10px] text-blue-100 font-medium">Near Gandhi Park</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/15">
+                  <span className="block text-xs sm:text-sm font-black text-emerald-300">🚗 Easy Parking</span>
+                  <span className="text-[10px] text-blue-100 font-medium">Safe Visitor Drop-off</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/15">
+                  <span className="block text-xs sm:text-sm font-black text-cyan-300">🚌 Bus Transit</span>
+                  <span className="text-[10px] text-blue-100 font-medium">Direct City Routes</span>
+                </div>
+                <div className="bg-white/10 backdrop-blur-md rounded-xl p-2.5 text-center text-white border border-white/15">
+                  <span className="block text-xs sm:text-sm font-black text-rose-300">🕒 Visiting Hours</span>
+                  <span className="text-[10px] text-blue-100 font-medium">Mon - Sat (8 AM - 6 PM)</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -3835,26 +3988,35 @@ export default function Home() {
                 </p>
               </div>
 
-              {/* Action Buttons: Phone & Official WhatsApp (2-columns, Map removed) */}
-              <div className="grid grid-cols-2 gap-2 pt-0.5">
+              {/* Action Buttons: Phone, WhatsApp & Live Map */}
+              <div className="grid grid-cols-3 gap-1.5 pt-0.5">
                 <a 
                   href="tel:+917810087310" 
-                  className="px-3 py-2 rounded-xl bg-white border border-amber-200 text-[#C2410C] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-amber-100/60 transition shadow-2xs active:scale-95 text-center"
+                  className="px-2 py-2 rounded-xl bg-white border border-amber-200 text-[#C2410C] font-extrabold text-[11px] flex items-center justify-center gap-1 hover:bg-amber-100/60 transition shadow-2xs active:scale-95 text-center"
                 >
                   <Phone className="w-3.5 h-3.5 text-[#EA580C] shrink-0" />
-                  <span className="whitespace-nowrap font-heading font-black">Call Us</span>
+                  <span className="whitespace-nowrap font-heading font-black">Call</span>
                 </a>
                 <a 
                   href="https://wa.me/917810087310?text=Hello%20Vannam%20Preschool!%20I%20would%20like%20to%20know%20more%20about%20admissions." 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-2 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-[#128C7E] font-extrabold text-xs flex items-center justify-center gap-1.5 hover:bg-[#25D366]/20 transition shadow-2xs active:scale-95 text-center"
+                  className="px-2 py-2 rounded-xl bg-[#25D366]/10 border border-[#25D366]/30 text-[#128C7E] font-extrabold text-[11px] flex items-center justify-center gap-1 hover:bg-[#25D366]/20 transition shadow-2xs active:scale-95 text-center"
                 >
                   {/* Official WhatsApp Logo */}
-                  <svg className="w-4 h-4 fill-[#25D366] shrink-0" viewBox="0 0 24 24">
+                  <svg className="w-3.5 h-3.5 fill-[#25D366] shrink-0" viewBox="0 0 24 24">
                     <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.41a8.165 8.165 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.216 8.216 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.59c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.48-.4-.42-.56-.43h-.47c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.77 2.71 4.29 3.8.6.26 1.07.41 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.3z" />
                   </svg>
-                  <span className="whitespace-nowrap font-heading font-black">WhatsApp</span>
+                  <span className="whitespace-nowrap font-heading font-black">Chat</span>
+                </a>
+                <a 
+                  href="https://maps.app.goo.gl/AYaRRh5jPhJiWCSw5" 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-2 py-2 rounded-xl bg-sky-50 border border-sky-200 text-[#0284C7] font-extrabold text-[11px] flex items-center justify-center gap-1 hover:bg-sky-100 transition shadow-2xs active:scale-95 text-center"
+                >
+                  <Navigation className="w-3.5 h-3.5 text-[#0284C7] shrink-0" />
+                  <span className="whitespace-nowrap font-heading font-black">Live Map</span>
                 </a>
               </div>
 
