@@ -126,6 +126,39 @@ export default function AdminLayout({ children }) {
     return () => clearInterval(interval);
   }, [pathname]);
 
+  const userRole = (user?.role || 'ADMIN').toUpperCase();
+  const isSuperAdmin = userRole === 'ADMIN' || userRole === 'SUPER_ADMIN';
+  const isTeacher = userRole === 'TEACHER';
+  const isContentManager = userRole === 'CONTENT_MANAGER';
+  const isEnquiryManager = userRole === 'ENQUIRY_MANAGER';
+
+  // Route protection by role (must be called before any early return)
+  useEffect(() => {
+    if (!user || pathname === '/admin/login') return;
+
+    if (isSuperAdmin) return; // Full access to entire web
+
+    if (isTeacher) {
+      const allowedTeacherRoutes = ['/admin/activities', '/admin/attendance', '/admin/homework', '/admin/classes', '/admin/students', '/admin'];
+      if (!allowedTeacherRoutes.includes(pathname)) {
+        showToast('Teacher access: Restricted to student activities & classroom operations', 'info');
+        router.push('/admin/activities');
+      }
+    } else if (isContentManager) {
+      const allowedContentRoutes = ['/admin/announcements', '/admin/teachers', '/admin/programs', '/admin/facilities', '/admin/gallery', '/admin/testimonials', '/admin/about', '/admin/homepage', '/admin'];
+      if (!allowedContentRoutes.includes(pathname)) {
+        showToast('Content access: Restricted to Website Live CMS', 'info');
+        router.push('/admin/announcements');
+      }
+    } else if (isEnquiryManager) {
+      const allowedEnquiryRoutes = ['/admin/admissions', '/admin/enquiries', '/admin'];
+      if (!allowedEnquiryRoutes.includes(pathname)) {
+        showToast('Enquiry Manager access: Restricted to Admissions', 'info');
+        router.push('/admin/admissions');
+      }
+    }
+  }, [user, pathname, router, isSuperAdmin, isTeacher, isContentManager, isEnquiryManager]);
+
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/auth', { method: 'DELETE' });
@@ -153,39 +186,6 @@ export default function AdminLayout({ children }) {
       </div>
     );
   }
-
-  const userRole = (user?.role || 'ADMIN').toUpperCase();
-  const isSuperAdmin = userRole === 'ADMIN' || userRole === 'SUPER_ADMIN';
-  const isTeacher = userRole === 'TEACHER';
-  const isContentManager = userRole === 'CONTENT_MANAGER';
-  const isEnquiryManager = userRole === 'ENQUIRY_MANAGER';
-
-  // Route protection by role
-  useEffect(() => {
-    if (!user || pathname === '/admin/login') return;
-
-    if (isSuperAdmin) return; // Full access to entire web
-
-    if (isTeacher) {
-      const allowedTeacherRoutes = ['/admin/activities', '/admin/attendance', '/admin/homework', '/admin/classes', '/admin/students', '/admin'];
-      if (!allowedTeacherRoutes.includes(pathname)) {
-        showToast('Teacher access: Restricted to student activities & classroom operations', 'info');
-        router.push('/admin/activities');
-      }
-    } else if (isContentManager) {
-      const allowedContentRoutes = ['/admin/announcements', '/admin/teachers', '/admin/programs', '/admin/facilities', '/admin/gallery', '/admin/testimonials', '/admin/about', '/admin/homepage', '/admin'];
-      if (!allowedContentRoutes.includes(pathname)) {
-        showToast('Content access: Restricted to Website Live CMS', 'info');
-        router.push('/admin/announcements');
-      }
-    } else if (isEnquiryManager) {
-      const allowedEnquiryRoutes = ['/admin/admissions', '/admin/enquiries', '/admin'];
-      if (!allowedEnquiryRoutes.includes(pathname)) {
-        showToast('Enquiry Manager access: Restricted to Admissions', 'info');
-        router.push('/admin/admissions');
-      }
-    }
-  }, [user, pathname, router, isSuperAdmin, isTeacher, isContentManager, isEnquiryManager]);
 
   const navSections = [
     {
