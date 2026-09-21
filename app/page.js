@@ -205,15 +205,16 @@ export default function Home() {
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
   const [mobileProgramModal, setMobileProgramModal] = useState(null);
 
-  // Testimonials Auto-Runner State (1.5 sec / 1500ms automatic running delay)
+  // Testimonials Auto-Runner State (6s delay with pause on background/hover)
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
   useEffect(() => {
     if (isTestimonialPaused) return;
     const timer = setInterval(() => {
+      if (typeof document !== 'undefined' && document.hidden) return;
       setActiveTestimonialIdx((prev) => (prev + 1) % 3);
-    }, 1500);
+    }, 6000);
     return () => clearInterval(timer);
   }, [isTestimonialPaused]);
 
@@ -268,11 +269,30 @@ export default function Home() {
   // Dynamic Content & Announcements from Admin Store (Real-time Live Sync / "Nuclear Option")
   const [dynamicAnnouncements, setDynamicAnnouncements] = useState([]);
   const [dynamicContent, setDynamicContent] = useState(null);
+  const contentFingerprintRef = React.useRef("");
 
-  const fetchLiveContent = () => {
+  const fetchLiveContent = React.useCallback(() => {
+    if (typeof document !== 'undefined' && document.hidden) return;
+
     fetch(`/api/content?t=${Date.now()}`)
       .then((res) => res.json())
       .then((data) => {
+        // Compute lightweight fingerprint to prevent re-rendering when data hasn't changed
+        const fingerprint = JSON.stringify({
+          annCount: data.announcements?.length || 0,
+          annHead: data.announcements?.[0]?.title || '',
+          facCount: data.facilities?.length || 0,
+          tchCount: data.teachers?.length || 0,
+          galCount: data.gallery?.length || 0,
+          galHead: data.gallery?.[0]?.url || '',
+          testCount: data.testimonials?.length || 0
+        });
+
+        if (contentFingerprintRef.current === fingerprint) {
+          return; // No change: 0 main thread re-renders!
+        }
+        contentFingerprintRef.current = fingerprint;
+
         if (data.announcements) {
           setDynamicAnnouncements(data.announcements.filter((a) => a.active !== false));
         }
@@ -281,7 +301,7 @@ export default function Home() {
         }
       })
       .catch((err) => console.error('Failed to load dynamic content:', err));
-  };
+  }, []);
 
   useEffect(() => {
     fetchLiveContent();
@@ -309,8 +329,12 @@ export default function Home() {
     };
     window.addEventListener('focus', handleFocus);
 
-    // 4. Background heartbeat sync (polls every 4s so remote devices sync without refresh)
-    const heartbeat = setInterval(fetchLiveContent, 4000);
+    // 4. Fallback background sync (30s interval, pauses when tab is hidden to save battery & CPU)
+    const heartbeat = setInterval(() => {
+      if (typeof document !== 'undefined' && !document.hidden) {
+        fetchLiveContent();
+      }
+    }, 30000);
 
     return () => {
       if (channel) channel.close();
@@ -318,7 +342,7 @@ export default function Home() {
       window.removeEventListener('focus', handleFocus);
       clearInterval(heartbeat);
     };
-  }, []);
+  }, [fetchLiveContent]);
 
   // FAQ Accordion State
   const [activeFaq, setActiveFaq] = useState(null);

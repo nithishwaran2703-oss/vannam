@@ -1847,3 +1847,24 @@ html, body {
     will-change: transform, opacity;
   }
 }
+
+/* Modern Browser Engine: Skip off-screen rendering until scrolled into view */
+#why-us,
+#methodology,
+#facilities,
+#safety,
+#teachers,
+#gallery,
+#testimonials,
+#events,
+#contact {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 800px;
+}
+
+/* Reduce composite layer creation overhead on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
