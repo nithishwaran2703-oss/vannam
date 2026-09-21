@@ -420,28 +420,28 @@ export default function ParentPortal({ isModal = false, onClose }) {
   // =========================================================================
   if (!isAuthenticated) {
     return (
-      <div className="relative min-h-[590px] w-full rounded-3xl bg-[#060913] text-white flex items-center justify-center p-3 sm:p-6 overflow-hidden shadow-2xl border-2 border-cyan-500/20">
+      <div className="relative min-h-[590px] w-full rounded-3xl bg-white text-[#0F2963] flex items-center justify-center p-3 sm:p-6 overflow-hidden shadow-2xl border border-slate-200">
         
-        {/* 7-Color Ambient Neon Glow Spheres */}
-        <div className="absolute -top-24 -left-24 w-72 h-72 bg-[#F43F5E]/20 rounded-full blur-[90px] pointer-events-none animate-pulse" />
-        <div className="absolute top-10 -right-20 w-72 h-72 bg-[#00A8E8]/25 rounded-full blur-[90px] pointer-events-none animate-pulse" />
-        <div className="absolute -bottom-24 left-1/4 w-80 h-80 bg-[#10B981]/20 rounded-full blur-[100px] pointer-events-none animate-pulse" />
-        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#8B5CF6]/25 rounded-full blur-[90px] pointer-events-none animate-pulse" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#F59E0B]/10 rounded-full blur-[120px] pointer-events-none" />
+        {/* Soft Cheerful Ambient Glow Spheres */}
+        <div className="absolute -top-24 -left-24 w-72 h-72 bg-[#F43F5E]/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-10 -right-20 w-72 h-72 bg-[#00A8E8]/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute -bottom-24 left-1/4 w-80 h-80 bg-[#10B981]/10 rounded-full blur-[90px] pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-72 h-72 bg-[#8B5CF6]/10 rounded-full blur-[80px] pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#F59E0B]/10 rounded-full blur-[100px] pointer-events-none" />
 
-        {/* Cyber Neon Grid Pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#00A8E812_1px,transparent_1px),linear-gradient(to_bottom,#00A8E812_1px,transparent_1px)] bg-[size:26px_26px] pointer-events-none" />
+        {/* Subtle grid dot pattern */}
+        <div className="absolute inset-0 bg-[radial-gradient(#CBD5E1_1px,transparent_1px)] [background-size:20px_20px] opacity-60 pointer-events-none" />
 
-        {/* 7-Color Rainbow Border Neon Container */}
-        <div className="relative z-10 max-w-md w-full p-[2px] rounded-3xl bg-gradient-to-r from-[#F43F5E] via-[#F97316] via-[#F59E0B] via-[#10B981] via-[#00A8E8] via-[#8B5CF6] to-[#0F2963] shadow-[0_0_50px_rgba(0,168,232,0.35)]">
+        {/* 7-Color Rainbow Border Container */}
+        <div className="relative z-10 max-w-md w-full p-[2.5px] rounded-3xl bg-gradient-to-r from-[#F43F5E] via-[#F97316] via-[#F59E0B] via-[#10B981] via-[#00A8E8] via-[#8B5CF6] to-[#0F2963] shadow-[0_20px_60px_-15px_rgba(15,41,99,0.15)]">
           
-          <div className="bg-[#0B1120]/95 backdrop-blur-2xl p-5 sm:p-7 rounded-[22px] space-y-4 sm:space-y-5 text-center relative">
+          <div className="bg-white p-6 sm:p-8 rounded-[21px] space-y-4 sm:space-y-5 text-center relative shadow-sm">
             
             {/* Modal Close Button (Clearly visible inside card top-right) */}
             {isModal && onClose && (
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-white/10 hover:bg-rose-500 text-slate-300 hover:text-white border border-white/20 flex items-center justify-center transition-all shadow-md cursor-pointer"
+                className="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-rose-50 text-slate-400 hover:text-rose-600 border border-slate-200 flex items-center justify-center transition-all shadow-xs cursor-pointer"
                 title="Close Parent Portal"
                 aria-label="Close"
               >
@@ -453,7 +453,7 @@ export default function ParentPortal({ isModal = false, onClose }) {
             <div className="flex flex-col items-center space-y-2">
               
               {/* Logo Card */}
-              <div className="p-2 rounded-2xl bg-white/95 border-2 border-white shadow-[0_0_25px_rgba(245,158,11,0.3)]">
+              <div className="p-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm">
                 <img 
                   src="/logo.png" 
                   alt="Vannam World Preschool Logo" 
@@ -470,7 +470,7 @@ export default function ParentPortal({ isModal = false, onClose }) {
                   { color: "bg-[#00A8E8]", name: "Cyan" },
                   { color: "bg-[#F97316]", name: "Orange" },
                   { color: "bg-[#8B5CF6]", name: "Purple" },
-                  { color: "bg-[#0F2963] border border-cyan-400", name: "Navy" }
+                  { color: "bg-[#0F2963]", name: "Navy" }
                 ].map((shade, i) => (
                   <span 
                     key={i} 
@@ -481,51 +481,52 @@ export default function ParentPortal({ isModal = false, onClose }) {
               </div>
 
               {/* Badge */}
-              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-400/50 text-cyan-300 text-[10px] font-black uppercase tracking-widest shadow-[0_0_12px_rgba(0,168,232,0.3)]">
-                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-[#E8EEFB] border border-[#CBD8F6] text-[#0F2963] text-[10px] font-black uppercase tracking-widest shadow-xs">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#00A8E8] animate-ping" />
                 <span>VANNAM WORLD PRESCHOOL</span>
               </div>
 
               {/* Title with 7-Color Gradient */}
               <div>
                 <h2 className="font-heading text-xl sm:text-2xl font-black tracking-tight leading-tight">
-                  <span className="text-white">7-Shades </span>
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F43F5E] via-[#F59E0B] via-[#10B981] via-[#00A8E8] to-[#8B5CF6] drop-shadow-[0_0_20px_rgba(0,168,232,0.5)]">
+                  <span className="text-[#0F2963]">7-Shades </span>
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F43F5E] via-[#F59E0B] via-[#10B981] via-[#00A8E8] to-[#8B5CF6]">
                     Parent Portal
                   </span>
                 </h2>
-                <p className="text-[11px] text-slate-300 font-medium mt-0.5">
+                <p className="text-[11px] text-slate-500 font-medium mt-0.5">
                   Daily Activity & Learning Command Center
                 </p>
               </div>
 
             </div>
 
-            {/* Quick 1-Tap Demo Login with Rainbow Neon Border */}
-            <div className="p-3 rounded-2xl bg-[#060913]/90 border border-cyan-500/30 flex items-center justify-between gap-2 shadow-inner text-left">
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">
+            {/* Quick 1-Tap Demo Login Box */}
+            <div className="p-3 rounded-2xl bg-[#F8FAFC] border border-slate-200 flex items-center justify-between gap-2 shadow-2xs text-left">
+              <div className="flex items-center gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center text-white font-bold text-xs shadow-xs">
                   ⚡
                 </div>
                 <div>
-                  <p className="text-[11px] font-black text-white leading-tight">Quick Parent Access</p>
-                  <p className="text-[9px] text-cyan-300 font-medium">Aarav, Ananya & Vihaan</p>
+                  <p className="text-xs font-black text-[#0F2963] leading-tight">Quick Parent Access</p>
+                  <p className="text-[10px] text-slate-500 font-medium">Aarav, Ananya & Vihaan</p>
                 </div>
               </div>
               <button
+                type="button"
                 onClick={handleNeonLogin}
                 disabled={isLoggingIn}
-                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#10B981] via-[#00A8E8] to-[#8B5CF6] text-white text-[11px] font-black hover:opacity-95 transition shadow-[0_0_15px_rgba(0,168,232,0.4)] flex items-center gap-1 shrink-0 cursor-pointer"
+                className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#10B981] via-[#00A8E8] to-[#8B5CF6] text-white text-xs font-bold hover:brightness-105 transition shadow-sm flex items-center gap-1.5 shrink-0 cursor-pointer"
               >
-                {isLoggingIn ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Zap className="w-3 h-3 fill-current text-amber-300" />}
+                {isLoggingIn ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Zap className="w-3.5 h-3.5 fill-current text-amber-200" />}
                 <span>One-Tap Login</span>
               </button>
             </div>
 
-            {/* Login Form with 7-Color Focus Highlights */}
-            <form onSubmit={handleNeonLogin} className="space-y-2.5 text-left">
+            {/* Login Form */}
+            <form onSubmit={handleNeonLogin} className="space-y-3 text-left">
               <div>
-                <label className="block text-[9.5px] font-black text-cyan-300 uppercase tracking-widest mb-1 ml-0.5">
+                <label className="block text-[10px] font-extrabold text-slate-700 uppercase tracking-wider mb-1 ml-0.5">
                   Parent Email / ID
                 </label>
                 <div className="relative">
@@ -535,14 +536,14 @@ export default function ParentPortal({ isModal = false, onClose }) {
                     onChange={(e) => setLoginEmail(e.target.value)}
                     required
                     placeholder="parent@vannamworld.edu"
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#060913]/90 border border-cyan-500/30 text-white text-xs font-semibold placeholder:text-slate-500 focus:outline-none focus:border-[#00A8E8] focus:ring-2 focus:ring-[#00A8E8]/40 focus:shadow-[0_0_15px_rgba(0,168,232,0.3)] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[#00A8E8] focus:ring-2 focus:ring-[#00A8E8]/20 transition shadow-2xs"
                   />
-                  <User className="w-3.5 h-3.5 text-cyan-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <User className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[9.5px] font-black text-cyan-300 uppercase tracking-widest mb-1 ml-0.5">
+                <label className="block text-[10px] font-extrabold text-slate-700 uppercase tracking-wider mb-1 ml-0.5">
                   Parent PIN / Password
                 </label>
                 <div className="relative">
@@ -552,9 +553,9 @@ export default function ParentPortal({ isModal = false, onClose }) {
                     onChange={(e) => setLoginPin(e.target.value)}
                     required
                     placeholder="••••"
-                    className="w-full px-3.5 py-2 rounded-xl bg-[#060913]/90 border border-cyan-500/30 text-white text-xs font-semibold placeholder:text-slate-500 focus:outline-none focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/40 focus:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-slate-200 text-slate-900 text-xs font-semibold placeholder:text-slate-400 focus:outline-none focus:border-[#F59E0B] focus:ring-2 focus:ring-[#F59E0B]/20 transition shadow-2xs"
                   />
-                  <Lock className="w-3.5 h-3.5 text-amber-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+                  <Lock className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
               </div>
 
@@ -562,7 +563,7 @@ export default function ParentPortal({ isModal = false, onClose }) {
               <button
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full py-2.5 sm:py-3 rounded-xl bg-gradient-to-r from-[#F43F5E] via-[#F97316] via-[#F59E0B] via-[#10B981] via-[#00A8E8] to-[#8B5CF6] text-white font-heading font-black text-xs uppercase tracking-wider shadow-[0_0_25px_rgba(0,168,232,0.5)] hover:brightness-110 transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-[#F43F5E] via-[#F97316] via-[#F59E0B] via-[#10B981] via-[#00A8E8] to-[#8B5CF6] text-white font-heading font-black text-xs uppercase tracking-wider shadow-md hover:brightness-105 active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-2 cursor-pointer"
               >
                 {isLoggingIn ? (
                   <>
@@ -580,12 +581,12 @@ export default function ParentPortal({ isModal = false, onClose }) {
             </form>
 
             {/* Footer Security Badges */}
-            <div className="flex items-center justify-between text-[9.5px] text-slate-400 pt-2 border-t border-white/10">
-              <span className="flex items-center gap-1 text-emerald-400 font-bold">
-                <ShieldCheck className="w-3 h-3" />
+            <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2.5 border-t border-slate-100">
+              <span className="flex items-center gap-1.5 text-emerald-600 font-bold">
+                <ShieldCheck className="w-3.5 h-3.5" />
                 256-Bit Encrypted
               </span>
-              <span className="text-cyan-300 font-medium">Vannam World • 2026</span>
+              <span className="text-slate-400 font-semibold">Vannam World • 2026</span>
             </div>
 
           </div>
