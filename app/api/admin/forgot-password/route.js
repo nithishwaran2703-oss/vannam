@@ -1,28 +1,18 @@
 import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
-
-// Helper to sanitize phone numbers into E.164 without '+'
-function cleanPhoneNumber(rawPhone) {
-  if (!rawPhone) return '';
-  const digits = String(rawPhone).replace(/[^0-9]/g, '');
-  if (digits.length === 10) {
-    return '91' + digits; // Default to India (+91) if 10-digit mobile number is entered
-  }
-  return digits;
-}
+import { sendPasswordResetEmail } from '@/lib/mailer';
 
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { action, phone, email, otp, newPassword } = body;
+    const { action, email, phone, otp, newPassword } = body;
 
-    const rawPhone = (phone || '').trim();
-    const cleanPhone = cleanPhoneNumber(rawPhone);
     const cleanEmail = (email || '').trim().toLowerCase();
+    const rawPhone = (phone || '').trim();
 
-    if (!cleanPhone && !cleanEmail) {
+    if (!cleanEmail && !rawPhone) {
       return NextResponse.json(
-        { error: 'Registered phone number or mobile is required.' },
+        { error: 'Registered Super Admin email address is required.' },
         { status: 400 }
       );
     }
@@ -42,16 +32,15 @@ export async function POST(request) {
       }
     };
 
-    // Find user by phone number or by email
+    // Find user by email or by phone
     let user = (store.users || []).find((u) => {
-      const uPhone = cleanPhoneNumber(u.phone || u.whatsapp || '');
       const uEmail = (u.email || '').toLowerCase();
-      if (cleanPhone && uPhone && uPhone === cleanPhone) return true;
       if (cleanEmail && uEmail === cleanEmail) return true;
+      if (rawPhone && (u.phone || '').includes(rawPhone)) return true;
       return false;
     });
 
-    // Fallback: If searching by email and not in store yet
+    // If searching by email and not in store yet
     if (!user && cleanEmail && DEFAULT_ACCOUNTS[cleanEmail]) {
       user = { ...DEFAULT_ACCOUNTS[cleanEmail] };
       if (!store.users) store.users = [];
@@ -59,16 +48,16 @@ export async function POST(request) {
       try { saveStore(store); } catch (_) {}
     }
 
-    // If searching by phone and no specific user found with that phone, bind to Super Admin
+    // If still not found, fallback to super admin
     if (!user) {
       user = (store.users || []).find((u) => u.role === 'ADMIN' || u.role === 'super_admin') || {
         ...DEFAULT_ACCOUNTS['admin@vannam.edu'],
-        phone: rawPhone
+        email: cleanEmail || 'admin@vannam.edu'
       };
       if (!store.users) store.users = [];
       const adminIdx = store.users.findIndex((u) => u.role === 'ADMIN' || u.role === 'super_admin');
-      if (adminIdx !== -1) {
-        store.users[adminIdx].phone = rawPhone;
+      if (adminIdx !== -1 && cleanEmail) {
+        store.users[adminIdx].email = cleanEmail;
         user = store.users[adminIdx];
       } else {
         store.users.push(user);
@@ -76,32 +65,24 @@ export async function POST(request) {
       try { saveStore(store); } catch (_) {}
     }
 
+    const targetEmail = (user.email || cleanEmail).toLowerCase();
+
     // Initialize passwordResets store
     if (!store.passwordResets) {
       store.passwordResets = {};
     }
 
-    const resetLookupKey = cleanPhone || cleanEmail;
-
     // -------------------------------------------------------------
-    // ACTION 1: SEND AUTOMATED VERIFICATION OTP
+    // ACTION 1: SEND CONFIRMATION EMAIL WITH OTP
     // -------------------------------------------------------------
     if (action === 'send-otp') {
-      if (cleanPhone && cleanPhone.length < 10) {
-        return NextResponse.json(
-          { error: 'Please enter a valid 10-digit mobile or phone number.' },
-          { status: 400 }
-        );
-      }
-
       // Generate a secure 6-digit numeric OTP
       const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString();
       const expiresAt = Date.now() + 10 * 60 * 1000; // 10 minutes
 
-      store.passwordResets[resetLookupKey] = {
+      store.passwordResets[targetEmail] = {
         otp: generatedOtp,
-        userEmail: user.email,
-        phone: cleanPhone,
+        userEmail: targetEmail,
         expiresAt,
         attempts: 0,
         createdAt: new Date().toISOString()
@@ -111,53 +92,29 @@ export async function POST(request) {
       if (!store.auditLogs) store.auditLogs = [];
       store.auditLogs.unshift({
         id: `log-${Date.now()}`,
-        action: 'PASSWORD_RESET_OTP_REQUESTED',
+        action: 'PASSWORD_RESET_EMAIL_REQUESTED',
         userId: user.id || 'usr-admin',
         userName: user.name || 'Super Admin',
         resource: 'Auth',
-        details: `Password reset verification OTP generated for mobile +${cleanPhone}`,
+        details: `Password reset verification email requested for ${targetEmail}`,
         timestamp: new Date().toISOString()
       });
 
       saveStore(store);
 
-      // Automated Server Dispatch (e.g. Meta WhatsApp Cloud API / Twilio SMS)
-      const otpMessage = `*Vannam Preschool Security*: Your password reset OTP is ${generatedOtp}. Valid for 10 minutes.`;
+      // Send the actual confirmation email using Nodemailer
+      await sendPasswordResetEmail({
+        toEmail: targetEmail,
+        userName: user.name || 'Super Admin',
+        otpCode: generatedOtp
+      });
 
-      // 1. Meta WhatsApp Cloud API (Automated Server-to-Phone delivery)
-      if (process.env.WHATSAPP_API_TOKEN && process.env.WHATSAPP_PHONE_ID) {
-        try {
-          await fetch(`https://graph.facebook.com/v18.0/${process.env.WHATSAPP_PHONE_ID}/messages`, {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${process.env.WHATSAPP_API_TOKEN}`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              messaging_product: 'whatsapp',
-              to: cleanPhone,
-              type: 'text',
-              text: { body: otpMessage }
-            })
-          });
-          console.log(`[Vannam Verification] ✅ Automated WhatsApp dispatched via Meta Cloud API to +${cleanPhone}`);
-        } catch (apiErr) {
-          console.warn('[Vannam Verification] WhatsApp Cloud API note:', apiErr.message);
-        }
-      }
-
-      // 2. Log in server terminal for local development
-      console.log(`[Vannam Verification] 🔑 6-Digit OTP for +${cleanPhone} (${user.email}): ${generatedOtp}`);
-
-      const formattedDisplayPhone = cleanPhone.length >= 10
-        ? `+${cleanPhone.slice(0, cleanPhone.length - 10)} ${cleanPhone.slice(-10, -5)} ${cleanPhone.slice(-5)}`
-        : `+${cleanPhone}`;
+      console.log(`[Vannam Auth] 📧 Confirmation Code dispatched to ${targetEmail}: ${generatedOtp}`);
 
       return NextResponse.json({
         success: true,
-        message: `A 6-digit confirmation code has been sent to ${formattedDisplayPhone}.`,
-        otpCode: generatedOtp,
-        phone: cleanPhone,
+        message: `A 6-digit confirmation code has been sent to ${targetEmail}. Please check your inbox.`,
+        email: targetEmail,
         expiresInMinutes: 10
       });
     }
@@ -168,7 +125,7 @@ export async function POST(request) {
     if (action === 'verify-and-reset') {
       if (!otp) {
         return NextResponse.json(
-          { error: 'The 6-digit verification code is required.' },
+          { error: 'The 6-digit confirmation code is required.' },
           { status: 400 }
         );
       }
@@ -180,20 +137,21 @@ export async function POST(request) {
         );
       }
 
-      const pending = store.passwordResets[resetLookupKey] || store.passwordResets[cleanPhone] || store.passwordResets[cleanEmail];
+      const pending = store.passwordResets[targetEmail] || store.passwordResets[cleanEmail];
 
       if (!pending) {
         return NextResponse.json(
-          { error: 'No active verification request found for this phone number. Please request a new code.' },
+          { error: 'No active password reset request found. Please request a new confirmation code.' },
           { status: 400 }
         );
       }
 
       if (Date.now() > pending.expiresAt) {
-        delete store.passwordResets[resetLookupKey];
+        delete store.passwordResets[targetEmail];
+        if (cleanEmail) delete store.passwordResets[cleanEmail];
         saveStore(store);
         return NextResponse.json(
-          { error: 'Verification code has expired. Please request a new code.' },
+          { error: 'Confirmation code has expired. Please request a new code.' },
           { status: 400 }
         );
       }
@@ -202,24 +160,24 @@ export async function POST(request) {
       if (pending.otp.trim() !== otp.trim()) {
         pending.attempts = (pending.attempts || 0) + 1;
         if (pending.attempts >= 5) {
-          delete store.passwordResets[resetLookupKey];
+          delete store.passwordResets[targetEmail];
+          if (cleanEmail) delete store.passwordResets[cleanEmail];
           saveStore(store);
           return NextResponse.json(
-            { error: 'Too many incorrect attempts. Please request a new verification code.' },
+            { error: 'Too many incorrect attempts. Please request a new confirmation code.' },
             { status: 400 }
           );
         }
         saveStore(store);
         return NextResponse.json(
-          { error: `Invalid verification code. Please try again (${5 - pending.attempts} attempts remaining).` },
+          { error: `Invalid confirmation code. Please try again (${5 - pending.attempts} attempts remaining).` },
           { status: 400 }
         );
       }
 
       // OTP is valid! Update user password
       user.password = newPassword.trim();
-      delete store.passwordResets[resetLookupKey];
-      if (cleanPhone) delete store.passwordResets[cleanPhone];
+      delete store.passwordResets[targetEmail];
       if (cleanEmail) delete store.passwordResets[cleanEmail];
 
       // Add audit log entry
@@ -230,7 +188,7 @@ export async function POST(request) {
         userId: user.id || 'usr-admin',
         userName: user.name || 'Super Admin',
         resource: 'Auth',
-        details: `Password successfully updated via phone OTP verification for ${user.email} (Phone: ${cleanPhone})`,
+        details: `Password successfully updated via email confirmation for ${targetEmail}`,
         timestamp: new Date().toISOString()
       });
 
@@ -245,9 +203,9 @@ export async function POST(request) {
           await sql`
             UPDATE users 
             SET password = ${newPassword.trim()}
-            WHERE LOWER(email) = ${(user.email || '').toLowerCase()};
+            WHERE LOWER(email) = ${targetEmail};
           `;
-          console.log(`[Vannam Auth] ✅ Synced new password to Neon cloud DB for ${user.email}`);
+          console.log(`[Vannam Auth] ✅ Synced new password to Neon cloud DB for ${targetEmail}`);
         }
       } catch (dbErr) {
         console.warn(`[Vannam Auth] ⚠️ Neon DB sync note:`, dbErr.message);
@@ -255,7 +213,7 @@ export async function POST(request) {
 
       return NextResponse.json({
         success: true,
-        userEmail: user.email,
+        userEmail: targetEmail,
         message: 'Password successfully updated! You can now log in with your new credentials.'
       });
     }

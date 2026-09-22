@@ -14,8 +14,7 @@ import {
   CheckCircle2,
   RefreshCw,
   ArrowLeft,
-  Check,
-  Phone
+  Check
 } from 'lucide-react';
 
 export default function AdminLoginPage() {
@@ -29,13 +28,11 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loginSuccessNotice, setLoginSuccessNotice] = useState('');
 
-  // Forgot Password / Phone OTP State
+  // Forgot Password / Email Confirmation State
   const [isForgotMode, setIsForgotMode] = useState(false);
-  const [forgotStep, setForgotStep] = useState(1); // 1 = Request Code, 2 = Enter Code & Reset, 3 = Success
-  const [forgotPhone, setForgotPhone] = useState('');
-  const [resolvedEmail, setResolvedEmail] = useState('');
+  const [forgotStep, setForgotStep] = useState(1); // 1 = Request Email Code, 2 = Enter Code & Reset, 3 = Success
+  const [forgotEmail, setForgotEmail] = useState('');
   const [otp, setOtp] = useState('');
-  const [otpCode, setOtpCode] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -76,7 +73,7 @@ export default function AdminLoginPage() {
     }
   };
 
-  // Step 1: Send OTP to Super Admin Mobile
+  // Step 1: Send Confirmation Email with 6-Digit Code
   const handleSendOtp = async (e) => {
     e?.preventDefault();
     setForgotError('');
@@ -87,28 +84,25 @@ export default function AdminLoginPage() {
       const res = await fetch('/api/admin/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'send-otp', phone: forgotPhone })
+        body: JSON.stringify({ action: 'send-otp', email: forgotEmail })
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(data.error || 'Failed to dispatch confirmation code.');
+        throw new Error(data.error || 'Failed to dispatch confirmation email.');
       }
 
-      setForgotSuccess(data.message || `Verification code sent to ${forgotPhone}`);
-      if (data.otpCode) {
-        setOtpCode(data.otpCode);
-      }
+      setForgotSuccess(data.message || `Confirmation code sent to ${forgotEmail}`);
       setForgotStep(2);
     } catch (err) {
-      setForgotError(err.message || 'Could not send verification code. Please check the phone number.');
+      setForgotError(err.message || 'Could not send confirmation email. Please verify the address.');
     } finally {
       setForgotLoading(false);
     }
   };
 
-  // Step 2: Verify OTP and Reset Password
+  // Step 2: Verify Confirmation Code and Reset Password
   const handleVerifyAndReset = async (e) => {
     e?.preventDefault();
     setForgotError('');
@@ -131,7 +125,7 @@ export default function AdminLoginPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'verify-and-reset',
-          phone: forgotPhone,
+          email: forgotEmail,
           otp,
           newPassword
         })
@@ -143,13 +137,12 @@ export default function AdminLoginPage() {
         throw new Error(data.error || 'Verification or password reset failed.');
       }
 
-      const emailToUse = data.userEmail || 'admin@vannam.edu';
-      setResolvedEmail(emailToUse);
+      const emailToUse = data.userEmail || forgotEmail || 'admin@vannam.edu';
       setEmail(emailToUse);
       setPassword(newPassword);
       setForgotStep(3);
     } catch (err) {
-      setForgotError(err.message || 'Invalid verification code or reset failed.');
+      setForgotError(err.message || 'Invalid confirmation code or reset failed.');
     } finally {
       setForgotLoading(false);
     }
@@ -160,9 +153,8 @@ export default function AdminLoginPage() {
     setForgotStep(1);
     setForgotError('');
     setForgotSuccess('');
-    setForgotPhone('');
+    setForgotEmail('');
     setOtp('');
-    setOtpCode('');
     setNewPassword('');
     setConfirmPassword('');
   };
@@ -245,7 +237,7 @@ export default function AdminLoginPage() {
                       onClick={() => {
                         setIsForgotMode(true);
                         setForgotStep(1);
-                        setForgotPhone('');
+                        setForgotEmail(email || '');
                         setForgotError('');
                         setForgotSuccess('');
                         setOtp('');
@@ -299,19 +291,19 @@ export default function AdminLoginPage() {
           )}
 
           {/* ========================================================= */}
-          {/* MODE B: FORGOT PASSWORD / MOBILE VERIFICATION FLOW         */}
+          {/* MODE B: FORGOT PASSWORD / EMAIL CONFIRMATION FLOW         */}
           {/* ========================================================= */}
           {isForgotMode && (
             <div className="animate-in fade-in duration-200">
               {/* Recovery Header */}
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-xl bg-[#00A8E8]/20 border border-[#00A8E8]/40 flex items-center justify-center text-[#00A8E8]">
-                    <Phone className="w-4 h-4" />
+                  <div className="w-8 h-8 rounded-xl bg-[#F59E0B]/20 border border-[#F59E0B]/40 flex items-center justify-center text-[#F59E0B]">
+                    <Mail className="w-4 h-4" />
                   </div>
                   <div>
                     <h2 className="text-sm font-bold text-white">Reset Super Admin Password</h2>
-                    <p className="text-[11px] text-[#CBD8F6]/80">Phone Verification & Security OTP</p>
+                    <p className="text-[11px] text-[#CBD8F6]/80">Email Confirmation Code (OTP)</p>
                   </div>
                 </div>
 
@@ -332,44 +324,41 @@ export default function AdminLoginPage() {
                 </div>
               )}
 
-              {/* STEP 1: Enter Phone Number */}
+              {/* STEP 1: Enter Email */}
               {forgotStep === 1 && (
                 <form onSubmit={handleSendOtp} className="space-y-4">
                   <p className="text-xs text-[#CBD8F6]/90 leading-relaxed">
-                    Enter your registered Super Admin mobile phone number. We will send a secure 6-digit confirmation code directly to your phone.
+                    Enter your registered Super Admin email address. We will dispatch a 6-digit confirmation code directly to your email inbox.
                   </p>
 
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#CBD8F6] mb-1.5">
-                      Super Admin Phone Number
+                      Super Admin Email Address
                     </label>
                     <div className="relative">
-                      <Phone className="w-4 h-4 text-[#00A8E8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                      <Mail className="w-4 h-4 text-[#00A8E8] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                       <input
-                        type="tel"
-                        value={forgotPhone}
-                        onChange={(e) => setForgotPhone(e.target.value)}
-                        placeholder="e.g. 98401 23456 or +91 78100 87310"
+                        type="email"
+                        value={forgotEmail}
+                        onChange={(e) => setForgotEmail(e.target.value)}
+                        placeholder="e.g. admin@vannam.edu or your@email.com"
                         required
                         className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white placeholder-white/40 text-sm focus:outline-none focus:ring-2 focus:ring-[#00A8E8] transition font-mono"
                       />
                     </div>
-                    <p className="text-[10px] text-white/50 mt-1">
-                      Enter your 10-digit mobile number or standard country format (+91).
-                    </p>
                   </div>
 
                   <button
                     type="submit"
-                    disabled={forgotLoading || !forgotPhone}
+                    disabled={forgotLoading || !forgotEmail}
                     className="w-full py-3.5 px-4 rounded-xl font-extrabold text-sm text-[#0F2963] bg-gradient-to-r from-[#F59E0B] to-[#FBBF24] hover:from-[#FBBF24] hover:to-[#F59E0B] shadow-lg shadow-amber-500/20 active:scale-[0.98] transition flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
                     {forgotLoading ? (
                       <div className="w-5 h-5 border-2 border-[#0F2963] border-t-transparent rounded-full animate-spin"></div>
                     ) : (
                       <>
-                        <ShieldCheck className="w-4 h-4" />
-                        <span>Send 6-Digit Verification Code</span>
+                        <Mail className="w-4 h-4" />
+                        <span>Send Confirmation Code</span>
                         <ArrowRight className="w-4 h-4" />
                       </>
                     )}
@@ -390,39 +379,21 @@ export default function AdminLoginPage() {
               {/* STEP 2: Enter OTP & Set New Password */}
               {forgotStep === 2 && (
                 <form onSubmit={handleVerifyAndReset} className="space-y-4">
-                  {/* Notice of dispatched OTP with Auto Fill button */}
-                  <div className="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-400/30 text-amber-100 text-xs space-y-2">
+                  {/* Notice of dispatched Email */}
+                  <div className="p-3.5 rounded-2xl bg-amber-500/15 border border-amber-400/30 text-amber-100 text-xs space-y-1">
                     <div className="flex items-center gap-2 font-bold text-white">
-                      <Phone className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                      <span>Code Sent to: {forgotPhone}</span>
+                      <Mail className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                      <span>Code Sent to: {forgotEmail}</span>
                     </div>
                     <p className="text-[11px] text-amber-200/80 leading-snug">
-                      Please enter the 6-digit verification code below (Valid for 10 minutes).
+                      Please check your email inbox (and spam folder) for the 6-digit confirmation code (Valid for 10 minutes).
                     </p>
-
-                    {otpCode && (
-                      <div className="pt-2 flex items-center justify-between border-t border-amber-400/20 mt-1">
-                        <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
-                          <span>Verification Code:</span>
-                          <strong className="font-mono text-white text-xs tracking-widest bg-black/40 px-2 py-0.5 rounded border border-amber-400/30">
-                            {otpCode}
-                          </strong>
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setOtp(otpCode)}
-                          className="text-[11px] font-extrabold px-2.5 py-1 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-200 hover:text-white border border-amber-400/40 transition cursor-pointer"
-                        >
-                          Auto Fill Code
-                        </button>
-                      </div>
-                    )}
                   </div>
 
                   {/* 6-Digit OTP Input */}
                   <div>
                     <label className="block text-xs font-bold uppercase tracking-wider text-[#CBD8F6] mb-1.5">
-                      6-Digit Verification Code (OTP)
+                      6-Digit Confirmation Code (OTP)
                     </label>
                     <div className="relative">
                       <KeyRound className="w-4 h-4 text-white/50 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -506,7 +477,7 @@ export default function AdminLoginPage() {
                       ) : (
                         <>
                           <Check className="w-4 h-4" />
-                          <span>Verify OTP & Save Password</span>
+                          <span>Verify Code & Save Password</span>
                         </>
                       )}
                     </button>
@@ -532,7 +503,7 @@ export default function AdminLoginPage() {
 
                   <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-left space-y-1 font-mono text-xs">
                     <div className="text-[#CBD8F6]/60 text-[10px] uppercase font-sans font-bold">Updated Account:</div>
-                    <div className="text-white"><span className="text-[#CBD8F6]/60 font-sans">Email:</span> {resolvedEmail || 'admin@vannam.edu'}</div>
+                    <div className="text-white"><span className="text-[#CBD8F6]/60 font-sans">Email:</span> {forgotEmail}</div>
                     <div className="text-emerald-300"><span className="text-[#CBD8F6]/60 font-sans">Status:</span> New Password Active</div>
                   </div>
 
