@@ -228,6 +228,7 @@
       "experience": "14+ Years",
       "qualifications": "M.Ed Early Childhood Education (14+ Yrs)",
       "qual": "M.Ed Early Childhood Education (14+ Yrs)",
+      "shortQual": "M.Ed Early Ed",
       "bio": "Passionate about creating nurturing environments where every child feels seen, loved, and inspired to explore.",
       "intro": "Passionate about creating nurturing environments where every child feels seen, loved, and inspired to explore.",
       "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
@@ -243,6 +244,7 @@
       "experience": "9+ Years",
       "qualifications": "Certified Montessori Trainer & Child Psychologist",
       "qual": "Certified Montessori Trainer & Child Psychologist",
+      "shortQual": "AMI Montessori",
       "bio": "Specializes in tactile sensory learning and building early phonics confidence through playful discovery.",
       "intro": "Specializes in tactile sensory learning and building early phonics confidence through playful discovery.",
       "image": "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=400&q=80",
@@ -258,6 +260,7 @@
       "experience": "7+ Years",
       "qualifications": "B.S. Child Development & Pediatric First Aid Certified",
       "qual": "B.S. Child Development & Pediatric First Aid Certified",
+      "shortQual": "B.S. Child Dev",
       "bio": "Loves introducing toddlers to their first group social experiences with gentle encouragement and hugs.",
       "intro": "Loves introducing toddlers to their first group social experiences with gentle encouragement and hugs.",
       "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
@@ -273,6 +276,7 @@
       "experience": "6+ Years",
       "qualifications": "B.Ed Physical Education & LEGO Education Instructor",
       "qual": "B.Ed Physical Education & LEGO Education Instructor",
+      "shortQual": "B.Ed Physical Ed",
       "bio": "Inspires young minds through spatial building projects, balance tracks, and fun scientific experiments.",
       "intro": "Inspires young minds through spatial building projects, balance tracks, and fun scientific experiments.",
       "image": "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80",
@@ -328,8 +332,8 @@
       "id": "gal-1",
       "title": "Montessori Math Exploration",
       "category": "classroom",
-      "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
-      "src": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80",
+      "url": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80",
+      "src": "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80",
       "caption": "Junior learners manipulating tactile wooden cylinders and bead bars.",
       "featured": true,
       "status": "published",
@@ -339,8 +343,8 @@
       "id": "gal-2",
       "title": "Outdoor Agility Race",
       "category": "sports",
-      "url": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80",
-      "src": "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80",
+      "url": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80",
+      "src": "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80",
       "caption": "Shock-absorbing safe sprinting and obstacle runs.",
       "featured": true,
       "status": "published",
@@ -361,8 +365,8 @@
       "id": "gal-4",
       "title": "Botany Garden Walk",
       "category": "outdoor",
-      "url": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80",
-      "src": "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80",
+      "url": "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80",
+      "src": "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80",
       "caption": "Nurturing botanical curiosity in our organic butterfly garden.",
       "featured": false,
       "status": "published",
@@ -636,24 +640,6 @@
   },
   "users": [
     {
-      "id": "usr-1",
-      "name": "(Super Admin)",
-      "email": "nithish@gmail.com",
-      "password": "nithish",
-      "role": "ADMIN",
-      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
-      "lastLogin": "2026-09-21T08:26:57.346Z"
-    },
-    {
-      "id": "usr-teacher-1",
-      "name": "Teacher Sarah Jenkins",
-      "email": "nithish@gmail.com",
-      "password": "nithish",
-      "role": "TEACHER",
-      "avatar": "https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&q=80",
-      "lastLogin": null
-    },
-    {
       "id": "usr-parent-demo",
       "name": "Andrew Vance (Parent)",
       "email": "andrew@vannamworld.edu",
@@ -663,17 +649,296 @@
       "lastLogin": null
     },
     {
-      "id": "usr-teacher-1",
-      "name": "Mrs. Priya Sharma",
-      "email": "teacher@vannam.edu",
-      "password": "Teacher@Vannam2026",
-      "role": "TEACHER",
-      "avatar": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80",
-      "teacherId": "priya-sharma",
-      "lastLogin": "2026-08-29T09:00:00Z"
+      "id": "usr-1790054256280",
+      "name": "nithish",
+      "email": "nithishwaran2703@gmail.com",
+      "password": "nithish",
+      "role": "ADMIN",
+      "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80",
+      "lastLogin": null,
+      "phone": "8220230896"
     }
   ],
   "auditLogs": [
+    {
+      "id": "log-1790057165529",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated for mobile +918220230896",
+      "timestamp": "2026-09-22T06:06:05.529Z"
+    },
+    {
+      "id": "log-1790057146878",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated for mobile +918220230896",
+      "timestamp": "2026-09-22T06:05:46.878Z"
+    },
+    {
+      "id": "log-1790057105707",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated for mobile +918220230896",
+      "timestamp": "2026-09-22T06:05:05.707Z"
+    },
+    {
+      "id": "log-1790057087995",
+      "action": "WHATSAPP_PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated for WhatsApp +918220230896",
+      "timestamp": "2026-09-22T06:04:47.995Z"
+    },
+    {
+      "id": "log-1790056953223",
+      "action": "WHATSAPP_PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated for WhatsApp +918220230896",
+      "timestamp": "2026-09-22T06:02:33.223Z"
+    },
+    {
+      "id": "log-1790054352749",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithishwaran2703@gmail.com",
+      "timestamp": "2026-09-22T05:19:12.749Z"
+    },
+    {
+      "id": "log-1790054352514",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithishwaran2703@gmail.com",
+      "timestamp": "2026-09-22T05:19:12.514Z"
+    },
+    {
+      "id": "log-1790054351980",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithishwaran2703@gmail.com",
+      "timestamp": "2026-09-22T05:19:11.980Z"
+    },
+    {
+      "id": "log-1790054350435",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithishwaran2703@gmail.com",
+      "timestamp": "2026-09-22T05:19:10.435Z"
+    },
+    {
+      "id": "log-1790054300689",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1790054256280",
+      "userName": "nithish",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithishwaran2703@gmail.com",
+      "timestamp": "2026-09-22T05:18:20.689Z"
+    },
+    {
+      "id": "log-1790054256280",
+      "action": "Created Admin User",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Created new admin user: nithish (ADMIN)",
+      "timestamp": "2026-09-22T05:17:36.280Z"
+    },
+    {
+      "id": "log-1790054168131",
+      "action": "Deleted User Account",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Deleted user account: Admissions Desk (Enquiry Manager) (admissions@vannam.edu)",
+      "timestamp": "2026-09-22T05:16:08.131Z"
+    },
+    {
+      "id": "log-1790054165129",
+      "action": "Deleted User Account",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Deleted user account: (Super Admin) (nithish@gmail.com)",
+      "timestamp": "2026-09-22T05:16:05.129Z"
+    },
+    {
+      "id": "log-1790054144919",
+      "action": "Deleted User Account",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Deleted user account: Vikram K. (Content Manager) (content@vannam.edu)",
+      "timestamp": "2026-09-22T05:15:44.919Z"
+    },
+    {
+      "id": "log-1790054133100",
+      "action": "Deleted User Account",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Deleted user account: Dr. Gayathri R. (Super Admin) (admin@vannam.edu)",
+      "timestamp": "2026-09-22T05:15:33.100Z"
+    },
+    {
+      "id": "log-1790054127261",
+      "action": "Deleted User Account",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Deleted user account: Mr.gokulnath (gokul@gmail.com)",
+      "timestamp": "2026-09-22T05:15:27.261Z"
+    },
+    {
+      "id": "log-1790054087667",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T05:14:47.667Z"
+    },
+    {
+      "id": "log-1790053839230",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for nithish@gmail.com",
+      "timestamp": "2026-09-22T05:10:39.230Z"
+    },
+    {
+      "id": "log-1790053720349",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-admin-default",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for admin@vannam.edu",
+      "timestamp": "2026-09-22T05:08:40.349Z"
+    },
+    {
+      "id": "log-1790053674096",
+      "action": "PASSWORD_RESET_SUCCESS",
+      "userId": "usr-admin-default",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Password successfully updated via OTP verification for admin@vannam.edu",
+      "timestamp": "2026-09-22T05:07:54.096Z"
+    },
+    {
+      "id": "log-1790053674042",
+      "action": "PASSWORD_RESET_OTP_REQUESTED",
+      "userId": "usr-admin-default",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Password reset verification OTP generated and dispatched for admin@vannam.edu",
+      "timestamp": "2026-09-22T05:07:54.042Z"
+    },
+    {
+      "id": "log-1790048872973",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T03:47:52.973Z"
+    },
+    {
+      "id": "log-1790048860943",
+      "action": "TEACHER Login",
+      "userId": "usr-teacher-1",
+      "userName": "Mrs. Priya Sharma",
+      "resource": "Auth",
+      "details": "Successful login to teacher portal",
+      "timestamp": "2026-09-22T03:47:40.943Z"
+    },
+    {
+      "id": "log-1790048846513",
+      "action": "ADMIN Login",
+      "userId": "usr-admissions-default",
+      "userName": "Admissions Desk (Enquiry Manager)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T03:47:26.513Z"
+    },
+    {
+      "id": "log-1790048832685",
+      "action": "ADMIN Login",
+      "userId": "usr-content-default",
+      "userName": "Vikram K. (Content Manager)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T03:47:12.685Z"
+    },
+    {
+      "id": "log-1790048817187",
+      "action": "ADMIN Login",
+      "userId": "usr-admin-default",
+      "userName": "Dr. Gayathri R. (Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T03:46:57.187Z"
+    },
+    {
+      "id": "log-1790048375074",
+      "action": "content_manager Login",
+      "userId": "usr-teacher-1",
+      "userName": "Mr.gokulnath",
+      "resource": "Auth",
+      "details": "Successful login to content_manager portal",
+      "timestamp": "2026-09-22T03:39:35.074Z"
+    },
+    {
+      "id": "log-1790048342210",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user Mr.gokulnath (gokul@gmail.com)",
+      "timestamp": "2026-09-22T03:39:02.211Z"
+    },
+    {
+      "id": "log-1790048339005",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user Mr.gokulnath (gokul@gmail.com)",
+      "timestamp": "2026-09-22T03:38:59.005Z"
+    },
+    {
+      "id": "log-1790048312227",
+      "action": "ADMIN Login",
+      "userId": "usr-1",
+      "userName": "(Super Admin)",
+      "resource": "Auth",
+      "details": "Successful login to ADMIN portal",
+      "timestamp": "2026-09-22T03:38:32.227Z"
+    },
+    {
+      "id": "log-1790048224384",
+      "action": "Updated User Credentials",
+      "userId": "usr-1",
+      "userName": "Administrator",
+      "resource": "Users",
+      "details": "Updated credentials for user Mr.gokulnath (gokul@gmail.com)",
+      "timestamp": "2026-09-22T03:37:04.384Z"
+    },
     {
       "id": "log-1789979427879",
       "action": "Updated Testimonials Content",
@@ -1207,5 +1472,33 @@
       "status": "ASSIGNED",
       "materials": "Jolly Phonics Workbook Section 1"
     }
-  ]
+  ],
+  "passwordResets": {
+    "admin@vannam.edu": {
+      "otp": "392243",
+      "expiresAt": 1790054320349,
+      "attempts": 0,
+      "createdAt": "2026-09-22T05:08:40.349Z"
+    },
+    "nithish@gmail.com": {
+      "otp": "853252",
+      "expiresAt": 1790054439230,
+      "attempts": 0,
+      "createdAt": "2026-09-22T05:10:39.230Z"
+    },
+    "nithishwaran2703@gmail.com": {
+      "otp": "131212",
+      "expiresAt": 1790054952749,
+      "attempts": 0,
+      "createdAt": "2026-09-22T05:19:12.749Z"
+    },
+    "918220230896": {
+      "otp": "572295",
+      "userEmail": "nithishwaran2703@gmail.com",
+      "phone": "918220230896",
+      "expiresAt": 1790057765529,
+      "attempts": 0,
+      "createdAt": "2026-09-22T06:06:05.529Z"
+    }
+  }
 }

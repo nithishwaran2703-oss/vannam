@@ -264,8 +264,8 @@ export default function TeacherDashboard() {
       {/* Top Navbar */}
       <header className="sticky top-0 z-30 bg-[#0B132B]/80 backdrop-blur-xl border-b border-white/10 px-4 sm:px-8 py-3.5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00A8E8] to-[#0F2963] p-1.5 flex items-center justify-center border border-white/10">
-            <Image src="/logo.png" alt="Logo" width={24} height={24} className="object-contain" />
+          <div className="h-9 px-2.5 bg-white rounded-xl flex items-center justify-center border border-white/20 shadow-xs">
+            <img src="/logo.png" alt="Logo" className="h-6 w-auto object-contain" />
           </div>
           <div>
             <div className="text-sm font-black tracking-tight text-white flex items-center gap-2">

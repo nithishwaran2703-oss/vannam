@@ -153,19 +153,19 @@ export default function AdminLayout({ children }) {
     if (isSuperAdmin) return; // Full access to entire web
 
     if (isTeacher) {
-      const allowedTeacherRoutes = ['/admin/activities', '/admin/attendance', '/admin/homework', '/admin/classes', '/admin/students', '/admin'];
+      const allowedTeacherRoutes = ['/admin/activities', '/admin/attendance', '/admin/homework', '/admin/classes', '/admin/students', '/admin', '/admin/users'];
       if (!allowedTeacherRoutes.includes(pathname)) {
         showToast('Teacher access: Restricted to student activities & classroom operations', 'info');
         router.push('/admin/activities');
       }
     } else if (isContentManager) {
-      const allowedContentRoutes = ['/admin/announcements', '/admin/teachers', '/admin/programs', '/admin/facilities', '/admin/gallery', '/admin/testimonials', '/admin/about', '/admin/homepage', '/admin'];
+      const allowedContentRoutes = ['/admin/announcements', '/admin/teachers', '/admin/programs', '/admin/facilities', '/admin/gallery', '/admin/testimonials', '/admin/about', '/admin/homepage', '/admin', '/admin/users'];
       if (!allowedContentRoutes.includes(pathname)) {
         showToast('Content access: Restricted to Website Live CMS', 'info');
         router.push('/admin/announcements');
       }
     } else if (isEnquiryManager) {
-      const allowedEnquiryRoutes = ['/admin/admissions', '/admin/enquiries', '/admin'];
+      const allowedEnquiryRoutes = ['/admin/admissions', '/admin/enquiries', '/admin', '/admin/users'];
       if (!allowedEnquiryRoutes.includes(pathname)) {
         showToast('Enquiry Manager access: Restricted to Admissions', 'info');
         router.push('/admin/admissions');
@@ -227,7 +227,7 @@ export default function AdminLayout({ children }) {
     },
     {
       group: 'System & Admissions',
-      visible: isSuperAdmin || isEnquiryManager,
+      visible: true,
       items: [
         {
           label: 'Admissions Queue',
@@ -237,7 +237,14 @@ export default function AdminLayout({ children }) {
           badge: (badges.newAdmissions || 0) + (badges.newEnquiries || 0) > 0 ? (badges.newAdmissions || 0) + (badges.newEnquiries || 0) : null,
           badgeColor: 'bg-amber-500 text-white'
         },
-        { label: 'Staff & Admin Accounts', href: '/admin/users', icon: UserCog, visible: isSuperAdmin },
+        { 
+          label: 'Staff & Admin Accounts', 
+          href: '/admin/users', 
+          icon: UserCog, 
+          visible: true,
+          badge: !isSuperAdmin ? 'View Only' : null,
+          badgeColor: 'bg-slate-700 text-slate-300'
+        },
         { label: 'School Settings', href: '/admin/settings', icon: Settings, visible: isSuperAdmin }
       ]
     }
@@ -359,16 +366,18 @@ export default function AdminLayout({ children }) {
         {/* Permanent Desktop Sidebar (lg and up) */}
         <aside className="hidden lg:flex lg:w-64 flex-col bg-[#0F2963] text-white shrink-0 h-full border-r border-slate-800">
           {/* Sidebar Top Header */}
-          <div className="h-16 px-5 border-b border-white/10 flex items-center gap-3 shrink-0">
-            <div className="w-9 h-9 rounded-xl bg-white/10 p-1.5 flex items-center justify-center ring-2 ring-white/10 shrink-0">
-              <Image src="/logo.png" alt="Logo" width={28} height={28} className="object-contain" />
-            </div>
-            <div className="min-w-0">
-              <div className="font-extrabold text-sm tracking-tight text-white truncate">Vannam Preschool</div>
-              <div className="text-[10px] font-semibold text-[#CBD8F6]/70 uppercase tracking-wider">
-                Control Center
+          <div className="h-16 px-4 border-b border-white/10 flex items-center gap-3 shrink-0">
+            <Link href="/admin" className="flex items-center gap-2.5 min-w-0 group">
+              <div className="h-10 px-2.5 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xs border border-white/20 group-hover:scale-102 transition-transform">
+                <img src="/logo.png" alt="Vannam Preschool" className="h-7 w-auto object-contain" />
               </div>
-            </div>
+              <div className="min-w-0 flex flex-col justify-center">
+                <div className="font-extrabold text-xs tracking-tight text-white truncate group-hover:text-[#F59E0B] transition-colors">Vannam Admin</div>
+                <div className="text-[9.5px] font-bold text-[#F59E0B] uppercase tracking-wider">
+                  Control Center
+                </div>
+              </div>
+            </Link>
           </div>
 
           {/* Nav Menu Items */}
@@ -393,17 +402,17 @@ export default function AdminLayout({ children }) {
             <aside className="relative w-72 max-w-[85vw] bg-[#0F2963] text-white flex flex-col h-full shadow-2xl z-50 animate-in slide-in-from-left duration-200">
               {/* Drawer Top Header with Close Button */}
               <div className="h-16 px-4 border-b border-white/10 flex items-center justify-between shrink-0">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-white/10 p-1 flex items-center justify-center shrink-0">
-                    <Image src="/logo.png" alt="Logo" width={24} height={24} className="object-contain" />
+                <Link href="/admin" className="flex items-center gap-2.5 min-w-0" onClick={() => setSidebarOpen(false)}>
+                  <div className="h-9 px-2 bg-white rounded-xl flex items-center justify-center shrink-0 shadow-xs">
+                    <img src="/logo.png" alt="Vannam Preschool" className="h-6 w-auto object-contain" />
                   </div>
-                  <div className="min-w-0">
-                    <div className="font-extrabold text-xs text-white truncate">Vannam Preschool</div>
-                    <div className="text-[9px] font-semibold text-[#CBD8F6]/70 uppercase tracking-wider">
+                  <div className="min-w-0 flex flex-col justify-center">
+                    <div className="font-extrabold text-xs text-white truncate">Vannam Admin</div>
+                    <div className="text-[9px] font-bold text-[#F59E0B] uppercase tracking-wider">
                       Control Center
                     </div>
                   </div>
-                </div>
+                </Link>
                 <button
                   type="button"
                   onClick={() => setSidebarOpen(false)}
@@ -443,14 +452,9 @@ export default function AdminLayout({ children }) {
               </button>
 
               {/* Mobile Brand Logo */}
-              <div className="flex items-center gap-2 lg:hidden shrink-0">
-                <div className="w-7 h-7 rounded-lg bg-[#0F2963] p-1 flex items-center justify-center shrink-0">
-                  <Image src="/logo.png" alt="Logo" width={20} height={20} className="object-contain" />
-                </div>
-                <span className="font-extrabold text-xs text-[#0F2963] tracking-tight hidden sm:inline-block">
-                  Vannam
-                </span>
-              </div>
+              <Link href="/admin" className="flex items-center lg:hidden shrink-0">
+                <img src="/logo.png" alt="Vannam" className="h-7 w-auto object-contain" />
+              </Link>
 
               {/* Clean Breadcrumb Path */}
               <div className="flex items-center gap-1.5 text-xs text-slate-400 pl-2 sm:pl-3 border-l border-slate-200 min-w-0">

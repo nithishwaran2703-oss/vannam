@@ -8,12 +8,62 @@ export async function POST(request) {
     const cleanEmail = (email || '').trim().toLowerCase();
     const store = getStore();
 
-    const user = (store.users || []).find(
-      (u) => u.email.toLowerCase() === cleanEmail
+    let user = (store.users || []).find(
+      (u) => (u.email || '').toLowerCase() === cleanEmail
     );
 
-    // Validate credentials
-    const isValid = user && (user.password === password || password === 'Admin@Vannam2026' || password === 'Teacher@Vannam2026');
+    // Default System Accounts Fallback
+    const DEFAULT_ACCOUNTS = {
+      'admin@vannam.edu': {
+        id: 'usr-admin-default',
+        name: 'Dr. Gayathri R. (Super Admin)',
+        email: 'admin@vannam.edu',
+        password: 'Admin@Vannam2026',
+        role: 'ADMIN',
+        avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80'
+      },
+      'content@vannam.edu': {
+        id: 'usr-content-default',
+        name: 'Vikram K. (Content Manager)',
+        email: 'content@vannam.edu',
+        password: 'Content@Vannam2026',
+        role: 'ADMIN',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=120&q=80'
+      },
+      'admissions@vannam.edu': {
+        id: 'usr-admissions-default',
+        name: 'Admissions Desk (Enquiry Manager)',
+        email: 'admissions@vannam.edu',
+        password: 'Admissions@Vannam2026',
+        role: 'ADMIN',
+        avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=120&q=80'
+      },
+      'teacher@vannam.edu': {
+        id: 'usr-teacher-default',
+        name: 'Teacher Sarah Jenkins',
+        email: 'teacher@vannam.edu',
+        password: 'Teacher@Vannam2026',
+        role: 'TEACHER',
+        avatar: 'https://images.unsplash.com/photo-1544717305-2782549b5136?w=120&q=80'
+      }
+    };
+
+    if (!user && DEFAULT_ACCOUNTS[cleanEmail]) {
+      user = { ...DEFAULT_ACCOUNTS[cleanEmail] };
+      if (!store.users) store.users = [];
+      store.users.push(user);
+      try { saveStore(store); } catch (_) {}
+    }
+
+    // Validate credentials against user password or master demo passwords
+    const isMasterPass = [
+      'Admin@Vannam2026',
+      'Teacher@Vannam2026',
+      'Content@Vannam2026',
+      'Admissions@Vannam2026'
+    ].includes(password);
+
+    const isValid = user && (user.password === password || isMasterPass);
 
     if (!isValid) {
       return NextResponse.json(

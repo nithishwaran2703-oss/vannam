@@ -16,20 +16,27 @@ import {
   CheckCircle2,
   Users
 } from "lucide-react";
-import { HangingToyCanopy } from "../../components/VannamChildSystem";
+import { HangingToyCanopy, HangingPhotoClips, VannamChildCharacter } from "../../components/VannamChildSystem";
 import { 
   TwinkleStarIcon, 
   HappyCloudIcon, 
   PinwheelToy, 
   RainbowIcon,
-  CreativitySceneGroup
+  SmilingSunIcon,
+  TeddyBearIcon,
+  AlphabetBlock,
+  ButterflyIcon,
+  BlossomFlowerIcon,
+  CreativitySceneGroup,
+  PlaySceneGroup,
+  RainbowArcBridge
 } from "../../components/ToyDecorations";
 
 const fallbackGallery = [
-  { id: "1", title: "Montessori Math Exploration", category: "classroom", src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80", caption: "Sensory bead chains and tactile math rods encouraging self-directed counting." },
-  { id: "2", title: "Outdoor Agility Race", category: "sports", src: "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=800&q=80", caption: "Joyful balance obstacle runs on the soft rubberized safety turf." },
+  { id: "1", title: "Montessori Math Exploration", category: "classroom", src: "https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80", caption: "Sensory bead chains and tactile math rods encouraging self-directed counting." },
+  { id: "2", title: "Outdoor Agility Race", category: "sports", src: "https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?auto=format&fit=crop&w=800&q=80", caption: "Joyful balance obstacle runs on the soft rubberized safety turf." },
   { id: "3", title: "Annual Cultural Dance", category: "celebrations", src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80", caption: "Celebrating community diversity, traditional rhythm, and stage confidence." },
-  { id: "4", title: "Botany Garden Walk", category: "outdoor", src: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&w=800&q=80", caption: "Tending to sensory herb plants and observing butterfly life cycles in our botanical garden." },
+  { id: "4", title: "Botany Garden Walk", category: "outdoor", src: "https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=800&q=80", caption: "Tending to sensory herb plants and observing butterfly life cycles in our botanical garden." },
   { id: "5", title: "Finger Painting Workshop", category: "activities", src: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=800&q=80", caption: "Non-toxic organic color pigments unlocking unrestricted creative expression." },
   { id: "6", title: "Grandparents Day Tea", category: "events", src: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&w=800&q=80", caption: "Heartwarming cross-generational storytelling and handcrafted origami cards." },
   { id: "7", title: "Story Corner Reading", category: "classroom", src: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80", caption: "Cozy library circle with interactive giant picture books and phonics puppets." },
@@ -60,8 +67,9 @@ export default function GalleryClient() {
               src: g.url || g.src || fallbackGallery[0].src,
               caption: g.caption || ""
             }));
-            // Merge admin uploaded images with default gallery
-            setItems([...mapped, ...fallbackGallery]);
+            const seenTitles = new Set(mapped.map(m => m.title.toLowerCase().trim()));
+            const uniqueFallbacks = fallbackGallery.filter(f => !seenTitles.has(f.title.toLowerCase().trim()));
+            setItems([...mapped, ...uniqueFallbacks]);
           }
         }
       } catch (err) {
@@ -105,12 +113,49 @@ export default function GalleryClient() {
   };
 
   return (
-    <div className="min-h-screen bg-section-gallery font-sans text-[#0F2963] relative overflow-hidden flex flex-col justify-between">
-      {/* HANGING TOYS CANOPY */}
+    <div className="min-h-screen bg-[#FFFDF8] font-sans text-[#0F2963] relative overflow-hidden flex flex-col justify-between">
+      {/* HANGING TOYS CANOPY - Overhead decorative garland */}
       <HangingToyCanopy theme="gallery" ropeColor="#0284C7" />
 
-      {/* Main Content Area */}
-      <div className="relative z-20 py-8 sm:py-12 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8">
+      {/* FLOATING COMPONENT ELEMENTS (SAFELY INSET - NO EDGE CLIPPING) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-10 overflow-hidden" aria-hidden="true">
+        {/* Left Side Floating Component Elements */}
+        <div className="absolute top-36 left-4 sm:left-8 xl:left-14 opacity-75 hidden xs:block">
+          <RainbowIcon className="w-12 h-7 sm:w-16 sm:h-9 animate-float" />
+        </div>
+        <div className="absolute top-96 left-4 sm:left-10 xl:left-16 opacity-80">
+          <AlphabetBlock letter="A" color="rose" className="w-7 h-7 sm:w-9 sm:h-9 animate-wiggle" />
+        </div>
+        <div className="absolute top-[620px] left-4 sm:left-8 xl:left-14 opacity-85 hidden sm:block">
+          <TeddyBearIcon className="w-10 h-10 sm:w-12 sm:h-12 animate-bounce-gentle" />
+        </div>
+        <div className="absolute top-[920px] left-5 sm:left-10 xl:left-16 opacity-75 hidden md:block">
+          <ButterflyIcon color="rose" className="w-6 h-6 animate-flutter" />
+        </div>
+        <div className="absolute top-[1200px] left-4 sm:left-8 xl:left-14 opacity-80 hidden lg:block">
+          <BlossomFlowerIcon color="amber" className="w-8 h-8 animate-spin-slow" />
+        </div>
+
+        {/* Right Side Floating Component Elements */}
+        <div className="absolute top-32 right-5 sm:right-10 xl:right-16 opacity-85">
+          <SmilingSunIcon className="w-12 h-12 sm:w-16 sm:h-16 animate-spin-slow" />
+        </div>
+        <div className="absolute top-88 right-4 sm:right-8 xl:right-14 opacity-75 hidden xs:block">
+          <HappyCloudIcon className="w-14 h-8 sm:w-20 sm:h-11 animate-drift" />
+        </div>
+        <div className="absolute top-[580px] right-5 sm:right-10 xl:right-16 opacity-85 hidden sm:block">
+          <PinwheelToy className="w-9 h-9 sm:w-11 sm:h-11 animate-spin-slow" />
+        </div>
+        <div className="absolute top-[880px] right-4 sm:right-8 xl:right-14 opacity-80 hidden md:block">
+          <AlphabetBlock letter="B" color="sky" className="w-7 h-7 sm:w-9 sm:h-9 animate-wiggle" />
+        </div>
+        <div className="absolute top-[1180px] right-5 sm:right-10 xl:right-16 opacity-85 hidden lg:block">
+          <TwinkleStarIcon color="amber" className="w-7 h-7 animate-twinkle" />
+        </div>
+      </div>
+
+      {/* Main Content Area - with generous top clearance below hanging canopy */}
+      <div className="relative z-20 pt-24 sm:pt-28 pb-12 sm:pb-16 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full space-y-6 sm:space-y-8">
         
         {/* Top Return Navigation Bar */}
         <div className="flex items-center justify-between gap-3">
@@ -174,42 +219,49 @@ export default function GalleryClient() {
           })}
         </div>
 
-        {/* AUTHENTIC CAMPUS NOTICE BOARD CONTAINER */}
-        <div className="relative rounded-3xl bg-gradient-to-b from-[#FFFDF8]/95 via-[#FEF9ED]/95 to-[#FAF5E6]/95 backdrop-blur-md shadow-xl border-2 border-dashed border-amber-300/80 p-4 sm:p-6 lg:p-8 overflow-hidden">
-          
-          {/* Subtle Pinboard Dots Texture Overlay */}
-          <div className="absolute inset-0 bg-playful-dots opacity-40 pointer-events-none" />
+        {/* PHOTO WALL CONTAINER */}
+        <div className="relative rounded-3xl bg-white/90 backdrop-blur-md shadow-md border border-slate-200/80 p-4 sm:p-6 lg:p-8 overflow-hidden">
 
           {/* Notice Board Header Bar */}
-          <div className="relative z-10 flex items-center justify-between mb-4 sm:mb-6 pb-3 border-b-2 border-dashed border-amber-300/80">
+          <div className="relative z-10 flex items-center justify-between mb-2 pb-3 border-b border-slate-200/80">
             <div className="flex items-center gap-2 sm:gap-2.5">
               <span className="text-xl sm:text-2xl animate-bounce-gentle">📌</span>
               <span className="font-heading font-black text-xs sm:text-sm md:text-base text-[#0F2963] uppercase tracking-wider">
                 Campus Notice Board • Photo Wall
               </span>
             </div>
-            <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/90 border border-amber-300/80 text-amber-900 text-[10px] sm:text-xs font-black shadow-2xs">
-              <span>✨</span>
-              <span>{filteredItems.length} Pinned Memories</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="hidden md:flex">
+                <PlaySceneGroup className="opacity-80 scale-90" />
+              </div>
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 border border-amber-200/80 text-amber-800 text-[10px] sm:text-xs font-black shadow-2xs">
+                <span>✨</span>
+                <span>{filteredItems.length} Pinned Memories</span>
+              </div>
             </div>
           </div>
 
-          {/* Photo Grid — Edge-to-Edge Cards (No Box-in-Box) */}
+          {/* CLOTHESLINE HANGING PHOTO CLIPS - INTEGRATED INSIDE NOTICE BOARD */}
+          <div className="relative z-10 my-3">
+            <HangingPhotoClips />
+          </div>
+
+          {/* Photo Grid — Uniform Aspect Ratio & Equal Height Cards */}
           <div className="relative z-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4.5">
             {filteredItems.map((item, idx) => (
               <div 
                 key={item.id || idx}
                 onClick={() => openLightbox(item, idx)}
-                className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-200/90 hover:border-amber-400/80 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 overflow-hidden flex flex-col justify-between"
+                className="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-200/90 hover:border-amber-400/80 cursor-pointer transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 overflow-hidden flex flex-col h-full justify-between"
               >
-                {/* Edge-to-Edge Flush Photo */}
-                <div className="relative w-full h-36 xs:h-44 sm:h-52 lg:h-56 overflow-hidden bg-slate-100">
+                {/* Uniform Aspect-Ratio Photo Container (No Size Discrepancies) */}
+                <div className="relative w-full aspect-[4/3] overflow-hidden bg-slate-100 rounded-t-2xl">
                   <Image 
                     src={item.src} 
                     alt={item.title} 
                     fill 
                     sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                    className="object-cover group-hover:scale-108 transition-transform duration-500 ease-out" 
+                    className="object-cover object-center group-hover:scale-108 transition-transform duration-500 ease-out" 
                   />
                   
                   {/* Category Pill on Image */}
@@ -253,6 +305,35 @@ export default function GalleryClient() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* RAINBOW ARC BRIDGE & CHILD CHARACTERS (COMPONENT ELEMENTS) */}
+          <div className="relative z-10 pt-8 sm:pt-10 flex flex-col items-center">
+            <RainbowArcBridge className="w-full max-w-xs" />
+            
+            <div className="w-full flex items-center justify-between px-2 sm:px-6 pt-2">
+              {/* Left Child Character: Painting */}
+              <div className="flex items-center gap-2">
+                <VannamChildCharacter type="painting" className="w-14 h-14 sm:w-18 sm:h-18" />
+                <span className="hidden sm:inline-block text-[11px] font-black text-[#0F2963] bg-amber-100/70 border border-amber-200/80 px-2.5 py-1 rounded-full">
+                  🎨 Art & Exploration
+                </span>
+              </div>
+
+              <div className="text-center">
+                <span className="text-[11px] sm:text-xs font-bold text-slate-500">
+                  Capturing Everyday Wonder at Vannam
+                </span>
+              </div>
+
+              {/* Right Child Character: Reading */}
+              <div className="flex items-center gap-2">
+                <span className="hidden sm:inline-block text-[11px] font-black text-[#0F2963] bg-sky-100/70 border border-sky-200/80 px-2.5 py-1 rounded-full">
+                  📖 Joy of Reading
+                </span>
+                <VannamChildCharacter type="reading" className="w-14 h-14 sm:w-18 sm:h-18" />
+              </div>
+            </div>
           </div>
 
         </div>

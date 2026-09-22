@@ -1132,7 +1132,7 @@ export function TrustGardenIllustration() {
 
 export function HangingPhotoClips() {
   return (
-    <div className="relative w-full py-3 pointer-events-none select-none" aria-hidden="true">
+    <div className="relative w-full pb-11 pt-2 pointer-events-none select-none" aria-hidden="true">
       {/* Clothesline Cord */}
       <div className="w-full h-[2px] bg-amber-700/60 relative">
         <div className="flex justify-around items-start -mt-1 px-6">

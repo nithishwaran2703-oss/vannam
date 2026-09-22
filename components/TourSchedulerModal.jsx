@@ -5,7 +5,6 @@ import { X, Calendar, Clock, User, Phone, Mail, MapPin, CheckCircle2, Sparkles }
 import confetti from "canvas-confetti";
 
 export default function TourSchedulerModal({ isOpen, onClose }) {
-  const [selectedBranch, setSelectedBranch] = useState("main");
   const [selectedTimeSlot, setSelectedTimeSlot] = useState("10am");
   const [selectedDate, setSelectedDate] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -32,9 +31,9 @@ export default function TourSchedulerModal({ isOpen, onClose }) {
           childDob: form.childAge ? `Age ~${form.childAge}` : '',
           phone: form.phone,
           email: form.email,
-          program: selectedBranch === "main" ? "Rainbow Gardens (Main)" : "City Central Campus",
+          program: "Campus Tour - Coimbatore Main Campus",
           preferredDate: selectedDate ? `${selectedDate} (${selectedTimeSlot === "10am" ? "10:00 AM" : "03:30 PM"})` : '',
-          notes: form.notes || `Tour booking request at ${selectedBranch} campus.`
+          notes: form.notes || "Tour booking request at Coimbatore Main Campus."
         })
       });
     } catch (err) {
@@ -80,13 +79,22 @@ export default function TourSchedulerModal({ isOpen, onClose }) {
             <p className="text-xs sm:text-sm text-[#334155] max-w-sm mx-auto font-medium">
               We look forward to meeting you and <strong>{form.childName || "your child"}</strong>! Our admissions officer will call you to confirm your visit details.
             </p>
-            <div className="bg-[#F0F4FC] p-4 rounded-2xl border border-[#CBD8F6] text-xs text-[#1E293B] space-y-1.5 font-bold max-w-xs mx-auto">
-              <div>📍 Branch: {selectedBranch === "main" ? "Rainbow Gardens Campus" : "City Central Campus"}</div>
-              <div>📅 Time Slot: {selectedTimeSlot === "10am" ? "10:00 AM (Morning)" : "03:30 PM (Afternoon)"}</div>
+            <div className="bg-[#F0F4FC] p-4 rounded-2xl border border-[#CBD8F6] text-xs text-[#1E293B] space-y-2 font-bold max-w-sm mx-auto text-left">
+              <div className="flex items-start gap-2">
+                <span className="shrink-0">📍</span>
+                <div>
+                  <div className="font-extrabold text-[#0F2963]">Coimbatore Main Campus</div>
+                  <div className="text-[11px] font-normal text-slate-600 mt-0.5">Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001</div>
+                </div>
+              </div>
+              <div className="pt-2 border-t border-slate-200 flex items-center gap-2 text-slate-700">
+                <span>📅</span>
+                <span>Visit: {selectedDate ? `${selectedDate} • ` : ""}{selectedTimeSlot === "10am" ? "10:00 AM (Morning)" : "03:30 PM (Afternoon)"}</span>
+              </div>
             </div>
             <button
               onClick={onClose}
-              className="bg-vannam-yellow hover:bg-vannam-yellow text-[#0F2963] font-heading text-xs font-extrabold px-8 py-3.5 rounded-xl shadow-md transition"
+              className="bg-vannam-yellow hover:bg-vannam-yellow text-[#0F2963] font-heading text-xs font-extrabold px-8 py-3.5 rounded-xl shadow-md transition cursor-pointer"
             >
               Done & Close
             </button>
@@ -94,35 +102,31 @@ export default function TourSchedulerModal({ isOpen, onClose }) {
         ) : (
           <form onSubmit={handleSubmit} className="p-4 sm:p-8 space-y-4 text-[#0F2963] max-h-[75vh] overflow-y-auto">
             
+            {/* Campus Location Card (Single Campus with Address) */}
             <div>
-              <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5">1. Select Preferred Campus Branch *</label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setSelectedBranch("main")}
-                  className={`p-3 sm:p-3.5 rounded-2xl text-xs font-extrabold border-2 transition text-left ${
-                    selectedBranch === "main" ? "bg-vannam-yellow/5 border-vannam-yellow/40 text-[#0F2963] shadow-sm" : "bg-[#F0F4FC] border-[#CBD8F6] text-[#1E293B] hover:bg-[#E8EEFB]"
-                  }`}
-                >
-                  📍 Rainbow Gardens (Main)
-                  <span className="block text-[10px] font-medium text-[#64748B] mt-0.5">Sunshine Ave, Sector 4</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setSelectedBranch("city")}
-                  className={`p-3 sm:p-3.5 rounded-2xl text-xs font-extrabold border-2 transition text-left ${
-                    selectedBranch === "city" ? "bg-vannam-yellow/5 border-vannam-yellow/40 text-[#0F2963] shadow-sm" : "bg-[#F0F4FC] border-[#CBD8F6] text-[#1E293B] hover:bg-[#E8EEFB]"
-                  }`}
-                >
-                  📍 City Central Campus
-                  <span className="block text-[10px] font-medium text-[#64748B] mt-0.5">Metro Hub, Park St</span>
-                </button>
+              <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5 flex items-center gap-1.5">
+                <MapPin className="w-3.5 h-3.5 text-vannam-orange" />
+                <span>Campus Location</span>
+              </label>
+              <div className="p-3.5 rounded-2xl bg-[#F0F4FC] border border-[#CBD8F6] text-left flex items-start gap-2.5">
+                <div className="w-8 h-8 rounded-xl bg-vannam-yellow/25 text-vannam-orange flex items-center justify-center text-base shrink-0 mt-0.5">
+                  📍
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="font-heading font-extrabold text-xs sm:text-sm text-[#0F2963] flex items-center gap-2">
+                    <span>Coimbatore Main Campus</span>
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">Open for Visits</span>
+                  </div>
+                  <p className="text-[11px] font-medium text-slate-600 mt-0.5 leading-snug">
+                    Door no: 701, G-6 ground floor, Sullivan Street, Gandhi Park, Coimbatore - 641 001
+                  </p>
+                </div>
               </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5">2. Preferred Date *</label>
+                <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5">1. Preferred Date *</label>
                 <input
                   type="date"
                   required
@@ -133,12 +137,12 @@ export default function TourSchedulerModal({ isOpen, onClose }) {
               </div>
 
               <div>
-                <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5">3. Time Slot *</label>
+                <label className="block text-xs font-extrabold text-[#1E293B] uppercase mb-1.5">2. Time Slot *</label>
                 <div className="grid grid-cols-2 gap-2">
                   <button
                     type="button"
                     onClick={() => setSelectedTimeSlot("10am")}
-                    className={`py-3 rounded-2xl text-xs font-bold border transition ${
+                    className={`py-3 rounded-2xl text-xs font-bold border transition cursor-pointer ${
                       selectedTimeSlot === "10am" ? "bg-[#0F2963] text-white shadow-xs" : "bg-[#F0F4FC] border-[#CBD8F6] text-[#1E293B]"
                     }`}
                   >
@@ -147,7 +151,7 @@ export default function TourSchedulerModal({ isOpen, onClose }) {
                   <button
                     type="button"
                     onClick={() => setSelectedTimeSlot("3pm")}
-                    className={`py-3 rounded-2xl text-xs font-bold border transition ${
+                    className={`py-3 rounded-2xl text-xs font-bold border transition cursor-pointer ${
                       selectedTimeSlot === "3pm" ? "bg-[#0F2963] text-white shadow-xs" : "bg-[#F0F4FC] border-[#CBD8F6] text-[#1E293B]"
                     }`}
                   >

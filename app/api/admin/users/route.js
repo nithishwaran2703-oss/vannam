@@ -2,22 +2,71 @@ import { NextResponse } from 'next/server';
 import { getStore, saveStore } from '@/lib/dataStore';
 import pool from '@/lib/db';
 
-export async function GET() {
+function getSessionUser(request) {
+  try {
+    const adminSessionCookie = request.cookies.get('vannam_admin_session');
+    if (adminSessionCookie?.value) {
+      const val = adminSessionCookie.value;
+      if (typeof val === 'string' && val.startsWith('{')) {
+        return JSON.parse(val);
+      }
+    }
+  } catch (_) {}
+  return null;
+}
+
+function checkIsAdmin(sessionUser) {
+  if (!sessionUser) return false;
+  const role = (sessionUser.role || '').toUpperCase();
+  return role === 'ADMIN' || role === 'SUPER_ADMIN';
+}
+
+export async function GET(request) {
+  const sessionUser = getSessionUser(request);
+  const isAdmin = checkIsAdmin(sessionUser);
   const store = getStore();
-  const safeUsers = (store.users || []).map((u) => ({
-    id: u.id,
-    name: u.name,
-    email: u.email,
-    password: u.password,
-    role: u.role,
-    avatar: u.avatar,
-    lastLogin: u.lastLogin
-  }));
-  return NextResponse.json({ success: true, users: safeUsers });
+
+  const safeUsers = (store.users || []).map((u) => {
+    // Only Admin can see other users' passwords in plaintext.
+    // A non-admin user can only see their own password if matched; all other accounts have password masked.
+    const isSelf = sessionUser && (
+      u.id === sessionUser.id || 
+      (u.email || '').toLowerCase() === (sessionUser.email || '').toLowerCase()
+    );
+    const canViewPassword = isAdmin || isSelf;
+
+    return {
+      id: u.id,
+      name: u.name,
+      email: u.email,
+      password: canViewPassword ? u.password : '••••••••',
+      role: u.role,
+      avatar: u.avatar,
+      lastLogin: u.lastLogin,
+      canEdit: isAdmin || isSelf,
+      canViewPassword
+    };
+  });
+
+  return NextResponse.json({
+    success: true,
+    users: safeUsers,
+    isAdmin,
+    currentUserId: sessionUser?.id || null
+  });
 }
 
 export async function POST(request) {
   try {
+    const sessionUser = getSessionUser(request);
+    const isAdmin = checkIsAdmin(sessionUser);
+
+    if (!isAdmin) {
+      return NextResponse.json({
+        error: 'Permission Denied: Only Super Admin is authorized to create new staff or administrator accounts.'
+      }, { status: 403 });
+    }
+
     const body = await request.json();
     const { name, email, password, role, avatar, user } = body;
 
@@ -45,8 +94,8 @@ export async function POST(request) {
     store.users = [...(store.users || []), newUser];
     saveStore(store, {
       action: 'Created Admin User',
-      userId: user?.id || 'usr-1',
-      userName: user?.name || 'Administrator',
+      userId: sessionUser?.id || user?.id || 'usr-1',
+      userName: sessionUser?.name || user?.name || 'Administrator',
       resource: 'Users',
       details: `Created new admin user: ${name} (${role})`
     });
@@ -76,6 +125,9 @@ export async function POST(request) {
 
 export async function PUT(request) {
   try {
+    const sessionUser = getSessionUser(request);
+    const isAdmin = checkIsAdmin(sessionUser);
+
     const body = await request.json();
     const { id, name, email, password, role, avatar, user } = body;
 
@@ -90,16 +142,36 @@ export async function PUT(request) {
       return NextResponse.json({ error: 'User not found' }, { status: 404 });
     }
 
+    const targetUser = store.users[index];
+    const isEditingSelf = sessionUser && (
+      targetUser.id === sessionUser.id || 
+      (targetUser.email || '').toLowerCase() === (sessionUser.email || '').toLowerCase()
+    );
+
+    // Strict RBAC: Only Super Admin can edit other users' email, password, or role
+    if (!isAdmin && !isEditingSelf) {
+      return NextResponse.json({
+        error: 'Permission Denied: Only Super Admin can edit other members’ password or email.'
+      }, { status: 403 });
+    }
+
+    // Non-admin editing themselves cannot elevate their own role
+    if (!isAdmin && role && role !== targetUser.role) {
+      return NextResponse.json({
+        error: 'Permission Denied: Only Super Admin can modify account role permissions.'
+      }, { status: 403 });
+    }
+
     if (name) store.users[index].name = name.trim();
     if (email) store.users[index].email = email.trim().toLowerCase();
     if (password) store.users[index].password = password.trim();
-    if (role) store.users[index].role = role;
+    if (role && isAdmin) store.users[index].role = role;
     if (avatar) store.users[index].avatar = avatar;
 
     saveStore(store, {
       action: 'Updated User Credentials',
-      userId: user?.id || 'usr-1',
-      userName: user?.name || 'Administrator',
+      userId: sessionUser?.id || user?.id || 'usr-1',
+      userName: sessionUser?.name || user?.name || 'Administrator',
       resource: 'Users',
       details: `Updated credentials for user ${store.users[index].name} (${store.users[index].email})`
     });
@@ -134,6 +206,15 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   try {
+    const sessionUser = getSessionUser(request);
+    const isAdmin = checkIsAdmin(sessionUser);
+
+    if (!isAdmin) {
+      return NextResponse.json({
+        error: 'Permission Denied: Only Super Admin can delete account credentials.'
+      }, { status: 403 });
+    }
+
     const { searchParams } = new URL(request.url);
     const id = searchParams.get('id');
 
@@ -152,8 +233,8 @@ export async function DELETE(request) {
 
     saveStore(store, {
       action: 'Deleted User Account',
-      userId: 'usr-1',
-      userName: 'Administrator',
+      userId: sessionUser?.id || 'usr-1',
+      userName: sessionUser?.name || 'Administrator',
       resource: 'Users',
       details: `Deleted user account: ${targetUser.name} (${targetUser.email})`
     });

@@ -205,7 +205,7 @@ export default function Home() {
   const [activeProgramTab, setActiveProgramTab] = useState("playgroup");
   const [mobileProgramModal, setMobileProgramModal] = useState(null);
 
-  // Testimonials Auto-Runner State (6s delay with pause on background/hover)
+  // Testimonials Auto-Runner State (1.2s delay with pause on background/hover)
   const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
   const [isTestimonialPaused, setIsTestimonialPaused] = useState(false);
 
@@ -214,7 +214,7 @@ export default function Home() {
     const timer = setInterval(() => {
       if (typeof document !== 'undefined' && document.hidden) return;
       setActiveTestimonialIdx((prev) => (prev + 1) % 3);
-    }, 6000);
+    }, 1200);
     return () => clearInterval(timer);
   }, [isTestimonialPaused]);
 
@@ -977,7 +977,7 @@ export default function Home() {
           ...t,
           kidName: t.kidName || t.name || fallback.kidName,
           qual: t.qualifications || t.qual || fallback.qual,
-          shortQual: t.qualifications || t.shortQual || fallback.shortQual,
+          shortQual: t.shortQual || fallback.shortQual || (t.qualifications ? (t.qualifications.length > 18 ? t.qualifications.slice(0, 16) + '…' : t.qualifications) : fallback.qual),
           intro: t.bio || t.intro || fallback.intro,
           experience: t.experience || fallback.experience,
           badge: t.badge || fallback.badge,
@@ -2367,13 +2367,13 @@ export default function Home() {
 
                     {/* Center Hub */}
                     <div 
-                      className="w-32 h-32 rounded-full z-20 flex flex-col items-center justify-center transition-all duration-500 bg-white shadow-xl p-1.5 text-center"
+                      className="w-36 h-36 rounded-full z-20 flex flex-col items-center justify-center transition-all duration-500 bg-white shadow-xl p-2 text-center"
                       style={{ 
                         border: `4px solid ${currentShade.hex}`
                       }}
                     >
-                      <ActiveIcon className="w-12 h-12 mb-0.5 transition-colors duration-500 shrink-0" style={{ color: currentShade.hex }} />
-                      <span className="text-[10.5px] font-black uppercase text-[#0F2963] leading-tight px-0.5 truncate max-w-full">
+                      <ActiveIcon className="w-10 h-10 mb-1 transition-colors duration-500 shrink-0" style={{ color: currentShade.hex }} />
+                      <span className="text-[10px] sm:text-[10.5px] font-black uppercase text-[#0F2963] leading-tight px-1.5 text-center line-clamp-2 max-w-[120px]">
                         {currentShade.title}
                       </span>
                     </div>
@@ -2949,9 +2949,9 @@ export default function Home() {
 
                   {/* Modern Sleek Action Footer with Color-Matched Button */}
                   <div className="mt-4 pt-3 border-t border-black/5 flex items-center justify-between gap-2">
-                    <span className="text-[11px] font-bold text-[#0F2963] flex items-center gap-1.5 shrink-0 whitespace-nowrap" title={t.qual}>
+                    <span className="text-[11px] font-bold text-[#0F2963] flex items-center gap-1.5 min-w-0 flex-1" title={t.qual || t.qualifications}>
                       <GraduationCap className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-                      <span>{t.shortQual}</span>
+                      <span className="truncate">{t.shortQual}</span>
                     </span>
                     <button
                       type="button"
@@ -3116,11 +3116,11 @@ export default function Home() {
             })}
           </ScrollReveal>
 
-          {/* CREATIVE NOTICE BOARD PHOTO WALL CONTAINER */}
-          <div className="relative rounded-3xl bg-gradient-to-b from-[#FFFDF8]/90 to-[#FEF9ED]/90 backdrop-blur-md shadow-md p-3 sm:p-5 lg:p-6 overflow-hidden">
+          {/* PHOTO WALL CONTAINER */}
+          <div className="relative rounded-3xl bg-white/70 backdrop-blur-sm shadow-md border border-slate-200/80 p-3 sm:p-5 lg:p-6 overflow-hidden">
             
-            {/* Notice Board Header Bar (Yellow boundary and 8 pinned memories badge removed) */}
-            <div className="flex items-center justify-between mb-4 pb-2.5 border-b-2 border-dashed border-amber-200/90">
+            {/* Notice Board Header Bar */}
+            <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-200/80">
               <div className="flex items-center gap-2">
                 <span className="text-base sm:text-lg">📌</span>
                 <span className="font-heading font-black text-xs sm:text-sm text-[#0F2963] uppercase tracking-wider">
@@ -3187,7 +3187,7 @@ export default function Home() {
                 href="/gallery"
                 className="px-6 py-3 rounded-full bg-[#0F2963] hover:bg-vannam-orange text-white font-heading font-black text-xs sm:text-sm shadow-md hover:shadow-lg hover:-translate-y-0.5 active:scale-95 transition-all flex items-center gap-2 group cursor-pointer"
               >
-                <span>Explore More Memories</span>
+                <span>Explore Photos & Memories</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
